@@ -1,12 +1,11 @@
 import './App.css';
 import Footer from './components/Footer/Footer';
-import Navbar from './components/Navbar/Navbar';
+import Navigation from './components/Navigation/Navigation';
 
 const App =() => (
     <>
-    <Navbar/>
+    <Navigation/>
     <main style={{minHeight: "93vh"}}>
-
     </main>
     <Footer/>
     </>
