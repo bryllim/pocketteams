@@ -5,8 +5,6 @@ import Navigation from './components/Navigation/Navigation';
 const App =() => (
     <>
     <Navigation/>
-    <main style={{minHeight: "93vh"}}>
-    </main>
     <Footer/>
     </>
     );

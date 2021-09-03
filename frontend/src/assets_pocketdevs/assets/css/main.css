@@ -205,7 +205,7 @@ p {
   white-space: nowrap;
   vertical-align: middle;
   user-select: none;
-  padding: 16px 48px;
+  padding: 8px 24px;
   font-size: 18px;
   border-radius: 50px;
   color: #fff;
@@ -491,7 +491,10 @@ p {
 }
 
 .navbar-brand {
+  font-weight: bold;
   padding: 0;
+  padding-left: 10px;
+  color: #ED213A ;
 }
 
 .navbar-brand img {

@@ -4,6 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './assets_pocketdevs/assets/css/animate.css'
+import './assets_pocketdevs/assets/css/bootstrap-5.0.0-beta1.min.css'
+import './assets_pocketdevs/assets/css/glightbox.min.css'
+import './assets_pocketdevs/assets/css/LineIcons.2.0.css'
+import './assets_pocketdevs/assets/css/main.css'
+import './assets_pocketdevs/assets/css/main.css.map'
+import './assets_pocketdevs/assets/css/tiny-slider.css'
+import 'react-bootstrap'
 
 ReactDOM.render(
   <React.StrictMode>
