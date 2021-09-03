@@ -205,7 +205,7 @@ p {
   white-space: nowrap;
   vertical-align: middle;
   user-select: none;
-  padding: 8px 24px;
+  padding: 16px 48px;
   font-size: 18px;
   border-radius: 50px;
   color: #fff;
@@ -216,6 +216,10 @@ p {
   background: linear-gradient(to left, #ED213A 0%, #93291E 50.39%, #ED213A 100%);
   background-size: 200% auto;
   overflow: hidden;
+}
+
+.theme-btn-nav{
+  padding: 8px 24px;
 }
 
 .theme-btn:hover, .theme-btn:focus {

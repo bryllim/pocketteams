@@ -1,12 +1,13 @@
 import './App.css';
-import Footer from './components/Footer/Footer';
-import Navigation from './components/Navigation/Navigation';
+import LandingPage from './pages/LandingPage';
 
-const App =() => (
+function App() {
+
+    return (
     <>
-    <Navigation/>
-    <Footer/>
+    <LandingPage/>
     </>
-    );
+    )
+ }
 
 export default App;
