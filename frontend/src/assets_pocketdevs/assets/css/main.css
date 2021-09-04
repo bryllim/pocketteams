@@ -208,7 +208,7 @@ p {
   padding: 16px 48px;
   font-size: 18px;
   border-radius: 50px;
-  color: #fff;
+  color: #fff !important; 
   cursor: pointer;
   z-index: 5;
   transition: all .4s ease-in-out;
@@ -220,6 +220,10 @@ p {
 
 .theme-btn-nav{
   padding: 8px 24px;
+}
+
+.theme-btn-remove{
+  all:none;
 }
 
 .theme-btn:hover, .theme-btn:focus {
@@ -577,7 +581,7 @@ p {
   color: #000000;
   transition: all 0.3s ease-out 0s;
   position: relative;
-  padding: 20px;
+  padding: 10px;
   display: inline-flex;
   align-items: center;
 }
