@@ -226,6 +226,17 @@ p {
   all:none;
 }
 
+.white-bg{
+  background-color: #fff;
+}
+
+.feature-img{
+  position: absolute;
+  z-index: -1;
+  opacity: 20%; 
+  height: 70vh;
+}
+
 .theme-btn:hover, .theme-btn:focus {
   background-position: right center;
   color: #fff;
