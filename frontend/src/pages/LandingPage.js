@@ -4,6 +4,10 @@ import Navigation from '../components/Navigation'
 import dotShape from '../assets_pocketdevs/assets/img/hero/dots.shape.svg'
 import heroImage from '../../src/assets_pocketdevs/assets/img/blog/browser.jpg'
 import featuresImage from "../../src/assets_pocketdevs/assets/img/bg/cta-bg.jpg"
+import image1 from "../../src/assets_pocketdevs/assets/img/timeline/timeline-1.png"
+//import image2 from "../../src/assets_pocketdevs/assets/img/timeline/timeline-2.png"
+import image3 from "../../src/assets_pocketdevs/assets/img/timeline/timeline-3.png"
+import image4 from "../../src/assets_pocketdevs/assets/img/timeline/timeline-4.png"
 import axios from 'axios'
 import { Image } from 'react-bootstrap'
 
@@ -122,8 +126,7 @@ const LandingPage = () => {
                     <div className="row">
                         <div className="col-xl-6 col-lg-7 col-md-9 mx-auto">
                             <div className="section-title text-center mb-55">
-                                <h2 className="wow fadeInUp" data-wow-delay=".4s">How we work</h2>
-                                <p className="wow fadeInUp" data-wow-delay=".6s">Our process is customer-centric so we make sure to deliver value early and often.</p>
+                                <h2 className="wow fadeInUp" data-wow-delay=".4s">How it works</h2>
                             </div>
                         </div>
                     </div>
@@ -132,18 +135,18 @@ const LandingPage = () => {
                             <div className="single-timeline">
                                 <div className="row align-items-center">
                                     <div className="col-lg-5 order-last order-lg-first">
+                                        <div className="box-icon-style">
+                                            <i className="lni lni-list"></i>
+                                        </div>
                                         <div className="timeline-content left-content text-lg-end">
-                                            <div className="box-icon-style">
-                                                <i className="lni lni-search-alt"></i>
-                                            </div>
-                                            <h4 className="mb-10">Consultation</h4>
-                                            <p>We provide a free end-to-end consulting service which covers your requirements and ideate software solutions.</p>
+                                            <h4 className="mb-10">Task Integration</h4>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                                         </div>
                                     </div>
                                     <div className="col-lg-2"></div>
                                     <div className="col-lg-5">
                                         <div className="timeline-img">
-                                            <img src="assets/img/timeline/timeline-1.webp" alt=""/>
+                                            <img src={image1} alt=""/>
                                         </div>
                                     </div>
                                 </div>
@@ -154,17 +157,17 @@ const LandingPage = () => {
                                 <div className="row align-items-center">
                                     <div className="col-lg-5">
                                         <div className="timeline-img">
-                                            <img src="assets/img/timeline/timeline-2.webp" alt=""/>
+                                            <img src={image3} alt=""/>
                                         </div>
                                     </div>
                                     <div className="col-lg-2"></div>
                                     <div className="col-lg-5">
                                         <div className="timeline-content right-content text-start">
                                             <div className="box-icon-style">
-                                                <i className="lni lni-layers"></i>
+                                                <i className="lni lni-pencil-alt"></i>
                                             </div>
-                                            <h4 className="mb-10">Design</h4>
-                                            <p>Design and transform your requirements to organize and map out the overall solution architecture, modules, and features.</p>
+                                            <h4 className="mb-10">Board Customization</h4>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -176,37 +179,16 @@ const LandingPage = () => {
                                     <div className="col-lg-5 order-last order-lg-first">
                                         <div className="timeline-content left-content text-lg-end">
                                             <div className="box-icon-style">
-                                                <i className="lni lni-code-alt"></i>
+                                                <i className="lni lni-calendar"></i>
                                             </div>
-                                            <h4 className="mb-10">Code</h4>
-                                            <p>The development phase is where the project will be created and converting the design documentation into the actual solution.</p>
+                                            <h4 className="mb-10">Time Management</h4>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                                         </div>
                                     </div>
                                     <div className="col-lg-2"></div>
                                     <div className="col-lg-5">
                                         <div className="timeline-img">
-                                            <img src="assets/img/timeline/timeline-3.webp" alt=""/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-12">
-                            <div className="single-timeline">
-                                <div className="row align-items-center">
-                                    <div className="col-lg-5">
-                                        <div className="timeline-img">
-                                            <img src="assets/img/timeline/timeline-4.webp" alt=""/>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-2"></div>
-                                    <div className="col-lg-5">
-                                        <div className="timeline-content right-content text-start">
-                                            <div className="box-icon-style">
-                                                <i className="lni lni-rocket"></i>
-                                            </div>
-                                            <h4 className="mb-10">Launch</h4>
-                                            <p>Finally, we will be deploying the project into the agreed platforms together with our maintenance services.</p>
+                                            <img src={image4} alt=""/>
                                         </div>
                                     </div>
                                 </div>
