@@ -59,7 +59,6 @@ const LandingPage = () => {
             </section>
             {/* ========================= Features section start ========================= */}
             <section id="features" className="service-section pt-10 pb-20">       
-            <Image src={featuresImage} alt="" className="feature-img"/>
             <hr/>
                 <div className="container">        
                     <div className="row">                 

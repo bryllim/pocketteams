@@ -3,6 +3,7 @@ const express = require('express');
 const notes = require('./data/notes');
 const dotenv = require('dotenv');
 const connectDB = require("./config/db");
+const UserRoutes = require('./routes/UserRoutes');
 dotenv.config();
 connectDB();
 
@@ -16,6 +17,8 @@ app.get('/', (req, res) => {
 app.get('/api/notes', (req, res) => {
     res.json(notes);
 });
+
+app.use('/api/users', UserRoutes);
 
 const PORT = process.env.PORT || 3000;
 
