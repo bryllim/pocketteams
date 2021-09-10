@@ -3,7 +3,6 @@ import Footer from '../components/Footer'
 import Navigation from '../components/Navigation'
 import dotShape from '../assets_pocketdevs/assets/img/hero/dots.shape.svg'
 import heroImage from '../../src/assets_pocketdevs/assets/img/blog/browser.jpg'
-import featuresImage from "../../src/assets_pocketdevs/assets/img/bg/cta-bg.jpg"
 import image1 from "../../src/assets_pocketdevs/assets/img/timeline/timeline-1.png"
 //import image2 from "../../src/assets_pocketdevs/assets/img/timeline/timeline-2.png"
 import image3 from "../../src/assets_pocketdevs/assets/img/timeline/timeline-3.png"
