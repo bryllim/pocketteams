@@ -19,16 +19,16 @@ function App() {
 
     return (
         <>
-            {/* Preloader Here  */}
-                <Router>
+            <Router>
+                {/* Preloader if condition */}
+                {loading ? <Preload /> :
                     <Switch>
-                        {loading ? <Preload /> :<Route path="/" exact component={LandingPage}></Route>}
-                        {loading ? <Preload /> :<Route path="/login" exact component={LoginPage}></Route>}
-                        {loading ? <Preload /> :<Route path="/register" exact component={RegisterPage}></Route>}
-                        {loading ? <Preload /> :<Route path="/board" exact component={BoardView}></Route>}
-                    </Switch>
-                    {/* {loading ? <Preload/>  : <LandingPage/>} */}
-                </Router>
+                        <Route path="/" exact component={LandingPage}></Route>
+                        <Route path="/login" exact component={LoginPage}></Route>
+                        <Route path="/register" exact component={RegisterPage}></Route>
+                        <Route path="/board" exact component={BoardView}></Route>
+                    </Switch>}
+            </Router>
         </>
     )
 }
