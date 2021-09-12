@@ -20,8 +20,7 @@ const Board = () => {
     return (
         <>
         <Navigation/>
-    
-        
+
         <section id="home" className="hero-section">
             <div className="sideBar">
                 <Sidebar/>
