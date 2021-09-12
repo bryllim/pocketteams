@@ -4,7 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon backend/server.js"
+    "start": "nodemon backend/server.js",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm start\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -17,8 +19,12 @@
   },
   "homepage": "https://github.com/basceb/pocketteams#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "concurrently": "^6.2.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "mongoose": "^6.0.5",
     "nodemon": "^2.0.12"
   }
 }
