@@ -20,9 +20,18 @@ function App() {
 
     return (
         <>
-            {/* Preloader Here  */}
-                <Router>
+            <Router>
+                {/* Preloader if condition */}
+                {loading ? <Preload /> :
                     <Switch>
+<<<<<<< HEAD
+                        <Route path="/" exact component={LandingPage}></Route>
+                        <Route path="/login" exact component={LoginPage}></Route>
+                        <Route path="/register" exact component={RegisterPage}></Route>
+                        <Route path="/board" exact component={BoardView}></Route>
+                    </Switch>}
+            </Router>
+=======
                         {loading ? <Preload /> :<Route path="/" exact component={LandingPage}></Route>}
                         {loading ? <Preload /> :<Route path="/login" exact component={LoginPage}></Route>}
                         {loading ? <Preload /> :<Route path="/register" exact component={RegisterPage}></Route>}
@@ -31,6 +40,7 @@ function App() {
                     </Switch>
                     {/* {loading ? <Preload/>  : <LandingPage/>} */}
                 </Router>
+>>>>>>> 94544b70bcd72970be82230a05a9bd5939061b00
         </>
     )
 }
