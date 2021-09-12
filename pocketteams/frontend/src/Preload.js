@@ -3,16 +3,16 @@ import React from 'react'
 const Preload = () => {
     return (
         <>
-            <div class="preloader">
-                <div class="loader">
-                    <div class="spinner">
-                        <div class="spinner-container">
-                            <div class="spinner-rotator">
-                                <div class="spinner-left">
-                                    <div class="spinner-circle"></div>
+            <div className="preloader">
+                <div className="loader">
+                    <div className="spinner">
+                        <div className="spinner-container">
+                            <div className="spinner-rotator">
+                                <div className="spinner-left">
+                                    <div className="spinner-circle"></div>
                                 </div>
-                                <div class="spinner-right">
-                                    <div class="spinner-circle"></div>
+                                <div className="spinner-right">
+                                    <div className="spinner-circle"></div>
                                 </div>
                             </div>
                         </div>

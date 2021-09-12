@@ -3,6 +3,7 @@ import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import BoardView from './pages/BoardView';
+import Board from './pages/Board';
 // import Loader from 'react-loader-spinner';
 import { useEffect, useState } from 'react';
 import Preload from '../src/Preload'
@@ -14,21 +15,21 @@ function App() {
         setLoading(true)
         setTimeout(() => {
             setLoading(false)
-        }, 500)
+        }, 200)
     }, [])
 
     return (
         <>
-            {/* Preloader Here  */}
-                <Router>
+            <Router>
+                {/* Preloader if condition */}
+                {loading ? <Preload /> :
                     <Switch>
-                        {loading ? <Preload /> :<Route path="/" exact component={LandingPage}></Route>}
-                        {loading ? <Preload /> :<Route path="/login" exact component={LoginPage}></Route>}
-                        {loading ? <Preload /> :<Route path="/register" exact component={RegisterPage}></Route>}
-                        {loading ? <Preload /> :<Route path="/board" exact component={BoardView}></Route>}
-                    </Switch>
-                    {/* {loading ? <Preload/>  : <LandingPage/>} */}
-                </Router>
+                        <Route path="/" exact component={LandingPage}></Route>
+                        <Route path="/login" exact component={LoginPage}></Route>
+                        <Route path="/register" exact component={RegisterPage}></Route>
+                        <Route path="/boardx" exact component={Board}></Route>
+                    </Switch>}
+            </Router>
         </>
     )
 }

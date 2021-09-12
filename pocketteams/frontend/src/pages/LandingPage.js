@@ -1,11 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Footer from '../components/Footer'
 import Navigation from '../components/Navigation'
 import dotShape from '../assets_pocketdevs/assets/img/hero/dots.shape.svg'
 import heroImage from '../../src/assets_pocketdevs/assets/img/blog/browser.jpg'
+import image1 from "../../src/assets_pocketdevs/assets/img/timeline/timeline-1.png"
+//import image2 from "../../src/assets_pocketdevs/assets/img/timeline/timeline-2.png"
+import image3 from "../../src/assets_pocketdevs/assets/img/timeline/timeline-3.png"
+import image4 from "../../src/assets_pocketdevs/assets/img/timeline/timeline-4.png"
+import axios from 'axios'
 import { Image } from 'react-bootstrap'
 
 const LandingPage = () => {
+
+    //const [myData, setData] = useState([]);
+
+    const fetchData = async() => {
+        const {data} = await axios.get("/api/notes");
+        console.log(data);
+    }
+
+    //console.log("Data: " + myData);
+
+    useEffect(() => {
+        fetchData();
+    },[])
+
     return (
         <div>
             <Navigation />
@@ -19,7 +38,7 @@ const LandingPage = () => {
                                 <p className="mb-35 wow fadeInLeft" data-wow-delay=".4s">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                 </p>
-                                <a href="#contact" class="theme-btn">Get Started</a>
+                                <a href="#contact" className="theme-btn">Get Started</a>
                             </div>
                         </div>
                         <div className="col-xl-7 col-lg-6">
@@ -29,7 +48,7 @@ const LandingPage = () => {
                                         data-wow-delay=".5s" />
                                     <Image src={dotShape} alt="" className="dot-shape" />
                                     <div className="video-btn">
-                                        <a href="/" className="glightbox"><i class="lni lni-display"></i></a>
+                                        <a href="/" className="glightbox"><i className="lni lni-display"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -37,58 +56,58 @@ const LandingPage = () => {
                     </div>
                 </div>
             </section>
-            <hr />
             {/* ========================= Features section start ========================= */}
-            <section id="features" class="service-section pt-50 pb-50">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-xl-6 col-lg-7 col-md-9 mx-auto">
-                            <div class="section-title text-center mb-55">
-                                <h2 class="wow fadeInUp" data-wow-delay=".4s">Features</h2>
+            <section id="features" className="service-section pt-10 pb-20">       
+            <hr/>
+                <div className="container">        
+                    <div className="row">                 
+                        <div className="col-xl-6 col-lg-7 col-md-9 mx-auto">
+                            <div className="section-title text-center mb-55">
+                                <h2 className="wow fadeInUp" data-wow-delay=".4s">Features</h2>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-lg-3 col-md-5">
-                            <div class="service-box box-style">
-                                <div class="service-icon box-icon-style">
-                                    <i class="lni lni-handshake"></i>
+                    <div className="row">
+                        <div className="col-lg-3 col-md-5">
+                            <div className="service-box box-style white-bg">
+                                <div className="service-icon box-icon-style">
+                                    <i className="lni lni-handshake"></i>
                                 </div>
-                                <div class="box-content-style service-content">
+                                <div className="box-content-style service-content">
                                     <h5>Teams</h5>
                                     <p>Lorem ipsum dolor</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-5">
-                            <div class="service-box box-style">
-                                <div class="service-icon box-icon-style">
-                                    <i class="lni lni-bar-chart"></i>
+                        <div className="col-lg-3 col-md-5">
+                            <div className="service-box box-style white-bg">
+                                <div className="service-icon box-icon-style">
+                                    <i className="lni lni-bar-chart"></i>
                                 </div>
-                                <div class="box-content-style service-content">
+                                <div className="box-content-style service-content">
                                     <h5>Project Management</h5>
                                     <p>Lorem ipsum dolor</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-5">
-                            <div class="service-box box-style">
-                                <div class="service-icon box-icon-style">
-                                    <i class="lni lni-radio-button"></i>
+                        <div className="col-lg-3 col-md-5">
+                            <div className="service-box box-style white-bg">
+                                <div className="service-icon box-icon-style">
+                                    <i className="lni lni-radio-button"></i>
                                 </div>
-                                <div class="box-content-style service-content">
+                                <div className="box-content-style service-content">
                                     <h5>Task Management</h5>
                                     <p>Lorem ipsum dolor</p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-5">
-                            <div class="service-box box-style">
-                                <div class="service-icon box-icon-style">
-                                    <i class="lni lni-files"></i>
+                        <div className="col-lg-3 col-md-5">
+                            <div className="service-box box-style white-bg">
+                                <div className="service-icon box-icon-style">
+                                    <i className="lni lni-files"></i>
                                 </div>
-                                <div class="box-content-style service-content">
+                                <div className="box-content-style service-content">
                                     <h5>Collaboration</h5>
                                     <p>Lorem ipsum dolor</p>
                                 </div>
@@ -98,8 +117,85 @@ const LandingPage = () => {
                 </div>
             </section>
             <hr/>
-            {/* ========================= service-section end ========================= */}
-
+            {/* ========================= Features section end ========================= */}
+            {/* ========================= Features description start =========================*/}
+            <section className="process-section pt-130 pb-100">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-xl-6 col-lg-7 col-md-9 mx-auto">
+                            <div className="section-title text-center mb-55">
+                                <h2 className="wow fadeInUp" data-wow-delay=".4s">How it works</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row align-items-center time-line">
+                        <div className="col-12">
+                            <div className="single-timeline">
+                                <div className="row align-items-center">
+                                    <div className="col-lg-5 order-last order-lg-first">
+                                        <div className="box-icon-style">
+                                            <i className="lni lni-list"></i>
+                                        </div>
+                                        <div className="timeline-content left-content text-lg-end">
+                                            <h4 className="mb-10">Task Integration</h4>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-2"></div>
+                                    <div className="col-lg-5">
+                                        <div className="timeline-img">
+                                            <img src={image1} alt=""/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-12">
+                            <div className="single-timeline">
+                                <div className="row align-items-center">
+                                    <div className="col-lg-5">
+                                        <div className="timeline-img">
+                                            <img src={image3} alt=""/>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-2"></div>
+                                    <div className="col-lg-5">
+                                        <div className="timeline-content right-content text-start">
+                                            <div className="box-icon-style">
+                                                <i className="lni lni-pencil-alt"></i>
+                                            </div>
+                                            <h4 className="mb-10">Board Customization</h4>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-12">
+                            <div className="single-timeline">
+                                <div className="row align-items-center">
+                                    <div className="col-lg-5 order-last order-lg-first">
+                                        <div className="timeline-content left-content text-lg-end">
+                                            <div className="box-icon-style">
+                                                <i className="lni lni-calendar"></i>
+                                            </div>
+                                            <h4 className="mb-10">Time Management</h4>
+                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-2"></div>
+                                    <div className="col-lg-5">
+                                        <div className="timeline-img">
+                                            <img src={image4} alt=""/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {/* ========================= Features description end =========================*/}
             <Footer />
         </div>
     )

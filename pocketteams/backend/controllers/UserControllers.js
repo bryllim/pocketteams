@@ -1,0 +1,72 @@
+const User = require('../models/userModel')
+const AsyncHandler = require('express-async-handler');
+const bcrypt = require('bcryptjs/dist/bcrypt');
+const generateToken = require('../utils/GenerateToken');
+
+//Handles the user registration
+const registerUser = AsyncHandler(async (req, res) => {
+    const {first_name, last_name, email_address, password, profile_pic} = req.body;
+
+    const user_exists = await User.findOne({email_address});
+
+    //Check if the user exists from the database
+    if(user_exists){
+        res.status(400)
+        throw new Error('User Already Exists');
+    }
+
+    //Create the user 
+    const user = await User.create({
+        first_name,
+        last_name,
+        email_address,
+        password,
+        profile_pic,       
+    });
+
+    //If the user is recieved from the database
+    if(user) {
+        res.status(201).json({
+            _id: user._id,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email_address: user.email_address,
+            is_admin: user.is_admin,
+            profile_pic: user.profile_pic,         
+            token: generateToken(user._id),
+        })
+    } else {
+        res.status(400)
+        throw new Error("Error Occurred");
+    }
+
+    res.json({
+        first_name,
+        last_name,
+        email_address
+    });
+});
+
+//Handles the user login
+const authUser = AsyncHandler(async (req, res) => {
+    const {first_name, last_name, email_address, password, profile_pic} = req.body;
+
+    const user = await User.findOne({email_address});
+
+    if(user && (await user.matchPassword(password))){
+        res.json({
+            _id: user._id,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email_address: user.email_address,
+            profile_pic: user.profile_pic,
+            is_admin: user.is_admin,
+            token: generateToken(user._id)
+        });
+    } else {
+        res.status(400);
+        throw new Error("Invalid Email or Password!");
+    }
+});
+
+module.exports = {registerUser, authUser};

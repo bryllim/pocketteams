@@ -13,7 +13,7 @@ const Footer = () => {
                                 <li><a href="https://www.facebook.com/pocketdevscebu"><i
                                             className="lni lni-facebook-filled"></i></a></li>
                                 <li><a href="https://www.instagram.com/pocketdevs.ph/"><i
-                                            class="lni lni-instagram-filled"></i></a></li>
+                                            className="lni lni-instagram-filled"></i></a></li>
                             </ul>
                         </div>
                     </div>
