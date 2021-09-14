@@ -10,7 +10,7 @@ import image4 from "../../src/assets_pocketdevs/assets/img/timeline/timeline-4.p
 import axios from 'axios'
 import { Image } from 'react-bootstrap'
 
-const LandingPage = () => {
+const LandingPage = ({history}) => {
 
     //const [myData, setData] = useState([]);
 

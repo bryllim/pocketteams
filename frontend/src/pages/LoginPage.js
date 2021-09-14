@@ -1,16 +1,26 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, Navbar } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
 import pocketdevsLogo from '../assets_pocketdevs/assets/img/logo/pocketdevs-logo.png';
-import Preload from '../Preload';
+import ErrorMessage from '../components/ErrorMessage';
+import Preload from '../components/Preload';
 
-const LoginPage = () => {
+const LoginPage = ({history}) => {
 
     const [email_address, setEmailAddress] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
+    const userInfo = localStorage.getItem("userInfo");
+    useEffect(() => {
+        console.log("SAMPLE: " + userInfo);
+        //If the user is logged in from local storage
+        if(userInfo){
+            console.log("Inside if condition");
+            history.push("/boardx");
+        }
+    }, [history, userInfo]);
 
     const submitHandler = async (e) => {
         e.preventDefault();
@@ -22,6 +32,7 @@ const LoginPage = () => {
                 },
             };
 
+            //Load to get the data from API
             setLoading(true);
             const { data } = await axios.post('/api/users/login',
                 {
@@ -33,8 +44,9 @@ const LoginPage = () => {
             console.log(data);
             localStorage.setItem('userInfo', JSON.stringify(data));
             setLoading(false);
-        } catch (error) {
+        } catch (error) {  
             setError(error.response.data.message);
+            setLoading(false);
         }
     }
 
@@ -66,6 +78,7 @@ const LoginPage = () => {
                                         </div>
                                     </div>
                                 </div>
+                                {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
                                 {loading && <Preload/>}
                                 <form onSubmit={submitHandler} className="contact-form">
                                     <div className="row">
