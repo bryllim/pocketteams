@@ -4,7 +4,7 @@ const Teamcard = () => {
     return (
         <div className="container-fluid basecard">
             <h4>Teamname</h4>
-             <div className="row justify-content-between" style={{ background: 'red'}}>
+             <div className="row justify-content-between">
                 
             <div className="col-auto">
                 
