@@ -29,9 +29,9 @@ const Board = () => {
                    
                     <div className="row">
                
-                        <div className="col">
+                   
                         <Taskboard/>
-                        </div>
+                        
                         <div className="col-8">
                         <h6>Add Section</h6>
                         </div>
