@@ -40,6 +40,7 @@ const registerUser = AsyncHandler(async (req, res) => {
         throw new Error("Error Occurred");
     }
 
+    //Response from the API if the user is successfully registered
     res.json({
         first_name,
         last_name,
@@ -51,8 +52,10 @@ const registerUser = AsyncHandler(async (req, res) => {
 const authUser = AsyncHandler(async (req, res) => {
     const {first_name, last_name, email_address, password, profile_pic} = req.body;
 
+    //Check if the user exists and store it 
     const user = await User.findOne({email_address});
 
+    //Check if the password matches the user
     if(user && (await user.matchPassword(password))){
         res.json({
             _id: user._id,

@@ -2,11 +2,10 @@ import './App.css';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import BoardView from './pages/BoardView';
 import Board from './pages/Board';
 // import Loader from 'react-loader-spinner';
 import { useEffect, useState } from 'react';
-import Preload from '../src/Preload'
+import Preload from '../src/components/Preload'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 function App() {

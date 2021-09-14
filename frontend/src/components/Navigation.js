@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useSelector, useEffect } from 'react';
 import { Button, Image, Navbar } from 'react-bootstrap';
+import { useHistory } from 'react-router';
 import pocketdevsLogo from '../assets_pocketdevs/assets/img/logo/pocketdevs-logo.png';
 
 const Navigation = () => {
+
+  const history = useHistory();
+
   return (
     <>
       <header className="header navbar-area sticky">
@@ -27,12 +31,19 @@ const Navigation = () => {
                     <li className="nav-item">
                       <a className="page-scroll mt-3" href="#contact_us">Contact Us</a>
                     </li>
-                      <li className="nav-item">                       
-                        <a href="/login"><Button className="theme-btn theme-btn-nav mt-1">Login</Button></a>
-                      </li>
-                      <li className="nav-item">                 
-                        <a href="/register"><Button className="theme-btn theme-btn-nav mt-1">Sign Up</Button></a>
-                      </li>
+                    <li className="nav-item">
+                      <a href="/login"><Button className="theme-btn theme-btn-nav mt-1">Login</Button></a>
+                    </li>
+                    <li className="nav-item">
+                      <a href="/register"><Button className="theme-btn theme-btn-nav mt-1">Sign Up</Button></a>
+                    </li>
+                    <li className="nav-item">
+                      <a><Button className="theme-btn theme-btn-nav mt-1" onClick={() => {
+                        localStorage.removeItem("userInfo");
+                        history.push("/");
+                      }
+                      }>Log out</Button></a>
+                    </li>
                   </ul>
                 </div>
               </nav>
