@@ -13,13 +13,9 @@ code {
     monospace;
 }
 
-.sideBar {
-  height: 1000px;
-  background-color: blue;
-}
-.main{
-  height: 1000px;
 
+.main{
+  height: 800px;
 }
 
 

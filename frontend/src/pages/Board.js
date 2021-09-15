@@ -12,17 +12,14 @@ const Board = () => {
         <Navigation/>
     
 
-        <div className="container-fluid main">
+        <div className="main container p-5">
 
             
-            
-
 
             <div className="row">
                 <div class="col-auto">
                     <Sidebar/>
                 </div>
-
 
                 <div className="col">
                     <h1>Project</h1>
