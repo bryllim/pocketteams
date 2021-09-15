@@ -5,7 +5,7 @@ const Taskcard = () => {
         <div className="d-flex flex-column basecard">
             <h6>Title</h6>
             <p>Description</p>
-            <div className="d-flex justify-content-between align-items-center">
+            <div className="d-flex align-items-center">
                 <p>date</p>
                 <div className="d-flex align-items-center">
                     <button class="btn p-1 " type="button">
