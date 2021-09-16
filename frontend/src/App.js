@@ -3,6 +3,11 @@ import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import Board from './pages/Board';
+import Project from './pages/Project';
+import ProjectDashboard from './pages/ProjectDashboard';
+import My from './pages/My';
+import TeamDashboard from './pages/TeamDashboard';
+
 // import Loader from 'react-loader-spinner';
 import { useEffect, useState } from 'react';
 import Preload from '../src/components/Preload'
@@ -27,6 +32,10 @@ function App() {
                         <Route path="/login" exact component={LoginPage}></Route>
                         <Route path="/register" exact component={RegisterPage}></Route>
                         <Route path="/board" exact component={Board}></Route>
+                        <Route path="/project" exact component={Project}></Route>
+                        <Route path="/my" exact component={My}></Route>
+                        <Route path="/teamdashboard" exact component={TeamDashboard}></Route>
+                        <Route path="/projectdashboard" exact component={ProjectDashboard}></Route>
                     </Switch>}
             </Router>
         </>

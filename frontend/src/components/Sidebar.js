@@ -8,7 +8,7 @@ const Sidebar = () => {
             //     <h1>test</h1>
 
             // </div>
-           <div class="d-flex flex-column align-items-center flex-shrink-0 p-3 text-white " style={{width: '280px'}}>
+           <div class="d-flex flex-column align-items-center" style={{maxWidth:"300px"}}>
                 
                    <Profilecard/>
                    <Teamcard/>

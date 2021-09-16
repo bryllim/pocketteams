@@ -4,13 +4,14 @@ import Taskcard from './Taskcard'
 const Sectioncard = () => {
     return (
 
-        <div className="col">
-            <div className="d-grid d-flex d-flex justify-content-between rounded-top bg-danger ps-2">
-                
-                <div class="d-flex align-items-center">
-                    <div>Sectionname</div>
+        <div className="d-flex flex-column" style={{width:"300px"}}>
+            <div className="d-grid section justify-content-between rounded-top bg-danger ps-2">
+                <div className="sectionTitle">
+                    Sectionname
                 </div>
-                <div>
+            
+
+                <div className="btn-group optionButton">
                     <button class="btn" type="button">
                         <i class="bi bi-plus-square"></i>
                     </button>
@@ -18,7 +19,6 @@ const Sectioncard = () => {
                     <button class="btn " type="button">
                         <i class="bi bi-three-dots"></i>
                     </button>
-
                 </div>
          
 
