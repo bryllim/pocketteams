@@ -4,7 +4,7 @@ import Taskcard from './Taskcard'
 const Sectioncard = () => {
     return (
 
-        <div className="d-flex flex-column" style={{width:"400px"}}>
+        <div className="d-flex flex-column" style={{width:"300px"}}>
             <div className="d-grid section justify-content-between rounded-top bg-danger ps-2">
                 <div className="sectionTitle">
                     Sectionname

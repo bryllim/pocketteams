@@ -15,20 +15,26 @@ const Board = () => {
       
 
             
-            <div className="main container-fluid p-5 justify-content-center">
+            <div className="main container-fluid p-5 ">
                 <div className="row">
 
-                    <div class="col-3 ">
+                    <div class="col-5 " >
                         <Sidebar/>
                     </div>
 
-                    <div className="col-xxl-9">
+                    <div className="col-6">
                         <h1>Project</h1>
                     
                         <div className="row scrolling-wrapper flex-nowrap">
                 
 
                                 <Sectioncard/>
+                                <Sectioncard/>
+                                <Sectioncard/>
+                                <Sectioncard/>
+                                <Sectioncard/>
+                                <Sectioncard/>
+                         
                          
                                     
                         

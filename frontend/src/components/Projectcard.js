@@ -3,7 +3,7 @@ import React from 'react'
 const Projectcard = () => {
     return (
         
-        <div class="d-flex flex-column p-3 basecard bg-light" style={{height:"200px"}}>
+        <div class="d-flex flex-column p-3 basecard bg-light" style={{width:"200px",height:"200px"}}>
 
             <div className="d-flex justify-content-between">               
                 <img src="https://via.placeholder.com/150" alt="" className="rounded"  style={{height:"50px", width:"50px"}}/>
