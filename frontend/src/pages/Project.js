@@ -21,6 +21,13 @@ const Project = () => {
                             <div class="col">
                                 <Projectcard/>
                             </div>
+                            <div class="col">
+                                <Projectcard/>
+                            </div>
+                            <div class="col">
+                                <Projectcard/>
+                            </div>
+                         
                          
                         </div>
                     </div>

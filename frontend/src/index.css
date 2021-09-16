@@ -14,10 +14,10 @@ code {
 }
 
 
-.main{
+/* .main{
   height: 800px;
 }
-
+ */
 
 .basecard{
   background: #FFFFFF;
@@ -36,5 +36,24 @@ code {
   padding: 30px;
 }
 
+.section{
+  grid-template-columns:2fr 1fr;
+  align-items: end;
+}
 
+.optionButton{
+  justify-self: end;
+}
+
+.sectionTitle{
+ 
+  align-self:center;
+}
+
+
+.scrolling-wrapper{
+	overflow-x: auto;
+	padding-top: 30px;
+	padding-bottom: 70px;	
+}
 
