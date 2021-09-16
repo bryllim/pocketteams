@@ -196,7 +196,7 @@ const LandingPage = () => {
                 </div>
             </section>
             {/* ========================= Features description end =========================*/}
-            <Footer />
+           <Footer />
         </div>
     )
 }
