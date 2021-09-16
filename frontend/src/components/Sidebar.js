@@ -1,19 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
+
 import Profilecard from './Profilecard'
 import Teamcard from './Teamcard'
-import Button from './Button'
-const Sidebar = () => {
-    return (
-            // <div class='bg-dark' style={{width: '200px'}}> 
-            //     <h1>test</h1>
+import {Button,Accordion,Card} from 'react-bootstrap'
 
-            // </div>
+const Sidebar = () => {
+
+
+
+    return (
+         
            <div class="d-flex flex-column align-items-center" style={{maxWidth:"300px"}}>
                 
                    <Profilecard/>
                    <Teamcard/>
-                   <Button/>
+                   
+                   <Button variant="primary"  >Primary</Button>
 
+                            
             </div>     
   
     )
