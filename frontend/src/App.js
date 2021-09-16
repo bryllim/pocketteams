@@ -6,6 +6,7 @@ import Board from './pages/Board';
 import Project from './pages/Project';
 import ProjectDashboard from './pages/ProjectDashboard';
 import My from './pages/My';
+import TeamDashboard from './pages/TeamDashboard';
 
 // import Loader from 'react-loader-spinner';
 import { useEffect, useState } from 'react';
@@ -33,6 +34,7 @@ function App() {
                         <Route path="/board" exact component={Board}></Route>
                         <Route path="/project" exact component={Project}></Route>
                         <Route path="/my" exact component={My}></Route>
+                        <Route path="/teamdashboard" exact component={TeamDashboard}></Route>
                         <Route path="/projectdashboard" exact component={ProjectDashboard}></Route>
                     </Switch>}
             </Router>
