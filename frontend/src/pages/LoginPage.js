@@ -1,54 +1,34 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Image, Navbar } from 'react-bootstrap';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import pocketdevsLogo from '../assets_pocketdevs/assets/img/logo/pocketdevs-logo.png';
 import ErrorMessage from '../components/ErrorMessage';
 import Preload from '../components/Preload';
+import { login } from '../actions/userActions';
 
-const LoginPage = ({history}) => {
+const LoginPage = () => {
 
     const [email_address, setEmailAddress] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const userInfo = localStorage.getItem("userInfo");
+
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const userLogin = useSelector(state => state.userLogin)
+    const {loading, error, userInfo} = userLogin;
+
     useEffect(() => {
-        console.log("SAMPLE: " + userInfo);
-        //If the user is logged in from local storage
         if(userInfo){
-            console.log("Inside if condition");
-            history.push("/boardx");
+            history.push('/boardx');
         }
     }, [history, userInfo]);
 
+
     const submitHandler = async (e) => {
         e.preventDefault();
-        //Call the API 
-        try {
-            const config = {
-                headers: {
-                    "Content-type": "application/json",
-                },
-            };
-
-            //Load to get the data from API
-            setLoading(true);
-            const { data } = await axios.post('/api/users/login',
-                {
-                    email_address,
-                    password
-                },
-                config);
-            
-            console.log(data);
-            localStorage.setItem('userInfo', JSON.stringify(data));
-            setLoading(false);
-        } catch (error) {  
-            setError(error.response.data.message);
-            setLoading(false);
-        }
-    }
+        dispatch(login(email_address, password));
+    };
 
     return (
         <>
