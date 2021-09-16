@@ -15,8 +15,7 @@ const Sidebar = () => {
                    <Profilecard/>
                    <Teamcard/>
                    
-                   <Button variant="primary"  >Primary</Button>
-
+                   <button type="button" class="mt-3 theme-btn theme-btn-nav mt-1 btn btn-primary">Create New Team</button>
                             
             </div>     
   
