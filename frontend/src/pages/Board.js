@@ -22,7 +22,7 @@ const Board = () => {
                         <Sidebar/>
                     </div>
 
-                    <div className="col-6">
+                    <div className="col-sm-6">
                         <h1>Project</h1>
                     
                         <div className="row scrolling-wrapper flex-nowrap">
