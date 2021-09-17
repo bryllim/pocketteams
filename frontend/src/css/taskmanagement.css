@@ -1,0 +1,60 @@
+header {
+  padding: 30px;
+  background: #011627;
+  height: 120px;
+}
+
+.sidenav {
+  width: 45%;
+  background: #fff;
+  border: 1px solid black;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  position: absolute;
+  height: 95vh;
+  padding: 0 30px;
+  right: -100%;
+  transition: all 0.65s ease-in-out;
+}
+
+.sidenav.active {
+  right: 0;
+}
+
+ul {
+  padding: 0;
+}
+
+ul li {
+  list-style-type: none;
+}
+
+ul li a {
+  color: #000;
+  text-decoration: none;
+  font-size: 1em;
+  padding: 10px 15px;
+  display: block;
+}
+
+.taskComplete {
+  padding: 0.5em 1em;
+  font-size: 1rem;
+}
+
+.full {
+  width: 100%;
+}
+
+.modal {
+  color: red;
+}
+
+.radius {
+  border-radius: 30px;
+}
+
+.fas-checked {
+  width: 1.7rem;
+  margin-right: 1em;
+}
