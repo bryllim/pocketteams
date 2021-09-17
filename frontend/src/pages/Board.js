@@ -17,7 +17,7 @@ const Board = () => {
           </div>
           <div className="col-md-8">
             <h1>Project</h1>
-
+            
             <div className="row scrolling-wrapper flex-nowrap">
               <Sectioncard />
               <Sectioncard />

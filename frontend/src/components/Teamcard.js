@@ -9,8 +9,7 @@ const Teamcard = () => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     return (
-
-        <>
+        <div className="sidebar-box search-form-box mb-30">
         <Accordion defaultActiveKey="0">
                         <Card>
                         <Card.Header>
@@ -54,24 +53,14 @@ const Teamcard = () => {
                             <a href="#" class="list-group-item list-group-item-action">Project A</a>
                             <a href="#" class="list-group-item list-group-item-action">Project B</a>
                             <a href="#" class="list-group-item list-group-item-action">Project C</a>
-                
                         </div>
-
-
                         </Card.Body>
-
                         </Accordion.Collapse>
                         </Card>    
         </Accordion>  
-
-        <Addmember showModal={show} hideModal={handleClose}/>         
-        </>
-
-
-
-
-
-        
+        <Addmember showModal={show} hideModal={handleClose}/>     
+        <button type="button" class="mt-3 theme-btn theme-btn-nav mt-1 btn btn-primary">Create New Team</button>      
+        </div>    
     )
 }
 
