@@ -1,4 +1,5 @@
 import React from 'react'
+import PopMenu from './PopMenu'
 
 const Projectcard = () => {
     return (
@@ -7,7 +8,11 @@ const Projectcard = () => {
 
             <div className="d-flex justify-content-between">               
                 <img src="https://via.placeholder.com/150" alt="" className="rounded"  style={{height:"50px", width:"50px"}}/>
-                <i class="bi bi-three-dots"/>    
+                                 
+                <button type="button" class="d-flex btn m-0 p-0 ">
+                            <PopMenu  menuOptions={["Edit","Remove"]} />
+                        
+                </button>    
             </div>
 
             <div className="d-flex flex-column flex-fill justify-content-between">
