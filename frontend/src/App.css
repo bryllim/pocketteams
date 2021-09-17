@@ -20,8 +20,12 @@
 }
 
 .hover-me:hover{
-    color: #DC3545;
+    box-shadow: #6c757d;
     cursor: pointer;
+}
+
+.nav-text{
+    color: white !important;
 }
 
 
