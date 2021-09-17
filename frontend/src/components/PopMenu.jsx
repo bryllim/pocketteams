@@ -1,7 +1,7 @@
 import React from 'react'
-import {Dropdown,DropdownButton} from 'react-bootstrap'
+import {Dropdown} from 'react-bootstrap'
 
-const PopMenu = (toggleButton) => {
+const PopMenu = ({menuOptions}) => {
     
     const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
         <a
@@ -23,19 +23,23 @@ const PopMenu = (toggleButton) => {
     return (
         <>
            <Dropdown>
-                <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-                   
+                <Dropdown.Toggle 
+                as={CustomToggle} 
+                
+        
+                id="dropdown-custom-components">
+
+                    <i class="bi bi-three-dots"/> 
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                    <Dropdown.Item eventKey="1">Red</Dropdown.Item>
-                    <Dropdown.Item eventKey="2">Blue</Dropdown.Item>
-                    <Dropdown.Item eventKey="3" active>
-                        Orange
-                    </Dropdown.Item>
-                    <Dropdown.Item eventKey="1">Red-Orange</Dropdown.Item>
+                    {menuOptions.map((items) => (
+                        <Dropdown.Item eventKey="1">{items}</Dropdown.Item>
+                        
+                    ))}
+                    
                 </Dropdown.Menu>
-            </Dropdown>,
+            </Dropdown>
 
         </>
     )

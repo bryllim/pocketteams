@@ -39,8 +39,7 @@ const Teamcard = () => {
                  
                     
                         <button type="d-flex button" class="btn">
-                            {/* <PopMenu   /> */}
-                            <i class="bi bi-three-dots"/> 
+                            <PopMenu  menuOptions={["Edit","Remove"]} />
                         </button>  
 
                  
