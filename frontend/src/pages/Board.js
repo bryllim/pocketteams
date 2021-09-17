@@ -28,12 +28,9 @@ const Board = () => {
                         <div className="row scrolling-wrapper flex-nowrap">
                 
 
-                                <Sectioncard/>
-                                <Sectioncard/>
-                                <Sectioncard/>
-                                <Sectioncard/>
-                                <Sectioncard/>
-                                <Sectioncard/>
+                                <Sectioncard taskList={["test"]}/>
+                                <Sectioncard taskList={["test","test","test","test","test","test","test"]}/>
+                
                          
                          
                                     

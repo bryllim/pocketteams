@@ -2,7 +2,7 @@ import React from 'react'
 import Taskcard from './Taskcard'
 import PopMenu from './PopMenu'
 
-const Sectioncard = () => {
+const Sectioncard = ({taskList}) => {
     return (
 
         <div className="d-flex flex-column" style={{width:"300px"}}>
@@ -25,14 +25,13 @@ const Sectioncard = () => {
 
                  
             </div>
-            <div className="d-flex flex-column scrolling-wrapper-y flex-nowrap" style={{height:"500px"}}>
+            <div className="d-flex flex-column scrolling-wrapper-y flex-nowrap" style={{maxHeight:"500px"}}>
                 <div className="d-flex flex-column sectioncard">
-                    <Taskcard/>
-                    <Taskcard/>
-                    <Taskcard/>
-                    <Taskcard/>
-                    <Taskcard/>
-                    <Taskcard/>
+
+                    {taskList.map((items) => (
+                         <Taskcard/>
+                    ))}
+                  
                 </div>
             </div>
             
