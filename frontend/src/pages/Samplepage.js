@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import Navigation from "../components/Navigation";
+import Notes from "../components/Notes";
 import Sidetask from "../components/Sidetask";
 
 const Samplepage = () => {
@@ -7,15 +7,15 @@ const Samplepage = () => {
 
   return (
     <div>
-      {/* <Navigation /> */}
       <header>
         <button onClick={() => setShowNav(!showNav)} className="theme-btn my-2">
           Edit Task
         </button>
       </header>
-      <div>
-        <Sidetask show={showNav} hide={setShowNav} />
+      <div className="notes">
+        <Notes />
       </div>
+      <Sidetask show={showNav} hide={setShowNav} />
     </div>
   );
 };

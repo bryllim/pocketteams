@@ -11,10 +11,16 @@ header {
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
   position: absolute;
-  height: 95vh;
+  height: 96vh;
   padding: 0 30px;
+  z-index: 100;
   right: -100%;
   transition: all 0.65s ease-in-out;
+}
+
+label,
+p {
+  font-size: 0.9rem;
 }
 
 .sidenav.active {
@@ -44,17 +50,64 @@ ul li a {
 
 .full {
   width: 100%;
-}
-
-.modal {
-  color: red;
+  margin: 0;
+  padding: 0;
 }
 
 .radius {
   border-radius: 30px;
 }
 
-.fas-checked {
+.fas-icon {
   width: 1.7rem;
   margin-right: 1em;
+}
+
+.f-dark {
+  color: #000;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.subtask {
+  padding: 0.199999em 1em;
+  font-size: 14px;
+}
+
+.resize-0 {
+  resize: none;
+}
+
+.prio {
+  background-color: #fff;
+  padding: 0 0.4em;
+  border: none;
+  font-size: 0.9rem;
+  margin-left: 1.3em;
+  color: #000;
+}
+
+.prio:hover {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.option {
+  background-color: #dc3545;
+  border: none;
+  font-size: 0.9rem;
+  padding: 0.3em 0.5em;
+}
+
+/* notes */
+
+.notes {
+  height: 250px;
+  width: 205px;
+}
+
+.h-full {
+  height: 170px;
 }
