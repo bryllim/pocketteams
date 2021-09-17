@@ -38,9 +38,9 @@ function Profilecard() {
           <i class="lni lni-cog" /> Account Settings
         </small>
       </p>
-      <Modal show={show} onHide={handleClose} animation={false} size="lg">
+      <Modal show={show} onHide={handleClose} size="lg">
         <Modal.Header>
-          <h3>My Profile Settings</h3>
+          <h5>My Profile Settings</h5>
           <button type="button" class="btn-close me-2" onClick={handleClose} aria-label="Close"></button>
         </Modal.Header>
         <Modal.Body>
@@ -118,11 +118,6 @@ function Profilecard() {
                           </div>
                         </div>
                       </Row>
-                      <Row>
-                        <div className="col-md-12 mx-auto">
-                          <Button className="theme-btn mx-0" onClick={handleClose}>Save Changes</Button>
-                        </div>
-                      </Row>
                     </form>
                   </div>
                 </div>
@@ -130,6 +125,14 @@ function Profilecard() {
             </Row>
           </Container>
         </Modal.Body>
+        <Modal.Footer>
+            <Button
+              className="theme-btn theme-btn-modal mx-0"
+              onClick={handleClose}
+            >
+              Save Changes
+            </Button>
+          </Modal.Footer>
       </Modal>
       <p className="text-danger hover-me" onClick={logoutHandler}>
         <small>

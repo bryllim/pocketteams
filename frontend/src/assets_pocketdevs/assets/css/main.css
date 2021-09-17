@@ -222,6 +222,12 @@ p {
   padding: 8px 24px;
 }
 
+.theme-btn-modal{
+  font-weight: 200;
+  font-size: 14px;
+  padding: 8px 24px;
+}
+
 .theme-btn-remove{
   all:none;
 }

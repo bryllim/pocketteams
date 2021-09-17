@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Footer from '../components/Footer'
 import Navigation from '../components/Navigation'
 import dotShape from '../assets_pocketdevs/assets/img/hero/dots.shape.svg'
@@ -9,21 +9,29 @@ import image3 from "../../src/assets_pocketdevs/assets/img/timeline/timeline-3.p
 import image4 from "../../src/assets_pocketdevs/assets/img/timeline/timeline-4.png"
 import axios from 'axios'
 import { Image } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
 
 const LandingPage = ({history}) => {
-
-    //const [myData, setData] = useState([]);
 
     const fetchData = async() => {
         const {data} = await axios.get("/api/notes");
         console.log(data);
     }
 
-    //console.log("Data: " + myData);
+    const [loggedIn, setLoggedIn] = useState(false);
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
+
 
     useEffect(() => {
         fetchData();
-    },[])
+        if (userInfo) {
+            setLoggedIn(true);
+            history.push('/board');
+          } else {
+            setLoggedIn(false);
+          }
+    },[userInfo])
 
     return (
         <div>
