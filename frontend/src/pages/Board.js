@@ -1,6 +1,7 @@
 import Sidebar from "../components/Sidebar";
 import Navigation from "../components/Navigation";
 import Sectioncard from "../components/Sectioncard";
+import sidetask from "../components/Sidetask";
 
 const Board = () => {
   return (
@@ -20,10 +21,19 @@ const Board = () => {
                     <h1>Project</h1>
                   </div>
                   <div className="row scrolling-wrapper flex-nowrap">
-                 
-                                <Sectioncard taskList={["test"]}/>
-                                <Sectioncard taskList={["test","test","test","test","test","test","test"]}/>
-                                
+                    <Sectioncard taskList={["test"]} />
+                    <Sectioncard
+                      taskList={[
+                        "test",
+                        "test",
+                        "test",
+                        "test",
+                        "test",
+                        "test",
+                        "test",
+                      ]}
+                    />
+
                     <div className="col-5">
                       <h6>Add Section</h6>
                     </div>
