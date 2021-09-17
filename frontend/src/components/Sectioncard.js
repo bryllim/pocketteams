@@ -25,10 +25,17 @@ const Sectioncard = () => {
 
                  
             </div>
-
-            <div className="d-flex flex-column sectioncard">
-                <Taskcard/>
+            <div className="d-flex flex-column scrolling-wrapper-y flex-nowrap" style={{height:"500px"}}>
+                <div className="d-flex flex-column sectioncard">
+                    <Taskcard/>
+                    <Taskcard/>
+                    <Taskcard/>
+                    <Taskcard/>
+                    <Taskcard/>
+                    <Taskcard/>
+                </div>
             </div>
+            
 
             <div className="d-flex justify-content-center rounded-bottom bg-danger">
                 

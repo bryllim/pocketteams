@@ -57,3 +57,6 @@ code {
 	padding-bottom: 70px;	
 }
 
+.scrolling-wrapper-y {
+  overflow-y: auto;
+}
