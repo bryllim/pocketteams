@@ -12,8 +12,8 @@ header {
   border-bottom-left-radius: 30px;
   position: absolute;
   height: 96vh;
+  top: 4em;
   padding: 0 30px;
-  z-index: 100;
   right: -100%;
   transition: all 0.65s ease-in-out;
 }
@@ -99,15 +99,4 @@ ul li a {
   border: none;
   font-size: 0.9rem;
   padding: 0.3em 0.5em;
-}
-
-/* notes */
-
-.notes {
-  height: 250px;
-  width: 205px;
-}
-
-.h-full {
-  height: 170px;
 }
