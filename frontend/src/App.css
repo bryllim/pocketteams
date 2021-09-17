@@ -1,0 +1,28 @@
+.profile-image{
+    border: 3px solid #6c757d;;
+    background-color: #6c757d;;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;  
+}
+
+.settings-icon{
+    height: 10px;
+    width: 10px;
+    margin: 0 5px 0 0;
+}
+
+.profile-image:hover{
+    filter: brightness(90%);
+    border-color: #DC3545;
+}
+
+.hover-me:hover{
+    color: #DC3545;
+    cursor: pointer;
+}
+
+
+
