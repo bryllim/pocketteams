@@ -2,12 +2,18 @@ import React from 'react'
 import Sidebar from '../components/Sidebar'
 import Navigation from '../components/Navigation'
 import Projectcard from '../components/Projectcard'
+import Addmember from '../components/Addmember'
+
+
+
 const Project = () => {
     return (
         <>
             <Navigation/>
             <div className=" main container-fluid p-5">
                 <div className="row">
+
+
 
                     <div className="col-auto">
                     <Sidebar/>
@@ -38,6 +44,9 @@ const Project = () => {
                 </div>
 
             </div>
+
+
+            
 
         </>
     )

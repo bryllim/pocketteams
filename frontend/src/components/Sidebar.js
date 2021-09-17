@@ -1,15 +1,13 @@
-import React from "react";
-import Profilecard from "./Profilecard";
-import Teamcard from "./Teamcard";
-import Button from "./Button";
-const Sidebar = () => {
-  return (
-    <div className="sidebar-wrapper" >
-      <Profilecard />
-      <Teamcard />
-      <Button />
-    </div>
-  );
-};
+import Profilecard from './Profilecard'
+import Teamcard from './Teamcard'
 
-export default Sidebar;
+const Sidebar = () => {
+    return (      
+           <div class="d-flex flex-column align-items-center" style={{maxWidth:"300px"}}> 
+                   <Profilecard/>
+                   <Teamcard/>
+                   <button type="button" class="mt-3 theme-btn theme-btn-nav mt-1 btn btn-primary">Create New Team</button>                
+            </div>     
+    )
+}
+export default Sidebar

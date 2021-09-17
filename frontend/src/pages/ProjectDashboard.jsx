@@ -1,5 +1,6 @@
 import React from 'react'
 import Navigation from '../components/Navigation'
+
 const ProjectDashboard = () => {
     return (
        
@@ -12,10 +13,17 @@ const ProjectDashboard = () => {
             </div>
            
         </header>
+
+   
+
+
         <div className="d-flex flex-column align-items-center"> 
+        
+
+        
 
             <div className="d-flex flex-column  align-items-center " style={{ width:"500px"}} >
-
+        
                 <img src="https://via.placeholder.com/150" alt="" className="rounded"  style={{height:"150px", width:"150px"}}/>
 
                 <div class="mb-3">
