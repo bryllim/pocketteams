@@ -28,6 +28,8 @@ function App() {
                 {/* Preloader if condition */}
                 {loading ? <Preload /> :
                     <Switch>
+
+                    
                         <Route path="/" exact component={LandingPage}></Route>
                         <Route path="/login" exact component={LoginPage}></Route>
                         <Route path="/register" exact component={RegisterPage}></Route>
@@ -36,6 +38,8 @@ function App() {
                         <Route path="/my" exact component={My}></Route>
                         <Route path="/teamdashboard" exact component={TeamDashboard}></Route>
                         <Route path="/projectdashboard" exact component={ProjectDashboard}></Route>
+
+
                     </Switch>}
             </Router>
         </>

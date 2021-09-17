@@ -1,12 +1,16 @@
 import React, { useState } from 'react'
 import Addmember from './Addmember'
 import {Button,Accordion,Card} from 'react-bootstrap'
+import PopMenu from './PopMenu'
+
 const Teamcard = () => {
     const [show, setShow] = useState(false);
         
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    
+   
 
 
     return (
@@ -31,9 +35,17 @@ const Teamcard = () => {
 
                     <img src="https://via.placeholder.com/100" alt="" className="rounded-circle" style={{width:'auto', height:'40px'}}/>
                     <img src="https://via.placeholder.com/100" alt="" className="rounded-circle" style={{width:'auto', height:'40px'}}/>
-                    <button type="d-flex button" class="btn">
-                        <i class="bi bi-three-dots"/>    
-                    </button>  
+                    
+                 
+                    
+                        <button type="d-flex button" class="btn">
+                            {/* <PopMenu   /> */}
+                            <i class="bi bi-three-dots"/> 
+                        </button>  
+
+                 
+
+                    
                         </Card.Header>
 
                         <Accordion.Collapse eventKey="0">
