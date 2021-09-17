@@ -13,22 +13,28 @@ const Board = () => {
             <div className="col-md-4">
               <Sidebar />
             </div>
-            <div className="col-md-8">
-              <div class="row align-items-end">
-                <div class="col-xl-8 col-lg-8">
-                  <div class="section-title mb-60">
-                    <h1>Project</h1>
+            <div className="col-lg-8">
+              <div class="row">
+              
+                  <div class="section-title">
+                    <h1>ProjectName</h1>
                   </div>
                   <div className="row scrolling-wrapper flex-nowrap">
                  
                                 <Sectioncard taskList={["test"]}/>
                                 <Sectioncard taskList={["test","test","test","test","test","test","test"]}/>
-                                
+
                     <div className="col-5">
-                      <h6>Add Section</h6>
+                        <div className="d-flex flex-row align-items-center">
+                            <button class="btn" type="button">
+                                <i class="bi bi-plus"></i>
+                            </button>
+                            <h6>Add Section</h6>
+                        </div>
+                      
                     </div>
                   </div>
-                </div>
+               
               </div>
             </div>
           </div>
