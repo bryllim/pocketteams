@@ -11,7 +11,6 @@ const Projectcard = () => {
                                  
                 <button type="button" class="d-flex btn m-0 p-0 ">
                             <PopMenu  menuOptions={["Edit","Remove"]} />
-                        
                 </button>    
             </div>
 

@@ -1,6 +1,5 @@
 import React from 'react'
-import Navigation from '../components/Navigation'
-
+import PopMenu from '../components/PopMenu'
 const ProjectDashboard = () => {
     return (
        
@@ -56,10 +55,11 @@ const ProjectDashboard = () => {
                     <img src="https://via.placeholder.com/100" alt="" className="rounded-circle" style={{width:'auto', height:'60px'}}/>
                     
                 
-                    <button type="d-flex button" class="btn ms-auto align-self-start">
-                        <i class="bi bi-three-dots"/>    
-                        
-                    </button>  
+                 
+                    <button type="button" class="btn ms-auto align-self-start">
+                            <PopMenu  menuOptions={["Edit","Remove"]} />
+                    </button>    
+              
 
                 </div>
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import Taskcard from './Taskcard'
+import PopMenu from './PopMenu'
 
 const Sectioncard = () => {
     return (
@@ -16,9 +17,9 @@ const Sectioncard = () => {
                         <i class="bi bi-plus-square"></i>
                     </button>
 
-                    <button class="btn " type="button">
-                        <i class="bi bi-three-dots"></i>
-                    </button>
+                    <button type="button" class="d-flex btn">
+                            <PopMenu  menuOptions={["Edit","Remove"]} />
+                    </button>    
                 </div>
          
 
