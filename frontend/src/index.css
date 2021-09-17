@@ -55,6 +55,8 @@ code {
 	overflow-x: auto;
 	padding-top: 30px;
 	padding-bottom: 70px;	
+  height: 60vh;
+  width: 100vh;
 }
 
 .scrolling-wrapper-y {

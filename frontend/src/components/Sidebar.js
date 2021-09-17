@@ -5,7 +5,11 @@ const Sidebar = () => {
     return (      
            <div class="sidebar-wrapper"> 
                    <Profilecard/>
-                   <Teamcard/>             
+                   <Teamcard/>   
+                   <div class="sidebar-box recent-blog-box mb-30">
+                        <h5>My Notes</h5>
+                        <textarea cols="40" rows="15"></textarea>
+                     </div>          
             </div>     
     )
 }
