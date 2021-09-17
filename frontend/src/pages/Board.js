@@ -20,12 +20,10 @@ const Board = () => {
                     <h1>Project</h1>
                   </div>
                   <div className="row scrolling-wrapper flex-nowrap">
-                    <Sectioncard />
-                    <Sectioncard />
-                    <Sectioncard />
-                    <Sectioncard />
-                    <Sectioncard />
-                    <Sectioncard />
+                 
+                                <Sectioncard taskList={["test"]}/>
+                                <Sectioncard taskList={["test","test","test","test","test","test","test"]}/>
+                                
                     <div className="col-5">
                       <h6>Add Section</h6>
                     </div>

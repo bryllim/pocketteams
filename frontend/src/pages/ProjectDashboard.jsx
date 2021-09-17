@@ -57,7 +57,7 @@ const ProjectDashboard = () => {
                 
                  
                     <button type="button" class="btn ms-auto align-self-start">
-                            <PopMenu  menuOptions={["Edit","Remove"]} />
+                            <PopMenu  menuOptions={["Edit","Remove"]}/>
                     </button>    
               
 
