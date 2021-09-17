@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import 'react-bootstrap'
 import './index.css';
 import App from './App';
+import { Provider } from 'react-redux';
+import store from './store';
 import reportWebVitals from './reportWebVitals';
+//CSS IMPORTS HERE
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets_pocketdevs/assets/css/animate.css'
 import './assets_pocketdevs/assets/css/bootstrap-5.0.0-beta1.min.css'
@@ -16,9 +20,9 @@ import 'react-bootstrap'
 
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 

@@ -1,25 +1,12 @@
-import React, { useState } from 'react'
-
 import Profilecard from './Profilecard'
 import Teamcard from './Teamcard'
-import {Button,Accordion,Card} from 'react-bootstrap'
 
 const Sidebar = () => {
-
-
-
-    return (
-         
-           <div class="d-flex flex-column align-items-center" style={{maxWidth:"300px"}}>
-                
+    return (      
+           <div class="sidebar-wrapper"> 
                    <Profilecard/>
-                   <Teamcard/>
-                   
-                   <button type="button" class="mt-3 theme-btn theme-btn-nav mt-1 btn btn-primary">Create New Team</button>
-                            
+                   <Teamcard/>             
             </div>     
-  
     )
 }
-
 export default Sidebar
