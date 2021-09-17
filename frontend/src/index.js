@@ -15,7 +15,9 @@ import './assets_pocketdevs/assets/css/LineIcons.2.0.css'
 import './assets_pocketdevs/assets/css/main.css'
 import './assets_pocketdevs/assets/css/main.css.map'
 import './assets_pocketdevs/assets/css/tiny-slider.css'
-//CSS IMPORTS HERE
+import './css/taskmanagement.css'
+import 'react-bootstrap'
+
 
 ReactDOM.render(
   <Provider store={store}>
