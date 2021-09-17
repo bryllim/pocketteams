@@ -1,22 +1,25 @@
-import React from "react";
-import Profilecard from "./Profilecard";
-import Teamcard from "./Teamcard";
-import Button from "./Button";
+import React, { useState } from 'react'
+
+import Profilecard from './Profilecard'
+import Teamcard from './Teamcard'
+import {Button,Accordion,Card} from 'react-bootstrap'
+
 const Sidebar = () => {
-  return (
-    // <div class='bg-dark' style={{width: '200px'}}>
-    //     <h1>test</h1>
 
-    // </div>
-    <div
-      class="d-flex flex-column align-items-center"
-      style={{ maxWidth: "300px" }}
-    >
-      <Profilecard />
-      <Teamcard />
-      <Button />
-    </div>
-  );
-};
 
-export default Sidebar;
+
+    return (
+         
+           <div class="d-flex flex-column align-items-center" style={{maxWidth:"300px"}}>
+                
+                   <Profilecard/>
+                   <Teamcard/>
+                   
+                   <button type="button" class="mt-3 theme-btn theme-btn-nav mt-1 btn btn-primary">Create New Team</button>
+                            
+            </div>     
+  
+    )
+}
+
+export default Sidebar
