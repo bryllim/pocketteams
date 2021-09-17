@@ -1,7 +1,8 @@
 import React from 'react'
 import Taskcard from './Taskcard'
+import PopMenu from './PopMenu'
 
-const Sectioncard = () => {
+const Sectioncard = ({taskList}) => {
     return (
 
         <div className="d-flex flex-column" style={{width:"300px"}}>
@@ -16,18 +17,24 @@ const Sectioncard = () => {
                         <i class="bi bi-plus-square"></i>
                     </button>
 
-                    <button class="btn " type="button">
-                        <i class="bi bi-three-dots"></i>
-                    </button>
+                    <button type="button" class="d-flex btn">
+                            <PopMenu  menuOptions={["Edit","Remove"]} />
+                    </button>    
                 </div>
          
 
                  
             </div>
+            <div className="d-flex flex-column scrolling-wrapper-y flex-nowrap" id="style-3" style={{maxHeight:"500px"}}>
+                <div className="d-flex flex-column sectioncard">
 
-            <div className="d-flex flex-column sectioncard">
-                <Taskcard/>
+                    {taskList.map((items) => (
+                         <Taskcard/>
+                    ))}
+                  
+                </div>
             </div>
+            
 
             <div className="d-flex justify-content-center rounded-bottom bg-danger">
                 
