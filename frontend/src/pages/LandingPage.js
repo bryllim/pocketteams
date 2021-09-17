@@ -1,29 +1,37 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import Footer from '../components/Footer'
 import Navigation from '../components/Navigation'
 import dotShape from '../assets_pocketdevs/assets/img/hero/dots.shape.svg'
-import heroImage from '../../src/assets_pocketdevs/assets/img/blog/browser.jpg'
+import heroImage from '../../src/assets_pocketdevs/assets/img/blog/browser_snapshot.PNG'
 import image1 from "../../src/assets_pocketdevs/assets/img/timeline/timeline-1.png"
 //import image2 from "../../src/assets_pocketdevs/assets/img/timeline/timeline-2.png"
 import image3 from "../../src/assets_pocketdevs/assets/img/timeline/timeline-3.png"
 import image4 from "../../src/assets_pocketdevs/assets/img/timeline/timeline-4.png"
 import axios from 'axios'
 import { Image } from 'react-bootstrap'
+import { useSelector } from 'react-redux'
 
 const LandingPage = ({history}) => {
-
-    //const [myData, setData] = useState([]);
 
     const fetchData = async() => {
         const {data} = await axios.get("/api/notes");
         console.log(data);
     }
 
-    //console.log("Data: " + myData);
+    const [loggedIn, setLoggedIn] = useState(false);
+    const userLogin = useSelector((state) => state.userLogin);
+    const { userInfo } = userLogin;
+
 
     useEffect(() => {
         fetchData();
-    },[])
+        if (userInfo) {
+            setLoggedIn(true);
+            history.push('/board');
+          } else {
+            setLoggedIn(false);
+          }
+    },[userInfo])
 
     return (
         <div>
@@ -48,7 +56,7 @@ const LandingPage = ({history}) => {
                                         data-wow-delay=".5s" />
                                     <Image src={dotShape} alt="" className="dot-shape" />
                                     <div className="video-btn">
-                                        <a href="/" className="glightbox"><i className="lni lni-display"></i></a>
+                                        <a href="#features" className="glightbox"><i className="lni lni-display"></i></a>
                                     </div>
                                 </div>
                             </div>

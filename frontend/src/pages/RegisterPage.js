@@ -1,7 +1,8 @@
-import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, Navbar} from 'react-bootstrap'
-import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useHistory } from 'react-router-dom';
+import { register } from '../actions/userActions';
 import pocketdevsLogo from '../assets_pocketdevs/assets/img/logo/pocketdevs-logo.png';
 import ErrorMessage from '../components/ErrorMessage';
 import Preload from '../components/Preload';
@@ -17,40 +18,29 @@ const RegisterPage = () => {
     const [profile_pic, setProfilePic] = useState
     ("https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg");
     const [pic_message, setPicMessage] = useState(null);
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false);
+
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const userRegister = useSelector((state) => state.userRegister)
+    const { loading, error, userInfo } = userRegister;
+
+    useEffect(() => {
+        if(userInfo){
+            history.push('/boardx');
+        }
+    }, [history, userInfo]);
 
     const submitHandler = async (e) => {
         e.preventDefault();
 
-        //Check if the password is 
         if(password !== confirm_password){
-            setMessage("Password does not match");
+            setMessage('Password does not match')
         } else {
-            setMessage(null)
-            try{
-                const config = {
-                    header: {
-                        "Content-type": "application/json",
-                    },
-                };
-
-            //Post the request to the API
-            setLoading(true);
-            const {data} = await axios.post("/api/users",
-                {first_name, last_name, email_address, password}, 
-                config
-            );               
-            setLoading(false);
-
-            //Set the info into the local storage 
-            localStorage.setItem("userInfo", JSON.stringify(data));
-            } catch (error) {
-                setLoading(false);
-                setError(error.response.data.message);
-            }
-        }    
+            dispatch(register(first_name, last_name, email_address, password, profile_pic));
+        }
     };
+
 
     const postDetails = (profile_pic) => {
 
