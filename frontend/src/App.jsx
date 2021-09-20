@@ -11,7 +11,7 @@ import Samplepage from "./pages/Samplepage";
 
 // import Loader from 'react-loader-spinner';
 import { useEffect, useState } from "react";
-import Preload from "../src/components/Preload";
+import Preload from "./components/Preload";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {

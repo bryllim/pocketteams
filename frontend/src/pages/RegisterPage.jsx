@@ -17,7 +17,7 @@ const RegisterPage = () => {
     const [message, setMessage] = useState(null);
     const [profile_pic, setProfilePic] = useState
     ("https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg");
-    const [pic_message, setPicMessage] = useState(null);
+    //const [pic_message, setPicMessage] = useState(null);
 
     const dispatch = useDispatch();
     const history = useHistory();
@@ -42,36 +42,36 @@ const RegisterPage = () => {
     };
 
 
-    const postDetails = (profile_pic) => {
+    // const postDetails = (profile_pic) => {
 
-        if(!profile_pic){
-            return setPicMessage("Please select an Image");
-        }        
+    //     if(!profile_pic){
+    //         return setPicMessage("Please select an Image");
+    //     }        
 
-        setPicMessage(null);
+    //     setPicMessage(null);
 
-        if(profile_pic.type === 'image/jpeg' || profile_pic.type === 'image/png'){
-            const data = new FormData();
-            data.append('file', profile_pic)
-            data.append('upload_present','pocketteams')//Upload cloud name
-            data.append('cloud_name', 'dppl4qapk')//Username for cloudinary
-            fetch("https://api.cloudinary.com/v1_1/dppl4qapk/image/upload", {
-                method: "post",
-                body: data,
-            })
-            .then((res)=>res.json())
-            .then((data)=>{
-                console.log(data);
-                setProfilePic(data.url.toString());
-            })
-            .catch ((err) => {
-                console.log(err);
-            });
-        } else {
-            return setPicMessage("Please select an Image");
-        }
+    //     if(profile_pic.type === 'image/jpeg' || profile_pic.type === 'image/png'){
+    //         const data = new FormData();
+    //         data.append('file', profile_pic)
+    //         data.append('upload_present','pocketteams')//Upload cloud name
+    //         data.append('cloud_name', 'dppl4qapk')//Username for cloudinary
+    //         fetch("https://api.cloudinary.com/v1_1/dppl4qapk/image/upload", {
+    //             method: "post",
+    //             body: data,
+    //         })
+    //         .then((res)=>res.json())
+    //         .then((data)=>{
+    //             console.log(data);
+    //             setProfilePic(data.url.toString());
+    //         })
+    //         .catch ((err) => {
+    //             console.log(err);
+    //         });
+    //     } else {
+    //         return setPicMessage("Please select an Image");
+    //     }
         
-    };
+    // };
 
     return (
         <>

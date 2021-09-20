@@ -1,12 +1,11 @@
-import React, { useState } from "react";
 import {
   Form,
-
   Modal,
-  Button,
+  Col,
+  Row,
 } from "react-bootstrap";
 
-const Addmember = ({ showModal, hideModal }) => {
+const AddMember = ({ showModal, hideModal }) => {
   return (
     <>
       <Modal show={showModal} onHide={hideModal}>
@@ -21,12 +20,19 @@ const Addmember = ({ showModal, hideModal }) => {
         </Modal.Header>
 
         <Modal.Body>
-          <div className="col">
-            <div className="d-flex">
-              <div class="d-flex flex-column mb-3 mx-1 flex-fill">
-                <p>
-                  Add to Team
-                </p>
+          <Row xs="12">
+            <Col xs="6">
+                <Form.Label>Add to Team</Form.Label>
+                <Form.Control as="select"> 
+                  <option>1</option>
+                  <option>2</option>
+                  <option>3</option>
+                  <option>4</option>
+                  <option>5</option>
+                </Form.Control>
+            </Col>
+            <Col xs="6">
+                <Form.Label>Add to Project</Form.Label>
                 <Form.Control as="select">
                   <option>1</option>
                   <option>2</option>
@@ -34,45 +40,30 @@ const Addmember = ({ showModal, hideModal }) => {
                   <option>4</option>
                   <option>5</option>
                 </Form.Control>
-              </div>
-
-              <div class="d-flex flex-column mb-3 mx-1 flex-fill">
-                <p>
-                  Add to Project
-                </p>
-
-                <Form.Control as="select">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                </Form.Control>
-              </div>
-            </div>
-
-            <p>Emails</p>
-
-            <textarea
-              class="form-control"
-              placeholder="add emails here"
-              id="floatingTextarea2"
-              style={{ height: "100px" }}
-            ></textarea>
-          </div>
+            </Col>
+            <Col md="12">
+              <Form.Label>Add to Project</Form.Label>
+              <textarea
+                class="form-control"
+                placeholder="add emails here"
+                id="floatingTextarea2"
+                style={{ height: "100px" }}
+              />
+            </Col>
+          </Row>
         </Modal.Body>
 
         <Modal.Footer>
-          <Button
+          <button
             className="theme-btn theme-btn-modal mx-0"
             onClick={hideModal}
           >
             Save Changes
-          </Button>
+          </button>
         </Modal.Footer>
       </Modal>
     </>
   );
 };
 
-export default Addmember;
+export default AddMember;
