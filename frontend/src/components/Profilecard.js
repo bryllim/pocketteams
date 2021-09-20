@@ -39,12 +39,11 @@ function Profilecard() {
         </small>
       </p>
       <Modal show={show} onHide={handleClose} size="lg">
-        <Modal.Header>
+          <Container>
+          <Modal.Header>
           <h5>My Profile Settings</h5>
           <button type="button" class="btn-close me-2" onClick={handleClose} aria-label="Close"></button>
         </Modal.Header>
-        <Modal.Body>
-          <Container>
             <Row>
               <Col xs="12">
                 <div className="text-center mx-auto">
@@ -124,7 +123,6 @@ function Profilecard() {
               </Col>
             </Row>
           </Container>
-        </Modal.Body>
         <Modal.Footer>
             <Button
               className="theme-btn theme-btn-modal mx-0"

@@ -62,11 +62,15 @@ body {
 }
 
 hr {
-    margin: 5rem 15rem 5rem 15rem;
+    margin: 1rem 15rem 1rem 15rem;
     color: inherit;
     background-color: currentColor;
     border: 0;
     opacity: .25
+}
+
+hr.notes{
+    margin: 1rem 0rem 0rem 0rem;
 }
 
 hr:not([size]) {
@@ -643,8 +647,6 @@ progress {
     width: 100%;
     padding-right: var(--bs-gutter-x, .75rem);
     padding-left: var(--bs-gutter-x, .75rem);
-    margin-right: auto;
-    margin-left: auto
 }
 
 @media (min-width:576px) {
