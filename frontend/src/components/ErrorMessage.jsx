@@ -9,4 +9,4 @@ const ErrorMessage = ({ variant = "info", children}) => {
     );
 }; 
 
-export default ErrorMessage
+export default ErrorMessage;

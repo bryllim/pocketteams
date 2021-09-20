@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Addmember from "./Addmember";
+import AddMember from "./AddMember";
 import { Button, Accordion, Card } from "react-bootstrap";
 import PopMenu from "./PopMenu";
 import AddTeam from "./AddTeamModal";
@@ -76,7 +76,7 @@ const Teamcard = () => {
           </Card.Body>
         </Accordion.Collapse>
       </Accordion>
-      <Addmember showModal={show} hideModal={handleClose} />
+      <AddMember showModal={show} hideModal={handleClose} />
       <button
         type="button"
         class="mt-3 theme-btn theme-btn-nav mt-1 btn btn-primary"

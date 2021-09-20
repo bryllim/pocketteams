@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Image, Navbar } from 'react-bootstrap';
 import { NavLink, useHistory } from 'react-router-dom';
-import pocketdevsLogo from '../assets_pocketdevs/assets/img/logo/pocketdevs-logo.png';
+import PocketdevsLogo from '../assets_pocketdevs/assets/img/logo/pocketdevs-logo.png';
 import ErrorMessage from '../components/ErrorMessage';
 import Preload from '../components/Preload';
 import { login } from '../actions/userActions';
@@ -38,7 +38,7 @@ const LoginPage = () => {
                         <div className="col-xl-6 col-lg-7 col-md-9 mx-auto">
                             <div className="section-title text-center mb-55">
                                 <NavLink className="navbar-brand" to="/">
-                                    <Image src={pocketdevsLogo}></Image>
+                                    <Image src={PocketdevsLogo}></Image>
                                     <Navbar.Brand>Pocket Teams</Navbar.Brand>
                                 </NavLink>
                                 <p className="wow fadeInUp" data-wow-delay=".6s">

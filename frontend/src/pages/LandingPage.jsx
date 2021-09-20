@@ -10,6 +10,7 @@ import image4 from "../../src/assets_pocketdevs/assets/img/timeline/timeline-4.p
 import axios from 'axios'
 import { Image } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router'
 
 const LandingPage = ({history}) => {
 
@@ -17,21 +18,15 @@ const LandingPage = ({history}) => {
         const {data} = await axios.get("/api/notes");
         console.log(data);
     }
-
-    const [loggedIn, setLoggedIn] = useState(false);
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
-
 
     useEffect(() => {
         fetchData();
         if (userInfo) {
-            setLoggedIn(true);
             history.push('/board');
-          } else {
-            setLoggedIn(false);
-          }
-    },[userInfo])
+          } 
+    },[history, userInfo])
 
     return (
         <div>

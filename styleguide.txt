@@ -1,0 +1,10 @@
+NAMING CONVERTION FOR CODING:
+
+For Components 
+    Filesnames and React Components -> Pascal Case (ex. ProfileCard for <ProfileCard/>)
+    Props Naming: <ProfileCard variant="container"/> instead of <ProfileCard variant="className"/>
+    
+
+
+
+
