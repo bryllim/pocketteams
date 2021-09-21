@@ -3,9 +3,8 @@ import PopMenu from './PopMenu'
 
 const Projectcard = () => {
     return (
-        
-        <div class="d-flex flex-column p-3 basecard bg-light" style={{width:"200px",height:"200px"}}>
-
+        <div className="sidebar-wrapper">
+            <div className="sidebar-box">
             <div className="d-flex justify-content-between">               
                 <img src="https://via.placeholder.com/150" alt="" className="rounded"  style={{height:"50px", width:"50px"}}/>
                                  
@@ -31,11 +30,8 @@ const Projectcard = () => {
             </div>
             
 
-        
-            
-
         </div>
-        
+        </div>
     )
 }
 

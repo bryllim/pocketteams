@@ -8,7 +8,7 @@ const Taskcard = () => {
       onClick={() => setShowNav(!showNav)}
       className="d-flex flex-column mb-2 basecard"
     >
-      <Sidetask show={showNav} hide={setShowNav} />
+      {showNav &&< Sidetask show={showNav} />}
       <h6>Title</h6>
       <p>Description</p>
       <div className="d-flex justify-content-between align-items-center">
