@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Sidetask from "../components/Sidetask";
+import Sidetask from "./Sidetask";
 
 const Taskcard = () => {
   const [showNav, setShowNav] = useState(false);

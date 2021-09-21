@@ -2235,6 +2235,13 @@ p {
   }
 }
 
+.scrollable{
+  max-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
 .sidebar-wrapper .sidebar-box {
   padding: 30px;
   border: 1px solid #F4EEFB;

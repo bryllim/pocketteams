@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Button,
-  CloseButton,
   Col,
   Container,
   Image,
@@ -39,12 +38,11 @@ function Profilecard() {
         </small>
       </p>
       <Modal show={show} onHide={handleClose} size="lg">
-        <Modal.Header>
+          <Container>
+          <Modal.Header>
           <h5>My Profile Settings</h5>
           <button type="button" class="btn-close me-2" onClick={handleClose} aria-label="Close"></button>
         </Modal.Header>
-        <Modal.Body>
-          <Container>
             <Row>
               <Col xs="12">
                 <div className="text-center mx-auto">
@@ -64,7 +62,7 @@ function Profilecard() {
                         </Row>
                       </div>
                       <Row>
-                        <div className="col-md-6">
+                        <Col md="6">
                           <input
                             type="text"
                             name="name"
@@ -72,8 +70,8 @@ function Profilecard() {
                             placeholder="First name"
                             required
                           />
-                        </div>
-                        <div className="col-md-6">
+                        </Col>
+                        <Col md="6">
                           <input
                             type="text"
                             name="lastName"
@@ -81,10 +79,10 @@ function Profilecard() {
                             placeholder="Last name"
                             required
                           />
-                        </div>
+                        </Col>
                       </Row>
                       <Row>
-                        <div className="col-md-6">
+                        <Col md="6">
                           <input
                             type="email"
                             name="email"
@@ -92,8 +90,8 @@ function Profilecard() {
                             placeholder="Email"
                             required
                           />
-                        </div>
-                        <div className="col-md-6">
+                        </Col>
+                        <Col md="6">
                           <input
                             type="password"
                             name="password"
@@ -101,8 +99,8 @@ function Profilecard() {
                             placeholder="Password"
                             required
                           />
-                        </div>
-                        <div className="col-md-12">
+                        </Col>
+                        <Col md="12">
                           <div className="text-center mx-md-0">
                             <form onSubmit={null} className="contact-form">
                               <div className="col-md-12">
@@ -116,7 +114,7 @@ function Profilecard() {
                               </div>
                             </form>
                           </div>
-                        </div>
+                        </Col>
                       </Row>
                     </form>
                   </div>
@@ -124,7 +122,6 @@ function Profilecard() {
               </Col>
             </Row>
           </Container>
-        </Modal.Body>
         <Modal.Footer>
             <Button
               className="theme-btn theme-btn-modal mx-0"

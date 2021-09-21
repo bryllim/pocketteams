@@ -1,27 +1,45 @@
 import Sidebar from "../components/Sidebar";
 import Navigation from "../components/Navigation";
 import Sectioncard from "../components/Sectioncard";
-import sidetask from "../components/Sidetask";
+import { Col, Container, Row } from "react-bootstrap";
 
 const Board = () => {
   return (
     <>
       <Navigation />
-
-      <section className="blog-section mt-5">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-4">
+        <Container fluid>
+          <Row>
+              <Col xxl="3">
               <Sidebar />
-            </div>
-            <div className="col-lg-8">
-              <div class="row">
-              
-                  <div class="section-title">
-                    <h1>ProjectName</h1>
+              </Col>
+              <Col md="9">
+                  <div class="section-title mb-60">
+                    <h1>Project</h1>
                   </div>
                   <div className="row scrolling-wrapper flex-nowrap">
                     <Sectioncard taskList={["test"]} />
+                    <Sectioncard
+                      taskList={[
+                        "test",
+                        "test",
+                        "test",
+                        "test",
+                        "test",
+                        "test",
+                        "test",
+                      ]}
+                    />
+                    <Sectioncard
+                      taskList={[
+                        "test",
+                        "test",
+                        "test",
+                        "test",
+                        "test",
+                        "test",
+                        "test",
+                      ]}
+                    />
                     <Sectioncard
                       taskList={[
                         "test",
@@ -44,12 +62,9 @@ const Board = () => {
                       
                     </div>
                   </div>
-               
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+              </Col>
+          </Row>
+        </Container>
     </>
   );
 };

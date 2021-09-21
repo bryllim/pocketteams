@@ -24,57 +24,50 @@ const AddTeam = ({ showModal, hideModal }) => {
 
         <Modal.Body>
           <Col xs="12">
-            <div className="contact-form-wrapper">
-              <form onSubmit={null} className="contact-form">
-                <Row>
-                  <div className="col-md-12">
-                    <input
-                      type="text"
-                      name="team_name"
-                      id="team_name"
-                      placeholder="Team name"
-                      required
-                    />
-                  </div>
-                </Row>
-                <Row>
-                  <div className="col-md-12">
-                    <input
-                      type="text"
-                      name="team_members"
-                      id="team_members"
-                      placeholder="Members"
-                      required
-                    />
-                  </div>
-                  <div className="col-md-12">
-                    <form onSubmit={null} className="contact-form">
-                      <div className="col-md-12">
-                        <textarea
-                          type="text"
-                          name="description"
-                          id="description"
-                          placeholder="Description"
-                          required
-                        />
-                      </div>
-                    </form>
-                  </div>
-                  <div className="col-md-12">
-                    <DropdownButton
-                      id="dropdown-basic-button"
-                      title="Accessibility Type"
-                    >
-                      <Dropdown.Item href="#/action-1">
-                        Request Invites Only
-                      </Dropdown.Item>
-                      <Dropdown.Item href="#/action-2">Private</Dropdown.Item>
-                      <Dropdown.Item href="#/action-3">Public</Dropdown.Item>
-                    </DropdownButton>
-                  </div>
-                </Row>
-              </form>
-            </div>
+            <Row>
+              <Col md="6" className="mb-3">
+                <Form.Label>Team Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="team_name"
+                  id="team_name"
+                  required
+                />
+              </Col>
+
+              <Col md="6" className="mb-3">
+                <Form.Label>Members</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="team_members"
+                  id="team_members"
+                  required
+                />
+              </Col>
+            </Row>
+            <Col md="12" className="mb-5">
+              <Form.Label>Description</Form.Label>
+              <textarea
+                class="form-control"
+                type="text"
+                name="description"
+                id="description"
+                required
+              />
+            </Col>
+            <Col md="12">
+              <Form.Label>User Access</Form.Label>
+              <DropdownButton
+                id="dropdown-basic-button"
+                title="Accessibility Type"
+              >
+                <Dropdown.Item href="#/action-1">
+                  Request Invites Only
+                </Dropdown.Item>
+                <Dropdown.Item href="#/action-2">Private</Dropdown.Item>
+                <Dropdown.Item href="#/action-3">Public</Dropdown.Item>
+              </DropdownButton>
+            </Col>
           </Col>
         </Modal.Body>
         <Modal.Footer>
