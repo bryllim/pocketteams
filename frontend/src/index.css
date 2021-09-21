@@ -1,11 +1,13 @@
+@import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900&display=swap");
 body {
-  margin: 0;
+  /* margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+    sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
    padding-top: 90px; /*space between header and main content */
+   font-family: "Poppins", sans-serif;
 }
 
 code {
@@ -44,8 +46,14 @@ code {
 }
 
 .sectionTitle{
+  margin-left: 10px;
+  color: #fff;
+}
 
-  align-self:center;
+.taskTitle{
+  padding-top: 30px;
+  margin-left: 10px;
+  color: black;
 }
 
 .project-card{
@@ -55,16 +63,42 @@ code {
 
 
 
+.section-wrapper{
+  border: 1px solid #F4EEFB;
+  border-radius: 15px;
+  background: linear-gradient(to left, #ED213A 0%, #93291E 50.39%, #ED213A 100%);
+  transition: all 0.3s ease-out 0s;
+}
+
+.section-wrapper-internal{
+    border: 1px solid #F4EEFB;
+    border-radius: 15px;
+    background: #fff;
+    transition: all 0.3s ease-out 0s;
+}
 
 .scrolling-wrapper{
-	overflow-x: auto;
+	overflow-x: scroll;
 	padding-top: 30px;
 	padding-bottom: 70px;	
-  height: 60vh;
   width: 100%;
 }
 
+.add-task-btn{
+  font-size: 10px !important;
+  padding: 8px 48px 8px 48px   !important;
+}
 
+.btn-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0 20px 0;
+}
+
+.board-container{
+  height: 100vh;
+}
 
 .scrolling-wrapper-y {
   overflow-y: auto;
