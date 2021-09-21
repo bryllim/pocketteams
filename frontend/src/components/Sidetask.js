@@ -21,7 +21,7 @@ const sidetask = ({ show, hide }) => {
           <Image className="fas-icon" src={subtask}></Image>
           <Image className="fas-icon" src={trash}></Image>
           <Image
-            onClick={() => hide(false)}
+            onClick={() => hide(!show)}
             className="fas-icon pointer"
             src={close}
           ></Image>

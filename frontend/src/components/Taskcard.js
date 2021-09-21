@@ -3,13 +3,13 @@ import Sidetask from "../components/Sidetask";
 
 const Taskcard = () => {
   const [showNav, setShowNav] = useState(false);
+
   return (
-    <div
-      onClick={() => setShowNav(!showNav)}
-      className="d-flex flex-column mb-2 basecard"
-    >
-      <Sidetask show={showNav} hide={setShowNav} />
+    <div className="d-flex flex-column mb-2 basecard pointer">
       <h6>Title</h6>
+      <button onClick={() => setShowNav(!showNav)} className="theme-btn p-0">
+        try
+      </button>
       <p>Description</p>
       <div className="d-flex justify-content-between align-items-center">
         <p>date</p>
@@ -25,6 +25,7 @@ const Taskcard = () => {
           />
         </div>
       </div>
+      <Sidetask show={showNav} hide={setShowNav} />
     </div>
   );
 };
