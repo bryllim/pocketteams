@@ -1,8 +1,6 @@
 import React from "react";
-import Taskcard from "./Taskcard";
-import PopMenu from "./PopMenu";
 
-const Sectioncard = ({ taskList }) => {
+const SectionCard = ({ taskList }) => {
   return (
     <div className="d-flex flex-column" style={{ width: "300px" }}>
       <div className="section-wrapper">
@@ -26,4 +24,4 @@ const Sectioncard = ({ taskList }) => {
   );
 };
 
-export default Sectioncard;
+export default SectionCard;

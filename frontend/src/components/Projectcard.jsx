@@ -2,7 +2,7 @@ import React,{useCallback} from 'react'
 import PopMenu from './PopMenu'
 import { useHistory ,} from 'react-router-dom';
 
-const Projectcard = () => {
+const ProjectCard = () => {
 
     const history = useHistory();
     const handleOnClick = useCallback(() => history.push('/board'), [history]);
@@ -36,4 +36,4 @@ const Projectcard = () => {
     )
 }
 
-export default Projectcard
+export default ProjectCard

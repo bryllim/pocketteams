@@ -1,7 +1,7 @@
 import React from 'react'
 import Sidebar from '../components/Sidebar'
 import Navigation from '../components/Navigation'
-import Projectcard from '../components/Projectcard'
+import Projectcard from '../components/ProjectCard'
 
 const Project = () => {
     return (

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Sidetask from "./Sidetask";
+import Sidetask from "./SideTask";
 
-const Taskcard = () => {
+const TaskCard = () => {
   const [showNav, setShowNav] = useState(false);
   return (
     <div
@@ -29,4 +29,4 @@ const Taskcard = () => {
   );
 };
 
-export default Taskcard;
+export default TaskCard;
