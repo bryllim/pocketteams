@@ -24,8 +24,8 @@ const Project = () => {
                     </div>
 
                     <div className="col-lg-8">
-                        <h5>Projects</h5>
-                        <div className="row row-cols-l-4 row-cols-md-3 g-2">
+                        <h1>Projects</h1> 
+                        <div className="row row-cols-xxl-3 row-cols-md-2 g-md-2 g-2">
                             <div class="col">
                                 <Projectcard/>
                             </div>
@@ -41,9 +41,7 @@ const Project = () => {
                             <div class="col">
                                 <Projectcard/>
                             </div>
-                         
-                         
-                        </div>
+                        </div> 
                     </div>
                 </div>
 
