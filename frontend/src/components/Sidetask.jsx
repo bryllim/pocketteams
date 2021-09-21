@@ -9,7 +9,7 @@ import user from "../assets_pocketdevs/assets/img/logo/user.svg";
 import calendar from "../assets_pocketdevs/assets/img/logo/calendar.svg";
 import add from "../assets_pocketdevs/assets/img/logo/add-btn.svg";
 
-const sidetask = ({ show, hide }) => {
+const sidetask = ({ show }) => {
   return (
     <div className={show ? "sidenav active" : "sidenav"}>
       <div className="border-bottom border-dark d-flex align-items-center justify-content-between">
@@ -21,7 +21,7 @@ const sidetask = ({ show, hide }) => {
           <Image className="fas-icon" src={subtask}></Image>
           <Image className="fas-icon" src={trash}></Image>
           <Image
-            onClick={() => hide(false)}
+            onClick={() => !show}
             className="fas-icon pointer"
             src={close}
           ></Image>
