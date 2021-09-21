@@ -11,7 +11,6 @@ const Sectioncard = ({taskList}) => {
                     Sectionname
                 </div>
             
-
                 <div className="btn-group optionButton">
                     <button class="btn" type="button">
                         <i class="bi bi-plus-square"></i>
@@ -21,8 +20,6 @@ const Sectioncard = ({taskList}) => {
                             <PopMenu  menuOptions={["Edit","Remove"]} />
                     </button>    
                 </div>
-         
-
                  
             </div>
             <div className="d-flex flex-column scrolling-wrapper-y flex-nowrap" id="style-3" style={{maxHeight:"500px"}}>
