@@ -1,24 +1,31 @@
 import React from 'react'
 import Sidebar from '../components/Sidebar'
 import Navigation from '../components/Navigation'
-import Projectcard from '../components/Projectcard'
+import Projectcard from '../components/ProjectCard'
 
 const Project = () => {
     return (
         <>
             <Navigation/>
-            <div className=" main container-fluid p-5">
-                <div className="row">
 
 
 
-                    <div className="col-auto">
+
+            
+            <section className="blog-section mt-5">
+
+                <div className="container">    
+                    <div className="row">
+
+
+
+                    <div className="col-md-4">
                     <Sidebar/>
                     </div>
 
-                    <div className="col-md-9">
-                        <h5>Projects</h5>
-                        <div className="row row-cols-xl-5 row-cols-md-3 g-5">
+                    <div className="col-lg-8">
+                        <h1>Projects</h1> 
+                        <div className="row row-cols-xxl-3 row-cols-md-2 g-md-2 g-2">
                             <div class="col">
                                 <Projectcard/>
                             </div>
@@ -34,14 +41,12 @@ const Project = () => {
                             <div class="col">
                                 <Projectcard/>
                             </div>
-                         
-                         
-                        </div>
+                        </div> 
                     </div>
                 </div>
 
             </div>
-
+            </section>
 
             
 

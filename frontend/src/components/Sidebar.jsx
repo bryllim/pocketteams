@@ -1,6 +1,6 @@
 import Notes from "./Notes";
-import Profilecard from "./Profilecard";
-import Teamcard from "./Teamcard";
+import Profilecard from "./ProfileCard";
+import Teamcard from "./TeamCard";
 
 const Sidebar = () => {
   return (

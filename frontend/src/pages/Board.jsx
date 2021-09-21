@@ -53,7 +53,13 @@ const Board = () => {
                     />  */}
                     <SectionCard/>
                     <div className="col-5">
-                      <h6>Add Section</h6>
+                        <div className="d-flex flex-row align-items-center">
+                            <button class="btn" type="button">
+                                <i class="bi bi-plus"></i>
+                            </button>
+                            <h6>Add Section</h6>
+                        </div>
+                      
                     </div>
                   </div>
               </Col>
