@@ -4,7 +4,7 @@ import Teamcard from "./Teamcard";
 
 const Sidebar = () => {
   return (
-    <div class="sidebar-wrapper">
+    <div className="sidebar-wrapper">
       <Profilecard />
       <Teamcard />
       <Notes />

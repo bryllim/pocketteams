@@ -13,44 +13,11 @@ const Board = () => {
               <Sidebar />
               </Col>
               <Col md="9" className="board-container">
-                  <div class="section-title mb-60">
+                  <div className="section-title mb-60">
                     <h1>Project</h1>
                   </div>
                   <div className="row scrolling-wrapper flex-nowrap">
-                    {/* <Sectioncard taskList={["test"]} />
-                    <Sectioncard
-                      taskList={[
-                        "test",
-                        "test",
-                        "test",
-                        "test",
-                        "test",
-                        "test",
-                        "test",
-                      ]}
-                    />
-                    <Sectioncard
-                      taskList={[
-                        "test",
-                        "test",
-                        "test",
-                        "test",
-                        "test",
-                        "test",
-                        "test",
-                      ]}
-                    />
-                    <Sectioncard
-                      taskList={[
-                        "test",
-                        "test",
-                        "test",
-                        "test",
-                        "test",
-                        "test",
-                        "test",
-                      ]}
-                    />  */}
+                    <SectionCard taskList={["test"]} />
                     <SectionCard/>
                     <div className="col-5">
                       <h6>Add Section</h6>

@@ -32,16 +32,16 @@ function Profilecard() {
       <h5>{user.first_name + " " + user.last_name}</h5>
       <p>{user.email_address}</p>
       <p className="text-dark">Pocketdevs</p>
-      <p className="text-danger hover-me" onClick={handleShow}>
-        <small>
-          <i class="lni lni-cog" /> Account Settings
+      <p className="text-danger" onClick={handleShow}>
+        <small className="hover-me">
+          <i className="lni lni-cog" /> Account Settings
         </small>
       </p>
       <Modal show={show} onHide={handleClose} size="lg">
           <Container>
           <Modal.Header>
           <h5>My Profile Settings</h5>
-          <button type="button" class="btn-close me-2" onClick={handleClose} aria-label="Close"></button>
+          <button type="button" className="btn-close me-2" onClick={handleClose} aria-label="Close"></button>
         </Modal.Header>
             <Row>
               <Col xs="12">
@@ -131,8 +131,8 @@ function Profilecard() {
             </Button>
           </Modal.Footer>
       </Modal>
-      <p className="text-danger hover-me" onClick={logoutHandler}>
-        <small>
+      <p className="text-danger" onClick={logoutHandler}>
+        <small className="hover-me">
           <strong>Logout</strong>
         </small>
       </p>

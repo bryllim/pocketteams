@@ -5,7 +5,7 @@ import {
   Row,
 } from "react-bootstrap";
 
-const AddMember = ({ showModal, hideModal }) => {
+const AddMemberModal = ({ showModal, hideModal }) => {
   return (
     <>
       <Modal show={showModal} onHide={hideModal}>
@@ -66,4 +66,4 @@ const AddMember = ({ showModal, hideModal }) => {
   );
 };
 
-export default AddMember;
+export default AddMemberModal;
