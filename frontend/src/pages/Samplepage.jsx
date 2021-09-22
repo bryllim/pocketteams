@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Notes from "../components/Notes";
-import Sidetask from "../components/Sidetask";
+import SideTask from "../components/SideTask";
 
-const Samplepage = () => {
+const SamplePage = () => {
   const [showNav, setShowNav] = useState(false);
 
   return (
@@ -15,9 +15,9 @@ const Samplepage = () => {
       <div className="notes">
         <Notes />
       </div>
-      <Sidetask show={showNav} hide={setShowNav} />
+      <SideTask show={showNav} hide={setShowNav} />
     </div>
   );
 };
 
-export default Samplepage;
+export default SamplePage;
