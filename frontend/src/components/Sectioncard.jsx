@@ -1,8 +1,9 @@
 import React from "react";
 import Taskcard from "./Taskcard";
 import PopMenu from "./PopMenu";
+import NewTaskCard from "./NewTaskCard";
 
-const Sectioncard = ({ taskList }) => {
+const SectionCard = ({ taskList }) => {
   return (
     <div className="d-flex flex-column" style={{ width: "300px" }}>
       <div className="section-wrapper">
@@ -11,19 +12,18 @@ const Sectioncard = ({ taskList }) => {
               {/* <button class="btn-add-task" type="button">
                 <p><i class="bi bi-plus-square"></i> Add Another Task</p>
               </button> */}
-              <p className="taskTitle">Task</p>
-              <hr className="notes"/>
-              <p className="taskTitle">Task</p>
-              <hr className="notes"/>
-              <p className="taskTitle">Task</p>
-              <hr className="notes"/>
+              <NewTaskCard/>
+              <NewTaskCard/>
+              <NewTaskCard/>
+              <NewTaskCard/>
               <div className="btn-container">
-              <button className="theme-btn add-task-btn">ADD ANOTHER TASK</button>
-              </div>
+                <button className="theme-btn add-task-btn">ADD ANOTHER TASK</button>
+            </div>
           </div>
-        </div>
+      </div>
     </div>
+
   );
 };
 
-export default Sectioncard;
+export default SectionCard;

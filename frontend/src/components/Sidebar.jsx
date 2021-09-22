@@ -1,5 +1,5 @@
 import Notes from "./Notes";
-import Profilecard from "./Profilecard";
+import Profilecard from "./ProfileCard";
 import Teamcard from "./Teamcard";
 
 const Sidebar = () => {

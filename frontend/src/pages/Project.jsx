@@ -1,7 +1,7 @@
 import React from 'react'
 import Sidebar from '../components/Sidebar'
 import Navigation from '../components/Navigation'
-import Projectcard from '../components/Projectcard'
+import ProjectCard from '../components/ProjectCard'
 
 const Project = () => {
     return (
@@ -20,19 +20,19 @@ const Project = () => {
                         <h5>Projects</h5>
                         <div className="row row-cols-xl-5 row-cols-md-3 g-5">
                             <div class="col">
-                                <Projectcard/>
+                                <ProjectCard/>
                             </div>
                             <div class="col">
-                                <Projectcard/>
+                                <ProjectCard/>
                             </div>
                             <div class="col">
-                                <Projectcard/>
+                                <ProjectCard/>
                             </div>
                             <div class="col">
-                                <Projectcard/>
+                                <ProjectCard/>
                             </div>
                             <div class="col">
-                                <Projectcard/>
+                                <ProjectCard/>
                             </div>
                          
                          

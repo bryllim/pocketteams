@@ -1,7 +1,7 @@
 import Sidebar from "../components/Sidebar";
 import Navigation from "../components/Navigation";
-import SectionCard from "../components/SectionCard";
 import { Col, Container, Row } from "react-bootstrap";
+import SectionCard from "../components/SectionCard";
 
 const Board = () => {
   return (

@@ -17,7 +17,7 @@ const Projectcard = () => {
 
                 <div className="d-flex flex-column">
                     <h6>Title</h6>
-                    <p className='ps-3'> Contedsa here    </p>
+                    <p className='ps-3'> Contents here    </p>
                 </div>
 
                 <div className="d-flex flex-column">

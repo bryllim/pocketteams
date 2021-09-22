@@ -1,6 +1,5 @@
 import React from 'react'
 import Navigation from '../components/Navigation'
-import Sectioncard from '../components/Sectioncard'
 
 const My = () => {
     return (
