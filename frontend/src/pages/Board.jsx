@@ -1,4 +1,4 @@
-import Sidebar from "../components/Sidebar";
+import SideBar from "../components/SideBar";
 import Navigation from "../components/Navigation";
 import SectionCard from "../components/SectionCard";
 import { Col, Container, Row } from "react-bootstrap";
@@ -10,7 +10,7 @@ const Board = () => {
         <Container fluid>
           <Row>
               <Col xxl="3">
-              <Sidebar />
+              <SideBar />
               </Col>
               <Col md="9" className="board-container">
                   <div className="section-title mb-60">
