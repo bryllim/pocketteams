@@ -4,7 +4,7 @@ import { Button, Accordion, Card } from "react-bootstrap";
 import PopMenu from "./PopMenu";
 import AddTeam from "./AddTeamModal";
 
-const Teamcard = () => {
+const TeamCard = () => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -89,4 +89,4 @@ const Teamcard = () => {
   );
 };
 
-export default Teamcard;
+export default TeamCard;

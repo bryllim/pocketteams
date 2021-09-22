@@ -10,7 +10,7 @@ import user from "../assets_pocketdevs/assets/img/logo/user.svg";
 // import calendar from "../assets_pocketdevs/assets/img/logo/calendar.svg";
 import add from "../assets_pocketdevs/assets/img/logo/add-btn.svg";
 
-const sidetask = ({ show, hide }) => {
+const SideTask = ({ show, hide }) => {
   return (
     <div className={show ? "sidenav active sidebar-wrapper" : "sidenav sidebar-wrapper"}>
       <div className="sidebar-box">
@@ -137,4 +137,4 @@ const sidetask = ({ show, hide }) => {
   );
 };
 
-export default sidetask;
+export default SideTask;

@@ -1,7 +1,5 @@
 import React from "react";
-import Taskcard from "./Taskcard";
-import PopMenu from "./PopMenu";
-import NewTaskCard from "./NewTaskCard";
+import TaskCard from "./TaskCard";
 
 const SectionCard = ({ taskList }) => {
   return (
@@ -12,10 +10,10 @@ const SectionCard = ({ taskList }) => {
               {/* <button class="btn-add-task" type="button">
                 <p><i class="bi bi-plus-square"></i> Add Another Task</p>
               </button> */}
-              <NewTaskCard/>
-              <NewTaskCard/>
-              <NewTaskCard/>
-              <NewTaskCard/>
+              <TaskCard/>
+              <TaskCard/>
+              <TaskCard/>
+              <TaskCard/>
               <div className="btn-container">
                 <button className="theme-btn add-task-btn">ADD ANOTHER TASK</button>
             </div>
