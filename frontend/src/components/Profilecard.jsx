@@ -12,7 +12,7 @@ import { useHistory } from "react-router";
 import { logout } from "../actions/userActions";
 import pocketdevsLogo from "../assets_pocketdevs/assets/img/profile/generated_profile.PNG";
 
-function Profilecard() {
+function ProfileCard() {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -140,4 +140,4 @@ function Profilecard() {
   );
 }
 
-export default Profilecard;
+export default ProfileCard;

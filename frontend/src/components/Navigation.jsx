@@ -1,10 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useCallback } from 'react';
 import {  useSelector } from 'react-redux';
 import background from '../assets_pocketdevs/assets/img/bg/common-bg.svg';
+import { useHistory ,} from 'react-router-dom';
 
 const Navigation = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
+
+  const history = useHistory();
+  const handleOnClick = useCallback(() => history.push('/project'), [history]);
 
   const [loggedIn, setLoggedIn] = useState(false);
   const [isActive, setActive] = useState(false);
@@ -28,11 +32,19 @@ const Navigation = () => {
           <div className="row align-items-center">
             <div className="col-lg-12">
               <nav className="navbar navbar-expand-lg">
+<<<<<<< HEAD
                 <div className="container">
                   <div className="row">
                     <div className="col-md-12">
                       <div className="banner-content">
                         <h3 className="text-white mb-2 d-none d-md-block">PocketTeams</h3>
+=======
+                <div class="container">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="banner-content">
+                        <h3 class="text-white mb-2 d-none d-md-block" onClick={handleOnClick}>PocketTeams</h3>
+>>>>>>> b73e56b2c887fafa22abd207f5e1305c5bbda3d2
                       </div>
                     </div>
                   </div>

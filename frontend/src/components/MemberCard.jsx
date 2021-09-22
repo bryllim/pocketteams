@@ -6,7 +6,7 @@ const MemberCard = () => {
             <div className="d-flex flex-column pt-1 align-items-center basecard" style={{width:"200px", height:"200px"}}>
                
                 <button type="button" class="btn m-0 p-0 pe-1 align-self-end">
-                            <PopMenu  menuOptions={["Set as Project Owner","Remove"]} />
+                            <PopMenu  menuOptions={["Set as Project Owner","Remove"]}/>
                 </button>   
 
                 <img src="https://via.placeholder.com/100" alt="" className="rounded-circle" style={{width:'100px', height:'100px'}}/>

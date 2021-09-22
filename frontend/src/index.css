@@ -21,13 +21,27 @@ code {
 }
  */
 
+ *::-webkit-scrollbar {
+  height: 6px; 
+  width: 6px;
+  background: transparent;
+}
+
+/* Track */
+*::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+
+/* Handle on hover */
+
+
+
 .basecard{
   background: #FFFFFF;
-  border: 0.5px solid rgba(0, 0, 0, 0.5);
-  box-sizing: border-box;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 20px;
-  padding: 10px;
+/* Shadow-1 */
+  box-shadow: 0px 2px 4px -2px rgba(24, 39, 75, 0.12), 0px 4px 4px -2px rgba(24, 39, 75, 0.08);
+  border-radius: 30px;
 }
 
 .sectioncard{
@@ -58,26 +72,45 @@ code {
   color: black;
 }
 
-.section-wrapper{
-  border: 1px solid #F4EEFB;
-  border-radius: 15px;
-  background: linear-gradient(to left, #ED213A 0%, #93291E 50.39%, #ED213A 100%);
-  transition: all 0.3s ease-out 0s;
+.project-card{
+  min-width: 250px;
+  height: 300px;
 }
 
+.ico{
+  width: 32px;
+  height: auto;
+}
+
+.ico-size{
+  font-size: 32px !important; 
+}
+
+
+.section-wrapper{
+  border: 1px solid #F4EEFB;
+  border-radius: 30px;
+  background: linear-gradient(to left, #ED213A 0%, #93291E 50.39%, #ED213A 100%);
+  transition: all 0.3s ease-out 0s;
+  min-width: 400px !important;
+  max-height: 600px;
+}
+
+
 .section-wrapper-internal{
-    border: 1px solid #F4EEFB;
     border-radius: 15px;
     background: #fff;
     transition: all 0.3s ease-out 0s;
 }
 
-.scrolling-wrapper{
-	overflow-x: scroll;
-	padding-top: 30px;
-	padding-bottom: 70px;	
-  width: 100%;
+
+.task-wrapper{
+  height: 100px;
+  border-bottom: 0.5px solid #0000004f;
+
 }
+
+
 
 .add-task-btn{
   font-size: 10px !important;
@@ -95,9 +128,43 @@ code {
   height: 100vh;
 }
 
-.scrolling-wrapper-y {
-  overflow-y: auto;
+.scrolling-wrapper-x{
+	overflow-x: auto;
 }
+
+.scrolling-wrapper-y{
+  overflow-y: auto; 
+}
+
+.scrolling-wrapper-y:hover::-webkit-scrollbar-thumb {
+  background: #555; 
+}
+
+.scrolling-wrapper-x::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+}
+/* 
+.scrolling-wrapper-y::-webkit-scrollbar{
+
+  width: 6px;
+  opacity: 0%;
+}
+
+.scrolling-wrapper-y:hover::-webkit-scrollbar{
+
+  width: 6px;
+  background-color: #F5F5F5;
+  opacity: 10%;
+}
+
+.scrolling-wrapper-y:hover::-webkit-scrollbar-thumb
+{
+	background-color: #0000000c;
+  height: 1px;
+ 
+} */
+/* width */
+
 
 
 #style-3::-webkit-scrollbar-track

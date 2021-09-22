@@ -4,7 +4,7 @@ import { Button, Accordion, Card, Dropdown } from "react-bootstrap";
 import AddTeam from "./AddTeamModal";
 import EditTeam from "./EditTeamModal";
 
-const Teamcard = () => {
+const TeamCard = () => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -120,4 +120,4 @@ const Teamcard = () => {
   );
 };
 
-export default Teamcard;
+export default TeamCard;
