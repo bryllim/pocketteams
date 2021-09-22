@@ -17,14 +17,12 @@ const Board = () => {
                     <h1>Project</h1>
                   </div>
                   <div className="d-flex scrolling-wrapper-x flex-nowrap">
-
                     <SectionCard/>
                     <SectionCard/>
                     <SectionCard/>
-                 
-               
+                    <SectionCard/>
                     <div className="">
-                        <div className="btn d-flex justify-content-between align-items-center border rounded-pill px-5 py-2">
+                        <div className="btn d-flex align-items-center border rounded-pill px-5 py-2 text-nowrap">
                             <i class="lni lni-plus"></i>
                             <h5>Add Section</h5>
                         </div>

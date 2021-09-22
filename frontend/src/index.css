@@ -22,6 +22,7 @@ code {
  */
 
  *::-webkit-scrollbar {
+  height: 6px; 
   width: 6px;
   background: transparent;
 }
@@ -31,10 +32,6 @@ code {
   background: #f1f1f1; 
 }
  
-/* Handle */
-*::-webkit-scrollbar-thumb {
-
-}
 
 /* Handle on hover */
 
@@ -95,7 +92,7 @@ code {
   border-radius: 30px;
   background: linear-gradient(to left, #ED213A 0%, #93291E 50.39%, #ED213A 100%);
   transition: all 0.3s ease-out 0s;
-  width: 400px;
+  min-width: 400px !important;
   max-height: 600px;
 }
 
@@ -113,14 +110,7 @@ code {
 
 }
 
-.scrolling-wrapper-x{
-	overflow-x: scroll;
-  overflow-y: hidden;
-	padding-top: 30px;
-	padding-bottom: 70px;	
-  height: auto;
 
-}
 
 .add-task-btn{
   font-size: 10px !important;
@@ -138,11 +128,19 @@ code {
   height: 100vh;
 }
 
+.scrolling-wrapper-x{
+	overflow-x: auto;
+}
+
 .scrolling-wrapper-y{
   overflow-y: auto; 
 }
 
 .scrolling-wrapper-y:hover::-webkit-scrollbar-thumb {
+  background: #555; 
+}
+
+.scrolling-wrapper-x::-webkit-scrollbar-thumb:hover {
   background: #555; 
 }
 /* 
