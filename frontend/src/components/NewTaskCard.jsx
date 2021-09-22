@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Sidetask from "./Sidetask";
+import SideTask from "./SideTask";
 
 
 const NewTaskCard = () => {
@@ -10,7 +10,7 @@ const NewTaskCard = () => {
                 <p className="taskTitle">Task</p>
                 <i onClick={() => setShowNav(!showNav)} className="lni lni-pencil align-self-start p-2 m-2"></i>
             </div>
-            <Sidetask show={showNav} hide={setShowNav} />
+            <SideTask show={showNav} hide={setShowNav} />
         </div>
     )
 }

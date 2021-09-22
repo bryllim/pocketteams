@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Sidetask from "./SideTask";
+import SideTask from "./SideTask";
 
 const TaskCard = () => {
   const [showNav, setShowNav] = useState(false);
@@ -25,7 +25,7 @@ const TaskCard = () => {
           />
         </div>
       </div>
-      <Sidetask show={showNav} hide={setShowNav} />
+      <SideTask show={showNav} hide={setShowNav} />
     </div>
   );
 };
