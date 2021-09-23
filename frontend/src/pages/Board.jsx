@@ -36,9 +36,11 @@ const columnsFromBackend = {
 };
 
 const onDragEnd = (result, columns, setColumns) => {
-  if (!result.destination) return;
   const { source, destination } = result;
 
+
+  if (!result.destination) return;
+  
   if (source.droppableId !== destination.droppableId) {
     const sourceColumn = columns[source.droppableId];
     const destColumn = columns[destination.droppableId];
@@ -98,7 +100,7 @@ const Board = () => {
                         return(
                           <div
                             {...provided.droppableProps}
-                            innerRef={provided.innerRef}
+                            ref={provided.innerRef}
                             style={{
                               display: "flex",
                               flexDirection: "row",
@@ -106,8 +108,7 @@ const Board = () => {
                           >
                             {Object.entries(columns).map(([columnId, column], index) => {
                               return (
-                                      <div                   
-                                      
+                                      <div                                
                                         style={{
                                           display: "flex",
                                           flexDirection: "column",
@@ -116,19 +117,12 @@ const Board = () => {
                                         key={columnId}
                                       >
                                         <div style={{ margin: 8 }}>
-                                          <Droppable droppableId={columnId} key={columnId}>
-                                            {(provided, snapshot) => {
-                                              return (
-                                                  <SectionCard
-                                                  provided={provided}
-                                                  snapshot={snapshot}
-                                                  column={column}
-                                                  columnId={columnId}
-                                                  index={index}
-                                                  />
-                                              );
-                                            }}
-                                          </Droppable>
+                                          <SectionCard
+                                          provided={provided}
+                                          column={column}
+                                          columnId={columnId}
+                                          index={index}
+                                          />
                                         </div>
                                       </div>
                               )
