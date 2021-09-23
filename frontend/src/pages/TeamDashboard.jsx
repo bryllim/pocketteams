@@ -1,5 +1,5 @@
 import React from 'react'
-import MemberCard from '../components/MemberCard'
+import MemberCard from '../components/Modals/AddMemberModal'
 const TeamDashboard = () => {
     return (
         <>

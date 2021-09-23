@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import AddMember from "./AddMemberModal";
+import AddMember from "../Modals/AddMemberModal";
 import { Button, Accordion, Card, Dropdown } from "react-bootstrap";
-import AddTeam from "./AddTeamModal";
-import EditTeam from "./EditTeamModal";
+import AddTeam from "../Modals/AddTeamModal";
+import EditTeam from "../Modals/EditTeamModal";
 
 const TeamCard = () => {
   const [show, setShow] = useState(false);

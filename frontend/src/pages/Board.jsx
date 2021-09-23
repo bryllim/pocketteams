@@ -1,9 +1,9 @@
 import SideBar from "../components/SideBar";
 import Navigation from "../components/Navigation";
-import SectionCard from "../components/SectionCard";
+import SectionCard from "../components/Cards/SectionCard";
 import { Col, Container, Row } from "react-bootstrap";
 import { v4 as uuid } from 'uuid';
-import TaskCard from "../components/TaskCard";
+import TaskCard from "../components/Cards/TaskCard";
 
 
 import { useState } from "react";

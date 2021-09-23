@@ -1,5 +1,5 @@
 import React,{useCallback} from 'react'
-import PopMenu from './PopMenu'
+import PopMenu from '../PopMenu'
 import { useHistory ,} from 'react-router-dom';
 
 const ProjectCard = () => {

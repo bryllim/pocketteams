@@ -9,8 +9,8 @@ import {
 } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import { logout } from "../actions/userActions";
-import pocketdevsLogo from "../assets_pocketdevs/assets/img/profile/generated_profile.PNG";
+import { logout } from "../../actions/userActions";
+import pocketdevsLogo from "../../assets_pocketdevs/assets/img/profile/generated_profile.PNG";
 
 function ProfileCard() {
   const [show, setShow] = useState(false);
