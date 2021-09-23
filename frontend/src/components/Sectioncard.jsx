@@ -16,7 +16,7 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
               <div className="d-flex justify-content-between align-items-center px-3 py-2 ">
                 <h5 className="text-white"
                   {...provided.dragHandleProps}
-                >{column.name}asd</h5>
+                >{column.name}</h5>
                 <div>
                   <button class="btn text-white" type="button">
                     <i class="lni lni-plus fs-3 "></i>
@@ -27,7 +27,7 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
                   </button>
                 </div>
               </div>
-              <Droppable droppableId={columnId} key={columnId}>
+              <Droppable droppableId={columnId} key={columnId} type="task">
                 {(provided,snapshot) => {
                   return(
                     <div 
@@ -53,6 +53,7 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
                           </button>
                           <div>Add Another Task</div>
                         </div>
+                        
                     </div> 
                   )
                 }}  

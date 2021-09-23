@@ -16,31 +16,40 @@ const itemsFromBackend = [
   { id: uuid(), content: "Fifth task" }
 ];
 
+
+
 const columnsFromBackend = {
-  [uuid()]: {
+  'col1': {
     name: "Requested",
     items: itemsFromBackend
   },
-  [uuid()]: {
+  'col2': {
     name: "To do",
     items: []
   },
-  [uuid()]: {
-    name: "In Progress",
-    items: []
-  },
-  [uuid()]: {
-    name: "Done",
-    items: []
-  }
 };
 
-const onDragEnd = (result, columns, setColumns) => {
-  const { source, destination } = result;
+const columnOrder = ['col1', 'col2']
+
+const onDragEnd = (result, columns, setColumns,order, setOrder) => {
+  const { source, destination, type } = result;
 
 
   if (!result.destination) return;
-  
+
+  //if dragging in column
+  if(type==="column"){
+    //insert the source index to destination index
+    const columnList = order
+    const movedColumn = columnList.splice(source.index, 1)
+    columnList.splice(destination.index,0, movedColumn[0])
+    setOrder([
+     ...order
+    ])
+    return
+  }
+
+
   if (source.droppableId !== destination.droppableId) {
     const sourceColumn = columns[source.droppableId];
     const destColumn = columns[destination.droppableId];
@@ -76,6 +85,7 @@ const onDragEnd = (result, columns, setColumns) => {
 
 const Board = () => {
   const [columns, setColumns] = useState(columnsFromBackend);
+  const [order,setOrder] = useState(columnOrder)
 
   return (
     <>
@@ -91,7 +101,7 @@ const Board = () => {
                   </div>
                   <div className="d-flex scrolling-wrapper-x flex-nowrap">
                   <DragDropContext
-                    onDragEnd={result => onDragEnd(result, columns, setColumns)}
+                    onDragEnd={result => onDragEnd(result, columns, setColumns,order,setOrder)}
                   >
                     <Droppable 
                       droppableId="all-columns" direction="horizontal" type="column"
@@ -106,7 +116,8 @@ const Board = () => {
                               flexDirection: "row",
                             }}
                           >
-                            {Object.entries(columns).map(([columnId, column], index) => {
+                            {order.map((columnId,index)=>{
+                              const column = columns[columnId]
                               return (
                                       <div                                
                                         style={{
@@ -126,9 +137,13 @@ const Board = () => {
                                         </div>
                                       </div>
                               )
+                              
                             })}
+                            {provided.placeholder}
                           </div> 
+                          
                       )}}
+                      
                     </Droppable> 
                   </DragDropContext>
                 
