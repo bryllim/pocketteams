@@ -88,37 +88,55 @@ const Board = () => {
                     <h1>Project</h1>
                   </div>
                   <div className="d-flex scrolling-wrapper-x flex-nowrap">
-
                   <DragDropContext
-        onDragEnd={result => onDragEnd(result, columns, setColumns)}
-      >
-        {Object.entries(columns).map(([columnId, column], index) => {
-          return (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center"
-              }}
-              key={columnId}
-            >
-              <div style={{ margin: 8 }}>
-                <Droppable droppableId={columnId} key={columnId}>
-                  {(provided, snapshot) => {
-                    return (
-                        <SectionCard
-                        provided={provided}
-                        snapshot={snapshot}
-                        column={column}
-                        />
-                    );
-                  }}
-                </Droppable>
-              </div>
-            </div>
-          );
-        })}
-      </DragDropContext>
+                    onDragEnd={result => onDragEnd(result, columns, setColumns)}
+                  >
+                    <Droppable 
+                      droppableId="all-columns" direction="horizontal" type="column"
+                    >
+                      {provided => {
+                        return(
+                          <div
+                            {...provided.droppableProps}
+                            innerRef={provided.innerRef}
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                            }}
+                          >
+                            {Object.entries(columns).map(([columnId, column], index) => {
+                              return (
+                                      <div                   
+                                      
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "column",
+                                          alignItems: "center"
+                                        }}
+                                        key={columnId}
+                                      >
+                                        <div style={{ margin: 8 }}>
+                                          <Droppable droppableId={columnId} key={columnId}>
+                                            {(provided, snapshot) => {
+                                              return (
+                                                  <SectionCard
+                                                  provided={provided}
+                                                  snapshot={snapshot}
+                                                  column={column}
+                                                  columnId={columnId}
+                                                  index={index}
+                                                  />
+                                              );
+                                            }}
+                                          </Droppable>
+                                        </div>
+                                      </div>
+                              )
+                            })}
+                          </div> 
+                      )}}
+                    </Droppable> 
+                  </DragDropContext>
                 
                  
                     <div className="">

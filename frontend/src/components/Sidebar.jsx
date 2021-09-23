@@ -1,11 +1,11 @@
 import Notes from "./Notes";
-import Profilecard from "./ProfileCard";
+import ProfileCard from "./ProfileCard";
 import Teamcard from "./TeamCard";
 
 const Sidebar = () => {
   return (
     <div class="sidebar-wrapper">
-      <Profilecard />
+      <ProfileCard />
       <Teamcard />
       <Notes />
     </div>

@@ -7,7 +7,6 @@ const TaskCard = ({ provided,snapshot,item }) => {
   return (
 
     <div
-      
       className="d-flex flex-column task-wrapper mb-3 p-3 px-3 rounded"
 
       ref={provided.innerRef}
