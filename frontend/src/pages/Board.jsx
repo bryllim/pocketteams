@@ -90,16 +90,16 @@ const Board = () => {
   return (
     <>
       <Navigation />
-        <Container fluid>
-          <Row>
-              <Col xxl="3">
+        <Container fluid className="board-container">
+          <Row className="h-100">
+              <Col xxl="3" className="d-flex flex-column h-100">
               <Sidebar />
               </Col>
-              <Col md="9" className="board-container">
-                  <div class="section-title mb-60">
+              <Col md="9" className="d-flex flex-column">
+                  <div class="section-title">
                     <h1>Project</h1>
                   </div>
-                  <div className="d-flex scrolling-wrapper-x flex-nowrap">
+                  <div className="d-flex scrolling-wrapper-x flex-nowrap flex-grow-1" >
                   <DragDropContext
                     onDragEnd={result => onDragEnd(result, columns, setColumns,order,setOrder)}
                   >

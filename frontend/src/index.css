@@ -6,7 +6,7 @@ body {
     sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-   padding-top: 90px; /*space between header and main content */
+   padding-top: 100px; /*space between header and main content */
    font-family: "Poppins", sans-serif;
 }
 
@@ -127,7 +127,13 @@ code {
 }
 
 .board-container{
-  height: 100vh;
+  height: calc(100vh - 100px);
+  padding:12px;
+  overflow-y: hidden;
+}
+
+.task-board-wrapper{
+  height:100% ;
 }
 
 .scrolling-wrapper-x{
@@ -144,6 +150,10 @@ code {
 
 .scrolling-wrapper-x::-webkit-scrollbar-thumb:hover {
   background: #555; 
+}
+
+.team-section-wrapper{
+  min-height: 300px !important;
 }
 /* 
 .scrolling-wrapper-y::-webkit-scrollbar{
