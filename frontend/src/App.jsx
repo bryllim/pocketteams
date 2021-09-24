@@ -7,7 +7,6 @@ import Project from "./pages/Project";
 import ProjectDashboard from "./pages/ProjectDashboard";
 
 import TeamDashboard from "./pages/TeamDashboard";
-import SamplePage from "./pages/SamplePage";
 
 // import Loader from 'react-loader-spinner';
 import { useEffect, useState } from "react";
@@ -48,7 +47,6 @@ function App() {
               exact
               component={ProjectDashboard}
             ></Route>
-            <Route path="/SamplePage" exact component={SamplePage}></Route>
           </Switch>
         )}
       </Router>

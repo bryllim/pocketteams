@@ -10,7 +10,7 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
             <div 
               {...provided.draggableProps}
               ref={provided.innerRef}
-              className="d-flex flex-column section-wrapper mx-2 mb-3"
+              className="d-flex flex-column section-wrapper mx-2 my-3"
             >
               <div className="d-flex justify-content-between align-items-center px-3 py-2 ">
                 <h5 className="text-white"
@@ -46,11 +46,11 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
                           </>
                         )})}
                       {provided.placeholder}
-                        <div class="d-flex justify-content-center theme-btn align-items-center mx-auto "  style={{width:"250px", height:"50px"}}>
+                        <div class="d-flex justify-content-center align-items-center theme-btn mx-auto"  style={{width:"250px", height:"50px"}}>
                           <button class="btn" type="button">
                               <i class="lni lni-plus text-white"></i>
                           </button>
-                          <h6 class="text-white">Add Another Task</h6>
+                          <h6 class="text-white">Add Another</h6>
                         </div>
                         
                     </div> 

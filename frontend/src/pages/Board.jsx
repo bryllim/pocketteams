@@ -1,9 +1,9 @@
-import Sidebar from "../components/Sidebar";
+import SideBar from "../components/Sidebar";
 import Navigation from "../components/Navigation";
-import SectionCard from "../components/SectionCard";
+import SectionCard from "../components/Cards/SectionCard";
 import { Col, Container, Row } from "react-bootstrap";
 import { v4 as uuid } from 'uuid';
-import TaskCard from "../components/TaskCard";
+import TaskCard from "../components/Cards/TaskCard";
 
 
 import { useState } from "react";
@@ -97,10 +97,10 @@ const Board = () => {
       <Navigation />
         <Container fluid className="board-container">
           <Row className="h-100">
-              <Col xxl="3" className="d-flex flex-column h-100 d-none d-md-block d-md-none d-lg-block  d-lg-none d-xl-block">
-              <Sidebar />
+              <Col xl="3" className="d-flex flex-column h-100 d-none d-md-block d-md-none d-lg-block  d-lg-none d-xl-block">
+                <SideBar/>
               </Col>
-              <Col md="9" className="d-flex flex-column h-100">
+              <Col xl="9" className="d-flex flex-column h-100 col-md-12">
                   <div class="section-title">
                     <h1>Project</h1>
                   </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import Sidebar from '../components/Sidebar'
 import Navigation from '../components/Navigation'
-import Projectcard from '../components/ProjectCard'
+import PorjectCard from '../components/Cards/ProjectCard'
 import { Col, Container, Row } from "react-bootstrap";
 
 const Project = () => {
@@ -17,19 +17,19 @@ const Project = () => {
                                 <h1>Projects</h1> 
                                 <div className="row row-cols-xxl-4 row-cols-xl-3 row-cols-md-2 g-md-2 g-2">
                                     <div class="col">
-                                        <Projectcard/>
+                                        <PorjectCard/>
                                     </div>
                                     <div class="col">
-                                        <Projectcard/>
+                                        <PorjectCard/>
                                     </div>
                                     <div class="col">
-                                        <Projectcard/>
+                                        <PorjectCard/>
                                     </div>
                                     <div class="col">
-                                        <Projectcard/>
+                                        <PorjectCard/>
                                     </div>
                                     <div class="col">
-                                        <Projectcard/>
+                                        <PorjectCard/>
                                     </div>
                                 </div> 
                             </Col>
