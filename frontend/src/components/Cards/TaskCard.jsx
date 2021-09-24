@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import Sidetask from "../SideTask";
+import SideTask from "../Sidetask";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 
 const TaskCard = ({ provided,snapshot,item }) => {
   const [showNav, setShowNav] = useState(false);
+
   return (
 
     <div
@@ -20,7 +21,6 @@ const TaskCard = ({ provided,snapshot,item }) => {
       }}
 
     >
-      {showNav &&< Sidetask show={showNav} />}
       <div className="d-flex flex-row justify-content-between">
         <h6>{item.content}</h6>
       
@@ -41,7 +41,9 @@ const TaskCard = ({ provided,snapshot,item }) => {
           />
         </div>
       </div>
+      <SideTask show={showNav} hide={setShowNav} />
     </div>
+
   );
 };
 
