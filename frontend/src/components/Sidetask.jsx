@@ -1,4 +1,3 @@
-import React from "react";
 import { Image } from "react-bootstrap";
 import { Dropdown, ButtonGroup, Button } from "react-bootstrap";
 import checked from "../assets_pocketdevs/assets/img/logo/checked.svg";

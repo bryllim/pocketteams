@@ -2,25 +2,30 @@ import React from 'react'
 import { Col, Image, Row } from 'react-bootstrap'
 
 const EditTeamCard = (props) => {
+    const user = JSON.parse(localStorage.getItem("userInfo"));
     return (
-
             <div className="sidebar-wrapper mt-10 mb-10">
                 <div className="sidebar-box">
-                  <Row className="mb-20">
+                  <div className="mb-20 navbar-brand">
                     <Image
+                    //   src={user.profile_picture}
                       src={props.logo}
-                      roundedCircle
-                      className="edit-modal"
+                      alt="Profile Picture"
+                      className="profile-image hover-me"
                     ></Image>
+                  </div>
+                  <Row>
+                      <p className="editteam-p text-center text-primary">{user.first_name + " " + user.last_name}</p>
                   </Row>
                   <Row>
-                    <Col>
-                      <small><p>Sebastian Ceblano</p></small>
-                      <small><p>Member</p></small>
-                    </Col>
+                      <p className="editteam-p editteam-email text-center">{user.email_address}</p>
+                  </Row>
+                  <Row>
+                      <p className="editteam-p editteam-email text-center">Role</p>
                   </Row>
                 </div>
               </div>
+
     )
 }
 

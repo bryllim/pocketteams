@@ -8,7 +8,7 @@ import {
 const AddMemberModal = ({ showModal, hideModal }) => {
   return (
     <>
-      <Modal show={showModal} onHide={hideModal}>
+      <Modal centered show={showModal} onHide={hideModal}>
         <Modal.Header>
           <h5>Add Member</h5>
           <button

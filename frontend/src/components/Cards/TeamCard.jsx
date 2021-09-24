@@ -29,6 +29,7 @@ const TeamCard = () => {
       {children}
     </p>
 ));
+  const user = JSON.parse(localStorage.getItem("userInfo"));
 
   return (
     <div className="sidebar-box search-form-box mb-30">
@@ -76,7 +77,7 @@ const TeamCard = () => {
                     <Dropdown.Item onClick={handleEditShow}>Edit</Dropdown.Item>
                     <Dropdown.Item onClick={null}>Remove</Dropdown.Item>
                 </Dropdown.Menu>
-            </Dropdown>
+        </Dropdown>
         </button>
 
         <Accordion.Collapse eventKey="0">
@@ -115,7 +116,7 @@ const TeamCard = () => {
       {/* MODALS */}
       <AddMember showModal={show} hideModal={handleClose} />
       <AddTeam showModal={teamShow} hideModal={handleTeamClose} />
-      <EditTeam showModal={editShow} hideModal={handleEditClose} />
+      <EditTeam user={user} showModal={editShow} hideModal={handleEditClose} />
     </div>
   );
 };
