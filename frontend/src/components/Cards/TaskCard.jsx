@@ -26,7 +26,7 @@ const TaskCard = ({ provided,snapshot,item }) => {
       
         <i onClick={() => setShowNav(!showNav)} class="lni lni-pencil"></i>
    
-       
+
       </div>
 
       <p className="ps-3">Description</p>
