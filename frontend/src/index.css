@@ -30,7 +30,7 @@ code {
 
 /* Track */
 *::-webkit-scrollbar-track {
-  background: transparent
+  background: rgba(235, 235, 235, 0.411)
 }
  
 
