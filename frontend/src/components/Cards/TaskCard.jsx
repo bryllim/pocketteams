@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Sidetask from "./SideTask";
+import Sidetask from "../SideTask";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 
 const TaskCard = ({ provided,snapshot,item }) => {
@@ -41,7 +41,6 @@ const TaskCard = ({ provided,snapshot,item }) => {
           />
         </div>
       </div>
-    
     </div>
   );
 };

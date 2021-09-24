@@ -7,6 +7,11 @@
     -o-border-radius: 50%;
     border-radius: 50%;  
 }
+ 
+.edit-modal{
+    height: fit-content;
+    width: fit-content;
+}
 
 .settings-icon{
     height: 10px;

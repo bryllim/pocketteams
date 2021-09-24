@@ -5,10 +5,10 @@ import {
   Row,
 } from "react-bootstrap";
 
-const AddMember = ({ showModal, hideModal }) => {
+const AddMemberModal = ({ showModal, hideModal }) => {
   return (
     <>
-      <Modal show={showModal} onHide={hideModal}>
+      <Modal centered show={showModal} onHide={hideModal}>
         <Modal.Header>
           <h5>Add Member</h5>
           <button
@@ -66,4 +66,4 @@ const AddMember = ({ showModal, hideModal }) => {
   );
 };
 
-export default AddMember;
+export default AddMemberModal;

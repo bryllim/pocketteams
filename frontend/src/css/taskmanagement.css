@@ -5,15 +5,14 @@ header {
 }
 
 .sidenav {
-  width: 45%;
-  background: #fff;
-  border: 1px solid black;
+  height: 100%vh;
+  width: 30%;
+  /* background: #fff;
   border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
+  border-bottom-left-radius: 30px; */
   position: absolute;
-  height: 96vh;
   top: 4em;
-  padding: 0 30px;
+  /* padding: 0 30px; */
   right: -100%;
   transition: all 0.65s ease-in-out;
 }

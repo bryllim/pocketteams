@@ -6,12 +6,13 @@ import {
   Row,
   DropdownButton,
   Dropdown,
+  NavDropdown,
 } from "react-bootstrap";
 
 const AddTeam = ({ showModal, hideModal }) => {
   return (
     <>
-      <Modal show={showModal} onHide={hideModal}>
+      <Modal centered show={showModal} onHide={hideModal}>
         <Modal.Header>
           <h5>Create New Team</h5>
           <button
@@ -53,21 +54,29 @@ const AddTeam = ({ showModal, hideModal }) => {
                 name="description"
                 id="description"
                 required
+                rows="10"
               />
             </Col>
-            <Col md="12">
-              <Form.Label>User Access</Form.Label>
-              <DropdownButton
-                id="dropdown-basic-button"
-                title="Accessibility Type"
-              >
-                <Dropdown.Item href="#/action-1">
-                  Request Invites Only
-                </Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Private</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Public</Dropdown.Item>
-              </DropdownButton>
-            </Col>
+            <Row>
+              <Col md="4">
+              <Form.Label className="px-4">User Access</Form.Label>
+              </Col>
+              <Col md="6">
+              <Dropdown>
+                <Dropdown.Toggle
+                  id="dropdown-custom-components"
+                  className="option"
+                />
+                  <Dropdown.Menu>
+                    <Dropdown.Item href="#/action-1">
+                      Request Invites Only
+                    </Dropdown.Item>
+                    <Dropdown.Item href="#/action-2">Private</Dropdown.Item>
+                    <Dropdown.Item href="#/action-3">Public</Dropdown.Item>
+                  </Dropdown.Menu>
+              </Dropdown>
+              </Col>
+            </Row>
           </Col>
         </Modal.Body>
         <Modal.Footer>

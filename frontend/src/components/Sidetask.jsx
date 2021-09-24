@@ -1,4 +1,3 @@
-import React from "react";
 import { Image } from "react-bootstrap";
 import { Dropdown, ButtonGroup, Button } from "react-bootstrap";
 import checked from "../assets_pocketdevs/assets/img/logo/checked.svg";
@@ -12,6 +11,8 @@ import add from "../assets_pocketdevs/assets/img/logo/add-btn.svg";
 const SideTask = ({ show }) => {
   return (
     <div className={show ? "sidenav active" : "sidenav"}>
+      <div className="sidebar-wrapper">
+        <div className="sidebar-box">
       <div className="border-bottom border-dark d-flex align-items-center justify-content-between">
         <button className="theme-btn my-2 taskComplete">
           <Image className="fas-icon" src={checked}></Image>
@@ -129,6 +130,8 @@ const SideTask = ({ show }) => {
           className="mx-2 p-3 full resize-0 radius"
           placeholder="Write a comment"
         ></textarea>
+      </div>
+      </div>
       </div>
     </div>
   );

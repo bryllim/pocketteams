@@ -1,12 +1,12 @@
 import Notes from "./Notes";
-import Profilecard from "./ProfileCard";
-import Teamcard from "./TeamCard";
+import ProfileCard from "./Cards/ProfileCard";
+import TeamCard from "./Cards/TeamCard";
 
 const Sidebar = () => {
   return (
-    <div class="sidebar-wrapper">
-      <Profilecard />
-      <Teamcard />
+    <div className="sidebar-wrapper">
+      <ProfileCard />
+      <TeamCard />
       <Notes />
     </div>
   );

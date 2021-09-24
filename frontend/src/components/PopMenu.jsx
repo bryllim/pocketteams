@@ -1,47 +1,38 @@
 import React from 'react'
 import {Dropdown} from 'react-bootstrap'
 
-const PopMenu = ({menuOptions}) => {
+const PopMenu = () => {
     
     const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
-        <a
-          href=""
+        <p
           ref={ref}
           onClick={(e) => {
-
             e.preventDefault();
             onClick(e);
-            
           }}
         >
           {children}
-   
-        </a>
+        </p>
     ));
 
+    function handleClick(items){
+        console.log(items);
+    }
 
     return (
-        <>
            <Dropdown>
                 <Dropdown.Toggle 
                 as={CustomToggle} 
-                
-        
                 id="dropdown-custom-components">
-
-                    <i class="bi bi-three-dots"/> 
+                    <i className="bi bi-three-dots"/> 
                 </Dropdown.Toggle>
-
                 <Dropdown.Menu>
-                    {menuOptions.map((items) => (
-                        <Dropdown.Item eventKey="1">{items}</Dropdown.Item>
-                        
-                    ))}
                     
+                    {/* {menuOptions.map((items) => (
+                        <Dropdown.Item>{items}</Dropdown.Item>
+                    ))} */}
                 </Dropdown.Menu>
             </Dropdown>
-
-        </>
     )
 }
 
