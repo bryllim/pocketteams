@@ -92,14 +92,14 @@ const Board = () => {
       <Navigation />
         <Container fluid className="board-container">
           <Row className="h-100">
-              <Col xxl="3" className="d-flex flex-column h-100 d-none d-md-block  d-md-none d-lg-block   d-lg-none d-xl-block">
+              <Col xxl="3" className="d-flex flex-column h-100 d-none d-md-block d-md-none d-lg-block  d-lg-none d-xl-block">
               <Sidebar />
               </Col>
-              <Col md="9" className="d-flex flex-column">
+              <Col md="9" className="d-flex flex-column h-100">
                   <div class="section-title">
                     <h1>Project</h1>
                   </div>
-                  <div className="d-flex scrolling-wrapper-x flex-nowrap flex-grow-1" >
+                  <div className="d-flex scrolling-wrapper-x flex-nowrap flex-grow-1 task-board-wrapper" >
                   <DragDropContext
                     onDragEnd={result => onDragEnd(result, columns, setColumns,order,setOrder)}
                   >
@@ -114,6 +114,7 @@ const Board = () => {
                             style={{
                               display: "flex",
                               flexDirection: "row",
+                              height:"100%"
                             }}
                           >
                             {order.map((columnId,index)=>{
@@ -123,18 +124,20 @@ const Board = () => {
                                         style={{
                                           display: "flex",
                                           flexDirection: "column",
-                                          alignItems: "center"
+                                          alignItems: "center",
+                                          height:'100%'
                                         }}
                                         key={columnId}
+                                       
                                       >
-                                        <div style={{ margin: 8 }}>
+                                   
                                           <SectionCard
                                           provided={provided}
                                           column={column}
                                           columnId={columnId}
                                           index={index}
                                           />
-                                        </div>
+                              
                                       </div>
                               )
                               
