@@ -1,4 +1,4 @@
-import SideBar from "../components/SideBar";
+import SideBar from "../components/Sidebar";
 import Navigation from "../components/Navigation";
 import SectionCard from "../components/Cards/SectionCard";
 import { Col, Container, Row } from "react-bootstrap";
@@ -13,31 +13,47 @@ const itemsFromBackend = [
   { id: uuid(), content: "Second task" },
   { id: uuid(), content: "Third task" },
   { id: uuid(), content: "Fourth task" },
+  { id: uuid(), content: "Fourth task" },
+  { id: uuid(), content: "Fourth task" },
+  { id: uuid(), content: "Fourth task" },
+  { id: uuid(), content: "Fourth task" },
+  { id: uuid(), content: "Fourth task" },
   { id: uuid(), content: "Fifth task" }
 ];
 
+
+
 const columnsFromBackend = {
-  [uuid()]: {
+  'col1': {
     name: "Requested",
     items: itemsFromBackend
   },
-  [uuid()]: {
+  'col2': {
     name: "To do",
     items: []
   },
-  [uuid()]: {
-    name: "In Progress",
-    items: []
-  },
-  [uuid()]: {
-    name: "Done",
-    items: []
-  }
 };
 
-const onDragEnd = (result, columns, setColumns) => {
+const columnOrder = ['col1', 'col2']
+
+const onDragEnd = (result, columns, setColumns,order, setOrder) => {
+  const { source, destination, type } = result;
+
+
   if (!result.destination) return;
-  const { source, destination } = result;
+
+  //if dragging in column
+  if(type==="column"){
+    //insert the source index to destination index
+    const columnList = order
+    const movedColumn = columnList.splice(source.index, 1)
+    columnList.splice(destination.index,0, movedColumn[0])
+    setOrder([
+     ...order
+    ])
+    return
+  }
+
 
   if (source.droppableId !== destination.droppableId) {
     const sourceColumn = columns[source.droppableId];
@@ -74,51 +90,71 @@ const onDragEnd = (result, columns, setColumns) => {
 
 const Board = () => {
   const [columns, setColumns] = useState(columnsFromBackend);
+  const [order,setOrder] = useState(columnOrder)
 
   return (
     <>
       <Navigation />
-        <Container fluid>
-          <Row>
-              <Col xxl="3">
-              <SideBar />
+        <Container fluid className="board-container">
+          <Row className="h-100">
+              <Col xl="3" className="d-flex flex-column h-100 d-none d-md-block d-md-none d-lg-block  d-lg-none d-xl-block">
+                <SideBar/>
               </Col>
-              <Col md="9" className="board-container">
-                  <div className="section-title mb-60">
+              <Col xl="9" className="d-flex flex-column h-100 col-md-12">
+                  <div class="section-title">
                     <h1>Project</h1>
                   </div>
-                  <div className="d-flex scrolling-wrapper-x flex-nowrap">
-
+                  <div className="d-flex scrolling-wrapper-x flex-nowrap flex-grow-1 task-board-wrapper" >
                   <DragDropContext
-        onDragEnd={result => onDragEnd(result, columns, setColumns)}
-      >
-        {Object.entries(columns).map(([columnId, column], index) => {
-          return (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center"
-              }}
-              key={columnId}
-            >
-              <div style={{ margin: 8 }}>
-                <Droppable droppableId={columnId} key={columnId}>
-                  {(provided, snapshot) => {
-                    return (
-                        <SectionCard
-                        provided={provided}
-                        snapshot={snapshot}
-                        column={column}
-                        />
-                    );
-                  }}
-                </Droppable>
-              </div>
-            </div>
-          );
-        })}
-      </DragDropContext>
+                    onDragEnd={result => onDragEnd(result, columns, setColumns,order,setOrder)}
+                  >
+                    <Droppable 
+                      droppableId="all-columns" direction="horizontal" type="column"
+                    >
+                      {provided => {
+                        return(
+                          <div
+                            {...provided.droppableProps}
+                            ref={provided.innerRef}
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              height:"100%"
+                            }}
+                            className="pb-3"
+                          >
+                            {order.map((columnId,index)=>{
+                              const column = columns[columnId]
+                              return (
+                                      <div                                
+                                        style={{
+                                          display: "flex",
+                                          flexDirection: "column",
+                                          alignItems: "center",
+                                          height:'100%'
+                                        }}
+                                        key={columnId}
+                                       
+                                      >
+                                   
+                                          <SectionCard
+                                          provided={provided}
+                                          column={column}
+                                          columnId={columnId}
+                                          index={index}
+                                          />
+                              
+                                      </div>
+                              )
+                              
+                            })}
+                            {provided.placeholder}
+                          </div> 
+                          
+                      )}}
+                      
+                    </Droppable> 
+                  </DragDropContext>
                 
                  
                     <div className="">

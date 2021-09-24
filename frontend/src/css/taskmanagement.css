@@ -5,15 +5,20 @@ header {
 }
 
 .sidenav {
-  height: 100%vh;
-  width: 30%;
+  width: 0%;
+  opacity: 0;
   /* background: #fff;
+  border: 1px solid black;
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px; */
-  position: absolute;
+  display:block;
+  position: fixed;
+  height: 100%;
   top: 4em;
   /* padding: 0 30px; */
   right: -100%;
+  /* right: 0; */
+  z-index: 100;
   transition: all 0.65s ease-in-out;
 }
 
@@ -23,7 +28,11 @@ p {
 }
 
 .sidenav.active {
+  width: 35%;
+  opacity: 1;
   right: 0;
+  /* transition: all 0.65s ease-in-out; */
+  /* display: block; */
 }
 
 ul {
@@ -58,8 +67,20 @@ ul li a {
 }
 
 .fas-icon {
-  width: 1.7rem;
+  width: 1rem;
   margin-right: 1em;
+}
+
+.line-icon {
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  background-color: #eee;
+  border: none;
+  border-radius: 50%;
+}
+
+.form-button {
+  background-color: #fff;
 }
 
 .f-dark {
@@ -85,12 +106,7 @@ ul li a {
   border: none;
   font-size: 0.9rem;
   margin-left: 1.3em;
-  color: #000;
-}
-
-.prio:hover {
-  background-color: #dc3545;
-  color: #fff;
+  transition: all 0.5s ease;
 }
 
 .option {
@@ -99,3 +115,60 @@ ul li a {
   font-size: 0.9rem;
   padding: 0.3em 0.5em;
 }
+
+.lni-pencil {
+  border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.lni-pencil:hover {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.label-font {
+  font-size: 0.7rem;
+}
+
+.scrolling-section {
+  height: 460px;
+  background-color: #fff;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+/* --Media Query for the sidetas/sidenav--- */
+
+@media screen and (max-width: 996px) {
+  .sidenav,
+  .sidenav.active {
+    width: 40%;
+    top: 5.6em;
+  }
+}
+
+@media screen and (max-width: 770px) {
+  .sidenav,
+  .sidenav.active {
+    width: 50%;
+    top: 3em;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .sidenav,
+  .sidenav.active {
+    width: 100%;
+    top: 3em;
+  }
+}
+
+/* @media screen and (max-width: 1560px) {
+  .sidenav,
+  .sidenav.active {
+    width: 30%;
+  }
+} */
