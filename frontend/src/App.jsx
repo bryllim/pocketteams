@@ -7,10 +7,6 @@ import Project from "./pages/Project";
 import ProjectDashboard from "./pages/ProjectDashboard";
 
 import TeamDashboard from "./pages/TeamDashboard";
-<<<<<<< HEAD
-=======
-import SamplePage from "./pages/SamplePage";
->>>>>>> b73e56b2c887fafa22abd207f5e1305c5bbda3d2
 
 // import Loader from 'react-loader-spinner';
 import { useEffect, useState } from "react";
@@ -50,10 +46,6 @@ function App() {
               exact
               component={ProjectDashboard}
             ></Route>
-<<<<<<< HEAD
-=======
-            <Route path="/SamplePage" exact component={SamplePage}></Route>
->>>>>>> b73e56b2c887fafa22abd207f5e1305c5bbda3d2
           </Switch>
         )}
       </Router>

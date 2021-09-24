@@ -64,6 +64,18 @@ ul li a {
   margin-right: 1em;
 }
 
+.line-icon {
+  font-size: 1.5rem;
+  padding: 0.5rem;
+  background-color: #eee;
+  border: none;
+  border-radius: 50%;
+}
+
+.form-button {
+  background-color: #fff;
+}
+
 .f-dark {
   color: #000;
 }
@@ -112,10 +124,38 @@ ul li a {
   font-size: 0.7rem;
 }
 
-@media screen and (max-width: 1157px) {
+.scrolling-section {
+  height: 460px;
+  background-color: #fff;
+}
+
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+/* --Media Query for the sidetas/sidenav--- */
+
+@media screen and (max-width: 996px) {
+  .sidenav,
+  .sidenav.active {
+    width: 40%;
+    top: 5.6em;
+  }
+}
+
+@media screen and (max-width: 770px) {
+  .sidenav,
+  .sidenav.active {
+    width: 50%;
+    top: 3em;
+  }
+}
+
+@media screen and (max-width: 550px) {
   .sidenav,
   .sidenav.active {
     width: 100%;
+    top: 3em;
   }
 }
 

@@ -1,12 +1,8 @@
 import Sidebar from "../components/Sidebar";
 import Navigation from "../components/Navigation";
 import { Col, Container, Row } from "react-bootstrap";
-<<<<<<< HEAD
 import SectionCard from "../components/SectionCard";
 
-=======
-import { Button } from "react-bootstrap";
->>>>>>> b73e56b2c887fafa22abd207f5e1305c5bbda3d2
 const Board = () => {
   return (
     <>

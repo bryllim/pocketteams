@@ -7,13 +7,12 @@ const TaskCard = () => {
   return (
 
     <div
-      onClick={() => setShowNav(!showNav)}
       className="d-flex flex-column task-wrapper mb-3 pb-3 px-3"
     >
       <SideTask show={showNav} hide={setShowNav} />
       <div className="d-flex flex-row justify-content-between">
+        <i onClick={() => setShowNav(!showNav)} class="lni lni-pencil"></i>
         <h6>Title</h6>
-        <i class="lni lni-pencil"></i>
       </div>
 
       <p className="ps-3">Description</p>
