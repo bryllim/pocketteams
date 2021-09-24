@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Dropdown } from "react-bootstrap";
-import Comment from "./Comment";
-import SubTask from "./SubTask";
+import Comment from "../components/Comment";
+import SubTask from "../components/SubTask";
 // import Calendar from "react-calendar";
 
 const SideTask = ({ show, hide }) => {

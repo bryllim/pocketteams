@@ -5,15 +5,12 @@ header {
 }
 
 .sidenav {
-  width: 35%;
-  /* background: #fff;
-  border: 1px solid black;
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px; */
+  width: 0%;
+  opacity: 0;
   position: fixed;
+  display: block;
   height: 100%;
   top: 4em;
-  /* padding: 0 30px; */
   right: -100%;
   z-index: 100;
   transition: all 0.65s ease-in-out;
@@ -25,6 +22,8 @@ p {
 }
 
 .sidenav.active {
+  width: 35%;
+  opacity: 1;
   right: 0;
 }
 
