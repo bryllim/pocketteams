@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import AddMember from "./AddMember";
-import { Button, Accordion, Card } from "react-bootstrap";
-import PopMenu from "./PopMenu";
-import AddTeam from "./AddTeamModal";
+import AddMember from "../Modals/AddMemberModal";
+import { Button, Accordion, Card, Dropdown } from "react-bootstrap";
+import AddTeam from "../Modals/AddTeamModal";
+import EditTeam from "../Modals/EditTeamModal";
 
 const TeamCard = () => {
   const [show, setShow] = useState(false);
@@ -14,13 +14,30 @@ const TeamCard = () => {
   const handleTeamClose = () => setTeamShow(false);
   const handleTeamShow = () => setTeamShow(true);
 
+  const [editShow, setEditShow] = useState(false);
+  const handleEditClose = () => setEditShow(false);
+  const handleEditShow = () => setEditShow(true);
+
+  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <p
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {children}
+    </p>
+));
+  const user = JSON.parse(localStorage.getItem("userInfo"));
+
   return (
     <div className="sidebar-box search-form-box mb-30">
       <Accordion defaultActiveKey="0">
         <h4>Teamname</h4>
         <Accordion.Toggle as={Button} variant="link" eventKey="0">
-          <button type="button" class="btn  p-0 ">
-            <i class="bi bi-caret-right-fill" />
+          <button type="button" className="btn  p-0 ">
+            <i className="bi bi-caret-right-fill" />
           </button>
         </Accordion.Toggle>
         <svg
@@ -29,7 +46,7 @@ const TeamCard = () => {
           height="40"
           fill="currentColor"
           type="button"
-          class="bi btn-outline-secondary bi-plus-circle-dotted rounded-circle"
+          className="bi btn-outline-secondary bi-plus-circle-dotted rounded-circle"
           viewBox="0 0 16 16"
           onClick={handleShow}
         >
@@ -49,42 +66,57 @@ const TeamCard = () => {
           style={{ width: "auto", height: "40px" }}
         />
 
-        <button type="d-flex button" class="btn">
-          <PopMenu menuOptions={["Edit", "Remove"]} />
+        <button type="d-flex button" className="btn">
+        <Dropdown>
+                <Dropdown.Toggle 
+                as={CustomToggle} 
+                id="dropdown-custom-components">
+                    <i className="bi bi-three-dots"/> 
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    <Dropdown.Item onClick={handleEditShow}>Edit</Dropdown.Item>
+                    <Dropdown.Item onClick={null}>Remove</Dropdown.Item>
+                </Dropdown.Menu>
+        </Dropdown>
         </button>
 
         <Accordion.Collapse eventKey="0">
           <Card.Body>
-            <div class="list-group">
+            <div className="list-group">
               <p
                 href="#"
-                class="list-group-item list-group-item-action active"
+                className="list-group-item list-group-item-action active"
                 aria-current="true"
               >
                 The current link item
               </p>
-              <p href="#" class="list-group-item list-group-item-action">
+              <p href="#" className="list-group-item list-group-item-action">
                 Project A
               </p>
-              <p href="#" class="list-group-item list-group-item-action">
+              <p href="#" className="list-group-item list-group-item-action">
                 Project B
               </p>
-              <p href="#" class="list-group-item list-group-item-action">
+              <p href="#" className="list-group-item list-group-item-action">
                 Project C
               </p>
             </div>
           </Card.Body>
         </Accordion.Collapse>
       </Accordion>
-      <AddMember showModal={show} hideModal={handleClose} />
+      
+      {/* CREATE NEW TEAM BUTTON */}
       <button
         type="button"
-        class="mt-3 theme-btn theme-btn-nav mt-1 btn btn-primary"
+        className="mt-3 theme-btn theme-btn-nav mt-1 btn btn-primary"
         onClick={handleTeamShow}
       >
         Create New Team
       </button>
+
+      {/* MODALS */}
+      <AddMember showModal={show} hideModal={handleClose} />
       <AddTeam showModal={teamShow} hideModal={handleTeamClose} />
+      <EditTeam user={user} showModal={editShow} hideModal={handleEditClose} />
     </div>
   );
 };

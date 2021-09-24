@@ -24,7 +24,7 @@ const LandingPage = ({history}) => {
     useEffect(() => {
         fetchData();
         if (userInfo) {
-            history.push('/board');
+            history.push('/project');
           } 
     },[history, userInfo])
 

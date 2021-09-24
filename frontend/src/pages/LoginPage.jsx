@@ -20,7 +20,7 @@ const LoginPage = () => {
 
     useEffect(() => {
         if(userInfo){
-            history.push('/board');
+            history.push('/project');
         }
     }, [history, userInfo]);
 
