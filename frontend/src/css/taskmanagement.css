@@ -25,6 +25,8 @@ p {
   width: 35%;
   opacity: 1;
   right: 0;
+  /* transition: all 0.65s ease-in-out; */
+  /* display: block; */
 }
 
 ul {
