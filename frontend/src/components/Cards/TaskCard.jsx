@@ -7,26 +7,19 @@ const TaskCard = ({ provided,snapshot,item }) => {
 
   return (
 
-    <div
-      
-      className="d-flex flex-column task-wrapper mb-3 p-3 px-3 rounded"
-
-      ref={provided.innerRef}
+    <div>
+      <div className="d-flex flex-column task-wrapper mb-3 p-3 px-3 rounded"
+       ref={provided.innerRef}
       {...provided.draggableProps}
       {...provided.dragHandleProps}
 
       style={{
         userSelect: "none",
         ...provided.draggableProps.style
-      }}
-
-    >
-      <div className="d-flex flex-row justify-content-between">
+      }}>
+      <div className="d-flex flex-row align-items-center justify-content-between">
         <h6>{item.content}</h6>
-      
-        <i onClick={() => setShowNav(!showNav)} class="lni lni-pencil"></i>
-   
-       
+        <i onClick={() => setShowNav(!showNav)} class="lni lni-pencil mx-3"></i>
       </div>
 
       <p className="ps-3">Description</p>
@@ -41,7 +34,8 @@ const TaskCard = ({ provided,snapshot,item }) => {
           />
         </div>
       </div>
-      <SideTask show={showNav} hide={setShowNav} />
+      </div>
+        <SideTask show={showNav} hide={setShowNav} />
     </div>
 
   );
