@@ -1,7 +1,6 @@
 import React,{Container} from "react";
 import TaskCard from './TaskCard'
-import PopMenu from './PopMenu'
-import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
+import { Droppable, Draggable} from 'react-beautiful-dnd'
 
 const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
   return (
