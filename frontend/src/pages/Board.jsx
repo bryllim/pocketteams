@@ -92,7 +92,7 @@ const Board = () => {
       <Navigation />
         <Container fluid className="board-container">
           <Row className="h-100">
-              <Col xxl="3" className="d-flex flex-column h-100">
+              <Col xxl="3" className="d-flex flex-column h-100 d-none d-md-block  d-md-none d-lg-block   d-lg-none d-xl-block">
               <Sidebar />
               </Col>
               <Col md="9" className="d-flex flex-column">
