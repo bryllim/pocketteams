@@ -13,6 +13,11 @@ const itemsFromBackend = [
   { id: uuid(), content: "Second task" },
   { id: uuid(), content: "Third task" },
   { id: uuid(), content: "Fourth task" },
+  { id: uuid(), content: "Fourth task" },
+  { id: uuid(), content: "Fourth task" },
+  { id: uuid(), content: "Fourth task" },
+  { id: uuid(), content: "Fourth task" },
+  { id: uuid(), content: "Fourth task" },
   { id: uuid(), content: "Fifth task" }
 ];
 
@@ -116,6 +121,7 @@ const Board = () => {
                               flexDirection: "row",
                               height:"100%"
                             }}
+                            className="pb-3"
                           >
                             {order.map((columnId,index)=>{
                               const column = columns[columnId]

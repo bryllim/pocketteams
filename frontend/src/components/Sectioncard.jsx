@@ -32,7 +32,7 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
                     <div 
                       {...provided.droppableProps}
                       ref={provided.innerRef}
-                      className="section-wrapper-internal scrolling-wrapper-y flex-nowrap py-4 basecard"
+                      className=" section-wrapper-internal scrolling-wrapper-y flex-nowrap py-4 basecard"
                     >
                       {column.items.map((item, index) => {
                         return (
@@ -46,11 +46,11 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
                           </>
                         )})}
                       {provided.placeholder}
-                        <div class="d-flex justify-content-center theme-btn align-items-center mx-auto"  style={{width:"324px", height:"50px"}}>
+                        <div class="d-flex justify-content-center theme-btn align-items-center mx-auto "  style={{width:"250px", height:"50px"}}>
                           <button class="btn" type="button">
-                              <i class="lni lni-plus"></i>
+                              <i class="lni lni-plus text-white"></i>
                           </button>
-                          <div>Add Another Task</div>
+                          <h6 class="text-white">Add Another Task</h6>
                         </div>
                         
                     </div> 
