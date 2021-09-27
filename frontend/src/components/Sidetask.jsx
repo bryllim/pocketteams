@@ -15,11 +15,11 @@ const SideTask = ({ show, hide }) => {
       }
     >
       <div className="sidebar-box py-2 px-4">
-        <div className="border-bottom border-dark d-flex align-items-center justify-content-between">
+        <div className="d-flex align-items-center justify-content-between">
           <button
             complete={markTask}
             onClick={() => setMarkTask(!markTask)}
-            className="theme-btn mb-2 px-2 py-1 label-font taskComplete"
+            className="theme-btn theme-btn-sm mb-2"
           >
             <i class="lni lni-checkmark-circle pe-2"></i>
             {markTask ? "Mark as complete" : "Completed"}
@@ -32,6 +32,7 @@ const SideTask = ({ show, hide }) => {
             ></i>
           </div>
         </div>
+        <hr className="default mt-0"/>
         <div className="scrolling-section scrolling-wrapper-y overflow-x-hidden">
           <div className="py-2 border-dark">
             <form>
@@ -106,7 +107,7 @@ const SideTask = ({ show, hide }) => {
                     <button
                       subtask={subTask}
                       onClick={() => setSubTask(true)}
-                      className="theme-btn subtask"
+                      className="theme-btn theme-btn-sm"
                       type="button"
                     >
                       + add subtask
@@ -137,7 +138,7 @@ const SideTask = ({ show, hide }) => {
           ></textarea>
         </div>
         <div className="d-flex justify-content-end me-2">
-          <button className="theme-btn my-2 px-2 py-1 label-font taskComplete">
+          <button className="theme-btn theme-btn-sm my-2">
             Comment
           </button>
         </div>

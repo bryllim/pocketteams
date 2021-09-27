@@ -10,19 +10,19 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
             <div 
               {...provided.draggableProps}
               ref={provided.innerRef}
-              className="d-flex flex-column section-wrapper mx-2 my-3"
+              className="d-flex flex-column section-wrapper mx-2"
             >
-              <div className="d-flex justify-content-between align-items-center px-3 py-2 ">
+              <div className="d-flex justify-content-between align-items-center ps-3 pe-2 py-2 ">
                 <h5 className="text-white"
                   {...provided.dragHandleProps}
                 >{column.name}</h5>
                 <div>
                   <button class="btn text-white" type="button">
-                    <i class="lni lni-plus fs-3 "></i>
+                    <i class="lni lni-plus fs-5 "></i>
                   </button>
               
                   <button class="btn text-white" type="button">
-                    <i class="lni lni-more-alt fs-3 "></i>
+                    <i class="lni lni-more-alt fs-5 "></i>
                   </button>
                 </div>
               </div>

@@ -4,7 +4,7 @@ const Notes = () => {
   return (
     <div className="sidebar-box recent-blog-box mb-30">
       <h5>My Notes</h5>
-      <hr className="notes"></hr>
+      <hr className="default"></hr>
       <textarea className="notes-text"></textarea>
       <button className="theme-btn theme-btn-nav">
         <i className="lni lni-cloud-sync"></i>
