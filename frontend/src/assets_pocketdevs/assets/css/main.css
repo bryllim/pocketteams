@@ -218,15 +218,26 @@ p {
   overflow: hidden;
 }
 
-.theme-btn-nav{
-  padding: 8px 24px;
+.theme-btn-lg{
+  padding: 0.75em 1.5em;
+  font-size: 1.25rem;
 }
+
+.theme-btn-md{
+  padding: 0.75em 1em;
+  font-size: 1rem;
+}
+
+.theme-btn-sm{
+  padding: 0.3em 0.7em;
+  font-size: 1rem;
+} 
 
 .theme-btn-modal{
   font-weight: 200;
   font-size: 14px;
   padding: 8px 24px;
-}
+} 
 
 .theme-btn-remove{
   all:none;

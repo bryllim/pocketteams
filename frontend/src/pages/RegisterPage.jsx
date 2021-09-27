@@ -27,7 +27,7 @@ const RegisterPage = () => {
 
     useEffect(() => {
         if(userInfo){
-            history.push('/boardx');
+            history.push('/project');
         }
     }, [history, userInfo]);
 
