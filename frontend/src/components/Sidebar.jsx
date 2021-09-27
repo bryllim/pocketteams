@@ -10,6 +10,9 @@ const Sidebar = () => {
       <TeamCard />
       <TeamCard />
       <TeamCard />
+      <TeamCard />
+      <TeamCard />
+      <TeamCard />
       </div>
       {/* keep the notes at the bottom */}
       <div className="d-flex flex-column flex-grow-2 mt-auto"> 
