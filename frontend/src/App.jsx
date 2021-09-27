@@ -4,9 +4,6 @@ import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import Board from "./pages/Board";
 import Project from "./pages/Project";
-import ProjectDashboard from "./pages/ProjectDashboard";
-
-import TeamDashboard from "./pages/TeamDashboard";
 
 // import Loader from 'react-loader-spinner';
 import { useEffect, useState } from "react";
@@ -35,18 +32,6 @@ function App() {
             <Route path="/register" exact component={RegisterPage}></Route>
             <Route path="/board" exact component={Board}></Route>
             <Route path="/project" exact component={Project}></Route>
-
-
-            <Route
-              path="/teamdashboard"
-              exact
-              component={TeamDashboard}
-            ></Route>
-            <Route
-              path="/projectdashboard"
-              exact
-              component={ProjectDashboard}
-            ></Route>
           </Switch>
         )}
       </Router>

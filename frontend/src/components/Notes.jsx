@@ -6,7 +6,7 @@ const Notes = () => {
       <h5>My Notes</h5>
       <hr className="default"></hr>
       <textarea className="notes-text"></textarea>
-      <button className="theme-btn theme-btn-nav">
+      <button className="theme-btn theme-btn-md">
         <i className="lni lni-cloud-sync"></i>
         <span>Sync notes</span>
       </button>

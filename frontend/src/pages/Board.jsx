@@ -1,7 +1,7 @@
 import SideBar from "../components/Sidebar";
 import Navigation from "../components/Navigation";
 import SectionCard from "../components/Cards/SectionCard";
-import { Col, Container, Row } from "react-bootstrap";
+import { Breadcrumb, Col, Container, Row } from "react-bootstrap";
 import { v4 as uuid } from 'uuid';
 import TaskCard from "../components/Cards/TaskCard";
 
@@ -118,9 +118,10 @@ const Board = () => {
                 <SideBar/>
               </Col>
               <Col xl="9" className="d-flex flex-column h-100 col-md-12 ">
-                  <div class="section-title">
-                    <h1>Project</h1>
-                  </div>
+              <h3><Breadcrumb>
+              <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>
+              <Breadcrumb.Item href="/board" active>Board</Breadcrumb.Item>
+            </Breadcrumb></h3>
                   <div className="d-flex scrolling-wrapper-x flex-nowrap flex-grow-1 task-board-wrapper my-3" >
                   <DragDropContext
                     onDragEnd={result => onDragEnd(result, columns, setColumns,order,setOrder)}

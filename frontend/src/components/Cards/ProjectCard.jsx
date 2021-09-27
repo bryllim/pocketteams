@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from "react";
-import PopMenu from "../PopMenu";
 import { useHistory } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 import EditProjectModal from "../Modals/EditProjectModal";
