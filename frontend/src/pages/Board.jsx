@@ -87,6 +87,24 @@ const onDragEnd = (result, columns, setColumns,order, setOrder) => {
   }
 };
 
+const addColumn =(order,setOrder,columns,setColumns) => {
+  const colName = 'test' + Math.floor((Math.random() * 10) + 1);
+  setColumns({
+    ...columns,
+      [colName]:{
+      name:colName,
+      items: []
+    }
+  })
+
+  console.log(columns['test'])
+  
+  setOrder([
+    ...order,
+    colName
+   ])
+}
+
 const Board = () => {
   const [columns, setColumns] = useState(columnsFromBackend);
   const [order,setOrder] = useState(columnOrder)
@@ -99,11 +117,11 @@ const Board = () => {
               <Col xl="3" className="d-flex flex-column h-100 d-none d-md-block d-md-none d-lg-block  d-lg-none d-xl-block">
                 <SideBar/>
               </Col>
-              <Col xl="9" className="d-flex flex-column h-100 col-md-12">
+              <Col xl="9" className="d-flex flex-column h-100 col-md-12 ">
                   <div class="section-title">
                     <h1>Project</h1>
                   </div>
-                  <div className="d-flex scrolling-wrapper-x flex-nowrap flex-grow-1 task-board-wrapper" >
+                  <div className="d-flex scrolling-wrapper-x flex-nowrap flex-grow-1 task-board-wrapper my-3" >
                   <DragDropContext
                     onDragEnd={result => onDragEnd(result, columns, setColumns,order,setOrder)}
                   >
@@ -157,8 +175,8 @@ const Board = () => {
                 
                  
                     <div className="">
-                        <div className="btn d-flex align-items-center border rounded-pill px-5 py-2 text-nowrap">
-                            <i class="lni lni-plus"></i>
+                        <div className=" d-flex align-items-center justify-content-between border rounded-pill px-5 py-2 text-nowrap btn btn-outline-secondary" onClick={() =>addColumn(order,setOrder,columns,setColumns)}>
+                            <i class="lni lni-plus me-2" ></i>
                             <h5>Add Section</h5>
                         </div>
                     </div>
