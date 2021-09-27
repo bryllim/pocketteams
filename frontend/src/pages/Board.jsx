@@ -13,12 +13,11 @@ const itemsFromBackend = [
   { id: uuid(), content: "Second task" },
   { id: uuid(), content: "Third task" },
   { id: uuid(), content: "Fourth task" },
-  { id: uuid(), content: "Fourth task" },
-  { id: uuid(), content: "Fourth task" },
-  { id: uuid(), content: "Fourth task" },
-  { id: uuid(), content: "Fourth task" },
-  { id: uuid(), content: "Fourth task" },
-  { id: uuid(), content: "Fifth task" }
+  { id: uuid(), content: "Fifth task" },
+  { id: uuid(), content: "Sixth task" },
+  { id: uuid(), content: "Seventh task" },
+  { id: uuid(), content: "Eighth task" },
+  { id: uuid(), content: "Ninth task" }
 ];
 
 
