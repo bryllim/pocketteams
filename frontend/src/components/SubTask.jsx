@@ -1,43 +1,31 @@
-import React from "react";
+import React, { useState } from "react";
 
 const SubTask = () => {
-//   const [inputList, setInputList] = useState({ subtask: "" }, { subtask: "" });
-  
-//   const handleChange = (e , index) => {
-//     const { name, value } = e.target;
-//     const list = [...inputList];
-//     list[index][name] = value;
+  const [counter, setCounter] = useState(0);
 
-//     setInputList({
-//       ...inputList,
-//       [name]: value,
-//     });
-//   };
-
-//   const addInput = () => {
-//       setInputList([...inputList, {subtask: ""}])
-//   }
-
-//   console.log(JSON.stringify(inputList, null, 2));
+  const handleClick = () => {
+    setCounter(counter + 1);
+    console.log(counter);
+  };
 
   return (
     <div>
-      {/* {inputList.map(( item, i ) => { */}
-        {/* return ( */}
-          <div
-            // key={i} 
-            className="d-flex align-items-center my-2 ">
+      <button
+        onClick={handleClick}
+        type="button"
+        className="theme-btn theme-btn-sm"
+      >
+        + add subtask
+      </button>
+
+      {Array.from(Array(counter)).map((c, index) => {
+        return (
+          <div key={c} className="d-flex align-items-center my-3 px-3">
             <i class="lni lni-checkmark-circle pe-2"></i>
-            <input
-              name="subtask"
-              className="full"
-              type="text"
-            //   value={item.subtask}
-            //   onChange={e => handleChange (e, i)}
-            />
+            <input name="subtask" className="full input-border form-control px-1" type="text" />
           </div>
-        {/* ); */}
-      {/* })} */}
+        );
+      })}
     </div>
   );
 };
