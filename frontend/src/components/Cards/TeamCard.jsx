@@ -107,7 +107,7 @@ const TeamCard = () => {
       {/* CREATE NEW TEAM BUTTON */}
       <button
         type="button"
-        className="mt-3 theme-btn theme-btn-nav mt-1 btn btn-primary"
+        className="theme-btn theme-btn-sm btn btn-primary"
         onClick={handleTeamShow}
       >
         Create New Team

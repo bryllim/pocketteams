@@ -163,7 +163,9 @@ code {
 }
 
 .team-section-wrapper{
-  min-height: 300px !important;
+  min-height: 250px !important;
+  border: 1px solid #F4EEFB;
+  border-radius: 10px;
 }
 
 .addteam-dropdown{
