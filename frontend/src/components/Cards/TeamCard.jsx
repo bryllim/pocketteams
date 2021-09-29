@@ -28,7 +28,7 @@ const TeamCard = () => {
     >
       {children}
     </p>
-));
+  ));
   const user = JSON.parse(localStorage.getItem("userInfo"));
 
   return (
@@ -71,7 +71,7 @@ const TeamCard = () => {
                 <Dropdown.Toggle 
                 as={CustomToggle} 
                 id="dropdown-custom-components">
-                    <i className="bi bi-three-dots"/> 
+                    <i className="bi bi-three-dots"/>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     <Dropdown.Item onClick={handleEditShow}>Edit</Dropdown.Item>
