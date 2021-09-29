@@ -1,8 +1,12 @@
-import React,{Container} from "react";
+import React,{useContext} from "react";
 import TaskCard from './TaskCard'
-import { Droppable, Draggable} from 'react-beautiful-dnd'
+import { Droppable, Draggable} from 'react-beautiful-dnd' 
+import {TaskContext} from "../../contexts/SectionContext"
 
 const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
+
+  const {addTask,columns,setColumns} = useContext(TaskContext)
+
   return (
       <Draggable draggableId={columnId} index={index}>
         {provided => {
@@ -46,7 +50,7 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
                           </>
                         )})}
                       {provided.placeholder}
-                        <div class="d-flex justify-content-center align-items-center theme-btn mx-auto"  style={{width:"250px", height:"50px"}}>
+                        <div class="d-flex justify-content-center align-items-center theme-btn mx-auto"  onClick={() => addTask(columnId,columns,setColumns)} style={{width:"250px", height:"50px"}}>
                           <button class="btn" type="button">
                               <i class="lni lni-plus text-white"></i>
                           </button>
