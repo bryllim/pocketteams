@@ -3,11 +3,11 @@ import Navigation from "../components/Navigation";
 import SectionCard from "../components/Cards/SectionCard";
 import { Col, Container, Row } from "react-bootstrap";
 import { v4 as uuid } from 'uuid';
-import TaskCard from "../components/Cards/TaskCard";
-
-
 import { useState } from "react";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
+import {TaskContext}  from "../contexts/SectionContext"
+
+
 const itemsFromBackend = [
   { id: uuid(), content: "First task" },
   { id: uuid(), content: "Second task" },
@@ -19,7 +19,6 @@ const itemsFromBackend = [
   { id: uuid(), content: "Eighth task" },
   { id: uuid(), content: "Ninth task" }
 ];
-
 
 
 const columnsFromBackend = {
@@ -35,6 +34,24 @@ const columnsFromBackend = {
 
 const columnOrder = ['col1', 'col2']
 
+
+const addTask = (columnId,columns,setColumns) => {
+  const sourceColumn = columns[columnId]
+  const sourceItems = [...sourceColumn.items];
+  sourceItems.push({ id: uuid(), content: "the new task" })
+  
+  console.log(columnId);
+
+  setColumns({
+    ...columns,
+    [columnId]: {
+      ...sourceColumn,
+      items: sourceItems
+    },
+  })
+  return
+}
+
 const onDragEnd = (result, columns, setColumns,order, setOrder) => {
   const { source, destination, type } = result;
 
@@ -44,9 +61,11 @@ const onDragEnd = (result, columns, setColumns,order, setOrder) => {
   //if dragging in column
   if(type==="column"){
     //insert the source index to destination index
+
     const columnList = order
     const movedColumn = columnList.splice(source.index, 1)
     columnList.splice(destination.index,0, movedColumn[0])
+
     setOrder([
      ...order
     ])
@@ -61,6 +80,7 @@ const onDragEnd = (result, columns, setColumns,order, setOrder) => {
     const destItems = [...destColumn.items];
     const [removed] = sourceItems.splice(source.index, 1);
     destItems.splice(destination.index, 0, removed);
+
     setColumns({
       ...columns,
       [source.droppableId]: {
@@ -72,6 +92,7 @@ const onDragEnd = (result, columns, setColumns,order, setOrder) => {
         items: destItems
       }
     });
+    console.log(sourceColumn)
   } else {
     const column = columns[source.droppableId];
     const copiedItems = [...column.items];
@@ -97,7 +118,6 @@ const addColumn =(order,setOrder,columns,setColumns) => {
     }
   })
 
-  console.log(columns['test'])
   
   setOrder([
     ...order,
@@ -105,12 +125,15 @@ const addColumn =(order,setOrder,columns,setColumns) => {
    ])
 }
 
+
+
 const Board = () => {
   const [columns, setColumns] = useState(columnsFromBackend);
   const [order,setOrder] = useState(columnOrder)
 
   return (
     <>
+    <TaskContext.Provider value={{addTask,columns,setColumns}}>
       <Navigation />
         <Container fluid className="board-container">
           <Row className="h-100">
@@ -153,14 +176,12 @@ const Board = () => {
                                         key={columnId}
                                        
                                       >
-                                   
                                           <SectionCard
                                           provided={provided}
                                           column={column}
                                           columnId={columnId}
                                           index={index}
                                           />
-                              
                                       </div>
                               )
                               
@@ -175,7 +196,8 @@ const Board = () => {
                 
                  
                     <div className="">
-                        <div className=" d-flex align-items-center justify-content-between border rounded-pill px-5 py-2 text-nowrap btn btn-outline-secondary" onClick={() =>addColumn(order,setOrder,columns,setColumns)}>
+                        <div className=" d-flex align-items-center justify-content-between border rounded-pill px-5 py-2 text-nowrap btn btn-outline-secondary" 
+                          onClick={() =>addColumn(order,setOrder,columns,setColumns)}>
                             <i class="lni lni-plus me-2" ></i>
                             <h5>Add Section</h5>
                         </div>
@@ -184,6 +206,7 @@ const Board = () => {
               </Col>
           </Row>
         </Container>
+      </TaskContext.Provider>
     </>
   );
 };

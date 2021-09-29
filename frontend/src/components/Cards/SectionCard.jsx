@@ -1,9 +1,30 @@
-import React,{Container} from "react";
+import React,{useContext,useState} from "react";
 import TaskCard from './TaskCard'
-import { Droppable, Draggable} from 'react-beautiful-dnd'
+import { Droppable, Draggable} from 'react-beautiful-dnd' 
+import {TaskContext} from "../../contexts/SectionContext"
+import AddTaskModal from "../Modals/AddTaskModal";
 
 const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  
+  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <p
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {children}
+    </p>
+));
+
+  const {addTask,columns,setColumns} = useContext(TaskContext)
+
   return (
+    <>
       <Draggable draggableId={columnId} index={index}>
         {provided => {
           return(
@@ -46,7 +67,8 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
                           </>
                         )})}
                       {provided.placeholder}
-                        <div class="d-flex justify-content-center align-items-center theme-btn mx-auto"  style={{width:"250px", height:"50px"}}>
+                        <div class="d-flex justify-content-center align-items-center theme-btn mx-auto"  
+                          onClick={() => addTask(columnId,columns,setColumns)} style={{width:"250px", height:"50px"}}>
                           <button class="btn" type="button">
                               <i class="lni lni-plus text-white"></i>
                           </button>
@@ -60,7 +82,11 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
             </div>
           )
         }}
+         {/* MODALS */}
+        
     </Draggable> 
+    <AddTaskModal showModal={show} hideModal={handleClose} />
+    </>
   )}
 
 export default SectionCard;
