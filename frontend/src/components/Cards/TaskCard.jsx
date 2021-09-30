@@ -15,7 +15,7 @@ const TaskCard = ({item,index }) => {
         {(provided, snapshot) => {
           return (
             <div
-              className="d-flex flex-column task-wrapper mb-3 px-3 rounded"
+              className="d-flex flex-column task-wrapper rounded"
 
               ref={provided.innerRef}
               {...provided.draggableProps}
@@ -32,7 +32,8 @@ const TaskCard = ({item,index }) => {
                 <i onClick={() => setShowNav(!showNav)} className="lni lni-pencil p-2"></i>
               </div>
 
-            <p className="ps-3">Description</p>
+            <p className="px-3 text-limit">Desc scrip scrip scrip ripti oscripti oscripti oscript ios crip tioscrip
+            tioscriptioscn</p>
             <div className="d-flex justify-content-between align-items-center">
               <p>date</p>
               <div className="d-flex align-items-center">

@@ -6,6 +6,7 @@ import { v4 as uuid } from 'uuid';
 import { useState } from "react";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 import {TaskContext}  from "../contexts/SectionContext"
+import "../css/board.css"
 
 
 const itemsFromBackend = [
