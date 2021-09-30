@@ -10,7 +10,6 @@ import image4 from "../../src/assets_pocketdevs/assets/img/timeline/timeline-4.p
 import axios from 'axios'
 import { Image } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router'
 
 const LandingPage = ({history}) => {
 
@@ -20,7 +19,8 @@ const LandingPage = ({history}) => {
     useEffect(() => {
         if (userInfo) {
             history.push('/project');
-          } 
+        } 
+        console.log(userInfo);
     },[history, userInfo])
 
     return (

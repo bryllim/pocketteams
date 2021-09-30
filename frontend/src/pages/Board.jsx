@@ -4,6 +4,7 @@ import SectionCard from "../components/Cards/SectionCard";
 import { Breadcrumb, Col, Container, Row } from "react-bootstrap";
 import { v4 as uuid } from 'uuid';
 import TaskCard from "../components/Cards/TaskCard";
+
 import { useEffect, useState } from "react";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 import { useSelector } from "react-redux";
@@ -105,7 +106,6 @@ const addColumn =(order,setOrder,columns,setColumns) => {
     colName
    ])
 }
-
 
 
 const Board = () => {
