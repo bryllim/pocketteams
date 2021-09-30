@@ -6,8 +6,8 @@ const Notes = () => {
       <h5>My Notes</h5>
       <hr className="default"></hr>
       <textarea className="notes-text"></textarea>
-      <button className="theme-btn theme-btn-md">
-        <i className="lni lni-cloud-sync"></i>
+      <button className="theme-btn theme-btn-sm">
+        <i className="lni lni-cloud-sync me-2"></i>
         <span>Sync notes</span>
       </button>
     </div>
