@@ -8,6 +8,19 @@ const SideTask = ({ show, hide }) => {
   const [markTask, setMarkTask] = useState(true);
   const [subTask, setSubTask] = useState(false);
 
+
+  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <p
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {children}
+    </p>
+));
+
   return (
     <div
       className={
@@ -32,7 +45,7 @@ const SideTask = ({ show, hide }) => {
             ></i>
           </div>
         </div>
-        <hr className="default mt-0"/>
+        <hr className="default mt-0" />
         <div className="scrolling-section scrolling-wrapper-y overflow-x-hidden">
           <div className="py-2 border-dark">
             <form>
@@ -56,7 +69,20 @@ const SideTask = ({ show, hide }) => {
                     <label className="label-font">Assigned: </label>
                     <div className="d-flex align-items-center m2-4">
                       <i class="lni lni-user mx-2 fas-icon"></i>
-                      <p className="label-font">assign user</p>
+                      {/* <p className="label-font">assign user</p> */}
+
+                      <Dropdown>
+                        <Dropdown.Toggle
+                          as={CustomToggle}
+                          id="dropdown-custom-components"
+                        >
+                          <p className="label-font hover-me">assign user</p>
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          <Dropdown.Item onClick={null}>User 1</Dropdown.Item>
+                          <Dropdown.Item onClick={null}>User 2</Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
                     </div>
                   </div>
                 </div>
@@ -115,7 +141,7 @@ const SideTask = ({ show, hide }) => {
                   </div>
                 </div>
                 <div className="row px-2">
-                  { subTask ? <SubTask /> : <input type="text" hidden />}
+                  {subTask ? <SubTask /> : <input type="text" hidden />}
                 </div>
               </>
             </form>
@@ -138,9 +164,7 @@ const SideTask = ({ show, hide }) => {
           ></textarea>
         </div>
         <div className="d-flex justify-content-end me-2">
-          <button className="theme-btn theme-btn-sm my-2">
-            Comment
-          </button>
+          <button className="theme-btn theme-btn-sm my-2">Comment</button>
         </div>
       </div>
     </div>

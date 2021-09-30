@@ -14,15 +14,10 @@ import { useHistory } from 'react-router'
 
 const LandingPage = ({history}) => {
 
-    const fetchData = async() => {
-        const {data} = await axios.get("/api/notes");
-        console.log(data);
-    }
     const userLogin = useSelector((state) => state.userLogin);
     const { userInfo } = userLogin;
 
     useEffect(() => {
-        fetchData();
         if (userInfo) {
             history.push('/project');
           } 

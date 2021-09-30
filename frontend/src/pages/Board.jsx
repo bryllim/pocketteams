@@ -4,10 +4,11 @@ import SectionCard from "../components/Cards/SectionCard";
 import { Breadcrumb, Col, Container, Row } from "react-bootstrap";
 import { v4 as uuid } from 'uuid';
 import TaskCard from "../components/Cards/TaskCard";
-
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
+
 const itemsFromBackend = [
   { id: uuid(), content: "First task" },
   { id: uuid(), content: "Second task" },
@@ -105,9 +106,21 @@ const addColumn =(order,setOrder,columns,setColumns) => {
    ])
 }
 
+
+
 const Board = () => {
   const [columns, setColumns] = useState(columnsFromBackend);
   const [order,setOrder] = useState(columnOrder)
+
+  const history = useHistory();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+    useEffect(() => {
+        if (!userInfo) {
+            history.push('/');
+          } 
+    },[history, userInfo])
 
   return (
     <>

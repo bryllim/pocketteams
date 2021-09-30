@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Navigation from "../components/Navigation";
 import PorjectCard from "../components/Cards/ProjectCard";
 import { Breadcrumb, Col, Container, Row } from "react-bootstrap";
 
 const Project = () => {
+
   return (
     <>
       <Navigation />
@@ -23,19 +24,19 @@ const Project = () => {
             </Breadcrumb></h3>
             
             <div className="row row-cols-xxl-4 row-cols-xl-3 row-cols-md-2 g-md-2 g-2">
-              <div class="col">
+              <div className="col">
                 <PorjectCard />
               </div>
-              <div class="col">
+              <div className="col">
                 <PorjectCard />
               </div>
-              <div class="col">
+              <div className="col">
                 <PorjectCard />
               </div>
-              <div class="col">
+              <div className="col">
                 <PorjectCard />
               </div>
-              <div class="col">
+              <div className="col">
                 <PorjectCard />
               </div>
             </div>
