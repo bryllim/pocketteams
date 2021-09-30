@@ -76,20 +76,6 @@ const TeamCard = () => {
           style={{ width: "auto", height: "40px" }}
         />
 
-        <button type="d-flex button" className="btn">
-        <Dropdown>
-                <Dropdown.Toggle 
-                as={CustomToggle} 
-                id="dropdown-custom-components">
-                    <i className="bi bi-three-dots"/>
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                    <Dropdown.Item onClick={handleEditShow}>Edit</Dropdown.Item>
-                    <Dropdown.Item onClick={null}>Remove</Dropdown.Item>
-                </Dropdown.Menu>
-        </Dropdown>
-        </button>
-
         <Accordion.Collapse eventKey="0">
           <Card.Body>
             <div className="list-group">
