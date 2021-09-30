@@ -5,7 +5,7 @@ import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 const TaskCard = ({item,index }) => {
   const [showNav, setShowNav] = useState(false);
   const [toggle, setToggle] = useState(true)
-  const [name, setName] = useState('test')
+  const [name, setName] = useState(item.content)
 
 
   console.log(toggle)
@@ -36,22 +36,21 @@ const TaskCard = ({item,index }) => {
 
             >
               <div className="d-flex flex-row justify-content-between">
-                <h6>{item.content}</h6>
-                <i onClick={() => setShowNav(!showNav)} className="lni lni-pencil p-2"></i>
-              </div>
 
-            <p className="px-3 text-limit">Desc scrip scrip scrip ripti oscripti oscripti oscript ios crip tioscrip
-            tioscriptioscn</p>
-            <div className="d-flex justify-content-between align-items-center">
-
-            {toggle ?
-              (<p onDoubleClick={()=> editText()}>{name}</p>)
+              {toggle ?
+              (<h6 className="hover-me" onDoubleClick={()=> editText()}>{name}</h6>)
               :
               (<input
                 type="text"
                 value={name}
                 onChange={(e) => {
                   setName(e.target.value)
+                }}
+                onBlur={(e)=>{
+                  setToggle(true)
+                  setName(e.target.value)
+                  e.preventDefault()
+                  e.stopPropagation()
                 }}
                 onKeyDown={(event) => {
                   if (event.key === 'Enter' || event.key === 'Escape') {
@@ -61,6 +60,16 @@ const TaskCard = ({item,index }) => {
                 }}} 
               />)
             }      
+                {/* <h6>{item.content}</h6> */}
+                <i onClick={() => setShowNav(!showNav)} className="lni lni-pencil p-2"></i>
+              </div>
+
+            <p className="px-3 text-limit">Desc scrip scrip scrip ripti oscripti oscripti oscript ios crip tioscrip
+            tioscriptioscn</p>
+
+            <div className="d-flex justify-content-between align-items-center">
+
+           
 
               <p>date</p>
               <div className="d-flex align-items-center">
