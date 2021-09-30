@@ -1,11 +1,15 @@
 import SideBar from "../components/Sidebar";
 import Navigation from "../components/Navigation";
 import SectionCard from "../components/Cards/SectionCard";
-import { Col, Container, Row } from "react-bootstrap";
+import { Breadcrumb, Col, Container, Row } from "react-bootstrap";
 import { v4 as uuid } from 'uuid';
-import { useState } from "react";
+import TaskCard from "../components/Cards/TaskCard";
+
+import { useEffect, useState } from "react";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
-import {TaskContext}  from "../contexts/SectionContext"
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
+import {TaskContext}  from "../contexts/SectionContext";
 
 
 const itemsFromBackend = [
@@ -126,10 +130,19 @@ const addColumn =(order,setOrder,columns,setColumns) => {
 }
 
 
-
 const Board = () => {
   const [columns, setColumns] = useState(columnsFromBackend);
   const [order,setOrder] = useState(columnOrder)
+
+  const history = useHistory();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+    useEffect(() => {
+        if (!userInfo) {
+            history.push('/');
+          } 
+    },[history, userInfo])
 
   return (
     <>
@@ -141,9 +154,10 @@ const Board = () => {
                 <SideBar/>
               </Col>
               <Col xl="9" className="d-flex flex-column h-100 col-md-12 ">
-                  <div class="section-title">
-                    <h1>Project</h1>
-                  </div>
+              <h3><Breadcrumb>
+              <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>
+              <Breadcrumb.Item href="/board" active>Board</Breadcrumb.Item>
+            </Breadcrumb></h3>
                   <div className="d-flex scrolling-wrapper-x flex-nowrap flex-grow-1 task-board-wrapper my-3" >
                   <DragDropContext
                     onDragEnd={result => onDragEnd(result, columns, setColumns,order,setOrder)}
