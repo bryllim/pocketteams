@@ -4,7 +4,15 @@ import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 
 const TaskCard = ({item,index }) => {
   const [showNav, setShowNav] = useState(false);
+  const [toggle, setToggle] = useState(true)
+  const [name, setName] = useState('test')
 
+
+  console.log(toggle)
+  const editText = () => {
+    console.log(toggle)
+    setToggle(false)
+  }
   return (
     <div>
       <Draggable
@@ -35,6 +43,25 @@ const TaskCard = ({item,index }) => {
             <p className="px-3 text-limit">Desc scrip scrip scrip ripti oscripti oscripti oscript ios crip tioscrip
             tioscriptioscn</p>
             <div className="d-flex justify-content-between align-items-center">
+
+            {toggle ?
+              (<p onDoubleClick={()=> editText()}>{name}</p>)
+              :
+              (<input
+                type="text"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value)
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === 'Escape') {
+                    setToggle(true)
+                    event.preventDefault()
+                    event.stopPropagation()
+                }}} 
+              />)
+            }      
+
               <p>date</p>
               <div className="d-flex align-items-center">
                 <i className="lni lni-circle-plus fs-2 mx-1"/>
