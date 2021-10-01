@@ -36,7 +36,7 @@ const LandingPage = ({history}) => {
                                 <p className="mb-35 wow fadeInLeft" data-wow-delay=".4s">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                 </p>
-                                <a href="#contact" className="theme-btn">Get Started</a>
+                                <a href="/login" className="theme-btn">Get Started</a>
                             </div>
                         </div>
                         <div className="col-xl-7 col-lg-6">
