@@ -36,7 +36,7 @@ const Navigation = () => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="banner-content">
-                        <h3 className="text-white mb-2 d-none d-md-block" onClick={handleOnClick}>PocketTeams</h3>
+                        <h3 className="text-white mb-2 d-none d-md-block hover-me" onClick={handleOnClick}>PocketTeams</h3>
                       </div>
                     </div>
                   </div>
