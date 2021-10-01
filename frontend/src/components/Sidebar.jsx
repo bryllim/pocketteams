@@ -28,8 +28,12 @@ const Sidebar = () => {
         <AddTeam showModal={teamShow} hideModal={handleTeamClose} />
       </div>
       {/* NOTES */}
-      <div className="d-flex flex-column flex-grow-2">
         <Notes />
+        <div>
+        <button type="button" className="theme-btn theme-btn-md">
+        <i className="lni lni-cloud-sync me-2"></i>
+        <span>Sync notes</span>
+      </button>
       </div>
     </div>
   );
