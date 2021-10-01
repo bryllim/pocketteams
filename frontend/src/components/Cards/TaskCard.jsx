@@ -53,6 +53,7 @@ const TaskCard = ({item,index,columnId}) => {
                 type="text"
                 value={name}
                 onChange={(e) => {
+                  setToggle(false)
                   setName(e.target.value)
                 }}
                 autoFocus
