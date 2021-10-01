@@ -4,7 +4,7 @@ import Comment from "../components/Comment";
 import SubTask from "../components/SubTask";
 import Calendar from "react-calendar";
 
-const SideTask = ({ show, hide }) => {
+const SideTask = ({ showed, hide }) => {
   const [markTask, setMarkTask] = useState(true);
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p
@@ -21,7 +21,7 @@ const SideTask = ({ show, hide }) => {
   return (
     <div
       className={
-        show ? "sidenav active sidebar-wrapper" : "sidenav sidebar-wrapper"
+        showed ? "sidenav active sidebar-wrapper" : "sidenav sidebar-wrapper"
       }
     >
       <div className="sidebar-box py-2 px-4">
@@ -37,7 +37,7 @@ const SideTask = ({ show, hide }) => {
           <div className="d-flex align-items-center">
             <i className="lni lni-trash-can pointer f-dark me-2"></i>
             <i
-              onClick={() => hide(!show)}
+              onClick={() => hide(!showed)}
               className="lni lni-shift-right pointer f-dark me-2"
             ></i>
           </div>
