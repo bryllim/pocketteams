@@ -15,6 +15,9 @@ const Sidebar = () => {
       <ProfileCard />
       <div className="team-section-wrapper d-flex flex-column scrolling-wrapper-y mb-3 p-2">
         <TeamCard />
+        <TeamCard />
+        <TeamCard />
+        <TeamCard />
         {/* CREATE TEAM BUTTON */}
       </div>
       <div>

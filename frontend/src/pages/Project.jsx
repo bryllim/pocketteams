@@ -16,21 +16,19 @@ const Project = () => {
   const { userInfo } = userLogin;
   const history = useHistory();
 
+  const projectCreate = useSelector((state) => state.projectCreate);
+  const { success: successCreate} = projectCreate;
+
   const dispatch = useDispatch();
   const projectList = useSelector(state => state.projectList);
   const { loading, projects, error } = projectList;
-
-  function createProject(){
-    history.push('/createproject');
-  }
 
   useEffect(() => {
     if (userInfo) {
       history.push("/project");
     }
-
     dispatch(listProjects());
-  }, [history, userInfo, dispatch]);
+  }, [dispatch, successCreate, history, userInfo]);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);

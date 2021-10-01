@@ -22,7 +22,7 @@ const ProjectCard = ({data}) => {
 ));
 
   return (
-    <div className="sidebar-wrapper m-0">
+    <div className="sidebar-wrapper m-0 p-2">
       <div className="d-flex flex-column sidebar-box basecard project-card px-4 pb-4 pt-2">
         <div className="d-flex justify-content-end">
         <button type="button" className="d-flex btn m-0 p-0 ">
@@ -65,7 +65,7 @@ const ProjectCard = ({data}) => {
           </div>
         </div>
       </div>
-      <EditProjectModal showModal={editShow} hideModal={handleEditClose}/>
+      <EditProjectModal data_id={`/`} showModal={editShow} hideModal={handleEditClose}/>
     </div>
   );
 };
