@@ -1,18 +1,25 @@
-import React, { useState } from "react";
+import React, { useState,useEffect,useContext} from "react";
 import SideTask from "../Sidetask";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
-
-const TaskCard = ({item,index }) => {
+import {TaskContext} from "../../contexts/SectionContext"
+const TaskCard = ({item,index}) => {
   const [showNav, setShowNav] = useState(false);
   const [toggle, setToggle] = useState(true)
   const [name, setName] = useState(item.content)
+  const {editTitle} = useContext(TaskContext)
 
+  useEffect(() => {
+    // update the state of name when dragging
 
-  console.log(toggle)
+    setName(item.content);
+  },[item]);
+  
+
   const editText = () => {
-    console.log(toggle)
     setToggle(false)
   }
+
+
   return (
     <div>
       <Draggable
@@ -35,10 +42,12 @@ const TaskCard = ({item,index }) => {
               }}
 
             >
+           
+              
               <div className="d-flex flex-row justify-content-between">
 
               {toggle ?
-              (<h6 className="hover-me" onDoubleClick={()=> editText()}>{name}</h6>)
+              (<h6 className="hover-me" onClick={()=> editText()}>{name}</h6>)
               :
               (<input
                 type="text"
@@ -46,15 +55,16 @@ const TaskCard = ({item,index }) => {
                 onChange={(e) => {
                   setName(e.target.value)
                 }}
-                onBlur={(e)=>{
-                  setToggle(true)
-                  setName(e.target.value)
-                  e.preventDefault()
-                  e.stopPropagation()
-                }}
+                // onBlur={(e)=>{
+                //   setToggle(true)
+                //   setName(e.target.value)
+                //   e.preventDefault()
+                //   e.stopPropagation()
+                // }}
                 onKeyDown={(event) => {
                   if (event.key === 'Enter' || event.key === 'Escape') {
                     setToggle(true)
+                    editTitle(index,item);
                     event.preventDefault()
                     event.stopPropagation()
                 }}} 
