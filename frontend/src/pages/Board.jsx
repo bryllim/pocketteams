@@ -1,12 +1,15 @@
 import SideBar from "../components/Sidebar";
 import Navigation from "../components/Navigation";
 import SectionCard from "../components/Cards/SectionCard";
-import { Col, Container, Row } from "react-bootstrap";
+import { Breadcrumb, Col, Container, Row } from "react-bootstrap";
 import { v4 as uuid } from 'uuid';
-import { useState } from "react";
+import TaskCard from "../components/Cards/TaskCard";
+import { useEffect, useState } from "react";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 import {TaskContext}  from "../contexts/SectionContext"
-
+import "../css/board.css"
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router";
 
 const itemsFromBackend = [
   { id: uuid(), content: "First task" },
@@ -19,6 +22,29 @@ const itemsFromBackend = [
   { id: uuid(), content: "Eighth task" },
   { id: uuid(), content: "Ninth task" }
 ];
+
+const taskItems = {
+  [uuid()]: {
+    title: "First task",
+    description: "this is the decription",
+    date: "10/23/2021",
+  },
+  [uuid()]: {
+    title: "Second Task",
+    description: "this is the decription",
+    date: "10/23/2021",
+  },
+  [uuid()]: {
+    title: "Third task",
+    description: "this is the decription",
+    date: "10/23/2021",
+  },
+  [uuid()]: {
+    title: "Fourth task",
+    description: "this is the decription",
+    date: "10/23/2021",
+  },
+}
 
 
 const columnsFromBackend = {
@@ -35,12 +61,11 @@ const columnsFromBackend = {
 const columnOrder = ['col1', 'col2']
 
 
+
 const addTask = (columnId,columns,setColumns) => {
   const sourceColumn = columns[columnId]
   const sourceItems = [...sourceColumn.items];
   sourceItems.push({ id: uuid(), content: "the new task" })
-  
-  console.log(columnId);
 
   setColumns({
     ...columns,
@@ -51,6 +76,7 @@ const addTask = (columnId,columns,setColumns) => {
   })
   return
 }
+
 
 const onDragEnd = (result, columns, setColumns,order, setOrder) => {
   const { source, destination, type } = result;
@@ -126,14 +152,40 @@ const addColumn =(order,setOrder,columns,setColumns) => {
 }
 
 
-
 const Board = () => {
   const [columns, setColumns] = useState(columnsFromBackend);
   const [order,setOrder] = useState(columnOrder)
+  const [tasks, setTask] = useState(itemsFromBackend)
+
+
+  const editTitle = (index, item) =>{ 
+    // item.find(x => x.id === item.)
+    const sourceTask = tasks[index]
+    // sourceTask.content = newTitle
+    setTask([
+      ...tasks
+    ])
+    console.log(tasks)
+    console.log(columns)
+    return
+  }
+  
+
+
+
+  const history = useHistory();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+    useEffect(() => {
+        if (!userInfo) {
+            history.push('/');
+          } 
+    },[history, userInfo])
 
   return (
     <>
-    <TaskContext.Provider value={{addTask,columns,setColumns}}>
+    <TaskContext.Provider value={{addTask,columns,setColumns,editTitle}}>
       <Navigation />
         <Container fluid className="board-container">
           <Row className="h-100">
@@ -141,9 +193,10 @@ const Board = () => {
                 <SideBar/>
               </Col>
               <Col xl="9" className="d-flex flex-column h-100 col-md-12 ">
-                  <div class="section-title">
-                    <h1>Project</h1>
-                  </div>
+              <h3><Breadcrumb>
+              <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>
+              <Breadcrumb.Item href="/board" active>Board</Breadcrumb.Item>
+            </Breadcrumb></h3>
                   <div className="d-flex scrolling-wrapper-x flex-nowrap flex-grow-1 task-board-wrapper my-3" >
                   <DragDropContext
                     onDragEnd={result => onDragEnd(result, columns, setColumns,order,setOrder)}

@@ -1,10 +1,9 @@
-import React, { useCallback, useState } from "react";
-import PopMenu from "../PopMenu";
+import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Dropdown } from "react-bootstrap";
+import { Badge, Dropdown } from "react-bootstrap";
 import EditProjectModal from "../Modals/EditProjectModal";
 
-const ProjectCard = () => {
+const ProjectCard = ({data}) => {
   const history = useHistory();
   const handleOnClick = useCallback(() => history.push("/board"), [history]);
   const [editShow, setEditShow] = useState(false);
@@ -23,22 +22,16 @@ const ProjectCard = () => {
 ));
 
   return (
-    <div class="sidebar-wrapper m-0">
-      <div className="d-flex flex-column sidebar-box basecard project-card">
-        <div className="d-flex justify-content-between">
-          <img
-            src="https://via.placeholder.com/150"
-            alt=""
-            className="rounded"
-            style={{ height: "50px", width: "50px" }}
-          />
-          <button type="button" class="d-flex btn m-0 p-0 ">
-            <Dropdown>
+    <div className="sidebar-wrapper m-0">
+      <div className="d-flex flex-column sidebar-box basecard project-card px-4 pb-4 pt-2">
+        <div className="d-flex justify-content-end">
+        <button type="button" className="d-flex btn m-0 p-0 ">
+            <Dropdown className="my-auto">
               <Dropdown.Toggle
                 as={CustomToggle}
                 id="dropdown-custom-components"
               >
-                <i className="bi bi-three-dots" />
+                &nbsp;<i className="bi bi-three-dots" />
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item onClick={handleEditShow}>Edit</Dropdown.Item>
@@ -47,16 +40,28 @@ const ProjectCard = () => {
             </Dropdown>
           </button>
         </div>
+        <div className="d-flex justify-content-flex-start">
+          <img
+            src="https://via.placeholder.com/150"
+            alt=""
+            className="rounded me-3"
+            style={{ height: "50px", width: "50px" }}
+          />
+          <h4>{data.project_name}</h4>
+        </div>
         <div className="d-flex flex-fill flex-column mt-3">
-          <h4 className="mb-1">Title</h4>
-          <p className="ps-3"> Contedsa here </p>
-
+          <p className="text-limit text-limit-project"> {data.project_description} </p>
           <div className="d-flex justify-content-between mt-auto">
-            <p>Date</p>
-            <p className="hover-me" onClick={handleOnClick}>
-              {" "}
-              Open project <i class="bi bi-chevron-right"></i>{" "}
-            </p>
+            <blockquote className="blockquote mb-0">
+              <footer className="blockquote-footer">
+                  <p>Created on{" "}<cite title="Source Title">{data.createdAt.substring(0,10)}</cite></p>
+              </footer>
+            </blockquote>
+            <blockquote className="blockquote mb-0">
+            <footer className="hover-me blockquote-footer" onClick={handleOnClick}>
+              <p>{" "}Open project <i className="bi bi-chevron-right"></i>{" "}</p>
+            </footer>
+            </blockquote>
           </div>
         </div>
       </div>

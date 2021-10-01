@@ -1,9 +1,24 @@
-import React, { useState } from "react";
+import React, { useState,useEffect,useContext} from "react";
 import SideTask from "../Sidetask";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
-
-const TaskCard = ({item,index }) => {
+import {TaskContext} from "../../contexts/SectionContext"
+const TaskCard = ({item,index}) => {
   const [showNav, setShowNav] = useState(false);
+  const [toggle, setToggle] = useState(true)
+  const [name, setName] = useState(item.content)
+  const {editTitle} = useContext(TaskContext)
+
+  useEffect(() => {
+    // update the state of name when dragging
+
+    setName(item.content);
+  },[item]);
+  
+
+  const editText = () => {
+    setToggle(false)
+  }
+
 
   return (
     <div>
@@ -15,7 +30,7 @@ const TaskCard = ({item,index }) => {
         {(provided, snapshot) => {
           return (
             <div
-              className="d-flex flex-column task-wrapper mb-3 px-3 rounded"
+              className="d-flex flex-column task-wrapper rounded"
 
               ref={provided.innerRef}
               {...provided.draggableProps}
@@ -27,13 +42,45 @@ const TaskCard = ({item,index }) => {
               }}
 
             >
+           
+              
               <div className="d-flex flex-row justify-content-between">
-                <h6>{item.content}</h6>
+
+              {toggle ?
+              (<h6 className="hover-me" onClick={()=> editText()}>{name}</h6>)
+              :
+              (<input
+                type="text"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value)
+                }}
+                // onBlur={(e)=>{
+                //   setToggle(true)
+                //   setName(e.target.value)
+                //   e.preventDefault()
+                //   e.stopPropagation()
+                // }}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === 'Escape') {
+                    setToggle(true)
+                    editTitle(index,item);
+                    event.preventDefault()
+                    event.stopPropagation()
+                }}} 
+              />)
+            }      
+                {/* <h6>{item.content}</h6> */}
                 <i onClick={() => setShowNav(!showNav)} className="lni lni-pencil p-2"></i>
               </div>
 
-            <p className="ps-3">Description</p>
+            <p className="px-3 text-limit">Desc scrip scrip scrip ripti oscripti oscripti oscript ios crip tioscrip
+            tioscriptioscn</p>
+
             <div className="d-flex justify-content-between align-items-center">
+
+           
+
               <p>date</p>
               <div className="d-flex align-items-center">
                 <i className="lni lni-circle-plus fs-2 mx-1"/>

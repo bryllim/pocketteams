@@ -54,7 +54,7 @@ const SectionCard = ({ provided,snapshot,column,columnId,index, }) => {
                     <div 
                       {...provided.droppableProps}
                       ref={provided.innerRef}
-                      className=" section-wrapper-internal scrolling-wrapper-y flex-nowrap py-4 basecard"
+                      className=" section-wrapper-internal scrolling-wrapper-y flex-nowrap pt-4 basecard"
                     >
                       {column.items.map((item, index) => {
                         return (
@@ -68,7 +68,7 @@ const SectionCard = ({ provided,snapshot,column,columnId,index, }) => {
                           </>
                         )})}
                       {provided.placeholder}
-                        <div class="d-flex justify-content-center align-items-center theme-btn mx-auto"  
+                        <div class="d-flex justify-content-center align-items-center theme-btn mx-auto my-4"  
                           onClick={() => addTask(columnId,columns,setColumns)} style={{width:"250px", height:"50px"}}>
                           <button class="btn" type="button">
                               <i class="lni lni-plus text-white"></i>
