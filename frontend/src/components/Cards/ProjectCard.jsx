@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from "react";
-import PopMenu from "../PopMenu";
 import { useHistory } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
 import EditProjectModal from "../Modals/EditProjectModal";
@@ -23,7 +22,7 @@ const ProjectCard = () => {
 ));
 
   return (
-    <div class="sidebar-wrapper m-0">
+    <div className="sidebar-wrapper m-0">
       <div className="d-flex flex-column sidebar-box basecard project-card">
         <div className="d-flex justify-content-between">
           <img
@@ -32,7 +31,7 @@ const ProjectCard = () => {
             className="rounded"
             style={{ height: "50px", width: "50px" }}
           />
-          <button type="button" class="d-flex btn m-0 p-0 ">
+          <button type="button" className="d-flex btn m-0 p-0 ">
             <Dropdown>
               <Dropdown.Toggle
                 as={CustomToggle}
@@ -55,7 +54,7 @@ const ProjectCard = () => {
             <p>Date</p>
             <p className="hover-me" onClick={handleOnClick}>
               {" "}
-              Open project <i class="bi bi-chevron-right"></i>{" "}
+              Open project <i className="bi bi-chevron-right"></i>{" "}
             </p>
           </div>
         </div>
