@@ -4,7 +4,7 @@ import EditTeamCard from "../Cards/EditTeamCard";
 import pocketdevsLogo from "../../assets_pocketdevs/assets/img/profile/generated_profile.PNG";
 import ErrorMessage from "../ErrorMessage";
 import { useDispatch, useSelector } from "react-redux";
-import ReactMarkdown from "react-markdown";
+// import ReactMarkdown from "react-markdown";
 
 const AddProjectModal = ({ showModal, hideModal }) => {
 

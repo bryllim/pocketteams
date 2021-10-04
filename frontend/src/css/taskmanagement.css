@@ -139,6 +139,17 @@ ul li a {
   font-size: 0.7rem;
 }
 
+.date-btn {
+  height: 2em;
+  width: 11em;
+  margin-left: 3.5em;
+}
+
+::-webkit-calendar-picker-indicator {
+  height: 2em;
+  width: 1.5em;
+}
+
 .scrolling-section {
   height: 460px;
   background-color: #fff;

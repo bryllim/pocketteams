@@ -55,21 +55,9 @@ const SideTask = ({ showed, hide }) => {
                 <div className="row mb-1 f-dark">
                   <div className="col-xl py-2 d-flex align-items-center">
                     <label className="label-font">Date:</label>
-                    <div className="d-flex align-items-center mx-4">
-                      <button className="d-flex align-items-center border-0 form-button">
-                        <Dropdown>
-                          <Dropdown.Toggle
-                            as={CustomToggle}
-                            id="dropdown-custom-components"
-                          >
-                            <i class="lni lni-calendar mx-2 line-icon p-2 sidetask-btn"></i>
-                          </Dropdown.Toggle>
-                          <Dropdown.Menu>
-                            <Dropdown.Item onClick={null}><Calendar/></Dropdown.Item>
-                          </Dropdown.Menu>
-                        </Dropdown>
-                        <p className="label-font px-1">set date</p>
-                      </button>
+                    <div className="d-flex align-items-center">
+                        <input className="label-font border border-0 date-btn form-control p-0" type="date"/>
+                        {/* <p className="label-font px-1">set date</p> */}
                     </div>
                   </div>
                   <div className="col-xl py-2 d-flex align-items-center">
