@@ -82,7 +82,7 @@ const SideTask = ({ showed, hide }) => {
                 </div>
                 <div className="row mb-1 h6 f-dark">
                   <div className="col-xl py-2 d-flex align-items-center">
-                    <label className="label-font">Project:</label>
+                    <label className="label-font">Section:</label>
                     <div className="d-flex align-items-center mx-2">
                       <Dropdown>
                         <Dropdown.Toggle
@@ -101,12 +101,12 @@ const SideTask = ({ showed, hide }) => {
                           </svg>
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                          <Dropdown.Item onClick={null}>Project 1</Dropdown.Item>
-                          <Dropdown.Item onClick={null}>Project 2</Dropdown.Item>
+                          <Dropdown.Item onClick={null}>Requested</Dropdown.Item>
+                          <Dropdown.Item onClick={null}>To Do</Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
 
-                      <p className="label-font">project name</p>
+                      <p className="label-font">Section Name</p>
                     </div>
                   </div>
                   <div className="col-xl py-2 d-flex align-items-center">

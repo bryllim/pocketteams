@@ -13,7 +13,10 @@ const Sidebar = () => {
   return (
     <div className="d-flex flex-column sidebar-wrapper scrolling-wrapper-y h-100">
       <ProfileCard />
-      <div className="team-section-wrapper d-flex flex-column scrolling-wrapper-y mb-3 p-2">
+      <div className="team-section-wrapper d-flex flex-column scrolling-wrapper-y mb-30 p-2">
+        <TeamCard />
+        <TeamCard />
+        <TeamCard />
         <TeamCard />
         {/* CREATE TEAM BUTTON */}
       </div>

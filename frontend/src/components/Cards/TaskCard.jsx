@@ -2,7 +2,7 @@ import React, { useState,useEffect,useContext} from "react";
 import SideTask from "../Sidetask";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 import {TaskContext} from "../../contexts/SectionContext"
-const TaskCard = ({item,index}) => {
+const TaskCard = ({item,index,columnId}) => {
   const [showNav, setShowNav] = useState(false);
   const [toggle, setToggle] = useState(true)
   const [name, setName] = useState(item.content)
@@ -10,7 +10,7 @@ const TaskCard = ({item,index}) => {
 
   useEffect(() => {
     // update the state of name when dragging
-
+    
     setName(item.content);
   },[item]);
   
@@ -46,15 +46,17 @@ const TaskCard = ({item,index}) => {
               
               <div className="d-flex flex-row justify-content-between">
 
-              {toggle ?
-              (<h6 className="hover-me" onClick={()=> editText()}>{name}</h6>)
+              {toggle && name !== '' ?
+              (<h6 className="hover-me" onClick={()=> editText()} >{name}</h6>)
               :
               (<input
                 type="text"
                 value={name}
                 onChange={(e) => {
+                  setToggle(false)
                   setName(e.target.value)
                 }}
+                autoFocus
                 // onBlur={(e)=>{
                 //   setToggle(true)
                 //   setName(e.target.value)
@@ -64,7 +66,7 @@ const TaskCard = ({item,index}) => {
                 onKeyDown={(event) => {
                   if (event.key === 'Enter' || event.key === 'Escape') {
                     setToggle(true)
-                    editTitle(index,item);
+                    editTitle(index,name,item.id,columnId);
                     event.preventDefault()
                     event.stopPropagation()
                 }}} 

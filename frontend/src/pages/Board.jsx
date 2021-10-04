@@ -12,15 +12,15 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router";
 
 const itemsFromBackend = [
-  { id: uuid(), content: "First task" },
-  { id: uuid(), content: "Second task" },
-  { id: uuid(), content: "Third task" },
-  { id: uuid(), content: "Fourth task" },
-  { id: uuid(), content: "Fifth task" },
-  { id: uuid(), content: "Sixth task" },
-  { id: uuid(), content: "Seventh task" },
-  { id: uuid(), content: "Eighth task" },
-  { id: uuid(), content: "Ninth task" }
+  { id: uuid(), content: "First task", description: "this is desc", date: "10/13/2021" },
+  { id: uuid(), content: "Second task", description: "this is desc", date: "10/13/2021" },
+  { id: uuid(), content: "Third task", description: "this is desc", date: "10/13/2021" },
+  { id: uuid(), content: "Fourth task", description: "this is desc", date: "10/13/2021" },
+  { id: uuid(), content: "Fifth task", description: "this is desc", date: "10/13/2021" },
+  { id: uuid(), content: "Sixth task", description: "this is desc", date: "10/13/2021" },
+  { id: uuid(), content: "Seventh task", description: "this is desc", date: "10/13/2021" },
+  { id: uuid(), content: "Eighth task", description: "this is desc", date: "10/13/2021" },
+  { id: uuid(), content: "Ninth task", description: "this is desc", date: "10/13/2021" },
 ];
 
 const taskItems = {
@@ -62,20 +62,7 @@ const columnOrder = ['col1', 'col2']
 
 
 
-const addTask = (columnId,columns,setColumns) => {
-  const sourceColumn = columns[columnId]
-  const sourceItems = [...sourceColumn.items];
-  sourceItems.push({ id: uuid(), content: "the new task" })
 
-  setColumns({
-    ...columns,
-    [columnId]: {
-      ...sourceColumn,
-      items: sourceItems
-    },
-  })
-  return
-}
 
 
 const onDragEnd = (result, columns, setColumns,order, setOrder) => {
@@ -118,7 +105,6 @@ const onDragEnd = (result, columns, setColumns,order, setOrder) => {
         items: destItems
       }
     });
-    console.log(sourceColumn)
   } else {
     const column = columns[source.droppableId];
     const copiedItems = [...column.items];
@@ -158,21 +144,55 @@ const Board = () => {
   const [tasks, setTask] = useState(itemsFromBackend)
 
 
-  const editTitle = (index, item) =>{ 
-    // item.find(x => x.id === item.)
-    const sourceTask = tasks[index]
-    // sourceTask.content = newTitle
+  const editTitle = (index, name, id,columnId) =>{ 
+    const sourceTask = tasks.find(x => x.id === id)
+    console.log(name)
+    console.log(id)
+    console.log(sourceTask)
+    console.log(tasks)
+    if(name === ''){
+      const sourceColumn = columns[columnId];
+      const sourceItems = [...sourceColumn.items];
+      sourceItems.splice(index, 1);
+      setColumns({
+        ...columns,
+        [columnId]: {
+          ...sourceColumn,
+          items: sourceItems
+        },
+      });
+      return
+    }
+    sourceTask.content = name
     setTask([
       ...tasks
     ])
-    console.log(tasks)
-    console.log(columns)
+    return
+  }
+
+  const addTask = (columnId,columns,setColumns) => {
+    const sourceColumn = columns[columnId]
+    const sourceItems = [...sourceColumn.items];
+    sourceItems.push({ id: uuid(), content: "" })
+    console.log(sourceItems)
+    setColumns({
+      ...columns,
+      [columnId]: {
+        ...sourceColumn,
+        items: sourceItems
+      },
+    })
+
+    setTask([
+      ...tasks,
+      ...sourceItems
+
+    ])
+
+    // console.log(tasks)
     return
   }
   
-
-
-
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;

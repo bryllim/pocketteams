@@ -27,8 +27,8 @@ const TeamCard = () => {
   const user = JSON.parse(localStorage.getItem("userInfo"));
 
   return (
-    <div className="sidebar-box search-form-box mb-10">
-      <Accordion defaultActiveKey="0">
+    <div>
+      <Accordion defaultActiveKey="0" className="pt-3 px-3">
         <h4>Teamname
         <button type="d-flex button btn" className="btn">
         <Dropdown>
@@ -103,6 +103,7 @@ const TeamCard = () => {
       {/* MODALS */}
       <AddMember showModal={show} hideModal={handleClose} />
       <EditTeam user={user} showModal={editShow} hideModal={handleEditClose} />
+      <hr className="team"></hr>
     </div>
   );
 };

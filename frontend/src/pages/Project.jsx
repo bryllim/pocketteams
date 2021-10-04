@@ -16,25 +16,19 @@ const Project = () => {
   const { userInfo } = userLogin;
   const history = useHistory();
 
+  const projectCreate = useSelector((state) => state.projectCreate);
+  const { success: successCreate} = projectCreate;
+
   const dispatch = useDispatch();
   const projectList = useSelector(state => state.projectList);
   const { loading, projects, error } = projectList;
-
-  function createProject(){
-    history.push('/createproject');
-  }
 
   useEffect(() => {
     if (userInfo) {
       history.push("/project");
     }
-
     dispatch(listProjects());
-  }, [history, userInfo, dispatch]);
-
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow= () => setShow(true);
+  }, [dispatch, successCreate, history, userInfo]);
 
   return (
     <>
@@ -52,25 +46,16 @@ const Project = () => {
               <Breadcrumb>
                 <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>
               </Breadcrumb>
-              <button
-              type="button"
-              className="theme-btn theme-btn-lg mb-30"
-              onClick={handleShow}
-            >
-              <i class="lni lni-plus"/>&nbsp;New Project
-            </button>
             </h3>
             
             { error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
             { loading && <Preload/> }
             <div className="row row-cols-xxl-4 row-cols-xl-3 row-cols-md-2 g-md-2 g-2">
+            <Col><ProjectCard/></Col>
             { projects?.map((project) => (
-              <div class="col">
-                <ProjectCard data={project}/>
-              </div>
+              <Col><ProjectCard data={project}/></Col>
             ))}
             </div>
-            <AddProjectModal showModal={show} hideModal={handleClose} />
           </Col>
         </Row>
       </Container>
