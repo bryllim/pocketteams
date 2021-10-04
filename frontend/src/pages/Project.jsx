@@ -30,10 +30,6 @@ const Project = () => {
     dispatch(listProjects());
   }, [dispatch, successCreate, history, userInfo]);
 
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow= () => setShow(true);
-
   return (
     <>
       <Navigation />
@@ -50,25 +46,16 @@ const Project = () => {
               <Breadcrumb>
                 <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>
               </Breadcrumb>
-              <button
-              type="button"
-              className="theme-btn theme-btn-lg mb-30"
-              onClick={handleShow}
-            >
-              <i class="lni lni-plus"/>&nbsp;New Project
-            </button>
             </h3>
             
             { error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
             { loading && <Preload/> }
             <div className="row row-cols-xxl-4 row-cols-xl-3 row-cols-md-2 g-md-2 g-2">
+            <Col><ProjectCard/></Col>
             { projects?.map((project) => (
-              <div class="col">
-                <ProjectCard data={project}/>
-              </div>
+              <Col><ProjectCard data={project}/></Col>
             ))}
             </div>
-            <AddProjectModal showModal={show} hideModal={handleClose} />
           </Col>
         </Row>
       </Container>

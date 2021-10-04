@@ -33,7 +33,13 @@ const AddProjectModal = ({ showModal, hideModal }) => {
     <Modal centered size="lg" show={showModal} onHide={hideModal}>
       <Card>
         <Modal.Header>
-          <h5>Create new Project</h5>
+          <h5>Create New Project</h5>
+          <button
+            type="button"
+            class="btn-close me-2"
+            onClick={hideModal}
+            aria-label="Close"
+          ></button>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={null}>
@@ -57,12 +63,11 @@ const AddProjectModal = ({ showModal, hideModal }) => {
                 onChange={(e) => setProjectDescription(e.target.value)}
               />
             </Form.Group>
-            <Form.Group className="d-flex my-auto p-3">
+            <Form.Group className="d-flex my-auto p-3 search-form-box">
               <Dropdown>
-                &nbsp;
-                <Form.Label>Project Status</Form.Label>&nbsp;&nbsp;
+                <Form.Label>Project Status &nbsp; {projectStatus}</Form.Label>&nbsp;&nbsp;
                 <Dropdown.Toggle
-                  id="dropdown-custom-components"
+                  id="dropdown-custom-components dropdown-button-drop-up"
                   className="option f-dark"
                 ></Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -83,7 +88,7 @@ const AddProjectModal = ({ showModal, hideModal }) => {
 
         <Modal.Footer>
           <button
-            className="theme-btn theme-btn-modal mx-0"
+            className="theme-btn theme-btn-md mx-3"
             onClick={submitHandler}
           >
             Create Project

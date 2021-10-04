@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Badge, Dropdown } from "react-bootstrap";
 import EditProjectModal from "../Modals/EditProjectModal";
+import AddProjectModal from "../Modals/AddProjectModal";
 
 const ProjectCard = ({data}) => {
   const history = useHistory();
@@ -9,6 +10,11 @@ const ProjectCard = ({data}) => {
   const [editShow, setEditShow] = useState(false);
   const handleEditClose = () => setEditShow(false);
   const handleEditShow = () => setEditShow(true);
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow= () => setShow(true);
+
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p
       ref={ref}
@@ -23,6 +29,7 @@ const ProjectCard = ({data}) => {
 
   return (
     <div className="sidebar-wrapper m-0 p-2">
+      {data ?
       <div className="d-flex flex-column sidebar-box basecard project-card px-4 pb-4 pt-2">
         <div className="d-flex justify-content-end">
         <button type="button" className="d-flex btn m-0 p-0 ">
@@ -65,7 +72,17 @@ const ProjectCard = ({data}) => {
           </div>
         </div>
       </div>
+
+      :
+          <div className="d-flex flex-column sidebar-box basecard project-card add-project-container add-project hover-me px-4 pb-4 pt-2" onClick={handleShow}>
+              <div className="mx-auto my-auto">
+              <i className="lni lni-plus"></i>
+              <p>New Project</p>
+              </div>
+          </div>
+      } 
       <EditProjectModal data_id={`/`} showModal={editShow} hideModal={handleEditClose}/>
+      <AddProjectModal showModal={show} hideModal={handleClose} />
     </div>
   );
 };
