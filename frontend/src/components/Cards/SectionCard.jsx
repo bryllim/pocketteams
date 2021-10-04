@@ -60,6 +60,7 @@ const SectionCard = ({ provided,snapshot,column,columnId,index, }) => {
                         return (
                           <>
                             <TaskCard
+                              columnId={columnId}
                               provided={provided}
                               snapshot={snapshot}
                               item={item}
