@@ -2,11 +2,7 @@ import { useState } from "react";
 import { Form, Modal, Card, Dropdown } from "react-bootstrap";
 import ErrorMessage from "../ErrorMessage";
 import { useDispatch, useSelector } from "react-redux";
-<<<<<<< HEAD
-// import ReactMarkdown from "react-markdown";
-=======
 import { createProjectAction } from "../../actions/projectActions";
->>>>>>> 527846f08a526b0983b295bb8ef98d2206088339
 
 const AddProjectModal = ({ showModal, hideModal }) => {
   const [projectName, setProjectName] = useState("");
