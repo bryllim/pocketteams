@@ -51,6 +51,7 @@ const TaskCard = ({item,index,columnId}) => {
               :
               (<input
                 type="text"
+                maxlength="16"
                 className="border-top-0 border-end-0 border-start-0"
                 value={name}
                 onChange={(e) => {

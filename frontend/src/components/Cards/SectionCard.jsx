@@ -23,9 +23,6 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
   const [sectionTitle, setSectiontitle] = useState(column.name)
   const [sectionToggleState,setSectionToggleState] = useState(true)
 
-  // const changeSectionTitle = () =>{
-  //   // editTitle(index,name,item.id,columnId);
-  // }
 
 
 
@@ -42,6 +39,16 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
 ));
 
   const {addTask,columns,setColumns,changeSectionTitle} = useContext(TaskContext)
+    
+  const changeSection = () =>{
+    if(sectionTitle === ''){
+      openDeleteSection()
+    }
+    else{
+      changeSectionTitle({index,columnId,sectionTitle})
+    }
+      
+  }
 
   return (
     <>
@@ -63,7 +70,8 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
                   :
                   (<input
                     type="text"
-                    className="border-top-0 border-end-0 border-start-0 bg-transparent text-white"
+                    maxlength="16"
+                    className="border-top-0 border-light border-end-0 border-start-0 bg-transparent text-white"
                     value={sectionTitle}
                     onChange={(e) => {
                       setSectionToggleState(false)
@@ -72,14 +80,14 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
                     autoFocus
                     onBlur={(e)=>{
                       setSectionToggleState(true)
-                      changeSectionTitle({index,columnId,sectionTitle})
+                      changeSection()
                       e.preventDefault()
                       e.stopPropagation()
                     }}
                     onKeyDown={(event) => {
                       if (event.key === 'Enter' || event.key === 'Escape') {
                         setSectionToggleState(true)
-                        changeSectionTitle({index,columnId,sectionTitle})
+                        changeSection()
                         event.preventDefault()
                         event.stopPropagation()
                       }}} 
@@ -87,7 +95,7 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
                 }
                 
 
-                  <button class="btn text-white ms-auto" type="button">
+                  <button class="btn text-white ms-auto"  onClick={() => addTask(columnId,columns,setColumns)} type="button">
                     <i class="lni lni-plus fs-5 "></i>
                   </button>
 
