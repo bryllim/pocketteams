@@ -29,7 +29,7 @@ const TeamCard = () => {
   return (
     <div className="sidebar-box search-form-box mb-10">
       <Accordion defaultActiveKey="0">
-        <h4>Teamname
+        <h4 className="mb-3" >Teamname
         <button type="d-flex button btn" className="btn">
         <Dropdown>
                 <Dropdown.Toggle 

@@ -23,29 +23,6 @@ const itemsFromBackend = [
   { id: uuid(), content: "Ninth task", description: "this is desc", date: "10/13/2021" },
 ];
 
-const taskItems = {
-  [uuid()]: {
-    title: "First task",
-    description: "this is the decription",
-    date: "10/23/2021",
-  },
-  [uuid()]: {
-    title: "Second Task",
-    description: "this is the decription",
-    date: "10/23/2021",
-  },
-  [uuid()]: {
-    title: "Third task",
-    description: "this is the decription",
-    date: "10/23/2021",
-  },
-  [uuid()]: {
-    title: "Fourth task",
-    description: "this is the decription",
-    date: "10/23/2021",
-  },
-}
-
 
 const columnsFromBackend = {
   'col1': {
@@ -59,11 +36,6 @@ const columnsFromBackend = {
 };
 
 const columnOrder = ['col1', 'col2']
-
-
-
-
-
 
 const onDragEnd = (result, columns, setColumns,order, setOrder) => {
   const { source, destination, type } = result;
@@ -192,6 +164,41 @@ const Board = () => {
     // console.log(tasks)
     return
   }
+
+  const removeSection = (columnId,index) =>{
+    const columnObject = columns;
+    delete  columnObject[columnId];
+    const columnList = order
+    columnList.splice(index,1)
+
+    setColumns({
+      ...columnObject
+    })
+
+    setOrder([
+     ...columnList
+    ])
+    console.log(index)
+    console.log(columnList)
+    console.log(order)
+
+    return
+    //will the task also deleted when col deleted?
+  }
+
+  const changeSectionTitle =(props) => {
+    if(props.sectionTitle !== ''){
+      const columnObject = columns;
+      columnObject[props.columnId].name = props.sectionTitle
+      setColumns({
+        ...columnObject
+      })
+    }
+    else{
+      removeSection(props.columnId,props.index)
+    }
+  }
+
   
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
@@ -205,7 +212,7 @@ const Board = () => {
 
   return (
     <>
-    <TaskContext.Provider value={{addTask,columns,setColumns,editTitle}}>
+    <TaskContext.Provider value={{addTask,columns,setColumns,editTitle,removeSection,changeSectionTitle}}>
       <Navigation />
         <Container fluid className="board-container">
           <Row className="h-100">
