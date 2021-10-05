@@ -72,7 +72,7 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
                     autoFocus
                     onBlur={(e)=>{
                       setSectionToggleState(true)
-                      changeSectionTitle(index,columnId,sectionTitle)
+                      changeSectionTitle({index,columnId,sectionTitle})
                       e.preventDefault()
                       e.stopPropagation()
                     }}
@@ -100,7 +100,7 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
                         </button>
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item onClick={()=>setSectionToggleState(false)}>Edit</Dropdown.Item>
+                        <Dropdown.Item onClick={()=>setSectionToggleState(false)}>Rename</Dropdown.Item>
                         <Dropdown.Item onClick={openDeleteSection}>Remove</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
