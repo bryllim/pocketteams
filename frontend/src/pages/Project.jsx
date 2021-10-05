@@ -1,22 +1,34 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Navigation from "../components/Navigation";
-import PorjectCard from "../components/Cards/ProjectCard";
+import ProjectCard from "../components/Cards/ProjectCard";
+import Preload from "../components/Preload";
+import ErrorMessage from "../components/ErrorMessage";
 import { Breadcrumb, Col, Container, Row } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
+import { listProjects } from "../actions/projectActions";
+import AddProjectModal from "../components/Modals/AddProjectModal";
 
 const Project = () => {
-
+  
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const history = useHistory();
 
-    useEffect(() => {
-        if (userInfo) {
-            history.push('/project');
-        } 
-    },[history, userInfo])
+  const projectCreate = useSelector((state) => state.projectCreate);
+  const { success: successCreate} = projectCreate;
+
+  const dispatch = useDispatch();
+  const projectList = useSelector(state => state.projectList);
+  const { loading, projects, error } = projectList;
+
+  useEffect(() => {
+    if (userInfo) {
+      history.push("/project");
+    }
+    dispatch(listProjects());
+  }, [dispatch, successCreate, history, userInfo]);
 
   return (
     <>
@@ -30,27 +42,19 @@ const Project = () => {
             <Sidebar />
           </Col>
           <Col md="9" className="d-flex flex-column h-100">
+            <h3>
+              <Breadcrumb>
+                <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>
+              </Breadcrumb>
+            </h3>
             
-            <h3><Breadcrumb>
-              <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>
-            </Breadcrumb></h3>
-            
+            { error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
+            { loading && <Preload/> }
             <div className="row row-cols-xxl-4 row-cols-xl-3 row-cols-md-2 g-md-2 g-2">
-              <div class="col">
-                <PorjectCard />
-              </div>
-              <div class="col">
-                <PorjectCard />
-              </div>
-              <div class="col">
-                <PorjectCard />
-              </div>
-              <div class="col">
-                <PorjectCard />
-              </div>
-              <div class="col">
-                <PorjectCard />
-              </div>
+            <Col><ProjectCard/></Col>
+            { projects?.map((project) => (
+              <Col><ProjectCard data={project}/></Col>
+            ))}
             </div>
           </Col>
         </Row>

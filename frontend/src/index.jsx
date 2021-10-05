@@ -16,6 +16,7 @@ import './assets_pocketdevs/assets/css/main.css'
 import './assets_pocketdevs/assets/css/main.css.map'
 import './assets_pocketdevs/assets/css/tiny-slider.css'
 import './css/taskmanagement.css'
+import './css/board.css'
 import 'react-bootstrap'
 
 

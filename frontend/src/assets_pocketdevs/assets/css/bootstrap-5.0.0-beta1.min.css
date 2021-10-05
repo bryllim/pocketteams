@@ -73,6 +73,10 @@ hr.default{
     margin: 1rem 0rem 0rem 0rem;
 }
 
+hr.team{
+    margin: 1rem 1.5rem;
+}
+
 hr:not([size]) {
     height: 1px
 }
