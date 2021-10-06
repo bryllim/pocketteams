@@ -165,7 +165,7 @@ const SideTask = ({ showed, hide }) => {
           ></textarea>
         </div>
         <div className="d-flex justify-content-end me-2">
-          <button className="theme-btn theme-btn-md my-1 label-font">Comment</button>
+          <button className="theme-btn theme-btn-md p-2 my-1 label-font">Comment</button>
         </div>
       </div>
     </div>
