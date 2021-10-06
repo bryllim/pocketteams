@@ -174,16 +174,16 @@ code {
 }
 
 .add-project-container:hover{
-  background-color: #CCCCCC !important;
+  background-color: #272727 !important;
+  color:white;
 }
 
 .add-project{
-  font-size: 5em;
+  font-size: 6em;
 }
 
 .add-project:hover{
-  color: #ED213A;
-  transition-delay: 0.4s;
+  background-color: #E2E2E2 !important;
 }
 
 @media only screen and (max-width: 991px) {

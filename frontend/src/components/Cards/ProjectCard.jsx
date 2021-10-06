@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Badge, Dropdown } from "react-bootstrap";
+import { Badge, Col, Dropdown, Row } from "react-bootstrap";
 import EditProjectModal from "../Modals/EditProjectModal";
 import AddProjectModal from "../Modals/AddProjectModal";
 
@@ -38,7 +38,7 @@ const ProjectCard = ({data}) => {
                 as={CustomToggle}
                 id="dropdown-custom-components"
               >
-                &nbsp;<i className="bi bi-three-dots" />
+                &nbsp;<i className="bi bi-three-dots fs-3" />
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item onClick={handleEditShow}>Edit</Dropdown.Item>
@@ -51,33 +51,29 @@ const ProjectCard = ({data}) => {
           <img
             src="https://via.placeholder.com/150"
             alt=""
-            className="rounded me-3"
+            className="rounded-circle me-3"
             style={{ height: "50px", width: "50px" }}
           />
           <h4>{data.project_name}</h4>
         </div>
         <div className="d-flex flex-fill flex-column mt-3">
-          <p className="text-limit text-limit-project"> {data.project_description} </p>
+          <p className="text-limit text-limit-project text-dark fs-6"> {data.project_description} </p>
           <div className="d-flex justify-content-between mt-auto">
             <blockquote className="blockquote mb-0">
-              <footer className="blockquote-footer">
                   <p>Created on{" "}<cite title="Source Title">{data.createdAt.substring(0,10)}</cite></p>
-              </footer>
             </blockquote>
-            <blockquote className="blockquote mb-0">
-            <footer className="hover-me blockquote-footer" onClick={handleOnClick}>
+            <blockquote className="blockquote mb-0 hover-me" onClick={handleOnClick}>
               <p>{" "}Open project <i className="bi bi-chevron-right"></i>{" "}</p>
-            </footer>
             </blockquote>
           </div>
         </div>
       </div>
 
       :
-          <div className="d-flex flex-column sidebar-box basecard project-card add-project-container add-project hover-me px-4 pb-4 pt-2" onClick={handleShow}>
+          <div className="d-flex flex-column sidebar-box basecard project-card hover-me add-project px-4 pb-4 pt-2" onClick={handleShow}>
               <div className="mx-auto my-auto">
-              <i className="lni lni-plus"></i>
-              <p>New Project</p>
+                <i className="lni lni-plus text-dark"></i>
+                <p className="text-dark fs-6">New Project</p>
               </div>
           </div>
       } 
