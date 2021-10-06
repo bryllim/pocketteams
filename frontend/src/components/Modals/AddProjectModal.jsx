@@ -95,7 +95,7 @@ const AddProjectModal = ({ showModal, hideModal }) => {
                   <img
                     src={projectPic}
                     alt="Project_Pic"
-                    className="rounded-circle fs-3"
+                    className="rounded fs-3"
                     style={{
                       height: "5rem",
                       width: "5rem",

@@ -51,7 +51,7 @@ const ProjectCard = ({data}) => {
           <img
             src="https://via.placeholder.com/150"
             alt=""
-            className="rounded-circle me-3"
+            className="rounded me-3"
             style={{ height: "50px", width: "50px" }}
           />
           <h4>{data.project_name}</h4>
