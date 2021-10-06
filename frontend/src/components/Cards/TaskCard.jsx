@@ -2,6 +2,8 @@ import React, { useState,useEffect,useContext} from "react";
 import SideTask from "../Sidetask";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 import {TaskContext} from "../../contexts/SectionContext"
+import AddIcon from "../../assets_pocketdevs/assets/svg/AddIcon";
+
 const TaskCard = ({item,index,columnId}) => {
   const [showNav, setShowNav] = useState(false);
   const [toggle, setToggle] = useState(true)
@@ -42,8 +44,6 @@ const TaskCard = ({item,index,columnId}) => {
               }}
 
             >
-           
-              
               <div className="d-flex flex-row justify-content-between">
 
               {toggle && name !== '' ?
@@ -51,18 +51,20 @@ const TaskCard = ({item,index,columnId}) => {
               :
               (<input
                 type="text"
+                maxlength="16"
+                className="border-top-0 border-end-0 border-start-0"
                 value={name}
                 onChange={(e) => {
                   setToggle(false)
                   setName(e.target.value)
                 }}
                 autoFocus
-                // onBlur={(e)=>{
-                //   setToggle(true)
-                //   setName(e.target.value)
-                //   e.preventDefault()
-                //   e.stopPropagation()
-                // }}
+                onBlur={(e)=>{
+                  setToggle(true)
+                  editTitle(index,name,item.id,columnId);
+                  e.preventDefault()
+                  e.stopPropagation()
+                }}
                 onKeyDown={(event) => {
                   if (event.key === 'Enter' || event.key === 'Escape') {
                     setToggle(true)
@@ -85,7 +87,7 @@ const TaskCard = ({item,index,columnId}) => {
 
               <p>date</p>
               <div className="d-flex align-items-center">
-                <i className="lni lni-circle-plus fs-2 mx-1"/>
+                <AddIcon class={"bi btn-outline-secondary rounded-circle ico"} />
                 <img
                   src="https://via.placeholder.com/100"
                   alt=""
@@ -93,10 +95,9 @@ const TaskCard = ({item,index,columnId}) => {
                 />
               </div>
             </div>
-            {/* <SideTask show={showNav} hide={setShowNav} /> */}
           </div>)}}
     </Draggable>
-    <SideTask show={showNav} hide={setShowNav} />
+    <SideTask showed={showNav} hide={setShowNav} />
   </div>
   );
 }
