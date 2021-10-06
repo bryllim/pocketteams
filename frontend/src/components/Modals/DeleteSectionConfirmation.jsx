@@ -24,7 +24,7 @@ const DeleteSectionConfirmation = ({ showModal, hideModal,columnId,index }) => {
 
         <Modal.Footer>
           <button
-            className="btn btn-outline-secondary rounded"
+            className="btn btn-outline-secondary  theme-btn-modal rounded-pill"
             onClick={hideModal}
           >
             Cancel

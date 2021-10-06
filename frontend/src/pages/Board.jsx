@@ -251,8 +251,10 @@ const Board = () => {
                                           display: "flex",
                                           flexDirection: "column",
                                           alignItems: "center",
-                                          height:'100%'
+                                          height:'100%',
+                                          
                                         }}
+                                        className = "py-2"
                                         key={columnId}
                                        
                                       >
@@ -275,7 +277,7 @@ const Board = () => {
                   </DragDropContext>
                 
                  
-                    <div className="">
+                    <div className="pt-2">
                         <div className=" d-flex align-items-center justify-content-between border rounded-pill px-5 py-2 text-nowrap btn btn-outline-secondary" 
                           onClick={() =>addColumn(order,setOrder,columns,setColumns)}>
                             <i class="lni lni-plus me-2" ></i>
