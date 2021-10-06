@@ -29,6 +29,10 @@
     cursor: pointer;
 }
 
+.hover-me-text:hover{
+    color: white !important;
+}
+
 .nav-text{
     color: white !important;
 }
