@@ -6,7 +6,7 @@ import AddTaskModal from "../Modals/AddTaskModal";
 import { Dropdown } from "react-bootstrap";
 import DeleteSectionConfirmation from "../Modals/DeleteSectionConfirmation"
 
-const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
+const SectionCard = ({ provided,snapshot,column,columnId,index, }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -52,7 +52,7 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
 
   return (
     <>
-      <Draggable draggableId={columnId} index={index}>
+      <Draggable draggableId={columnId} index={index} >
         {provided => {
           return(
             <div 
