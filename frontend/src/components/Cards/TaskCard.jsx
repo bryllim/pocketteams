@@ -93,10 +93,9 @@ const TaskCard = ({item,index,columnId}) => {
                 />
               </div>
             </div>
-            {/* <SideTask show={showNav} hide={setShowNav} /> */}
           </div>)}}
     </Draggable>
-    <SideTask show={showNav} hide={setShowNav} />
+    <SideTask showed={showNav} hide={setShowNav} />
   </div>
   );
 }

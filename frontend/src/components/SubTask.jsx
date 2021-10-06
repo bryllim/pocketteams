@@ -13,9 +13,9 @@ const SubTask = () => {
       <button
         onClick={handleClick}
         type="button"
-        className="theme-btn theme-btn-sm"
+        className="theme-btn theme-btn-sm label-font"
       >
-        + add subtask
+        + Add subtask
       </button>
 
       {Array.from(Array(counter)).map((c, index) => {

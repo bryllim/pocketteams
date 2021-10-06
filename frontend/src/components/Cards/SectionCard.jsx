@@ -4,7 +4,7 @@ import { Droppable, Draggable} from 'react-beautiful-dnd'
 import {TaskContext} from "../../contexts/SectionContext"
 import AddTaskModal from "../Modals/AddTaskModal";
 
-const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
+const SectionCard = ({ provided,snapshot,column,columnId,index, }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -25,7 +25,7 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
 
   return (
     <>
-      <Draggable draggableId={columnId} index={index}>
+      <Draggable draggableId={columnId} index={index} >
         {provided => {
           return(
             <div 
@@ -33,13 +33,14 @@ const SectionCard = ({ provided,snapshot,column,columnId,index }) => {
               ref={provided.innerRef}
               className="d-flex flex-column section-wrapper mx-2"
             >
-              <div className="d-flex justify-content-between align-items-center ps-3 pe-2 py-2 ">
+              
+              <div className="d-flex justify-content-between align-items-center ps-3 pe-2 py-2">
                 <h5 className="text-white"
                   {...provided.dragHandleProps}
                 >{column.name}</h5>
                 <div>
                   <button class="btn text-white" type="button">
-                    <i class="lni lni-plus fs-5 "></i>
+                    <i class="lni lni-plus fs-5"></i>
                   </button>
               
                   <button class="btn text-white" type="button">
