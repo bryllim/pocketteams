@@ -3,6 +3,7 @@ import SideTask from "../Sidetask";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 import {TaskContext} from "../../contexts/SectionContext"
 import AddIcon from "../../assets_pocketdevs/assets/svg/AddIcon";
+import { Dropdown } from "react-bootstrap";
 
 const TaskCard = ({item,index,columnId}) => {
   const [showNav, setShowNav] = useState(false);
@@ -21,6 +22,17 @@ const TaskCard = ({item,index,columnId}) => {
     setToggle(false)
   }
 
+  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <p
+      ref={ref}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {children}
+    </p>
+));
 
   return (
     <div>
@@ -75,7 +87,24 @@ const TaskCard = ({item,index,columnId}) => {
               />)
             }      
                 {/* <h6>{item.content}</h6> */}
-                <i onClick={() => setShowNav(!showNav)} className="lni lni-pencil p-2"></i>
+
+                <Dropdown>
+                    <Dropdown.Toggle 
+                      as={CustomToggle} 
+                      id="dropdown-custom-components">
+                        <button class="btn p-0" type="button">
+                          <i class="lni lni-pencil p-2"></i>
+                        </button>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                        <Dropdown.Item onClick={()=>setShowNav(!showNav)}>Edit</Dropdown.Item>
+                        <Dropdown.Item onClick={(e)=>{
+                          editTitle(index,'',item.id,columnId);
+                        }}>Remove</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+
+                {/* <i onClick={() => setShowNav(!showNav)} className="lni lni-pencil p-2"></i> */}
               </div>
 
             <p className="px-3 text-limit">Desc scrip scrip scrip ripti oscripti oscripti oscript ios crip tioscrip
