@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import Comment from "../components/Comment";
 import SubTask from "../components/SubTask";
-import Calendar from "react-calendar";
 
 const SideTask = ({ showed, hide }) => {
   const [markTask, setMarkTask] = useState(true);
