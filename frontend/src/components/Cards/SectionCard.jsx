@@ -112,8 +112,7 @@ const SectionCard = ({ provided,snapshot,column,columnId,index, }) => {
                         <Dropdown.Item onClick={openDeleteSection}>Remove</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
-{/*               
-                  ()=>removeSection(columnId,index) */}
+
                   
              
               </div>
