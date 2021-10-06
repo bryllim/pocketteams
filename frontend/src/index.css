@@ -86,8 +86,8 @@ code {
   border-radius: 15px;
   border-bottom-left-radius: 30px;
   border-bottom-right-radius: 30px;
-  background: linear-gradient(to left, #ED213A 0%, #93291E 0%, #ED213A 100%);
-  
+  background: linear-gradient(to left, #ed213a 0%, #93291e 0%, #ed213a 100%);
+
   width: 350px !important;
   max-height: 100%;
 }
@@ -166,31 +166,17 @@ code {
   );
 }
 
-<<<<<<< HEAD
 .add-project-container:hover {
-  background-color: #cccccc !important;
+  background-color: #272727 !important;
+  color: white;
 }
 
 .add-project {
-  font-size: 5em;
-}
-
-.add-project:hover {
-  color: #ed213a;
-  transition-delay: 0.4s;
-=======
-.add-project-container:hover{
-  background-color: #272727 !important;
-  color:white;
-}
-
-.add-project{
   font-size: 6em;
 }
 
-.add-project:hover{
-  background-color: #E2E2E2 !important;
->>>>>>> 1fc7c583ba38ac6c1e792beba37cafe9815846b4
+.add-project:hover {
+  background-color: #e2e2e2 !important;
 }
 
 @media only screen and (max-width: 991px) {
