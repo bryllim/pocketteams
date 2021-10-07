@@ -179,7 +179,6 @@ code {
   background-color: #e2e2e2 !important;
 }
 
-
 @media only screen and (max-width: 991px) {
   .editteam-email {
     display: none;
@@ -217,17 +216,9 @@ code {
 } */
 /* width */
 
-<<<<<<< HEAD
 #style-3::-webkit-scrollbar-track {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #f5f5f5;
-=======
-
-#style-3::-webkit-scrollbar-track
-{
-	box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #F5F5F5;
->>>>>>> b5822adcb658abd7fdb8669306c86f9e85840c6c
 }
 
 #style-3::-webkit-scrollbar {
