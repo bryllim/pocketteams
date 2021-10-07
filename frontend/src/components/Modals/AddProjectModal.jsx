@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Modal, Card, Dropdown, Row, Col } from "react-bootstrap";
+import { Form, Modal, Card, Dropdown, Row, Col, Button, DropdownButton } from "react-bootstrap";
 import ErrorMessage from "../ErrorMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { createProjectAction } from "../../actions/projectActions";
@@ -81,47 +81,45 @@ const AddProjectModal = ({ showModal, hideModal }) => {
           <Form onSubmit={null}>
             {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
             <Form.Group controlId="project_name" className="my-auto p-3">
-              <Form.Label>Title</Form.Label>
               <Row>
-                <Col md="6">
+                <div>
+                  {picMessage && (
+                    <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
+                  )}
+                  <Form.Label className="text-dark ms-5">Project Picture</Form.Label>
+                  <img
+                    src={projectPic}
+                    alt="Project_Pic"
+                    className="rounded fs-3 ms-5"
+                    style={{
+                      height: "6rem",
+                      width: "6rem",
+                      margin: "1rem 0rem",
+                      display: "block",
+                    }}
+                  />
+                  <div className="mx-auto">
+                    <Form.Control 
+                        onChange={(e) => postDetails(e.target.files[0])}
+                        type="file"
+                    />
+                  </div>
+                </div>
+              </Row>
+              <Row>
+                <Form.Group controlId="project_name" className="my-auto p-3">
+                  <Form.Label className="text-dark fs-6">Title</Form.Label>
                   <Form.Control
                     type="title"
                     placeholder="Project Name"
                     onChange={(e) => setProjectName(e.target.value)}
                     label={projectName}
                   />
-                </Col>
-                <Col md="2">
-                  <img
-                    src={projectPic}
-                    alt="Project_Pic"
-                    className="rounded fs-3"
-                    style={{
-                      height: "5rem",
-                      width: "5rem",
-                      display: "block",
-                      margin: "auto",
-                    }}
-                  ></img>
-                </Col>
-                <Col md="4" className="my-auto">
-                  {picMessage && (
-                    <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
-                  )}
-                  <Form.Group controlId="pic">
-                    <Form.File
-                      onChange={(e) => postDetails(e.target.files[0])}
-                      id="custom-file"
-                      className="custom-file-label text-limit"
-                      type="image/png"
-                      custom
-                    />
-                  </Form.Group>
-                </Col>
+                </Form.Group>
               </Row>
             </Form.Group>
             <Form.Group controlId="project_description" className="my-auto p-3">
-              <Form.Label>Description</Form.Label>
+              <Form.Label className="text-dark fs-6">Description</Form.Label>
               <Form.Control
                 as="textarea"
                 value={projectDescription}
@@ -131,14 +129,9 @@ const AddProjectModal = ({ showModal, hideModal }) => {
               />
             </Form.Group>
             <Form.Group className="d-flex my-auto p-3 search-form-box">
-              <Dropdown>
-                <Form.Label>Project Status &nbsp; {projectStatus}</Form.Label>
-                &nbsp;&nbsp;
-                <Dropdown.Toggle
-                  id="dropdown-custom-components dropdown-button-drop-up"
-                  className="option f-dark"
-                ></Dropdown.Toggle>
-                <Dropdown.Menu>
+              <Form.Label className="me-3 my-auto fs-6 text-dark">Project Status</Form.Label>
+              <DropdownButton id="dropdown-item-button" title={projectStatus ? projectStatus: "Status" }>
+                  <Dropdown.ItemText>Project Status</Dropdown.ItemText>
                   <Dropdown.Item
                     href="#/action-1"
                     onClick={(e) => setProjectStatus("Light")}
@@ -157,8 +150,7 @@ const AddProjectModal = ({ showModal, hideModal }) => {
                   >
                     Heavy
                   </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+              </DropdownButton>
             </Form.Group>
           </Form>
         </Modal.Body>
