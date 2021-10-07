@@ -72,8 +72,8 @@ const ProjectCard = ({data}) => {
       :
           <div className="d-flex flex-column sidebar-box basecard project-card hover-me add-project px-4 pb-4 pt-2" onClick={handleShow}>
               <div className="mx-auto my-auto">
-                <i className="lni lni-plus text-dark"></i>
-                <p className="text-dark fs-6">New Project</p>
+                <i className="lni lni-plus text-secondary"></i>
+                <p className="text-secondary fs-6">New Project</p>
               </div>
           </div>
       } 

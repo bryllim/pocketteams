@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Dropdown } from "react-bootstrap";
+import { Dropdown, DropdownButton } from "react-bootstrap";
 import Comment from "../components/Comment";
 import SubTask from "../components/SubTask";
 
@@ -114,18 +114,19 @@ const SideTask = ({ showed, hide }) => {
                   </div>
                   <div className="col-xl py-2 d-flex align-items-center">
                     <label className="label-font me-2">Priority: </label>
-                    <Dropdown className="prio label-font d-flex align-items-center">
-                      <p className="label-font pe-2">{taskStatus}</p>
-                      <Dropdown.Toggle
+                    <DropdownButton id="dropdown-item-button" className="prio label-font d-flex align-items-center" title={taskStatus ? taskStatus : "Status"}>
+                      {/* <p className="label-font pe-2">{taskStatus}</p> */}
+                      <Dropdown.ItemText>Priority</Dropdown.ItemText>
+                      {/* <Dropdown.Toggle
                         id="dropdown-custom-components"
                         className="option f-dark"
-                      ></Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item href="#/action-1" onClick={(e) => setTaskStatus("Light")}>Light</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2" onClick={(e) => setTaskStatus("Medium")}>Medium</Dropdown.Item>
-                        <Dropdown.Item href="#/action-3" onClick={(e) => setTaskStatus("Heavy")}>Heavy</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
+                      ></Dropdown.Toggle> */}
+                      {/* <Dropdown.Menu> */}
+                        <Dropdown.Item onClick={(e) => setTaskStatus("Light")}>Light</Dropdown.Item>
+                        <Dropdown.Item onClick={(e) => setTaskStatus("Medium")}>Medium</Dropdown.Item>
+                        <Dropdown.Item onClick={(e) => setTaskStatus("Heavy")}>Heavy</Dropdown.Item>
+                      {/* </Dropdown.Menu> */}
+                    </DropdownButton>
                   </div>
                 </div>
                 <div className="row">
