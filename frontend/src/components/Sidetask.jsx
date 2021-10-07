@@ -33,7 +33,7 @@ const SideTask = ({ showed, hide }) => {
           <button
             complete={markTask}
             onClick={() => setMarkTask(!markTask)}
-            className="theme-btn theme-btn-sm mb-2"
+            className="theme-btn theme-btn-md mb-2 py-1"
           >
             <i class="lni lni-checkmark-circle pe-2"></i>
             {markTask ? "Mark as complete" : "Completed"}
@@ -165,7 +165,7 @@ const SideTask = ({ showed, hide }) => {
           ></textarea>
         </div>
         <div className="d-flex justify-content-end me-2">
-          <button className="theme-btn theme-btn-md p-2 my-1 label-font">Comment</button>
+          <button className="theme-btn theme-btn-sm py-1 my-1">Comment</button>
         </div>
       </div>
     </div>
