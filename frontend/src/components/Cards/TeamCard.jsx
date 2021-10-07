@@ -56,7 +56,7 @@ const TeamCard = () => {
           height="40"
           fill="currentColor"
           type="button"
-          className="bi btn-outline-secondary bi-plus-circle-dotted rounded-circle"
+          className="bi btn-outline-secondary bi-plus-circle-dotted rounded-circle mx-1"
           viewBox="0 0 16 16"
           onClick={handleShow}
         >
@@ -66,13 +66,13 @@ const TeamCard = () => {
         <img
           src="https://via.placeholder.com/100"
           alt=""
-          className="rounded-circle"
+          className="rounded-circle mx-1"
           style={{ width: "auto", height: "40px" }}
         />
         <img
           src="https://via.placeholder.com/100"
           alt=""
-          className="rounded-circle"
+          className="rounded-circle mx-1"
           style={{ width: "auto", height: "40px" }}
         />
 

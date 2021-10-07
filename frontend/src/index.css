@@ -185,6 +185,7 @@ code {
   background-color: #E2E2E2 !important;
 }
 
+
 @media only screen and (max-width: 991px) {
   .editteam-email{
     display:none;
@@ -222,7 +223,6 @@ code {
  
 } */
 /* width */
-
 
 
 #style-3::-webkit-scrollbar-track
