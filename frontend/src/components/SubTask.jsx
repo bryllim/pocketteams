@@ -13,7 +13,7 @@ const SubTask = () => {
       <button
         onClick={handleClick}
         type="button"
-        className="theme-btn theme-btn-sm label-font"
+        className="theme-btn theme-btn-sm"
       >
         + Add subtask
       </button>

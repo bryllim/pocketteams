@@ -3,7 +3,7 @@ import { Form, Modal, Card, Dropdown, Row, Col, Button, DropdownButton } from "r
 import ErrorMessage from "../ErrorMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { createProjectAction } from "../../actions/projectActions";
-import ReactMarkdown from "react-markdown";
+// import ReactMarkdown from "react-markdown";
 
 const AddProjectModal = ({ showModal, hideModal }) => {
   const [projectName, setProjectName] = useState("");
