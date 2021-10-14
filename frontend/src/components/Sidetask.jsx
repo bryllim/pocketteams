@@ -5,7 +5,6 @@ import SubTask from "../components/SubTask";
 
 const SideTask = ({ showed, hide }) => {
   const [markTask, setMarkTask] = useState(true);
-  const [taskStatus, setTaskStatus] = useState("set priority");
   const [sectionName, setSectionName] = useState("section name");
   const [user, setUser] = useState("assign user");
 
@@ -47,7 +46,7 @@ const SideTask = ({ showed, hide }) => {
         </div>
 
         <hr className="default mt-0" />
-        
+
         <div className="scrolling-section scrolling-wrapper-y overflow-x-hidden">
           <div className="py-2">
             <form>
@@ -79,11 +78,13 @@ const SideTask = ({ showed, hide }) => {
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                           <Dropdown.Item
+                            className="label-font-fw"
                             onClick={(e) => setSectionName("Requested")}
                           >
                             Requested
                           </Dropdown.Item>
                           <Dropdown.Item
+                            className="label-font-fw"
                             onClick={(e) => setSectionName("To Do")}
                           >
                             To Do
@@ -105,10 +106,16 @@ const SideTask = ({ showed, hide }) => {
                           <i class="lni lni-user mx-2 line-icon p-2 sidetask-btn"></i>
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                          <Dropdown.Item onClick={(e) => setUser("User 1")}>
+                          <Dropdown.Item
+                            className="label-font-fw"
+                            onClick={(e) => setUser("User 1")}
+                          >
                             User 1
                           </Dropdown.Item>
-                          <Dropdown.Item onClick={(e) => setUser("User 2")}>
+                          <Dropdown.Item
+                            className="label-font-fw"
+                            onClick={(e) => setUser("User 2")}
+                          >
                             User 2
                           </Dropdown.Item>
                         </Dropdown.Menu>
@@ -130,30 +137,23 @@ const SideTask = ({ showed, hide }) => {
                   </div>
                   <div className="col-xl py-2 d-flex align-items-center">
                     <label className="label-font me-2">Priority: </label>
-                    <DropdownButton
-                      id="dropdown-item-button"
-                      size="sm"
-                      className="prio"
-                      title={taskStatus ? taskStatus : setTaskStatus}
-                    >
-                      {/* <p className="label-font pe-2">{taskStatus}</p> */}
-                      <Dropdown.ItemText>Priority</Dropdown.ItemText>
-                      {/* <Dropdown.Toggle
-                        id="dropdown-custom-components"
-                        className="option f-dark"
-                      ></Dropdown.Toggle> */}
-                      {/* <Dropdown.Menu> */}
-                      <Dropdown.Item onClick={(e) => setTaskStatus("Light")}>
+                    <select class="form-select form-select-sm label-font ms-3">
+                      <option
+                        className="form-select-option label-font-fw"
+                        selected
+                      >
+                        select priority
+                      </option>
+                      <option className="form-select-option" value="1">
                         Light
-                      </Dropdown.Item>
-                      <Dropdown.Item onClick={(e) => setTaskStatus("Medium")}>
+                      </option>
+                      <option className="form-select-option" value="2">
                         Medium
-                      </Dropdown.Item>
-                      <Dropdown.Item onClick={(e) => setTaskStatus("Heavy")}>
+                      </option>
+                      <option className="form-select-option" value="3">
                         Heavy
-                      </Dropdown.Item>
-                      {/* </Dropdown.Menu> */}
-                    </DropdownButton>
+                      </option>
+                    </select>
                   </div>
                 </div>
                 <div className="row">
