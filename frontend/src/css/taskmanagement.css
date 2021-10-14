@@ -93,12 +93,23 @@ ul li a {
 }
 
 .prio {
-  background-color: #fff;
-  padding: 0 0.4em;
-  border: none;
-  font-size: 0.75rem;
-  margin-left: 1.3em;
-  transition: all 0.5s ease;
+  background: #fff;
+  color: #000;
+}
+
+.light {
+  background: #dc3546ab;
+  color: #fff;
+}
+
+.medium {
+  background: #dc3546da;
+  color: #fff;
+}
+
+.heavy {
+  background: #dc3546;
+  color: #fff;
 }
 
 .option {

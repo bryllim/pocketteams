@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Dropdown, DropdownButton } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 import Comment from "../components/Comment";
 import SubTask from "../components/SubTask";
 
@@ -7,6 +7,9 @@ const SideTask = ({ showed, hide }) => {
   const [markTask, setMarkTask] = useState(true);
   const [sectionName, setSectionName] = useState("section name");
   const [user, setUser] = useState("assign user");
+  const [color, setColor] = useState(
+    "form-select form-select-sm label-font ms-3"
+  );
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p
@@ -19,6 +22,21 @@ const SideTask = ({ showed, hide }) => {
       {children}
     </p>
   ));
+
+  const reClass = () => {
+    let val = document.getElementById("test").value;
+    console.log(val);
+
+    if (val == 1) {
+      setColor("form-select form-select-sm label-font ms-3 light");
+    } else if (val == 2) {
+      setColor("form-select form-select-sm label-font ms-3 medium");
+    } else if (val == 3) {
+      setColor("form-select form-select-sm label-font ms-3 heavy");
+    } else if (val === "select priority") {
+      setColor("form-select form-select-sm label-font ms-3 prio");
+    }
+  };
 
   return (
     <div
@@ -137,20 +155,25 @@ const SideTask = ({ showed, hide }) => {
                   </div>
                   <div className="col-xl py-2 d-flex align-items-center">
                     <label className="label-font me-2">Priority: </label>
-                    <select class="form-select form-select-sm label-font ms-3">
+                    <select
+                      className={color}
+                      id="test"
+                      onChange={reClass}
+                      aria-label="form-select-sm example"
+                    >
                       <option
-                        className="form-select-option label-font-fw"
-                        selected
+                        className="form-select-option label-font-fw prio"
+                        default
                       >
                         select priority
                       </option>
-                      <option className="form-select-option" value="1">
+                      <option className="light" value="1">
                         Light
                       </option>
-                      <option className="form-select-option" value="2">
+                      <option className="medium" value="2">
                         Medium
                       </option>
-                      <option className="form-select-option" value="3">
+                      <option className="heavy" value="3">
                         Heavy
                       </option>
                     </select>
