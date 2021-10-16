@@ -1,13 +1,15 @@
 import React, { useState } from "react";
-import { Dropdown, DropdownButton } from "react-bootstrap";
+import { Dropdown } from "react-bootstrap";
 import Comment from "../components/Comment";
 import SubTask from "../components/SubTask";
 
 const SideTask = ({ showed, hide }) => {
   const [markTask, setMarkTask] = useState(true);
-  const [taskStatus, setTaskStatus] = useState("set priority");
   const [sectionName, setSectionName] = useState("section name");
   const [user, setUser] = useState("assign user");
+  const [color, setColor] = useState(
+    "form-select form-select-sm label-font ms-3"
+  );
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p
@@ -20,6 +22,20 @@ const SideTask = ({ showed, hide }) => {
       {children}
     </p>
   ));
+
+  const reClass = () => {
+    let val = document.getElementById("test").value;
+
+    if (val == 1) {
+      setColor("form-select form-select-sm label-font ms-3 light");
+    } else if (val == 2) {
+      setColor("form-select form-select-sm label-font ms-3 medium");
+    } else if (val == 3) {
+      setColor("form-select form-select-sm label-font ms-3 heavy");
+    } else if (val === "select priority") {
+      setColor("form-select form-select-sm label-font ms-3 prio");
+    }
+  };
 
   return (
     <div
@@ -47,7 +63,7 @@ const SideTask = ({ showed, hide }) => {
         </div>
 
         <hr className="default mt-0" />
-        
+
         <div className="scrolling-section scrolling-wrapper-y overflow-x-hidden">
           <div className="py-2">
             <form>
@@ -79,11 +95,13 @@ const SideTask = ({ showed, hide }) => {
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                           <Dropdown.Item
+                            className="label-font-fw"
                             onClick={(e) => setSectionName("Requested")}
                           >
                             Requested
                           </Dropdown.Item>
                           <Dropdown.Item
+                            className="label-font-fw"
                             onClick={(e) => setSectionName("To Do")}
                           >
                             To Do
@@ -105,10 +123,16 @@ const SideTask = ({ showed, hide }) => {
                           <i class="lni lni-user mx-2 line-icon p-2 sidetask-btn"></i>
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                          <Dropdown.Item onClick={(e) => setUser("User 1")}>
+                          <Dropdown.Item
+                            className="label-font-fw"
+                            onClick={(e) => setUser("User 1")}
+                          >
                             User 1
                           </Dropdown.Item>
-                          <Dropdown.Item onClick={(e) => setUser("User 2")}>
+                          <Dropdown.Item
+                            className="label-font-fw"
+                            onClick={(e) => setUser("User 2")}
+                          >
                             User 2
                           </Dropdown.Item>
                         </Dropdown.Menu>
@@ -130,30 +154,29 @@ const SideTask = ({ showed, hide }) => {
                   </div>
                   <div className="col-xl py-2 d-flex align-items-center">
                     <label className="label-font me-2">Priority: </label>
-                    <DropdownButton
-                      id="dropdown-item-button"
-                      size="sm"
-                      className="prio"
-                      title={taskStatus ? taskStatus : setTaskStatus}
+                    <select
+                      className={color}
+                      aria-label="form-select-sm example"
+                      id="test"
+                      onChange={reClass}
                     >
-                      {/* <p className="label-font pe-2">{taskStatus}</p> */}
-                      <Dropdown.ItemText>Priority</Dropdown.ItemText>
-                      {/* <Dropdown.Toggle
-                        id="dropdown-custom-components"
-                        className="option f-dark"
-                      ></Dropdown.Toggle> */}
-                      {/* <Dropdown.Menu> */}
-                      <Dropdown.Item onClick={(e) => setTaskStatus("Light")}>
+                      <option
+                        className="form-select-option label-font-fw prio"
+                        aria-label="form-select-sm example"
+                        default
+                      >
+                        select priority
+                      </option>
+                      <option className="light" value="1">
                         Light
-                      </Dropdown.Item>
-                      <Dropdown.Item onClick={(e) => setTaskStatus("Medium")}>
+                      </option>
+                      <option className="medium" value="2">
                         Medium
-                      </Dropdown.Item>
-                      <Dropdown.Item onClick={(e) => setTaskStatus("Heavy")}>
+                      </option>
+                      <option className="heavy" value="3">
                         Heavy
-                      </Dropdown.Item>
-                      {/* </Dropdown.Menu> */}
-                    </DropdownButton>
+                      </option>
+                    </select>
                   </div>
                 </div>
                 <div className="row">
