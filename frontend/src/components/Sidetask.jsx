@@ -25,7 +25,6 @@ const SideTask = ({ showed, hide }) => {
 
   const reClass = () => {
     let val = document.getElementById("test").value;
-    console.log(val);
 
     if (val == 1) {
       setColor("form-select form-select-sm label-font ms-3 light");
@@ -157,12 +156,13 @@ const SideTask = ({ showed, hide }) => {
                     <label className="label-font me-2">Priority: </label>
                     <select
                       className={color}
+                      aria-label="form-select-sm example"
                       id="test"
                       onChange={reClass}
-                      aria-label="form-select-sm example"
                     >
                       <option
                         className="form-select-option label-font-fw prio"
+                        aria-label="form-select-sm example"
                         default
                       >
                         select priority
