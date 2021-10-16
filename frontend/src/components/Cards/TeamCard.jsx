@@ -44,12 +44,13 @@ const TeamCard = () => {
         </Dropdown>
         </button>
         </h4>
-  
+        <div className="d-flex">
         <Accordion.Toggle as={Button} variant="link" eventKey="0">
           <button type="button" className="btn  p-0 ">
             <i className="bi bi-caret-right-fill" />
           </button>
         </Accordion.Toggle>
+        
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="40"
@@ -75,6 +76,24 @@ const TeamCard = () => {
           className="rounded-circle mx-1"
           style={{ width: "auto", height: "40px" }}
         />
+
+        <img
+          src="https://via.placeholder.com/100"
+          alt=""
+          className="rounded-circle mx-1"
+          style={{ width: "auto", height: "40px" }}
+        />
+
+        <img
+          src="https://via.placeholder.com/100"
+          alt=""
+          className="rounded-circle mx-1"
+          style={{ width: "auto", height: "40px" }}
+        />
+
+        <p className="rounded-circle mx-1 extra-members">+3</p>
+        
+        </div>
 
         <Accordion.Collapse eventKey="0">
           <Card.Body>

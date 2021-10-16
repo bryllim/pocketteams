@@ -37,6 +37,16 @@
     color: white !important;
 }
 
+.extra-members{
+    background-color: #cccccc;
+    width: 40px;
+    height: 40px; 
+    text-align: center;
+    padding-top: 0.4rem;
+    padding-left: 0.7rem;
+    padding-right: 0.7rem;
+}
+
 .notes-text{
     border-width: 0;
     -webkit-box-sizing: border-box;

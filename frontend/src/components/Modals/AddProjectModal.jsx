@@ -82,29 +82,30 @@ const AddProjectModal = ({ showModal, hideModal }) => {
             {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
             <Form.Group controlId="project_name" className="my-auto p-3">
               <Row>
-                <div>
+                <Col md="3">
                   {picMessage && (
                     <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
                   )}
-                  <Form.Label className="text-dark ms-5">Project Picture</Form.Label>
+                  <Form.Label className="text-dark ms-2">Project Picture</Form.Label>
                   <img
                     src={projectPic}
                     alt="Project_Pic"
-                    className="rounded fs-3 ms-5"
+                    className="rounded fs-3 ms-2"
                     style={{
                       height: "6rem",
                       width: "6rem",
                       margin: "1rem 0rem",
                       display: "block",
+                      objectFit: "cover"
                     }}
                   />
-                  <div className="mx-auto">
+                  </Col>
+                  <Col md="9" className="my-auto">
                     <Form.Control 
                         onChange={(e) => postDetails(e.target.files[0])}
                         type="file"
                     />
-                  </div>
-                </div>
+                  </Col>
               </Row>
               <Row>
                 <Form.Group controlId="project_name" className="my-auto p-3">
