@@ -14,7 +14,7 @@ const createProject = asyncHandler( async (req,res) => {
         throw new Error("Please Fill all the Fields");
     } else {
         const project = new Project({user: req.user._id, project_name, project_status, project_description});
-
+        
         const createdProject = await project.save();
 
         res.status(201).json(createdProject);

@@ -11,6 +11,7 @@ export const listProjects = () => async (dispatch, getState) => {
         userLogin: {userInfo},
     } = getState();
 
+    
     const config = {
         headers: {
             Authorization: `Bearer ${userInfo.token}`,

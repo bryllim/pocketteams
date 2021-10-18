@@ -91,7 +91,7 @@ const TeamCard = () => {
           style={{ width: "auto", height: "40px" }}
         />
 
-        <p className="rounded-circle mx-1 extra-members">+3</p>
+        <p className="rounded-circle mx-1 extra-members hover-me">+3</p>
         
         </div>
 

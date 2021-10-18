@@ -47,6 +47,12 @@
     padding-right: 0.7rem;
 }
 
+.extra-members:hover{
+    color: black;
+    border: 0.5px black dashed ;
+    background-color: white;
+}
+
 .notes-text{
     border-width: 0;
     -webkit-box-sizing: border-box;
