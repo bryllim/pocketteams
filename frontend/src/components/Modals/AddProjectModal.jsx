@@ -17,6 +17,21 @@ const AddProjectModal = ({ showModal, hideModal }) => {
   const dispatch = useDispatch();
   const projectCreate = useSelector((state) => state.projectCreate);
   const { loading, error, project } = projectCreate;
+  const [color, setColor] = useState("form-select form-select-sm ms-3");
+
+  const reClass = () => {
+    let val = document.getElementById("test").value;
+
+    if (val == 1) {
+      setColor("form-select form-select-sm ms-3 light");
+    } else if (val == 2) {
+      setColor("form-select form-select-sm ms-3 medium");
+    } else if (val == 3) {
+      setColor("form-select form-select-sm ms-3 heavy");
+    } else if (val == "select priority") {
+      setColor("form-select form-select-sm ms-3 prio");
+    }
+  };
 
   const postDetails = (pics) => {
     if (
@@ -82,29 +97,30 @@ const AddProjectModal = ({ showModal, hideModal }) => {
             {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
             <Form.Group controlId="project_name" className="my-auto p-3">
               <Row>
-                <div>
+                <Col md="3">
                   {picMessage && (
                     <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
                   )}
-                  <Form.Label className="text-dark ms-5">Project Picture</Form.Label>
+                  <Form.Label className="text-dark ms-2">Project Picture</Form.Label>
                   <img
                     src={projectPic}
                     alt="Project_Pic"
-                    className="rounded fs-3 ms-5"
+                    className="rounded fs-3 ms-2"
                     style={{
                       height: "6rem",
                       width: "6rem",
                       margin: "1rem 0rem",
                       display: "block",
+                      objectFit: "cover"
                     }}
                   />
-                  <div className="mx-auto">
+                  </Col>
+                  <Col md="9" className="my-auto">
                     <Form.Control 
                         onChange={(e) => postDetails(e.target.files[0])}
                         type="file"
                     />
-                  </div>
-                </div>
+                  </Col>
               </Row>
               <Row>
                 <Form.Group controlId="project_name" className="my-auto p-3">
@@ -129,7 +145,32 @@ const AddProjectModal = ({ showModal, hideModal }) => {
               />
             </Form.Group>
             <Form.Group className="d-flex my-auto p-3 search-form-box">
-              <Form.Label className="me-3 my-auto fs-6 text-dark">Project Status</Form.Label>
+            <Form.Label className="text-dark fs-6 my-auto"> Project Status:  </Form.Label>
+                    <select
+                      className={color}
+                      aria-label="form-select-sm example"
+                      id="test"
+                      onChange={reClass}
+                    >
+                      <option
+                        className="form-select form-select-sm"
+                        default
+                      >
+                        select priority
+                      </option>
+                      <option className="light form-select-sm" value="1">
+                        Light
+                      </option>
+                      <option className="medium form-select-sm" value="2">
+                        Medium
+                      </option>
+                      <option className="heavy form-select-sm" value="3">
+                        Heavy
+                      </option>
+                    </select>
+
+              
+              {/* <Form.Label className="me-3 my-auto fs-6 text-dark">Project Status</Form.Label>
               <DropdownButton id="dropdown-item-button" title={projectStatus ? projectStatus: "Status" }>
                   <Dropdown.ItemText>Project Status</Dropdown.ItemText>
                   <Dropdown.Item
@@ -150,7 +191,7 @@ const AddProjectModal = ({ showModal, hideModal }) => {
                   >
                     Heavy
                   </Dropdown.Item>
-              </DropdownButton>
+              </DropdownButton> */}
             </Form.Group>
           </Form>
         </Modal.Body>
