@@ -14,14 +14,14 @@ const createProject = asyncHandler( async (req,res) => {
         throw new Error("Please Fill all the Fields");
     } else {
         const project = new Project({user: req.user._id, project_name, project_status, project_description});
-        
+
         const createdProject = await project.save();
 
         res.status(201).json(createdProject);
     }
 });
 
-const getNoteById = asyncHandler( async (req,res) => {
+const getProjectById = asyncHandler( async (req,res) => {
     const project = await Project.findById(req.params.id);
 
     if(project){
@@ -71,4 +71,4 @@ const deleteProject = asyncHandler(async (req,res) => {
     
 });
 
-module.exports = {getProjects, createProject, updateProject, deleteProject, getNoteById};
+module.exports = {getProjects, createProject, updateProject, deleteProject, getProjectById};

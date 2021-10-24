@@ -67,8 +67,8 @@ const ProjectCard = ({data}) => {
             </blockquote>
           </div>
         </div>
+        <EditProjectModal data={data} showModal={editShow} hideModal={handleEditClose}/>
       </div>
-
       :
           <div className="d-flex flex-column sidebar-box basecard project-card hover-me add-project px-4 pb-4 pt-2" onClick={handleShow}>
               <div className="mx-auto my-auto">
@@ -77,7 +77,6 @@ const ProjectCard = ({data}) => {
               </div>
           </div>
       } 
-      <EditProjectModal data_id={`/`} showModal={editShow} hideModal={handleEditClose}/>
       <AddProjectModal showModal={show} hideModal={handleClose} />
     </div>
   );

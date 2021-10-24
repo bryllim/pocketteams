@@ -168,30 +168,6 @@ const AddProjectModal = ({ showModal, hideModal }) => {
                         Heavy
                       </option>
                     </select>
-
-              
-              {/* <Form.Label className="me-3 my-auto fs-6 text-dark">Project Status</Form.Label>
-              <DropdownButton id="dropdown-item-button" title={projectStatus ? projectStatus: "Status" }>
-                  <Dropdown.ItemText>Project Status</Dropdown.ItemText>
-                  <Dropdown.Item
-                    href="#/action-1"
-                    onClick={(e) => setProjectStatus("Light")}
-                  >
-                    Light
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    href="#/action-2"
-                    onClick={(e) => setProjectStatus("Medium")}
-                  >
-                    Medium
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    href="#/action-3"
-                    onClick={(e) => setProjectStatus("Heavy")}
-                  >
-                    Heavy
-                  </Dropdown.Item>
-              </DropdownButton> */}
             </Form.Group>
           </Form>
         </Modal.Body>

@@ -45,9 +45,9 @@ const LandingPage = ({history}) => {
                                     <Image src={heroImage} alt="" className="image wow fadeInRight"
                                         data-wow-delay=".5s" />
                                     <Image src={dotShape} alt="" className="dot-shape" />
-                                    <div className="video-btn">
+                                    {/* <div className="video-btn">
                                         <a href="#features" className="glightbox"><i className="lni lni-display"></i></a>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
