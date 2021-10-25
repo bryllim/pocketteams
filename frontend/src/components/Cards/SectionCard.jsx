@@ -6,7 +6,10 @@ import AddTaskModal from "../Modals/AddTaskModal";
 import { Dropdown } from "react-bootstrap";
 import DeleteSectionConfirmation from "../Modals/DeleteSectionConfirmation"
 
-const SectionCard = ({ provided,snapshot,column,columnId,index, }) => {
+
+
+const SectionCard = ({ provided,snapshot,column,columnId,index,section}) => {
+  //rework
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -20,7 +23,7 @@ const SectionCard = ({ provided,snapshot,column,columnId,index, }) => {
   const closeDeleteSection = () => setShowDeleteSection(false)
   const openDeleteSection = () => setShowDeleteSection(true)
 
-  const [sectionTitle, setSectiontitle] = useState(column.name)
+  const [sectionTitle, setSectiontitle] = useState(section.section_name)
   const [sectionToggleState,setSectionToggleState] = useState(true)
 
 
@@ -38,27 +41,28 @@ const SectionCard = ({ provided,snapshot,column,columnId,index, }) => {
     </p>
 ));
 
-  const {addTask,columns,setColumns,changeSectionTitle} = useContext(TaskContext)
+  // const {addTask,columns,setColumns,changeSectionTitle} = useContext(TaskContext)
     
-  const changeSection = () =>{
-    if(sectionTitle === ''){
-      openDeleteSection()
-    }
-    else{
-      changeSectionTitle({index,columnId,sectionTitle})
-    }
+  // const changeSection = () =>{
+  //   if(sectionTitle === ''){
+  //     openDeleteSection()
+  //   }
+  //   else{
+  //     changeSectionTitle({index,columnId,sectionTitle})
+  //   }
       
-  }
+  // }
 
   return (
     <>
-      <Draggable draggableId={columnId} index={index} >
+      <Draggable draggableId={section._id} index={index} >
         {provided => {
           return(
             <div 
               {...provided.draggableProps}
               ref={provided.innerRef}
               className="d-flex flex-column section-wrapper mx-2"
+              
             >
               <div className="d-flex justify-content-between align-items-center ps-3 pe-2 py-2 ">
                 {sectionToggleState && sectionTitle !== '' ?
@@ -80,14 +84,14 @@ const SectionCard = ({ provided,snapshot,column,columnId,index, }) => {
                     autoFocus
                     onBlur={(e)=>{
                       setSectionToggleState(true)
-                      changeSection()
+                      // changeSection()
                       e.preventDefault()
                       e.stopPropagation()
                     }}
                     onKeyDown={(event) => {
                       if (event.key === 'Enter' || event.key === 'Escape') {
                         setSectionToggleState(true)
-                        changeSection()
+                        // changeSection()
                         event.preventDefault()
                         event.stopPropagation()
                       }}} 
@@ -95,16 +99,16 @@ const SectionCard = ({ provided,snapshot,column,columnId,index, }) => {
                 }
                 
 
-                  <button class="btn text-white ms-auto"  onClick={() => addTask(columnId,columns,setColumns)} type="button">
-                    <i class="lni lni-plus fs-5 "></i>
+                  <button className="btn text-white ms-auto" type="button">
+                    <i className="lni lni-plus fs-5 "></i>
                   </button>
 
                   <Dropdown>
                     <Dropdown.Toggle 
                       as={CustomToggle} 
                       id="dropdown-custom-components">
-                        <button class="btn text-white" type="button">
-                          <i class="lni lni-more-alt fs-5 "></i>
+                        <button className="btn text-white" type="button">
+                          <i className="lni lni-more-alt fs-5 "></i>
                         </button>
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
@@ -116,36 +120,40 @@ const SectionCard = ({ provided,snapshot,column,columnId,index, }) => {
                   
              
               </div>
-              <Droppable droppableId={columnId} key={columnId} type="task">
+          <Droppable droppableId={section._id} key={index} type="task">
                 {(provided,snapshot) => {
+                  
+
                   return(
+                  
                     <div 
                       {...provided.droppableProps}
                       ref={provided.innerRef}
-                      className=" section-wrapper-internal scrolling-wrapper-y flex-nowrap pt-4 basecard"
-                    >
-                      {column.items.map((item, index) => {
+                      className="section-wrapper-internal scrolling-wrapper-y flex-nowrap pt-4 basecard">
+
+                      {section.tasks.map((task, index) => {
                         return (
-                          <>
-                            <TaskCard
-                              columnId={columnId}
-                              provided={provided}
-                              snapshot={snapshot}
-                              item={item}
-                              index={index}
-                            />
-                          </>
-                        )})}
+                          <div key={index}>
+                          <TaskCard
+                            columnId={columnId}
+                            // provided={provided}
+                            // snapshot={snapshot}
+                            task={task}
+                            index={index}
+                          />
+                          </div>       
+                        )
+                      })}
                       {provided.placeholder}
-                        <div class="d-flex justify-content-center align-items-center theme-btn mx-auto my-4"  
-                          onClick={() => addTask(columnId,columns,setColumns)} style={{width:"250px", height:"50px"}}>
-                          <button class="btn" type="button">
-                              <i class="lni lni-plus text-white"></i>
-                          </button>
-                          <h6 class="text-white">Add Another</h6>
-                        </div>
-                        
-                    </div> 
+                      <div className="d-flex justify-content-center align-items-center theme-btn mx-auto my-4"  
+                      style={{width:"250px", height:"50px"}}>
+                            <button className="btn" type="button">
+                                <i className="lni lni-plus text-white"></i>
+                            </button>
+                            <h6 className="text-white">Add Another</h6>
+                      </div>
+                    </div>
+                     
                   )
                 }}  
               </Droppable> 
