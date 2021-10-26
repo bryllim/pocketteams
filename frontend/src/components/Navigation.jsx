@@ -59,8 +59,8 @@ const Navigation = () => {
                           }
                       </li>
                       <li className="nav-item">
-                          {isActive ? <a className="page-scroll" href="https://pocketdevs.online/#contact">Contact</a>:
-                            <a className="page-scroll nav-text" href="https://pocketdevs.online/#contact">Contact</a>
+                          {isActive ? <a className="page-scroll" href="https://pocketdevs.ph/#contact">Contact</a>:
+                            <a className="page-scroll nav-text" href="https://pocketdevs.ph/#contact">Contact</a>
                           }
                       </li>
                       <li className="nav-item">

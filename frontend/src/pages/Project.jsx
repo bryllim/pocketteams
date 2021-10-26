@@ -20,15 +20,18 @@ const Project = () => {
   const { success: successCreate} = projectCreate;
 
   const dispatch = useDispatch();
-  const projectList = useSelector(state => state.projectList);
+  const projectList = useSelector((state) => state.projectList);
   const { loading, projects, error } = projectList;
+
+  const projectUpdate = useSelector(state => state.projectUpdate);
+  const { success: successUpdate}  = projectUpdate;
 
   useEffect(() => {
     if (userInfo) {
       history.push("/project");
     }
     dispatch(listProjects());
-  }, [dispatch, successCreate, history, userInfo]);
+  }, [dispatch, successCreate, successUpdate, history, userInfo]);
 
   return (
     <>
