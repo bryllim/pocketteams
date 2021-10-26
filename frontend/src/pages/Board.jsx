@@ -9,7 +9,7 @@ import "../css/board.css"
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { listTasks } from "../actions/taskActions";
-import { listSection } from "../actions/sectionActions";
+import { listSection, updateSection } from "../actions/sectionActions";
 // import { onDragEnd,addColumn, editTitle} from "../functions/TaskFunctions";
 import {onDragEnd} from "../functions/dragDropFunctions"
 
@@ -45,14 +45,32 @@ import {onDragEnd} from "../functions/dragDropFunctions"
 
 
 
-
 const Board = () => {
-
   const dispatch = useDispatch();
-  const sectionList = useSelector((state) => state.sectionList);
+
+  // const onDragDrop = ({result, sections, sectionOrder}) =>{
+  //   onDragEnd({result, sections, sectionOrder})
+    
+  //   dispatch({
+  //     type: SECTION_LIST_SUCCESS,
+  //     payload: {data,sectionOrder}
+  //   })
+  // }
+  
+
+  const sectionData = useSelector((state) => state.sectionList);
   // const {sections,loading, error} = sectionList;
-  const sections = sectionList;
-  // const [columns, setColumns] = useState(columnList);
+
+  const dataList = sectionData.sections.data; //change this
+  const sectionOrder = sectionData.sections.sectionOrder;
+  const [sections, setSections] = useState(dataList);
+
+
+  const onDrag = ({result}) =>{
+    const {sourceSectionId,destinationSectionId,taskId} = onDragEnd({result,sections, sectionOrder, setSections})
+    dispatch(updateSection({sourceSectionId,destinationSectionId,taskId}));
+  }
+
   // const [order,setOrder] = useState(columnOrder)
   // const [tasks, setTask] = useState(itemsFromBackend)
   // const columnOrderList = useSelector(state => state.columnOrderList);
@@ -78,9 +96,14 @@ const Board = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
+  // useEffect(() => {
+  //   dispatch(updateSections({sourceSectionId,destinationSectionId,taskId}));
+  // },[sections])
+
   useEffect(() => {
-      console.log(sections.sections)
-  },[sections])
+      setSections(dataList)
+      // console.log(sectionData)
+  },[dataList])
 
   useEffect(() => {
     if (!userInfo) {
@@ -89,6 +112,7 @@ const Board = () => {
     dispatch(listSection());
   },[history, userInfo, dispatch])
 
+    
   
 
   
@@ -169,7 +193,7 @@ const Board = () => {
             </Breadcrumb></h3>
                   <div className="d-flex scrolling-wrapper-x flex-nowrap flex-grow-1 task-board-wrapper my-3" >
                   <DragDropContext
-                    onDragEnd={result => onDragEnd(result, sections.sections)}
+                    onDragEnd={result => onDrag({result})}
                   >
                     <Droppable 
                       droppableId="all-columns" direction="horizontal" type="column"
@@ -187,8 +211,10 @@ const Board = () => {
                             className="pb-3"
                           >
                            
-                           {sections.sections?(sections.sections.map((section,index)=>{
-                              // const column = columns[columnId]
+                           {(sectionOrder && sections)?(sectionOrder.map((sectionId,index)=>{
+                             const section = sections.filter(obj => {
+                              return obj._id === sectionId
+                            })[0]
                               return (
                                
                                       <div                                

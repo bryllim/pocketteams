@@ -120,7 +120,7 @@ const SectionCard = ({ provided,snapshot,column,columnId,index,section}) => {
                   
              
               </div>
-          <Droppable droppableId={section._id} key={index} type="task">
+          <Droppable droppableId={section._id} key={index} id="task">
                 {(provided,snapshot) => {
                   
 
@@ -130,19 +130,18 @@ const SectionCard = ({ provided,snapshot,column,columnId,index,section}) => {
                       {...provided.droppableProps}
                       ref={provided.innerRef}
                       className="section-wrapper-internal scrolling-wrapper-y flex-nowrap pt-4 basecard">
-
-                      {section.tasks.map((task, index) => {
-                        return (
-                          <div key={index}>
-                          <TaskCard
-                            columnId={columnId}
-                            // provided={provided}
-                            // snapshot={snapshot}
-                            task={task}
-                            index={index}
-                          />
-                          </div>       
-                        )
+                        {section.tasks.map((task, index) => {
+                          return (
+                            <div key={index}>
+                            <TaskCard
+                              columnId={columnId}
+                              provided={provided}
+                              snapshot={snapshot}
+                              task={task}
+                              index={index}
+                            />
+                            </div>       
+                          )
                       })}
                       {provided.placeholder}
                       <div className="d-flex justify-content-center align-items-center theme-btn mx-auto my-4"  

@@ -45,11 +45,9 @@ const TaskCard = ({task,index,columnId}) => {
           return (
             <div
               className="d-flex flex-column task-wrapper rounded"
-
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
-
               style={{
                 userSelect: "none",
                 ...provided.draggableProps.style

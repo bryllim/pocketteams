@@ -1,10 +1,16 @@
-const onDragEnd = (result, sections) => {
+const onDragEnd = ({result, sections, sectionOrder, setSections}) => {
+  
     const { source, destination, type } = result;
+    
+
+    const newSections = [...sections]
     // console.log(destination)
     // console.log(result.destination)
-    console.log(source)
-    console.log(destination)
-    console.log(sections)
+    // console.log(source)
+    // console.log(destination)
+    // console.log(result)
+    // console.log(sections)
+
     if (!result.destination) return;
 
     //if dragging in column
@@ -20,29 +26,55 @@ const onDragEnd = (result, sections) => {
     //   return
     // }
     if (source.droppableId !== destination.droppableId) {
-      const sourceSection= sections[source.index];
-      const destSection= sections[destination.index];
+      const sourceSectionId = source.droppableId
+      const destinationSectionId = destination.droppableId
+      const taskId = result.draggableId
+
+      const sourceIndex = sectionOrder.indexOf(source.droppableId)
+      const destinationIndex = sectionOrder.indexOf(destination.droppableId)
+      const sourceSection = newSections[sourceIndex];
+      const destSection= newSections[destinationIndex];
       const sourceTasks = [...sourceSection.tasks];
       const destTasks = [...destSection.tasks];
-      console.log("Before");
-      console.log(sourceSection)
-      console.log(destSection)
       const [removed] = sourceTasks.splice(source.index, 1);
       destTasks.splice(destination.index, 0, removed);
-      console.log("After");
-      console.log(sourceTasks)
-      console.log(destTasks)
-      // setSections({
-      //   ...sections,
-      //   [source.droppableId]: {
-      //     ...sourceSection,
-      //     items: sourceTasks
-      //   },
-      //   [destination.droppableId]: {
-      //     ...destSection,
-      //     items: destTasks
-      //   }
-      // });
+      
+      newSections[sourceIndex] = {...sourceSection,tasks:sourceTasks}
+      newSections[destinationIndex] = {...destSection,tasks:destTasks}
+      // console.log('newSection')
+      console.log(result)
+
+      setSections([
+        ...newSections,
+       
+        // sections[sourceIndex]:{
+
+        // }
+        // {
+        //   ...sourceSection,
+        //     tasks: sourceTasks
+        // },
+        // sections[destinationIndex] = {
+        //     ...destSection,
+        //     tasks: destTasks
+        // }
+       
+        // sections[destinationIndex]({
+        //   ...destSection,
+        //   tasks: destTasks
+        // })
+        // [sourceIndex]: {
+        //   ...sourceSection,
+        //   tasks: sourceTasks
+        // },
+        // [destinationIndex]: {
+        //   ...destSection,
+        //   tasks: destTasks
+        // }
+      ]);
+
+      return {sourceSectionId,destinationSectionId,taskId}
+
     } else {
       const column = sections[source.droppableId];
       const copiedTasks = [...column.items];
@@ -59,3 +91,6 @@ const onDragEnd = (result, sections) => {
   };
   
   module.exports = {onDragEnd}
+
+
+  // export default onDragEnd;

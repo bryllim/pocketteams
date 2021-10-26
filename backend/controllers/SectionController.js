@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Section = require("../models/SectionModel");
+const Task = require("../models/TaskModel");
 
 const createSection = asyncHandler( async (req,res) => {
     const {section_name, section_description} = req.body;
@@ -97,5 +98,44 @@ const updateSectionOrder = asyncHandler(async (req,res) => {
     }
 });
 
+const updateSectionTask = asyncHandler(async (req,res) => {
+    console.log("Updat Section Task")
 
-module.exports = {createSection, getSections,getSectionById, updateSection, deleteSection,updateSectionOrder};
+    const {sourceSectionId, destinationSectionId} = req.body;
+    const taskId = req.params.id
+    console.log(taskId)
+    console.log(sourceSectionId)
+    console.log(destinationSectionId)
+    const task = await Task.findById(taskId);
+    const sectionSource = await Section.findById(sourceSectionId);
+    const sectionDestination = await Section.findById(destinationSectionId);
+
+
+    //Check if this Section belongs to the user
+    if(sectionSource.user.toString() !== req.user._id.toString()){
+        res.status(401);
+        throw new Error("You can't perform this action");
+    }
+
+    if(task && sectionSource && sectionDestination){
+        const sourceTasks = sectionSource.tasks
+        const destinationTasks = sectionDestination.tasks
+        sectionSource.tasks = sourceTasks.filter(obj => 
+            obj._id === taskId
+        )
+        destinationTasks.push(taskId)
+       
+        task.section_id = destinationSectionId;
+
+        await task.save();
+        await sectionSource.save();
+        await sectionDestination.save();
+        res.json(sectionDestination);
+
+    } else {
+        res.status(404);
+        throw new Error("Section not found");
+    }
+});
+
+module.exports = {createSection, getSections,getSectionById, updateSection, deleteSection,updateSectionOrder,updateSectionTask};
