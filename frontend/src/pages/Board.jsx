@@ -67,8 +67,8 @@ const Board = () => {
 
 
   const onDrag = ({result}) =>{
-    const {sourceSectionId,destinationSectionId,taskId} = onDragEnd({result,sections, sectionOrder, setSections})
-    dispatch(updateSection({sourceSectionId,destinationSectionId,taskId}));
+    const {sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex} = onDragEnd({result,sections, sectionOrder, setSections})
+    dispatch(updateSection({sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex}));
   }
 
   // const [order,setOrder] = useState(columnOrder)

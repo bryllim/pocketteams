@@ -82,7 +82,7 @@ export const sectionOrderList = () => async (dispatch, getState) => {
 }
 
 
-export const updateSection = ({sourceSectionId,destinationSectionId,taskId}) => async (dispatch, getState) => {
+export const updateSection = ({sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex}) => async (dispatch, getState) => {
     try{
         dispatch({
             type: SECTION_UPDATE_REQUEST,
@@ -101,7 +101,7 @@ export const updateSection = ({sourceSectionId,destinationSectionId,taskId}) => 
 
         const { data } = await axios.put(
             `/api/sections/tasks/${taskId}`,
-            {sourceSectionId, destinationSectionId}, 
+            {sourceSectionId, destinationSectionId,sourceDragindex,destinationDragindex}, 
             config
         );
 

@@ -101,11 +101,11 @@ const updateSectionOrder = asyncHandler(async (req,res) => {
 const updateSectionTask = asyncHandler(async (req,res) => {
     console.log("Updat Section Task")
 
-    const {sourceSectionId, destinationSectionId} = req.body;
+    const {sourceSectionId, destinationSectionId,sourceDragindex,destinationDragindex} = req.body;
     const taskId = req.params.id
-    console.log(taskId)
-    console.log(sourceSectionId)
-    console.log(destinationSectionId)
+    // console.log(taskId)
+    // console.log(sourceSectionId)
+    // console.log(destinationSectionId)
     const task = await Task.findById(taskId);
     const sectionSource = await Section.findById(sourceSectionId);
     const sectionDestination = await Section.findById(destinationSectionId);
@@ -118,18 +118,49 @@ const updateSectionTask = asyncHandler(async (req,res) => {
     }
 
     if(task && sectionSource && sectionDestination){
-        const sourceTasks = sectionSource.tasks
-        const destinationTasks = sectionDestination.tasks
-        sectionSource.tasks = sourceTasks.filter(obj => 
-            obj._id === taskId
-        )
-        destinationTasks.push(taskId)
-       
+        const sourceTasks = [...sectionSource.tasks]
+        const destinationTasks = [...sectionDestination.tasks]
         task.section_id = destinationSectionId;
 
+        
+
+        // const filteredTasks = sourceTasks.filter(obj => 
+        //     obj._id === taskId
+        // )
+        if(sourceSectionId === destinationSectionId){
+            destinationTasks.splice(sourceDragindex,1)
+            destinationTasks.splice(destinationDragindex,0,taskId)
+            sectionDestination.tasks = destinationTasks
+            await sectionDestination.save();
+        }
+        
+        else{
+            sourceTasks.splice(sourceDragindex,1)
+            destinationTasks.splice(destinationDragindex,0,taskId)
+            sectionSource.tasks = sourceTasks
+            sectionDestination.tasks = destinationTasks
+            await sectionSource.save();
+            await sectionDestination.save();
+        }
+
+        
+ 
+
+
+        console.log(sectionDestination.tasks)
+        console.log(sectionSource.tasks)
+        console.log(sourceSectionId)
+        console.log(destinationSectionId)
+        // console.log(sourceTasks)
+        // console.log(destinationTasks)
+     
+
+
         await task.save();
-        await sectionSource.save();
-        await sectionDestination.save();
+  
+    
+    
+      
         res.json(sectionDestination);
 
     } else {
