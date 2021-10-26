@@ -55,7 +55,7 @@ const Project = () => {
             { loading && <Preload/> }
             <div className="row row-cols-xxl-4 row-cols-xl-3 row-cols-md-2 g-md-2 g-2">
             <Col><ProjectCard/></Col>
-            { projects?.map((project) => (
+            { projects?.reverse().map((project) => (
               <Col><ProjectCard data={project}/></Col>
             ))}
             </div>
