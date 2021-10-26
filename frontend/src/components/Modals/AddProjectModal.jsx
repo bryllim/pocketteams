@@ -150,7 +150,7 @@ const AddProjectModal = ({ showModal, hideModal }) => {
                       className={color}
                       aria-label="form-select-sm example"
                       id="test"
-                      onChange={reClass}
+                      onChange={(e) => setProjectStatus(e.target.value)}
                     >
                       <option
                         className="form-select form-select-sm"
@@ -158,13 +158,13 @@ const AddProjectModal = ({ showModal, hideModal }) => {
                       >
                         select priority
                       </option>
-                      <option className="light form-select-sm" value="1">
+                      <option className="light form-select-sm" value="light">
                         Light
                       </option>
-                      <option className="medium form-select-sm" value="2">
+                      <option className="medium form-select-sm" value="medium">
                         Medium
                       </option>
-                      <option className="heavy form-select-sm" value="3">
+                      <option className="heavy form-select-sm" value="heavy">
                         Heavy
                       </option>
                     </select>

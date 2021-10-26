@@ -29,6 +29,7 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
 
     resetHandler();
     hideModal();
+    window.location.reload(false);
   }
 
   const resetHandler = () => {
@@ -121,8 +122,8 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
                     <select
                       className={color}
                       aria-label="form-select-sm example"
-                      id="test"
-                      onChange={reClass}
+                      id="status"
+                      onChange={(e) => setProjectStatus(e.target.value), reClass}
                       defaultValue={projectStatus}
                     >
                       <option
@@ -130,27 +131,27 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
                       >
                         select priority
                       </option>
-                      <option className="light form-select-sm" value="1">
+                      <option className="light form-select-sm" value="light">
                         Light
                       </option>
-                      <option className="medium form-select-sm" value="2">
+                      <option className="medium form-select-sm" value="medium">
                         Medium
                       </option>
-                      <option className="heavy form-select-sm" value="3">
+                      <option className="heavy form-select-sm" value="heavy">
                         Heavy
                       </option>
                     </select>
             </Form.Group>
 
 
-              <label for="formGroupExampleInput2" class="form-label">
+              {/* <label for="formGroupExampleInput2" class="form-label">
                 Dates
               </label>
               <div class="d-flex justify-content-between">
                 <input type="date" class=" d-inline" id="date" name="date" />
                 <span className="m-2">to</span>
                 <input type="date" class=" d-inline" id="date" name="date" />
-              </div>
+              </div> */}
             </div>
 
             <div className="sidebar-wrapper">
