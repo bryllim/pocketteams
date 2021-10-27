@@ -2495,7 +2495,7 @@ textarea.form-control-lg {
 }
 
 .form-select-sm {
-  width: 150px;
+  width: 120px;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
   padding-left: 0.2rem;
@@ -2509,7 +2509,6 @@ textarea.form-control-lg {
   padding-left: 0.4rem;
   font-size: 1.5rem;
 }
-
 
 .form-select-option {
   color: #000;
