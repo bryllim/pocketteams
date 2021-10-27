@@ -20,15 +20,18 @@ const Project = () => {
   const { success: successCreate} = projectCreate;
 
   const dispatch = useDispatch();
-  const projectList = useSelector(state => state.projectList);
+  const projectList = useSelector((state) => state.projectList);
   const { loading, projects, error } = projectList;
+
+  const projectUpdate = useSelector(state => state.projectUpdate);
+  const { success: successUpdate}  = projectUpdate;
 
   useEffect(() => {
     if (userInfo) {
       history.push("/project");
     }
     dispatch(listProjects());
-  }, [dispatch, successCreate, history, userInfo]);
+  }, [dispatch, successCreate, successUpdate, history, userInfo]);
 
   return (
     <>
@@ -52,7 +55,7 @@ const Project = () => {
             { loading && <Preload/> }
             <div className="row row-cols-xxl-4 row-cols-xl-3 row-cols-md-2 g-md-2 g-2">
             <Col><ProjectCard/></Col>
-            { projects?.map((project) => (
+            { projects?.reverse().map((project) => (
               <Col><ProjectCard data={project}/></Col>
             ))}
             </div>

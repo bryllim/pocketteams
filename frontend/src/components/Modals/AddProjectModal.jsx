@@ -150,7 +150,7 @@ const AddProjectModal = ({ showModal, hideModal }) => {
                       className={color}
                       aria-label="form-select-sm example"
                       id="test"
-                      onChange={reClass}
+                      onChange={(e) => setProjectStatus(e.target.value)}
                     >
                       <option
                         className="form-select form-select-sm"
@@ -158,40 +158,16 @@ const AddProjectModal = ({ showModal, hideModal }) => {
                       >
                         select priority
                       </option>
-                      <option className="light form-select-sm" value="1">
+                      <option className="light form-select-sm" value="light">
                         Light
                       </option>
-                      <option className="medium form-select-sm" value="2">
+                      <option className="medium form-select-sm" value="medium">
                         Medium
                       </option>
-                      <option className="heavy form-select-sm" value="3">
+                      <option className="heavy form-select-sm" value="heavy">
                         Heavy
                       </option>
                     </select>
-
-              
-              {/* <Form.Label className="me-3 my-auto fs-6 text-dark">Project Status</Form.Label>
-              <DropdownButton id="dropdown-item-button" title={projectStatus ? projectStatus: "Status" }>
-                  <Dropdown.ItemText>Project Status</Dropdown.ItemText>
-                  <Dropdown.Item
-                    href="#/action-1"
-                    onClick={(e) => setProjectStatus("Light")}
-                  >
-                    Light
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    href="#/action-2"
-                    onClick={(e) => setProjectStatus("Medium")}
-                  >
-                    Medium
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    href="#/action-3"
-                    onClick={(e) => setProjectStatus("Heavy")}
-                  >
-                    Heavy
-                  </Dropdown.Item>
-              </DropdownButton> */}
             </Form.Group>
           </Form>
         </Modal.Body>
