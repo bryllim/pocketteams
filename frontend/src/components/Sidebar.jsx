@@ -32,12 +32,6 @@ const Sidebar = () => {
       </div>
       {/* NOTES */}
         <Notes />
-        <div>
-        <button type="button" className="theme-btn theme-btn-md">
-        <i className="lni lni-cloud-sync me-2"></i>
-        <span>Sync notes</span>
-      </button>
-      </div>
     </div>
   );
 };
