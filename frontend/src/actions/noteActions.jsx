@@ -87,7 +87,12 @@ export const updateNoteAction =  ( id, content ) =>
             }
         };
 
-        const { data } = await axios.put(`/api/note/${id}`, {content} , config);
+        const { data } = await axios.put(
+            `/api/note/${id}`, 
+            {content} ,
+             config
+        );
+        
 
         dispatch({
             type: NOTE_UPDATE_SUCCESS,

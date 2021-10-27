@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.route("/").get(protect, getNotes);
 router.route('/').post(protect, createdNote);
-router.route('/:id').get(getNoteById).put(protect, updateNote)
+router.route('/:id').get(protect, getNoteById).put(protect, updateNote)
 
 module.exports = router; 
