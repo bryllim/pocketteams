@@ -20,6 +20,11 @@ const SectionSchema = mongoose.Schema(
             required: true,
             ref: "User",
         },
+        section_order_id:{
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: "SectionOrder",
+        },
         tasks:[{
             type: mongoose.Schema.Types.ObjectId,
             ref: "Task",

@@ -1,16 +1,22 @@
 const asyncHandler = require("express-async-handler");
 const Section = require("../models/SectionModel");
 const Task = require("../models/TaskModel");
+const SectionOrder = require("../models/SectionOrderModel");
 
 const createSection = asyncHandler( async (req,res) => {
-    const {section_name, section_description} = req.body;
-
-    if(!section_name || !section_description){
+    const {section_name, section_description, section_order_id} = req.body;
+    //need to validate first if user belongs to section order id
+    if(!section_name || !section_description){ 
         res.status(400)
         throw new Error("Please Fill all the Fields");
     } else {
-        const section = new Section({user: req.user._id, section_name, section_description});
+        const section = new Section({user: req.user._id, section_name, section_description, section_order_id});
         const createdSection = await section.save();
+        sectionOrderResponse = await SectionOrder.findByIdAndUpdate(
+            section_order_id,
+            { $push: { items: createdSection} },
+            { new: true, useFindAndModify: false },
+        );
         res.status(201).json(createdSection);
     }
 });
@@ -101,7 +107,7 @@ const updateSectionOrder = asyncHandler(async (req,res) => {
 const updateSectionTask = asyncHandler(async (req,res) => {
     console.log("Updat Section Task")
 
-    const {sourceSectionId, destinationSectionId,sourceDragindex,destinationDragindex} = req.body;
+    const {sourceSectionId, destinationSectionId,sourceDragindex,destinationDragindex,type} = req.body;
     const taskId = req.params.id
     // console.log(taskId)
     // console.log(sourceSectionId)
@@ -115,6 +121,13 @@ const updateSectionTask = asyncHandler(async (req,res) => {
     if(sectionSource.user.toString() !== req.user._id.toString()){
         res.status(401);
         throw new Error("You can't perform this action");
+    }
+
+    if(type === 'column'){
+        const sourceData = await Section.findById(taskId)
+
+        .remove()
+
     }
 
     if(task && sectionSource && sectionDestination){

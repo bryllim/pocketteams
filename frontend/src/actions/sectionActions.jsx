@@ -23,10 +23,16 @@ export const listSection = () => async (dispatch, getState) => {
 
     const { data } = await axios.get(`/api/sections`, config);
 
-    const sectionOrder = []
-    data.map(item=>{
-        return sectionOrder.push(item._id)
-    })
+    const sectionOrder = await axios.get(`/api/sectionorder/6179228d94d94e1c2c6c21e3`, config).data.items;
+    if(!sectionOrder){
+        throw new Error("Error");
+    }
+
+   
+
+    // data.map(item=>{
+    //     return sectionOrder.push(item._id)
+    // })
 
     dispatch({
         type: SECTION_LIST_SUCCESS,
@@ -82,7 +88,7 @@ export const sectionOrderList = () => async (dispatch, getState) => {
 }
 
 
-export const updateSection = ({sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex}) => async (dispatch, getState) => {
+export const updateSection = ({sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type}) => async (dispatch, getState) => {
     try{
         dispatch({
             type: SECTION_UPDATE_REQUEST,
@@ -101,7 +107,7 @@ export const updateSection = ({sourceSectionId,destinationSectionId,taskId,sourc
 
         const { data } = await axios.put(
             `/api/sections/tasks/${taskId}`,
-            {sourceSectionId, destinationSectionId,sourceDragindex,destinationDragindex}, 
+            {sourceSectionId, destinationSectionId,sourceDragindex,destinationDragindex,type}, 
             config
         );
 

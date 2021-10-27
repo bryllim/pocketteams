@@ -62,13 +62,21 @@ const Board = () => {
   // const {sections,loading, error} = sectionList;
 
   const dataList = sectionData.sections.data; //change this
-  const sectionOrder = sectionData.sections.sectionOrder;
+  const sectionOrderData = sectionData.sections.sectionOrder;
   const [sections, setSections] = useState(dataList);
+  const [sectionOrder,setSectionOrder] = useState(sectionOrderData);
 
 
   const onDrag = ({result}) =>{
-    const {sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex} = onDragEnd({result,sections, sectionOrder, setSections})
-    dispatch(updateSection({sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex}));
+    const itemType = result.type
+    if(itemType === 'column'){
+      const {sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type} = onDragEnd({result,sections, sectionOrder, setSections,setSectionOrder})
+      // dispatch(updateSectionOrder({sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type}));
+    }
+    else{
+      const {sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type} = onDragEnd({result,sections, sectionOrder, setSections,setSectionOrder})
+      dispatch(updateSection({sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type}));
+    }
   }
 
   // const [order,setOrder] = useState(columnOrder)
