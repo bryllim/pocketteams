@@ -53,6 +53,7 @@ const SectionCard = ({ provided,snapshot,column,columnId,index, }) => {
   return (
     <>
       <Draggable draggableId={columnId} index={index} >
+        
         {provided => {
           return(
             <div 
