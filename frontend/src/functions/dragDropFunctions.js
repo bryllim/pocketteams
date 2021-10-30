@@ -15,28 +15,7 @@ const onDragEnd = ({result, sections, sectionOrder, setSections,setSectionOrder}
     const destinationDragindex = destination.index;
 
     if (!result.destination) return;
-
-    //if dragging in column
-    if(type==="column"){
-      
-      // //insert the source index to destination index
-      // const columnList = order
-      // const movedSection= columnList.splice(source.index, 1)
-      // columnList.splice(destination.index,0, movedSection[0])
   
-      // // setOrder([
-      // //  ...order
-      // // ])
-      // return
-      const newSectionOrder = [...sectionOrder]
-      const [removed] = newSectionOrder.splice(sourceDragindex, 1)
-      newSectionOrder.splice(destinationDragindex,0,removed)
-
-      setSectionOrder([
-        ...newSectionOrder
-      ])
-
-    }
     if (source.droppableId !== destination.droppableId) {
    
 
@@ -70,7 +49,9 @@ const onDragEnd = ({result, sections, sectionOrder, setSections,setSectionOrder}
     return {sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type}
   };
   
-  const orderSections = ({result, sections, sectionOrder, setSections,setSectionOrder}) => {
+  const orderSections = ({result,sectionOrder,setSectionOrder}) => {
+
+    if (!result.destination) return;
 
     const { source, destination , draggableId} = result;
 

@@ -1,5 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const SectionOrder = require("../models/SectionOrderModel");
+const Section = require("../models/SectionModel");
+const Task = require("../models/TaskModel");
 
 const createSectionOrder = asyncHandler( async (req,res) => {
     const { section_order_name} = req.body;
@@ -16,32 +18,48 @@ const createSectionOrder = asyncHandler( async (req,res) => {
 
 const getSectionOrders = asyncHandler( async (req,res) => {
     const sections = await SectionOrder.find().populate('items')
+
     res.json(sections);
 });
 
 const getSectionOrderById = asyncHandler( async (req,res) => {
-    const section = await SectionOrder.findById(req.params.id)
+    const sectionOrder = await SectionOrder.findById(req.params.id).populate({
+        path: 'items',
+        populate: {
+            path: 'tasks',
+        }
+    })
+    // const section = await Section.find( { $in: sectionOrder._id}).populate('tasks')
+    
+    console.log(sectionOrder.items)
+    if(sectionOrder){
 
-    if(section){
-        res.json(section);
+
+        // sectionOrder.items = section;
+        res.json(sectionOrder);
     } else {
         res.status(404).json({message: "section not found"});
     }
 });
 
 const updateSectionOrder = asyncHandler(async (req,res) => {
-    const {section_order_name} = req.body;
+    const {sourceDragIndex,destinationDragIndex,sectionId} = req.body;
+    const sectionOrderId = req.params.id
 
-    const sectionOrder = await SectionOrder.findById(req.params.id);
+    const sectionOrder = await SectionOrder.findById(sectionOrderId);
+
+    // const section = await Section.findById()
+    console.log(sectionOrderId)
 
     //Check if this SectionOrder belongs to the user
     if(sectionOrder.user.toString() !== req.user._id.toString()){
         res.status(401);
         throw new Error("You can't perform this action");
     }
-
     if(sectionOrder){
-        sectionOrder.section_order_name = section_order_name;
+        const [removed] = sectionOrder.items.splice(sourceDragIndex,1) //mutating the array
+        sectionOrder.items.splice(destinationDragIndex,0,removed)
+        console.log('sectionOrder')
         const updatedSectionOrder = await sectionOrder.save();
         res.json(updatedSectionOrder);
     } else {
@@ -73,6 +91,7 @@ const updateSectionOrderItems = asyncHandler(async (req,res) => {
     const sectionOrder = await SectionOrder.findById(req.params.id);
 
     sectionOrderItems = sectionOrder.items
+
 
     //Check if this SectionOrder belongs to the user
     if(section.user.toString() !== req.user._id.toString()){

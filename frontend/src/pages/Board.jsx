@@ -9,69 +9,32 @@ import "../css/board.css"
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { listTasks } from "../actions/taskActions";
-import { listSection, updateSection } from "../actions/sectionActions";
+import { listSection, updateSection, updateSectionOrder} from "../actions/sectionActions";
 // import { onDragEnd,addColumn, editTitle} from "../functions/TaskFunctions";
-import {onDragEnd} from "../functions/dragDropFunctions"
-
-
-
-// const itemsFromBackend = [
-//   { id: uuid(), content: "First task", description: "this is desc", date: "10/13/2021" },
-//   { id: uuid(), content: "Second task", description: "this is desc", date: "10/13/2021" },
-//   { id: uuid(), content: "Third task", description: "this is desc", date: "10/13/2021" },
-//   { id: uuid(), content: "Fourth task", description: "this is desc", date: "10/13/2021" },
-//   { id: uuid(), content: "Fifth task", description: "this is desc", date: "10/13/2021" },
-//   { id: uuid(), content: "Sixth task", description: "this is desc", date: "10/13/2021" },
-//   { id: uuid(), content: "Seventh task", description: "this is desc", date: "10/13/2021" },
-//   { id: uuid(), content: "Eighth task", description: "this is desc", date: "10/13/2021" },
-//   { id: uuid(), content: "Ninth task", description: "this is desc", date: "10/13/2021" },
-// ];
-
-
-// const columnsFromBackend = {
-//   'col1': {
-//     name: "Requested",
-//     items: itemsFromBackend
-//   },
-//   'col2': {
-//     name: "To do",
-//     items: []
-//   },
-// };
-
-// const columnOrder = ['col1', 'col2']
-
-
-
+import {onDragEnd,orderSections} from "../functions/dragDropFunctions"
 
 
 const Board = () => {
+
   const dispatch = useDispatch();
-
-  // const onDragDrop = ({result, sections, sectionOrder}) =>{
-  //   onDragEnd({result, sections, sectionOrder})
-    
-  //   dispatch({
-  //     type: SECTION_LIST_SUCCESS,
-  //     payload: {data,sectionOrder}
-  //   })
-  // }
-  
-
-  const sectionData = useSelector((state) => state.sectionList);
+  const dataList = useSelector((state) => state.sectionList);
   // const {sections,loading, error} = sectionList;
-
-  const dataList = sectionData.sections.data; //change this
-  const sectionOrderData = sectionData.sections.sectionOrder;
-  const [sections, setSections] = useState(dataList);
-  const [sectionOrder,setSectionOrder] = useState(sectionOrderData);
+  // const dataList = sectionData.sections.data; //change this
+  const sectionDataList= dataList.data.sectionDataList;
+  const sectionOrderList = dataList.data.sectionOrderList;
+  const sectionOrderId = dataList.data.sectionOrderId;
+  
+  const [sections, setSections] = useState(sectionDataList);
+  const [sectionOrder,setSectionOrder] = useState(sectionOrderList);
 
 
   const onDrag = ({result}) =>{
     const itemType = result.type
     if(itemType === 'column'){
-      const {sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type} = onDragEnd({result,sections, sectionOrder, setSections,setSectionOrder})
-      // dispatch(updateSectionOrder({sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type}));
+      const {sectionId,sourceDragIndex,destinationDragIndex} = orderSections({result,sectionOrder,setSectionOrder})
+      console.log("before Dispatch")
+      dispatch(updateSectionOrder({sectionId,sourceDragIndex,destinationDragIndex,sectionOrderId}));
+      console.log("after Dispatch")
     }
     else{
       const {sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type} = onDragEnd({result,sections, sectionOrder, setSections,setSectionOrder})
@@ -108,10 +71,11 @@ const Board = () => {
   //   dispatch(updateSections({sourceSectionId,destinationSectionId,taskId}));
   // },[sections])
 
+
   useEffect(() => {
-      setSections(dataList)
-      // console.log(sectionData)
-  },[dataList])
+      setSections(sectionDataList)
+      setSectionOrder(sectionOrderList)
+  },[sectionDataList,sectionOrderList])
 
   useEffect(() => {
     if (!userInfo) {
@@ -123,7 +87,6 @@ const Board = () => {
     
   
 
-  
 
   // const addTask = (columnId,columns,setColumns) => {
   //   const sourceColumn = columns[columnId]
@@ -187,7 +150,6 @@ const Board = () => {
 
   return (
     <>
-
       <Navigation />
         <Container fluid className="board-container">
           <Row className="h-100">
@@ -220,9 +182,12 @@ const Board = () => {
                           >
                            
                            {(sectionOrder && sections)?(sectionOrder.map((sectionId,index)=>{
-                             const section = sections.filter(obj => {
+                             console.log("first")
+
+                            const section = sections.filter(obj => {
                               return obj._id === sectionId
                             })[0]
+                            
                               return (
                                
                                       <div                                
@@ -236,13 +201,12 @@ const Board = () => {
                                         key={index}
                                        
                                       >
+                             
                                           <SectionCard
                                           section = {section}
                                           index={index}
                                           provided={provided}
-                                          // column={column}
-                                          // columnId={columnId}
-                                          // index={index}
+                                          columnId={sectionId}
                                           />
                                       </div>
                               )

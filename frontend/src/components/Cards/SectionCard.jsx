@@ -8,7 +8,7 @@ import DeleteSectionConfirmation from "../Modals/DeleteSectionConfirmation"
 
 
 
-const SectionCard = ({ provided,snapshot,column,columnId,index,section}) => {
+const SectionCard = ({columnId,index,section}) => {
   //rework
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -27,7 +27,10 @@ const SectionCard = ({ provided,snapshot,column,columnId,index,section}) => {
   const [sectionToggleState,setSectionToggleState] = useState(true)
 
 
+  console.log("Section Card")
 
+  console.log(sectionTitle)
+  console.log(section)
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p
@@ -55,6 +58,8 @@ const SectionCard = ({ provided,snapshot,column,columnId,index,section}) => {
 
   return (
     <>
+    
+    
       <Draggable draggableId={section._id} index={index} >
         {provided => {
           return(
@@ -62,14 +67,14 @@ const SectionCard = ({ provided,snapshot,column,columnId,index,section}) => {
               {...provided.draggableProps}
               ref={provided.innerRef}
               className="d-flex flex-column section-wrapper mx-2"
-              
             >
+              <p>{sectionTitle}</p>
               <div className="d-flex justify-content-between align-items-center ps-3 pe-2 py-2 ">
                 {sectionToggleState && sectionTitle !== '' ?
                   (<h5 className="text-white"
                     {...provided.dragHandleProps}
                   >
-                    {sectionTitle}
+                    {<p>{sectionTitle}</p>}
                   </h5>)
                   :
                   (<input
@@ -120,7 +125,7 @@ const SectionCard = ({ provided,snapshot,column,columnId,index,section}) => {
                   
              
               </div>
-          <Droppable droppableId={section._id} key={index} id="task">
+          {/* <Droppable droppableId={section._id} key={index} id="task">
                 {(provided,snapshot) => {
                   
 
@@ -155,11 +160,11 @@ const SectionCard = ({ provided,snapshot,column,columnId,index,section}) => {
                      
                   )
                 }}  
-              </Droppable> 
+              </Droppable>  */}
             </div>
           )
         }}
-         {/* MODALS */}
+   
         
     </Draggable> 
     <AddTaskModal showModal={show} hideModal={handleClose} />

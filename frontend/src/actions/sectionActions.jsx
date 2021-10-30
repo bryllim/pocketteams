@@ -1,7 +1,8 @@
 import { 
     SECTION_LIST_FAIL, SECTION_LIST_REQUEST, SECTION_LIST_SUCCESS,
-    SECTION_ORDER_LIST_REQUEST,SECTION_ORDER_LIST_SUCCESS,SECTION_ORDER_LIST_FAIL,
-    SECTION_UPDATE_REQUEST,SECTION_UPDATE_SUCCESS,SECTION_UPDATE_FAIL
+    SECTION_ORDER_LIST_SUCCESS,SECTION_ORDER_LIST_FAIL,
+    SECTION_UPDATE_REQUEST,SECTION_UPDATE_SUCCESS,SECTION_UPDATE_FAIL,
+    SECTION_ORDER_UPDATE_REQUEST, SECTION_ORDER_UPDATE_SUCCESS, SECTION_ORDER_UPDATE_FAIL
 } from "../constants/sectionConstants"
 import axios from "axios";
 
@@ -21,22 +22,23 @@ export const listSection = () => async (dispatch, getState) => {
         },
     };
 
-    const { data } = await axios.get(`/api/sections`, config);
+    // const { data } = await axios.get(`/api/sections`, config);
 
-    const sectionOrder = await axios.get(`/api/sectionorder/6179228d94d94e1c2c6c21e3`, config).data.items;
-    if(!sectionOrder){
+    const {data:projectData} = await axios.get(`/api/sectionorder/6179228d94d94e1c2c6c21e3`, config)
+
+    if(!projectData){
         throw new Error("Error");
     }
+    
+    const sectionOrderList = projectData.items.map(order =>{
+        return order._id
+    })
 
-   
-
-    // data.map(item=>{
-    //     return sectionOrder.push(item._id)
-    // })
-
+    const sectionDataList = projectData.items
+    const sectionOrderId = projectData._id
     dispatch({
         type: SECTION_LIST_SUCCESS,
-        payload: {data,sectionOrder}
+        payload: {sectionOrderList,sectionDataList,sectionOrderId,}
     })
     } catch (error){
         const message = 
@@ -51,10 +53,10 @@ export const listSection = () => async (dispatch, getState) => {
     }
 }
 
-export const sectionOrderList = () => async (dispatch, getState) => {
+export const updateSectionOrder =({sectionId,sourceDragIndex,destinationDragIndex,sectionOrderId}) => async (dispatch, getState) => {
     try{
         dispatch({
-            type: SECTION_ORDER_LIST_REQUEST,
+            type: SECTION_ORDER_UPDATE_REQUEST,
         });
 
     const {
@@ -66,12 +68,16 @@ export const sectionOrderList = () => async (dispatch, getState) => {
             Authorization: `Bearer ${userInfo.token}`,
         },
     };
+    
+    const { data } = await axios.put(
+        `/api/sectionorder/${sectionOrderId}`,
+        {sourceDragIndex,destinationDragIndex,sectionId}, 
+        config
+    );
 
-    // const { data } = await axios.get(`/api/columns/s`, config);
-    const data = ['col1', 'col2']
 
     dispatch({
-        type: SECTION_ORDER_LIST_SUCCESS,
+        type: SECTION_ORDER_UPDATE_SUCCESS,
         payload: data,
     })
     } catch (error){
@@ -81,7 +87,7 @@ export const sectionOrderList = () => async (dispatch, getState) => {
         : error.message;
 
         dispatch({
-            type: SECTION_ORDER_LIST_FAIL,
+            type: SECTION_ORDER_UPDATE_FAIL,
             payload: message,
         });
     }
