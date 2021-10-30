@@ -67,6 +67,12 @@ const onDragEnd = ({result, sections, sectionOrder, setSections, setSectionOrder
       ...newSectionOrder
     ])
 
+    console.log('orderSections')
+
+    console.log(result)
+    console.log(newSectionOrder)
+
+
     return {sectionId, sourceDragIndex, destinationDragIndex}
   }
 

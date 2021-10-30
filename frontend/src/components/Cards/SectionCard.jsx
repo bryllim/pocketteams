@@ -27,9 +27,9 @@ const SectionCard = ({columnId,index,section}) => {
   const [sectionToggleState,setSectionToggleState] = useState(true)
 
 
-  console.log("Section Card")
-  console.log(section._id)
-  console.log(columnId)
+  // console.log("Section Card")
+  // console.log(section._id)
+  // console.log(columnId)
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p

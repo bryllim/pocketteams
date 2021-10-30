@@ -18,13 +18,28 @@ const Board = () => {
 
   const dispatch = useDispatch();
 
+  
+
+
+  const history = useHistory();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  useEffect(() => {
+    if (!userInfo) {
+        history.push('/');
+    } 
+    dispatch(listSection());
+  },[history, userInfo, dispatch])
+
   const dataList = useSelector((state) => state.sectionList);
   const sectionDataList= dataList.data.sectionDataList;
   const sectionOrderList = dataList.data.sectionOrderList;
   const sectionOrderId = dataList.data.sectionOrderId;
-  
   const [sections, setSections] = useState(sectionDataList);
   const [sectionOrder,setSectionOrder] = useState(sectionOrderList);
+
+  
 
 
   const onDrag = ({result}) =>{
@@ -41,21 +56,15 @@ const Board = () => {
     }
   }
 
-  const history = useHistory();
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
 
-  useEffect(() => {
-    if (!userInfo) {
-        history.push('/');
-    } 
-    dispatch(listSection());
-  },[history, userInfo, dispatch])
 
-  useEffect(() => {
-      setSections(sectionDataList)
-      setSectionOrder(sectionOrderList)
-  },[sectionDataList,sectionOrderList])
+  useEffect(()=>{
+      if(dataList.loading === false){
+        setSections(sectionDataList)
+        setSectionOrder(sectionOrderList)
+      }
+  },[dataList])
+
 
   return (
     <>
@@ -91,11 +100,14 @@ const Board = () => {
                           >
                            
                            {(sectionOrder && sections)?(sectionOrder.map((sectionId,index)=>{
-                             console.log("first")
+                             console.log(index)
 
                             const section = sections.filter(obj => {
                               return obj._id === sectionId
                             })[0]
+
+                            console.log(section)
+                            console.log(sectionId)
                             
                               return (
                                
@@ -120,7 +132,10 @@ const Board = () => {
                                       </div>
                               )
                               
-                            })):<></>}
+                            })):<>{ 
+                             
+                      
+                            }</>}
                             {provided.placeholder}
                           </div> 
                           
