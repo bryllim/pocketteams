@@ -17,9 +17,8 @@ import {onDragEnd,orderSections} from "../functions/dragDropFunctions"
 const Board = () => {
 
   const dispatch = useDispatch();
+
   const dataList = useSelector((state) => state.sectionList);
-  // const {sections,loading, error} = sectionList;
-  // const dataList = sectionData.sections.data; //change this
   const sectionDataList= dataList.data.sectionDataList;
   const sectionOrderList = dataList.data.sectionOrderList;
   const sectionOrderId = dataList.data.sectionOrderId;
@@ -42,40 +41,9 @@ const Board = () => {
     }
   }
 
-  // const [order,setOrder] = useState(columnOrder)
-  // const [tasks, setTask] = useState(itemsFromBackend)
-  // const columnOrderList = useSelector(state => state.columnOrderList);
-
-  
-
-  // const taskList = useSelector(state => state.taskList);
-  // const {order} = columnOrderList;
- 
- 
-  // const {tasks} = taskList;
- 
-
-  // useEffect(() => {
-  //   // if(taskList){
-  //   //     history.push('/project');
-  //   // }
-  
-  //   // console.log(columnss)
-  // }, [dispatch]);
-
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
-
-  // useEffect(() => {
-  //   dispatch(updateSections({sourceSectionId,destinationSectionId,taskId}));
-  // },[sections])
-
-
-  useEffect(() => {
-      setSections(sectionDataList)
-      setSectionOrder(sectionOrderList)
-  },[sectionDataList,sectionOrderList])
 
   useEffect(() => {
     if (!userInfo) {
@@ -84,69 +52,10 @@ const Board = () => {
     dispatch(listSection());
   },[history, userInfo, dispatch])
 
-    
-  
-
-
-  // const addTask = (columnId,columns,setColumns) => {
-  //   const sourceColumn = columns[columnId]
-  //   const sourceItems = [...sourceColumn.items];
-  //   sourceItems.push({ id: uuid(), content: "" })
-  //   console.log(sourceItems)
-  //   setColumns({
-  //     ...columns,
-  //     [columnId]: {
-  //       ...sourceColumn,
-  //       items: sourceItems
-  //     },
-  //   })
-
-  //   setTask([
-  //     ...tasks,
-  //     ...sourceItems
-
-  //   ])
-
-  //   // console.log(tasks)
-  //   return
-  // }
-
-  // const removeSection = (columnId,index) =>{
-  //   const columnObject = columns;
-  //   delete  columnObject[columnId];
-  //   const columnList = order
-  //   columnList.splice(index,1)
-
-  //   setColumns({
-  //     ...columnObject
-  //   })
-
-  //   setOrder([
-  //    ...columnList
-  //   ])
-  //   console.log(index)
-  //   console.log(columnList)
-  //   console.log(order)
-
-  //   return
-  //   //will the task also deleted when col deleted?
-  // }
-
-  // const changeSectionTitle =(props) => {
-  //   if(props.sectionTitle !== ''){
-  //     const columnObject = columns;
-  //     columnObject[props.columnId].name = props.sectionTitle
-  //     setColumns({
-  //       ...columnObject
-  //     })
-  //   }
-  //   else{
-  //     removeSection(props.columnId,props.index)
-  //   }
-  // }
-
-  
-  
+  useEffect(() => {
+      setSections(sectionDataList)
+      setSectionOrder(sectionOrderList)
+  },[sectionDataList,sectionOrderList])
 
   return (
     <>
@@ -201,7 +110,7 @@ const Board = () => {
                                         key={index}
                                        
                                       >
-                             
+                                        <p>{section.section_name}</p>
                                           <SectionCard
                                           section = {section}
                                           index={index}
