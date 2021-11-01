@@ -247,6 +247,7 @@ const Board = () => {
                               const column = columns[columnId]
                               console.log(column)
                               console.log(columns)
+                              console.log(order)
                               return (
                                       <div                                
                                         style={{
