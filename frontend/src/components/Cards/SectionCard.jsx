@@ -27,10 +27,6 @@ const SectionCard = ({columnId,index,section}) => {
   const [sectionToggleState,setSectionToggleState] = useState(true)
 
 
-  // console.log("Section Card")
-  // console.log(section._id)
-  // console.log(columnId)
-
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p
       ref={ref}
@@ -42,12 +38,6 @@ const SectionCard = ({columnId,index,section}) => {
       {children}
     </p>
 ));
-
-
-console.log(section.section_name)
-console.log(columnId)
-console.log(index)
-
 
 
   return (
@@ -62,7 +52,7 @@ console.log(index)
             >
               <p>{section.section_name}</p>
               <div className="d-flex justify-content-between align-items-center ps-3 pe-2 py-2 ">
-                { section.section_name !== '' ?
+                {section.section_name !== '' ?
                   (<h5 className="text-white"
                     {...provided.dragHandleProps}
                   >
@@ -72,8 +62,6 @@ console.log(index)
             </div>
           )
         }}
-   
-        
     </Draggable> 
     <AddTaskModal showModal={show} hideModal={handleClose} />
     <DeleteSectionConfirmation showModal={showDeleteSection} hideModal={closeDeleteSection} columnId={columnId} index={index} />
