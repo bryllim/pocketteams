@@ -103,7 +103,9 @@ const Board = () => {
                             const section = sections.filter(obj => {
                               return obj._id === sectionId
                             })[0]
+
                             console.log(section)
+                            console.log(sections)
                               return (
                                
                                       <div                                
