@@ -39,6 +39,9 @@ const SectionCard = ({columnId,index,section}) => {
     </p>
 ));
 
+console.log(sectionTitle)
+console.log(section.section_name)
+
 
   return (
     <>
