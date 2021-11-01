@@ -62,16 +62,13 @@ const onDragEnd = ({result, sections, sectionOrder, setSections, setSectionOrder
     const newSectionOrder = [...sectionOrder]
     const [removed] = newSectionOrder.splice(sourceDragIndex, 1)
     newSectionOrder.splice(destinationDragIndex,0,removed)
-
-    setSectionOrder([
-      ...newSectionOrder
-    ])
-
-    console.log('orderSections')
-
-    console.log(result)
+    console.log('newSectionOrder')
     console.log(newSectionOrder)
+    setSectionOrder(newSectionOrder)
 
+    console.log('sectionOrder')
+    
+    console.log(sectionOrder)
 
     return {sectionId, sourceDragIndex, destinationDragIndex}
   }

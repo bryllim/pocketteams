@@ -44,6 +44,12 @@ const SectionCard = ({columnId,index,section}) => {
 ));
 
 
+console.log(section.section_name)
+console.log(columnId)
+console.log(index)
+
+
+
   return (
     <>
       <Draggable draggableId={columnId} index={index} >

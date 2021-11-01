@@ -100,15 +100,10 @@ const Board = () => {
                           >
                            
                            {(sectionOrder && sections)?(sectionOrder.map((sectionId,index)=>{
-                             console.log(index)
-
                             const section = sections.filter(obj => {
                               return obj._id === sectionId
                             })[0]
-
                             console.log(section)
-                            console.log(sectionId)
-                            
                               return (
                                
                                       <div                                
@@ -132,10 +127,7 @@ const Board = () => {
                                       </div>
                               )
                               
-                            })):<>{ 
-                             
-                      
-                            }</>}
+                            })):<></>}
                             {provided.placeholder}
                           </div> 
                           
