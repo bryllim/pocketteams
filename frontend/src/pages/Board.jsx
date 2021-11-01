@@ -245,6 +245,8 @@ const Board = () => {
                           >
                             {order.map((columnId,index)=>{
                               const column = columns[columnId]
+                              console.log(column)
+                              console.log(columns)
                               return (
                                       <div                                
                                         style={{
