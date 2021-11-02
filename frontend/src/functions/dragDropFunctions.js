@@ -1,7 +1,7 @@
 const onDragEnd = ({result, sections, sectionOrder, setSections, setSectionOrder}) => {
   
     const { source, destination, type } = result;
-    
+    console.log("test")
 
     const newSections = [...sections]
     const sourceSectionId = source.droppableId

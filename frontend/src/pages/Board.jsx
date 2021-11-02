@@ -14,10 +14,29 @@ import { listSection, updateSection, updateSectionOrder} from "../actions/sectio
 import {onDragEnd,orderSections} from "../functions/dragDropFunctions"
 
 
+
+
 const Board = () => {
 
   const dispatch = useDispatch();
 
+  const onDrag = ({result}) =>{
+    const itemType = result.type
+    if(itemType === 'column'){
+      if(result.destination.index === result.source.index ) return
+      
+      const {sectionId,sourceDragIndex,destinationDragIndex} = orderSections({result,sectionOrder,setSectionOrder})
+      console.log("before Dispatch")
+      dispatch(updateSectionOrder({sectionId,sourceDragIndex,destinationDragIndex,sectionOrderId}));
+      console.log("after Dispatch")
+    }
+    else{
+      if (!result.destination) return;
+      const {sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type} = onDragEnd({result,sections, sectionOrder, setSections,setSectionOrder})
+      dispatch(updateSection({sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type}));
+    }
+    return
+  }
   
 
 
@@ -42,19 +61,7 @@ const Board = () => {
   
 
 
-  const onDrag = ({result}) =>{
-    const itemType = result.type
-    if(itemType === 'column'){
-      const {sectionId,sourceDragIndex,destinationDragIndex} = orderSections({result,sectionOrder,setSectionOrder})
-      console.log("before Dispatch")
-      dispatch(updateSectionOrder({sectionId,sourceDragIndex,destinationDragIndex,sectionOrderId}));
-      console.log("after Dispatch")
-    }
-    // else{
-    //   const {sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type} = onDragEnd({result,sections, sectionOrder, setSections,setSectionOrder})
-    //   dispatch(updateSection({sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type}));
-    // }
-  }
+  
 
 
 
@@ -116,10 +123,9 @@ const Board = () => {
                                           height:'100%',
                                         }}
                                         className = "py-2"
-                                        key={index}
+                                        key={sectionId}
                                        
                                       >
-                                        <p>{section.section_name}</p>
                                           <SectionCard
                                           section = {section}
                                           index={index}
