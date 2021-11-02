@@ -9,7 +9,8 @@ import "../css/board.css"
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { listTasks } from "../actions/taskActions";
-import { listSection, updateSection, updateSectionOrder} from "../actions/sectionActions";
+import {TaskContext}  from "../contexts/SectionContext"
+import { listSection, updateSectionTask, updateSectionOrder} from "../actions/sectionActions";
 // import { onDragEnd,addColumn, editTitle} from "../functions/TaskFunctions";
 import {onDragEnd,orderSections} from "../functions/dragDropFunctions"
 
@@ -20,7 +21,7 @@ const Board = () => {
 
   const dispatch = useDispatch();
 
-  const onDrag = ({result}) =>{
+  const onDrag = ({result}) =>{ //transfer outside function component
     const itemType = result.type
     if(itemType === 'column'){
       if(result.destination.index === result.source.index ) return
@@ -33,13 +34,11 @@ const Board = () => {
     else{
       if (!result.destination) return;
       const {sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type} = onDragEnd({result,sections, sectionOrder, setSections,setSectionOrder})
-      dispatch(updateSection({sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type}));
+      dispatch(updateSectionTask({sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type}));
     }
     return
   }
   
-
-
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -57,13 +56,7 @@ const Board = () => {
   const sectionOrderId = dataList.data.sectionOrderId;
   const [sections, setSections] = useState(sectionDataList);
   const [sectionOrder,setSectionOrder] = useState(sectionOrderList);
-
-  
-
-
-  
-
-
+  const test = "test"
 
   useEffect(()=>{
       if(dataList.loading === false){
@@ -75,6 +68,7 @@ const Board = () => {
 
   return (
     <>
+     <TaskContext.Provider value={{sections,setSections,test}}>
       <Navigation />
         <Container fluid className="board-container">
           <Row className="h-100">
@@ -110,9 +104,6 @@ const Board = () => {
                             const section = sections.filter(obj => {
                               return obj._id === sectionId
                             })[0]
-
-                            console.log(section)
-                            console.log(sections)
                               return (
                                
                                       <div                                
@@ -130,7 +121,7 @@ const Board = () => {
                                           section = {section}
                                           index={index}
                                           provided={provided}
-                                          columnId={sectionId}
+                                          sectionId={sectionId}
                                           />
                                       </div>
                               )
@@ -156,6 +147,7 @@ const Board = () => {
               </Col>
           </Row>
         </Container>
+      </TaskContext.Provider>
     </>
   );
 };

@@ -2,7 +2,8 @@ import {
     SECTION_LIST_FAIL, SECTION_LIST_REQUEST, SECTION_LIST_SUCCESS,
     SECTION_ORDER_LIST_SUCCESS,SECTION_ORDER_LIST_FAIL,
     SECTION_UPDATE_REQUEST,SECTION_UPDATE_SUCCESS,SECTION_UPDATE_FAIL,
-    SECTION_ORDER_UPDATE_REQUEST, SECTION_ORDER_UPDATE_SUCCESS, SECTION_ORDER_UPDATE_FAIL
+    SECTION_ORDER_UPDATE_REQUEST, SECTION_ORDER_UPDATE_SUCCESS, SECTION_ORDER_UPDATE_FAIL,
+    SECTION_TASK_UPDATE_REQUEST,SECTION_TASK_UPDATE_SUCCESS,SECTION_TASK_UPDATE_FAIL,
 } from "../constants/sectionConstants"
 import axios from "axios";
 
@@ -94,10 +95,10 @@ export const updateSectionOrder =({sectionId,sourceDragIndex,destinationDragInde
 }
 
 
-export const updateSection = ({sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type}) => async (dispatch, getState) => {
+export const updateSectionTask = ({sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type}) => async (dispatch, getState) => {
     try{
         dispatch({
-            type: SECTION_UPDATE_REQUEST,
+            type: SECTION_TASK_UPDATE_REQUEST,
         });
 
         const {
@@ -133,6 +134,48 @@ export const updateSection = ({sourceSectionId,destinationSectionId,taskId,sourc
     }
     
 }
+
+
+export const updateSection = ({section_name, sectionId}) => async (dispatch, getState) => {
+    try{
+        dispatch({
+            type: SECTION_UPDATE_REQUEST,
+        });
+
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        const { data } = await axios.put(
+            `/api/sections/${sectionId}`,
+            {section_name}, 
+            config
+        );
+
+        dispatch({
+            type: SECTION_UPDATE_SUCCESS,
+            payload: data,
+        });
+    } catch (error) {
+        const message = 
+            error.response && error.response.data.message 
+                ? error.response.data.message 
+                : error.message;
+        dispatch({
+            type: SECTION_UPDATE_FAIL,
+            payload: message,
+        });
+    }
+    
+}
+
 
 
 

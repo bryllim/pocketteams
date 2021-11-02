@@ -1,8 +1,6 @@
 const onDragEnd = ({result, sections, sectionOrder, setSections, setSectionOrder}) => {
   
     const { source, destination, type } = result;
-    console.log("test")
-
     const newSections = [...sections]
     const sourceSectionId = source.droppableId
     const destinationSectionId = destination.droppableId
@@ -52,24 +50,14 @@ const onDragEnd = ({result, sections, sectionOrder, setSections, setSectionOrder
   const orderSections = ({result,sectionOrder,setSectionOrder}) => {
 
     if (!result.destination) return;
-
     const { source, destination , draggableId} = result;
-
     const sectionId = draggableId;
     const sourceDragIndex = source.index;
     const destinationDragIndex = destination.index;
-
     const newSectionOrder = [...sectionOrder]
     const [removed] = newSectionOrder.splice(sourceDragIndex, 1)
     newSectionOrder.splice(destinationDragIndex,0,removed)
-    console.log('newSectionOrder')
-    console.log(newSectionOrder)
     setSectionOrder(newSectionOrder)
-
-    console.log('sectionOrder')
-    
-    console.log(sectionOrder)
-
     return {sectionId, sourceDragIndex, destinationDragIndex}
   }
 

@@ -38,7 +38,8 @@ const getSectionById = asyncHandler( async (req,res) => {
 });
 
 const updateSection = asyncHandler(async (req,res) => {
-    const {section_name, section_description} = req.body;
+    const {section_name} = req.body;
+    console.log("Updated Section")
 
     const section = await Section.findById(req.params.id);
 
@@ -50,8 +51,6 @@ const updateSection = asyncHandler(async (req,res) => {
 
     if(section){
         section.section_name = section_name;
-        section.section_description = section_description;
-
         const updatedSection = await section.save();
         res.json(updatedSection);
     } else {

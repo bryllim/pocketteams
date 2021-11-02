@@ -5,10 +5,27 @@ import {TaskContext} from "../../contexts/SectionContext"
 import AddTaskModal from "../Modals/AddTaskModal";
 import { Dropdown } from "react-bootstrap";
 import DeleteSectionConfirmation from "../Modals/DeleteSectionConfirmation"
+import {deleteSection,renameSection,createSection} from "../../functions/sectionFunctions"
+import { useDispatch} from "react-redux";
+import { updateSection} from "../../actions/sectionActions";
+
+const changeSection =({sectionTitle,sections,setSections,index,dispatch,sectionId}) => {
+  if(sectionTitle === ''){
+    console.log("Change")
+    // renameSection()
+    return
+  }
+  else{
+    console.log("renameSection")
+      console.log(sections)
+    renameSection({sectionTitle,sections,setSections,index})
+    dispatch(updateSection({section_name: sectionTitle,sectionId}))
+    return
+  }
+}
 
 
-
-const SectionCard = ({columnId,index,section}) => {
+const SectionCard = ({sectionId,index,section}) => {
   //rework
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -23,10 +40,15 @@ const SectionCard = ({columnId,index,section}) => {
   const closeDeleteSection = () => setShowDeleteSection(false)
   const openDeleteSection = () => setShowDeleteSection(true)
 
-  const [sectionTitle, setSectiontitle] = useState(section.section_name)
+  const [sectionTitle, setSectionTitle] = useState(section.section_name)
   const [sectionToggleState,setSectionToggleState] = useState(true)
 
+  const {sections,setSections,test} = useContext(TaskContext)
+  console.log('sections')
+  console.log(test)
+  console.log(sectionId)
 
+  const dispatch = useDispatch();
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p
       ref={ref}
@@ -42,7 +64,8 @@ const SectionCard = ({columnId,index,section}) => {
 
   return (
     <>
-      <Draggable draggableId={columnId} index={index} >
+    
+      <Draggable draggableId={sectionId} index={index} >
         {provided => {
           return(
             <div 
@@ -51,7 +74,7 @@ const SectionCard = ({columnId,index,section}) => {
               className="d-flex flex-column section-wrapper mx-2"
             >
               <div className="d-flex justify-content-between align-items-center ps-3 pe-2 py-2 ">
-                {section.section_name !== '' ?
+                {sectionToggleState && sectionTitle !== '' ?
                   (<h5 className="text-white"
                     {...provided.dragHandleProps}
                   >
@@ -63,19 +86,20 @@ const SectionCard = ({columnId,index,section}) => {
                     value={sectionTitle}
                     onChange={(e) => {
                       setSectionToggleState(false)
-                      setSectiontitle(e.target.value)
+                      setSectionTitle(e.target.value)
                     }}
                     autoFocus
                     onBlur={(e)=>{
+                      //not working when clicking to other sections
                       setSectionToggleState(true)
-                      // changeSection()
+                      changeSection({sectionTitle,sections,setSections,index,dispatch,sectionId})
                       e.preventDefault()
                       e.stopPropagation()
                     }}
                     onKeyDown={(event) => {
                       if (event.key === 'Enter' || event.key === 'Escape') {
                         setSectionToggleState(true)
-                        // changeSection()
+                        changeSection({sectionTitle,sections,setSections,index,dispatch,sectionId})
                         event.preventDefault()
                         event.stopPropagation()
                       }}} 
@@ -118,7 +142,7 @@ const SectionCard = ({columnId,index,section}) => {
                           return (
                             <div key={index}>
                             <TaskCard
-                              columnId={columnId}
+                              sectionId={sectionId}
                               provided={provided}
                               snapshot={snapshot}
                               task={task}
@@ -146,7 +170,7 @@ const SectionCard = ({columnId,index,section}) => {
          {/* MODALS */}
     </Draggable> 
     <AddTaskModal showModal={show} hideModal={handleClose} />
-    <DeleteSectionConfirmation showModal={showDeleteSection} hideModal={closeDeleteSection} columnId={columnId} index={index} />
+    <DeleteSectionConfirmation showModal={showDeleteSection} hideModal={closeDeleteSection} sectionId={sectionId} index={index} />
     </>
   )}
 
