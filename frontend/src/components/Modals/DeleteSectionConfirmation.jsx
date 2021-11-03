@@ -6,6 +6,9 @@ import {
 } from "react-bootstrap";
 import React,{useContext} from "react";
 import {TaskContext} from "../../contexts/SectionContext"
+import {sectionDelete} from "../../functions/sectionFunctions"
+
+
 
 const DeleteSectionConfirmation = ({ showModal, hideModal,columnId,index }) => {
   const {removeSection} = useContext(TaskContext)
