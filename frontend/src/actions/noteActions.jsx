@@ -86,7 +86,7 @@ export const updateNoteAction =  ( id, content ) =>
                 Authorization: `Bearer ${userInfo.token}`,
             }
         };
-
+        console.log('updateNoteAction')
         const { data } = await axios.put(
             `/api/note/${id}`, 
             {content} ,

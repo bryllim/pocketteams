@@ -31,7 +31,6 @@ const Notes = (note) => {
     if (!userInfo) {
       history.push("/");
     }
-
   }, [dispatch, history, userInfo, successCreate, successUpdate,]);
 
 
@@ -43,7 +42,6 @@ const Notes = (note) => {
       dispatch(createNoteAction( defaultContent ));
 
     } 
-
     history.push('/project')
   }
 
