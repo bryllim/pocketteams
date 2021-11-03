@@ -5,8 +5,27 @@ import {TaskContext} from "../../contexts/SectionContext"
 import AddTaskModal from "../Modals/AddTaskModal";
 import { Dropdown } from "react-bootstrap";
 import DeleteSectionConfirmation from "../Modals/DeleteSectionConfirmation"
+import {deleteSection,renameSection,createSection} from "../../functions/sectionFunctions"
+import { useDispatch} from "react-redux";
+import { updateSection} from "../../actions/sectionActions";
 
-const SectionCard = ({ provided,snapshot,column,columnId,index, }) => {
+const changeSection =({sectionTitle,sections,setSections,index,dispatch,sectionId}) => {
+  if(sectionTitle === ''){
+    console.log("Change")
+    // renameSection()
+    return
+  }
+  else{
+    console.log("renameSection")
+    renameSection({sectionTitle,sections,setSections,index})
+    dispatch(updateSection({section_name: sectionTitle,sectionId}))
+    return
+  }
+}
+
+
+const SectionCard = ({sectionId,index,section}) => {
+  //rework
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -20,12 +39,12 @@ const SectionCard = ({ provided,snapshot,column,columnId,index, }) => {
   const closeDeleteSection = () => setShowDeleteSection(false)
   const openDeleteSection = () => setShowDeleteSection(true)
 
-  const [sectionTitle, setSectiontitle] = useState(column.name)
+  const [sectionTitle, setSectionTitle] = useState(section.section_name)
   const [sectionToggleState,setSectionToggleState] = useState(true)
 
+  const {sections,setSections} = useContext(TaskContext)
 
-
-
+  const dispatch = useDispatch();
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p
       ref={ref}
@@ -38,22 +57,11 @@ const SectionCard = ({ provided,snapshot,column,columnId,index, }) => {
     </p>
 ));
 
-  const {addTask,columns,setColumns,changeSectionTitle} = useContext(TaskContext)
-    
-  const changeSection = () =>{
-    if(sectionTitle === ''){
-      openDeleteSection()
-    }
-    else{
-      changeSectionTitle({index,columnId,sectionTitle})
-    }
-      
-  }
 
   return (
     <>
-      <Draggable draggableId={columnId} index={index} >
-        
+    
+      <Draggable draggableId={sectionId} index={index} >
         {provided => {
           return(
             <div 
@@ -67,28 +75,27 @@ const SectionCard = ({ provided,snapshot,column,columnId,index, }) => {
                     {...provided.dragHandleProps}
                   >
                     {sectionTitle}
-                  </h5>)
-                  :
-                  (<input
+                  </h5>):(<input
                     type="text"
                     maxlength="16"
                     className="border-top-0 border-light border-end-0 border-start-0 bg-transparent text-white"
                     value={sectionTitle}
                     onChange={(e) => {
                       setSectionToggleState(false)
-                      setSectiontitle(e.target.value)
+                      setSectionTitle(e.target.value)
                     }}
                     autoFocus
                     onBlur={(e)=>{
+                      //not working when clicking to other sections
                       setSectionToggleState(true)
-                      changeSection()
+                      changeSection({sectionTitle,sections,setSections,index,dispatch,sectionId})
                       e.preventDefault()
                       e.stopPropagation()
                     }}
                     onKeyDown={(event) => {
                       if (event.key === 'Enter' || event.key === 'Escape') {
                         setSectionToggleState(true)
-                        changeSection()
+                        changeSection({sectionTitle,sections,setSections,index,dispatch,sectionId})
                         event.preventDefault()
                         event.stopPropagation()
                       }}} 
@@ -96,16 +103,16 @@ const SectionCard = ({ provided,snapshot,column,columnId,index, }) => {
                 }
                 
 
-                  <button class="btn text-white ms-auto"  onClick={() => addTask(columnId,columns,setColumns)} type="button">
-                    <i class="lni lni-plus fs-5 "></i>
+                  <button className="btn text-white ms-auto" type="button">
+                    <i className="lni lni-plus fs-5 "></i>
                   </button>
 
                   <Dropdown>
                     <Dropdown.Toggle 
                       as={CustomToggle} 
                       id="dropdown-custom-components">
-                        <button class="btn text-white" type="button">
-                          <i class="lni lni-more-alt fs-5 "></i>
+                        <button className="btn text-white" type="button">
+                          <i className="lni lni-more-alt fs-5 "></i>
                         </button>
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
@@ -117,36 +124,39 @@ const SectionCard = ({ provided,snapshot,column,columnId,index, }) => {
                   
              
               </div>
-              <Droppable droppableId={columnId} key={columnId} type="task">
+          <Droppable droppableId={section._id} key={index} id="task">
                 {(provided,snapshot) => {
+                  
+
                   return(
+                  
                     <div 
                       {...provided.droppableProps}
                       ref={provided.innerRef}
-                      className=" section-wrapper-internal scrolling-wrapper-y flex-nowrap pt-4 basecard"
-                    >
-                      {column.items.map((item, index) => {
-                        return (
-                          <>
+                      className="section-wrapper-internal scrolling-wrapper-y flex-nowrap pt-4 basecard">
+                        {section.tasks.map((task, index) => {
+                          return (
+                            <div key={index}>
                             <TaskCard
-                              columnId={columnId}
+                              sectionId={sectionId}
                               provided={provided}
                               snapshot={snapshot}
-                              item={item}
+                              task={task}
                               index={index}
                             />
-                          </>
-                        )})}
+                            </div>       
+                          )
+                      })}
                       {provided.placeholder}
-                        <div class="d-flex justify-content-center align-items-center theme-btn mx-auto my-4"  
-                          onClick={() => addTask(columnId,columns,setColumns)} style={{width:"250px", height:"50px"}}>
-                          <button class="btn" type="button">
-                              <i class="lni lni-plus text-white"></i>
-                          </button>
-                          <h6 class="text-white">Add Another</h6>
-                        </div>
-                        
-                    </div> 
+                      <div className="d-flex justify-content-center align-items-center theme-btn mx-auto my-4"  
+                      style={{width:"250px", height:"50px"}}>
+                            <button className="btn" type="button">
+                                <i className="lni lni-plus text-white"></i>
+                            </button>
+                            <h6 className="text-white">Add Another</h6>
+                      </div>
+                    </div>
+                     
                   )
                 }}  
               </Droppable> 
@@ -154,10 +164,9 @@ const SectionCard = ({ provided,snapshot,column,columnId,index, }) => {
           )
         }}
          {/* MODALS */}
-        
     </Draggable> 
     <AddTaskModal showModal={show} hideModal={handleClose} />
-    <DeleteSectionConfirmation showModal={showDeleteSection} hideModal={closeDeleteSection} columnId={columnId} index={index} />
+    <DeleteSectionConfirmation showModal={showDeleteSection} hideModal={closeDeleteSection} sectionId={sectionId} index={index} />
     </>
   )}
 

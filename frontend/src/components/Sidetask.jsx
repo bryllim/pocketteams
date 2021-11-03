@@ -35,7 +35,7 @@ const SideTask = ({ showed, hide }) => {
             onClick={() => setMarkTask(!markTask)}
             className="theme-btn theme-btn-sm mb-2"
           >
-            <i class="lni lni-checkmark-circle pe-2"></i>
+            <i className="lni lni-checkmark-circle pe-2"></i>
             {markTask ? "Mark as complete" : "Completed"}
           </button>
           <div className="d-flex align-items-center">
@@ -71,7 +71,7 @@ const SideTask = ({ showed, hide }) => {
                           as={CustomToggle}
                           id="dropdown-custom-components"
                         >
-                          <i class="lni lni-user mx-2 line-icon p-2 sidetask-btn"></i>
+                          <i className="lni lni-user mx-2 line-icon p-2 sidetask-btn"></i>
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                           <Dropdown.Item onClick={(e) => setUser("User 1")}>User 1</Dropdown.Item>
@@ -158,7 +158,7 @@ const SideTask = ({ showed, hide }) => {
           </div>
         </div>
         <div className="mt-2 d-flex align-items-start">
-          <i class="lni lni-user mx-2 line-icon"></i>
+          <i className="lni lni-user mx-2 line-icon"></i>
           <textarea
             className="mx-2 px-3 py-1 full form-control resize-0 radius label-font"
             placeholder="Write a comment"
