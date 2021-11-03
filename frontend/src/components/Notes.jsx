@@ -31,9 +31,9 @@ const Notes = () => {
   useEffect(() => {
     dispatch(listNotes());
     if (!userInfo) {
-      history.push("/board");
+      history.push("/");
     }
-  }, [dispatch, history, userInfo]);
+  }, [dispatch, history, userInfo, successCreate, successUpdate]);
 
 
   // FOR SYNC BUTTON
@@ -60,13 +60,21 @@ const Notes = () => {
     dispatch(listNotes());
   }, [dispatch, successCreate, successUpdate])
 
+
   const updateHandler = (e) => {
     e.preventDefault();
-    dispatch(updateNoteAction( notes[0]._id , content ));
-    // if (!content) return
-    //window.location.reload(false);
+    if (!content) return
+    dispatch(updateNoteAction( notes[0]._id, content ));
   }
+  const createHandler = (e) => {
+    const defaultContent = "Write your note here."
+    e.preventDefault();
+    if (!content) {
+      dispatch(createNoteAction( defaultContent ));
 
+    } 
+    history.push('/project')
+  }
 
   return (
     <div className="sidebar-box recent-blog-box mb-30">
@@ -83,15 +91,10 @@ const Notes = () => {
                   ></textarea>
                   ))}
             <div>
-                <button className="theme-btn theme-btn-md" onClick={updateHandler}>
+                <button className="theme-btn theme-btn-md" onClick={ !content ? createHandler : updateHandler }>
                 <i className="lni lni-cloud-sync me-2"></i>
-                <span>Sync notes</span>
+                <span>{ !content ? "Create note" : "Sync note" }</span>
                 </button> 
-                {/* <Link to={`/board/notes/${note._id}`}> */}
-                {/* <button className="theme-btn theme-btn-md">
-                <span>Edit</span>
-                </button>   */}
-                {/* </Link> */}
             </div>
         </form>
     </div>

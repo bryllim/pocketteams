@@ -6,6 +6,7 @@ const connectDB = require("./config/db");
 const userRoutes = require('./routes/UserRoutes');
 const projectRoutes = require('./routes/ProjectRoutes');
 const taskRoutes = require('./routes/taskRoutes');
+const noteRoutes = require('./routes/NoteRoutes');
 const sectionRoutes = require('./routes/SectionRoutes');
 const sectionOrderRoutes = require('./routes/SectionOrderRoutes');
 const { NotFound, ErrorHandler } = require('./middlewares/ErrorMiddleware');
@@ -22,6 +23,7 @@ app.use(express.json());
 app.use('/api/users', userRoutes);
 app.use('/api/projects', projectRoutes)
 app.use('/api/tasks', taskRoutes)
+app.use('/api/note', noteRoutes)
 app.use('/api/sections', sectionRoutes)
 app.use('/api/sectionorder', sectionOrderRoutes)
 
