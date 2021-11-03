@@ -6,8 +6,11 @@ import {
     PROJECT_LIST_REQUEST, 
     PROJECT_LIST_SUCCESS,  
     PROJECT_UPDATE_REQUEST, 
-    PROJECT_UPDATE_SUCCESS, 
-    PROJECT_UPDATE_FAIL } from "../constants/projectConstants";
+    PROJECT_UPDATE_SUCCESS,
+    PROJECT_UPDATE_FAIL,
+    PROJECT_DELETE_REQUEST, 
+    PROJECT_DELETE_SUCCESS,
+    PROJECT_DELETE_FAIL } from "../constants/projectConstants";
 
 export const projectListReducer = (state = {projects: []}, action) => {
     switch (action.type){
@@ -50,3 +53,16 @@ export const projectUpdateReducer = (state = {}, action) => {
             return state;
     }
 };
+
+export const projectDeleteReducer = (state = {}, action) => {
+    switch (action.type) {
+      case PROJECT_DELETE_REQUEST:
+        return { loading: true };
+      case PROJECT_DELETE_SUCCESS:
+        return { loading: false, success: true };
+      case PROJECT_DELETE_FAIL:
+        return { loading: false, error: action.payload, success: false };
+      default:
+        return state;
+    }
+  };

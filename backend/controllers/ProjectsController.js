@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler");
 const Project = require("../models/ProjectModel");
 
 const getProjects = asyncHandler(async (req, res) => {
-    const projects = await Project.find();
+    const projects = await Project.find({user: req.user._id});
     res.json(projects);
 });
 
@@ -21,7 +21,7 @@ const createProject = asyncHandler( async (req,res) => {
     }
 });
 
-const getNoteById = asyncHandler( async (req,res) => {
+const getProjectById = asyncHandler( async (req,res) => {
     const project = await Project.findById(req.params.id);
 
     if(project){
@@ -71,4 +71,4 @@ const deleteProject = asyncHandler(async (req,res) => {
     
 });
 
-module.exports = {getProjects, createProject, updateProject, deleteProject, getNoteById};
+module.exports = {getProjects, createProject, updateProject, deleteProject, getProjectById};

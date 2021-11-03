@@ -32,7 +32,7 @@ const LandingPage = ({history}) => {
                     <div className="row align-items-center">
                         <div className="col-xl-5 col-lg-6">
                             <div className="hero-content-wrapper">
-                                <h1 className="mb-25 example-fade-text" data-wow-delay=".2s">What is Pocket Teams?</h1>
+                                <h1 className="mb-25 example-fade-text" data-wow-delay=".2s">Vercel Demo</h1>
                                 <p className="mb-35 wow fadeInLeft" data-wow-delay=".4s">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                 </p>
@@ -45,9 +45,9 @@ const LandingPage = ({history}) => {
                                     <Image src={heroImage} alt="" className="image wow fadeInRight"
                                         data-wow-delay=".5s" />
                                     <Image src={dotShape} alt="" className="dot-shape" />
-                                    <div className="video-btn">
+                                    {/* <div className="video-btn">
                                         <a href="#features" className="glightbox"><i className="lni lni-display"></i></a>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>

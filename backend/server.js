@@ -1,7 +1,7 @@
 //Get the package from node.js
-const express = require('express');
-const notes = require('./data/notes');
-const dotenv = require('dotenv');
+const express = require("express");
+const notes = require("./data/notes");
+const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const userRoutes = require('./routes/UserRoutes');
 const projectRoutes = require('./routes/ProjectRoutes');

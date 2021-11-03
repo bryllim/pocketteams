@@ -5,9 +5,11 @@ import SubTask from "../components/SubTask";
 
 const SideTask = ({ showed, hide }) => {
   const [markTask, setMarkTask] = useState(true);
-  const [taskStatus, setTaskStatus] = useState("set priority");
   const [sectionName, setSectionName] = useState("section name");
   const [user, setUser] = useState("assign user");
+  const [color, setColor] = useState(
+    "form-select form-select-sm label-font ms-3"
+  );
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p
@@ -21,6 +23,19 @@ const SideTask = ({ showed, hide }) => {
     </p>
   ));
 
+  const reClass = () => {
+    let val = document.getElementById("test").value;
+
+    if (val == 1) {
+      setColor("form-select form-select-sm label-font ms-3 light");
+    } else if (val == 2) {
+      setColor("form-select form-select-sm label-font ms-3 medium");
+    } else if (val == 3) {
+      setColor("form-select form-select-sm label-font ms-3 heavy");
+    } else if (val === "select priority") {
+      setColor("form-select form-select-sm label-font ms-3 prio");
+    }
+  };
 
   return (
     <div
@@ -33,7 +48,7 @@ const SideTask = ({ showed, hide }) => {
           <button
             complete={markTask}
             onClick={() => setMarkTask(!markTask)}
-            className="theme-btn theme-btn-sm mb-2"
+            className="theme-btn theme-btn-md mb-2 py-1"
           >
             <i className="lni lni-checkmark-circle pe-2"></i>
             {markTask ? "Mark as complete" : "Completed"}
@@ -46,9 +61,11 @@ const SideTask = ({ showed, hide }) => {
             ></i>
           </div>
         </div>
+
         <hr className="default mt-0" />
+
         <div className="scrolling-section scrolling-wrapper-y overflow-x-hidden">
-          <div className="py-2 border-dark">
+          <div className="py-2">
             <form>
               <input
                 className="py-2 full border-0 h3"
@@ -56,34 +73,7 @@ const SideTask = ({ showed, hide }) => {
                 placeholder="Write a task name"
               ></input>
               <>
-                <div className="row f-dark">
-                  <div className="col-xl py-2 d-flex align-items-center">
-                    <label className="label-font">Date:</label>
-                    <div className="d-flex align-items-center">
-                        <input className="label-font border border-0 date-btn form-control p-0" type="date"/>
-                    </div>
-                  </div>
-                  <div className="col-xl py-2 d-flex align-items-center">
-                    <label className="label-font">Assigned: </label>
-                    <div className="d-flex align-items-center">
-                      <Dropdown>
-                        <Dropdown.Toggle
-                          as={CustomToggle}
-                          id="dropdown-custom-components"
-                        >
-                          <i className="lni lni-user mx-2 line-icon p-2 sidetask-btn"></i>
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                          <Dropdown.Item onClick={(e) => setUser("User 1")}>User 1</Dropdown.Item>
-                          <Dropdown.Item onClick={(e) => setUser("User 2")}>User 2</Dropdown.Item>
-                        </Dropdown.Menu>
-                      </Dropdown>
-
-                      <p className="label-font">{user}</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="row mb-1 h6 f-dark">
+                <div className="row mb-1 f-dark">
                   <div className="col-xl py-2 d-flex align-items-center">
                     <label className="label-font">Section:</label>
                     <div className="d-flex align-items-center mx-2">
@@ -104,38 +94,99 @@ const SideTask = ({ showed, hide }) => {
                           </svg>
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                          <Dropdown.Item onClick={(e) => setSectionName("Requested")}>Requested</Dropdown.Item>
-                          <Dropdown.Item onClick={(e) => setSectionName("To Do")}>To Do</Dropdown.Item>
+                          <Dropdown.Item
+                            className="label-font-fw"
+                            onClick={(e) => setSectionName("Requested")}
+                          >
+                            Requested
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            className="label-font-fw"
+                            onClick={(e) => setSectionName("To Do")}
+                          >
+                            To Do
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                      <p className="label-font">{sectionName}</p>
+                    </div>
+                  </div>
+
+                  <div className="col-xl py-2 d-flex align-items-center">
+                    <label className="label-font">Assigned: </label>
+                    <div className="d-flex align-items-center">
+                      <Dropdown>
+                        <Dropdown.Toggle
+                          as={CustomToggle}
+                          id="dropdown-custom-components"
+                        >
+                          <i class="lni lni-user mx-2 line-icon p-2 sidetask-btn"></i>
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          <Dropdown.Item
+                            className="label-font-fw"
+                            onClick={(e) => setUser("User 1")}
+                          >
+                            User 1
+                          </Dropdown.Item>
+                          <Dropdown.Item
+                            className="label-font-fw"
+                            onClick={(e) => setUser("User 2")}
+                          >
+                            User 2
+                          </Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
 
-                      <p className="label-font">{sectionName}</p>
+                      <p className="label-font">{user}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="row f-dark">
+                  <div className="col-xl py-2 d-flex align-items-center">
+                    <label className="label-font">Date:</label>
+                    <div className="d-flex align-items-center">
+                      <input
+                        className="label-font border border-0 date-btn form-control p-0"
+                        type="date"
+                      />
                     </div>
                   </div>
                   <div className="col-xl py-2 d-flex align-items-center">
                     <label className="label-font me-2">Priority: </label>
-                    <Dropdown className="prio label-font d-flex align-items-center">
-                      <p className="label-font pe-2">{taskStatus}</p>
-                      <Dropdown.Toggle
-                        id="dropdown-custom-components"
-                        className="option f-dark"
-                      ></Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item href="#/action-1" onClick={(e) => setTaskStatus("Light")}>Light</Dropdown.Item>
-                        <Dropdown.Item href="#/action-2" onClick={(e) => setTaskStatus("Medium")}>Medium</Dropdown.Item>
-                        <Dropdown.Item href="#/action-3" onClick={(e) => setTaskStatus("Heavy")}>Heavy</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
+                    <select
+                      className={color}
+                      aria-label="form-select-sm example"
+                      id="test"
+                      onChange={reClass}
+                    >
+                      <option
+                        className="form-select-option label-font-fw prio"
+                        aria-label="form-select-sm example"
+                        default
+                      >
+                        select priority
+                      </option>
+                      <option className="light" value="1">
+                        Light
+                      </option>
+                      <option className="medium" value="2">
+                        Medium
+                      </option>
+                      <option className="heavy" value="3">
+                        Heavy
+                      </option>
+                    </select>
                   </div>
                 </div>
                 <div className="row">
                   <div className="col py-2 h6 f-dark">
                     <label className="label-font">Description:</label>
                     <div className="px-2">
-                    <textarea
-                      placeholder="Describe Task."
-                      className="mt-3 radius px-3 form-control py-2 label-font resize-0"
-                    ></textarea>
+                      <textarea
+                        placeholder="Describe Task."
+                        className="mt-3 radius px-3 form-control py-2 label-font resize-0"
+                      ></textarea>
                     </div>
                   </div>
                 </div>
@@ -165,7 +216,7 @@ const SideTask = ({ showed, hide }) => {
           ></textarea>
         </div>
         <div className="d-flex justify-content-end me-2">
-          <button className="theme-btn theme-btn-md p-2 my-1 label-font">Comment</button>
+          <button className="theme-btn theme-btn-sm py-1 my-1">Comment</button>
         </div>
       </div>
     </div>

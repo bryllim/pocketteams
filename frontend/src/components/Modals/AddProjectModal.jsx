@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Form, Modal, Card, Dropdown, Row, Col } from "react-bootstrap";
+import { Form, Modal, Card, Dropdown, Row, Col, Button, DropdownButton } from "react-bootstrap";
 import ErrorMessage from "../ErrorMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { createProjectAction } from "../../actions/projectActions";
-import ReactMarkdown from "react-markdown";
+// import ReactMarkdown from "react-markdown";
 
 const AddProjectModal = ({ showModal, hideModal }) => {
   const [projectName, setProjectName] = useState("");
@@ -17,6 +17,21 @@ const AddProjectModal = ({ showModal, hideModal }) => {
   const dispatch = useDispatch();
   const projectCreate = useSelector((state) => state.projectCreate);
   const { loading, error, project } = projectCreate;
+  const [color, setColor] = useState("form-select form-select-sm ms-3");
+
+  const reClass = () => {
+    let val = document.getElementById("test").value;
+
+    if (val == 1) {
+      setColor("form-select form-select-sm ms-3 light");
+    } else if (val == 2) {
+      setColor("form-select form-select-sm ms-3 medium");
+    } else if (val == 3) {
+      setColor("form-select form-select-sm ms-3 heavy");
+    } else if (val == "select priority") {
+      setColor("form-select form-select-sm ms-3 prio");
+    }
+  };
 
   const postDetails = (pics) => {
     if (
@@ -81,47 +96,46 @@ const AddProjectModal = ({ showModal, hideModal }) => {
           <Form onSubmit={null}>
             {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
             <Form.Group controlId="project_name" className="my-auto p-3">
-              <Form.Label>Title</Form.Label>
               <Row>
-                <Col md="6">
+                <Col md="3">
+                  {picMessage && (
+                    <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
+                  )}
+                  <Form.Label className="text-dark ms-2">Project Picture</Form.Label>
+                  <img
+                    src={projectPic}
+                    alt="Project_Pic"
+                    className="rounded fs-3 ms-2"
+                    style={{
+                      height: "6rem",
+                      width: "6rem",
+                      margin: "1rem 0rem",
+                      display: "block",
+                      objectFit: "cover"
+                    }}
+                  />
+                  </Col>
+                  <Col md="9" className="my-auto">
+                    <Form.Control 
+                        onChange={(e) => postDetails(e.target.files[0])}
+                        type="file"
+                    />
+                  </Col>
+              </Row>
+              <Row>
+                <Form.Group controlId="project_name" className="my-auto p-3">
+                  <Form.Label className="text-dark fs-6">Title</Form.Label>
                   <Form.Control
                     type="title"
                     placeholder="Project Name"
                     onChange={(e) => setProjectName(e.target.value)}
                     label={projectName}
                   />
-                </Col>
-                <Col md="2">
-                  <img
-                    src={projectPic}
-                    alt="Project_Pic"
-                    className="rounded fs-3"
-                    style={{
-                      height: "5rem",
-                      width: "5rem",
-                      display: "block",
-                      margin: "auto",
-                    }}
-                  ></img>
-                </Col>
-                <Col md="4" className="my-auto">
-                  {picMessage && (
-                    <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
-                  )}
-                  <Form.Group controlId="pic">
-                    <Form.File
-                      onChange={(e) => postDetails(e.target.files[0])}
-                      id="custom-file"
-                      className="custom-file-label text-limit"
-                      type="image/png"
-                      custom
-                    />
-                  </Form.Group>
-                </Col>
+                </Form.Group>
               </Row>
             </Form.Group>
             <Form.Group controlId="project_description" className="my-auto p-3">
-              <Form.Label>Description</Form.Label>
+              <Form.Label className="text-dark fs-6">Description</Form.Label>
               <Form.Control
                 as="textarea"
                 value={projectDescription}
@@ -131,34 +145,29 @@ const AddProjectModal = ({ showModal, hideModal }) => {
               />
             </Form.Group>
             <Form.Group className="d-flex my-auto p-3 search-form-box">
-              <Dropdown>
-                <Form.Label>Project Status &nbsp; {projectStatus}</Form.Label>
-                &nbsp;&nbsp;
-                <Dropdown.Toggle
-                  id="dropdown-custom-components dropdown-button-drop-up"
-                  className="option f-dark"
-                ></Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item
-                    href="#/action-1"
-                    onClick={(e) => setProjectStatus("Light")}
-                  >
-                    Light
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    href="#/action-2"
-                    onClick={(e) => setProjectStatus("Medium")}
-                  >
-                    Medium
-                  </Dropdown.Item>
-                  <Dropdown.Item
-                    href="#/action-3"
-                    onClick={(e) => setProjectStatus("Heavy")}
-                  >
-                    Heavy
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+            <Form.Label className="text-dark fs-6 my-auto"> Project Status:  </Form.Label>
+                    <select
+                      className={color}
+                      aria-label="form-select-sm example"
+                      id="test"
+                      onChange={(e) => setProjectStatus(e.target.value)}
+                    >
+                      <option
+                        className="form-select form-select-sm"
+                        default
+                      >
+                        select priority
+                      </option>
+                      <option className="light form-select-sm" value="light">
+                        Light
+                      </option>
+                      <option className="medium form-select-sm" value="medium">
+                        Medium
+                      </option>
+                      <option className="heavy form-select-sm" value="heavy">
+                        Heavy
+                      </option>
+                    </select>
             </Form.Group>
           </Form>
         </Modal.Body>
