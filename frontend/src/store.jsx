@@ -4,7 +4,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
 import { projectCreateReducer, projectListReducer, projectUpdateReducer } from './reducers/projectReducers';
 import { taskListReducer } from './reducers/taskReducers';
-import { sectionOrderListReducer, sectionListReducer ,sectionUpdateTaskReducer,SectionOrderUpdateReducer,sectionUpdateReducer} from './reducers/sectionReducers';
+import { sectionOrderListReducer, sectionListReducer ,sectionUpdateTaskReducer,SectionOrderUpdateReducer,sectionUpdateReducer,sectionCreateReducer,sectionDeleteReducer} from './reducers/sectionReducers';
 
 
 const reducer = combineReducers({
@@ -18,7 +18,9 @@ const reducer = combineReducers({
     sectionList: sectionListReducer,
     sectionTasksUpdate: sectionUpdateTaskReducer,
     SectionOrderUpdate:SectionOrderUpdateReducer,
-    sectionUpdate:sectionUpdateReducer
+    sectionUpdate:sectionUpdateReducer,
+    sectionCreate:sectionCreateReducer,
+    sectionDelete:sectionDeleteReducer
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

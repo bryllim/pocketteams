@@ -17,7 +17,6 @@ const changeSection =({sectionTitle,sections,setSections,index,dispatch,sectionI
   }
   else{
     console.log("renameSection")
-      console.log(sections)
     renameSection({sectionTitle,sections,setSections,index})
     dispatch(updateSection({section_name: sectionTitle,sectionId}))
     return
@@ -43,10 +42,7 @@ const SectionCard = ({sectionId,index,section}) => {
   const [sectionTitle, setSectionTitle] = useState(section.section_name)
   const [sectionToggleState,setSectionToggleState] = useState(true)
 
-  const {sections,setSections,test} = useContext(TaskContext)
-  console.log('sections')
-  console.log(test)
-  console.log(sectionId)
+  const {sections,setSections} = useContext(TaskContext)
 
   const dispatch = useDispatch();
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (

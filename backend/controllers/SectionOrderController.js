@@ -30,8 +30,6 @@ const getSectionOrderById = asyncHandler( async (req,res) => {
         }
     })
     // const section = await Section.find( { $in: sectionOrder._id}).populate('tasks')
-    
-    console.log(sectionOrder.items)
     if(sectionOrder){
 
 

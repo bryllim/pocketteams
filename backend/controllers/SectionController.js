@@ -4,20 +4,32 @@ const Task = require("../models/TaskModel");
 const SectionOrder = require("../models/SectionOrderModel");
 
 const createSection = asyncHandler( async (req,res) => {
-    const {section_name, section_description, section_order_id} = req.body;
+    const {section_name, section_order_id} = req.body;
+    console.log('createdSection')
+    console.log(section_name)
+    console.log(section_order_id)
     //need to validate first if user belongs to section order id
-    if(!section_name || !section_description){ 
-        res.status(400)
-        throw new Error("Please Fill all the Fields");
-    } else {
-        const section = new Section({user: req.user._id, section_name, section_description, section_order_id});
-        const createdSection = await section.save();
-        sectionOrderResponse = await SectionOrder.findByIdAndUpdate(
-            section_order_id,
-            { $push: { items: createdSection} },
-            { new: true, useFindAndModify: false },
-        );
-        res.status(201).json(createdSection);
+    try {
+        if(!section_name || !section_order_id){ 
+            res.status(400)
+            throw new Error("Please Fill all the Fields");
+        } else {
+            console.log('else')
+            const section = new Section({user: req.user._id, section_name, section_order_id});
+            const createdSection = await section.save();
+            sectionOrderResponse = await SectionOrder.findByIdAndUpdate(
+                section_order_id,
+                { $push: { items: createdSection} },
+                { new: true, useFindAndModify: false },
+            );
+            console.log('createdSection')
+            console.log(createdSection)
+            res.status(201).json(createdSection);
+        }
+    }
+    catch(e) {
+        console.log(e);
+    // [Error: Uh oh!]
     }
 });
 
