@@ -5,6 +5,7 @@ import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
 import { projectCreateReducer, projectListReducer, projectUpdateReducer } from './reducers/projectReducers';
 import { taskListReducer } from './reducers/taskReducers';
 import { sectionOrderListReducer, sectionListReducer ,sectionUpdateTaskReducer,SectionOrderUpdateReducer,sectionUpdateReducer,sectionCreateReducer,sectionDeleteReducer} from './reducers/sectionReducers';
+import { noteCreateReducer, noteListReducer, noteUpdateReducer } from './reducers/noteReducers';
 
 
 const reducer = combineReducers({
@@ -20,7 +21,10 @@ const reducer = combineReducers({
     SectionOrderUpdate:SectionOrderUpdateReducer,
     sectionUpdate:sectionUpdateReducer,
     sectionCreate:sectionCreateReducer,
-    sectionDelete:sectionDeleteReducer
+    sectionDelete:sectionDeleteReducer,
+    noteList: noteListReducer,
+    noteCreate: noteCreateReducer,
+    noteUpdate: noteUpdateReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
