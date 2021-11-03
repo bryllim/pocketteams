@@ -27,6 +27,8 @@
     "express-async-handler": "^1.1.4",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.5",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "react-calendar": "^3.4.0",
+    "react-modal": "^3.14.3"
   }
 }
