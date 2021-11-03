@@ -1,7 +1,7 @@
 import { NOTE_LIST_REQUEST, NOTE_LIST_SUCCESS, NOTE_LIST_FAIL, NOTE_CREATE_REQUEST, NOTE_CREATE_SUCCESS, NOTE_CREATE_FAIL, NOTE_UPDATE_REQUEST, NOTE_UPDATE_SUCCESS, NOTE_UPDATE_FAIL } from "../constants/notesConstants";
 
 
-export const noteListReducer = (state = {note: []}, action) => {
+export const noteListReducer = (state = {note: [] }, action) => {
     switch (action.type) {
         case NOTE_LIST_REQUEST:
             return { loading:true }

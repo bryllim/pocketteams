@@ -52,7 +52,7 @@ export const createNoteAction =  ( content ) =>
             }
         };
 
-        const { data } = await axios.post(`/api/note`,{content}, config);
+        const { data } = await axios.post(`/api/note`, {content}, config);
 
         dispatch({
             type: NOTE_CREATE_SUCCESS,
