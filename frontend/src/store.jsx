@@ -2,8 +2,10 @@ import { createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
-import { noteListReducer, noteCreateReducer, noteUpdateReducer } from './reducers/noteReducers';
-import { projectCreateReducer, projectListReducer, projectUpdateReducer, projectDeleteReducer } from './reducers/projectReducers';
+import { projectCreateReducer, projectListReducer, projectUpdateReducer } from './reducers/projectReducers';
+import { taskListReducer } from './reducers/taskReducers';
+import { sectionOrderListReducer, sectionListReducer ,sectionUpdateTaskReducer,SectionOrderUpdateReducer,sectionUpdateReducer,sectionCreateReducer,sectionDeleteReducer} from './reducers/sectionReducers';
+
 
 const reducer = combineReducers({
     userLogin: userLoginReducer,
@@ -11,10 +13,14 @@ const reducer = combineReducers({
     projectList: projectListReducer,
     projectCreate: projectCreateReducer,
     projectUpdate: projectUpdateReducer,
-    noteList: noteListReducer,
-    noteCreate: noteCreateReducer,
-    noteUpdate: noteUpdateReducer,
-    projectDelete: projectDeleteReducer
+    taskList: taskListReducer,
+    sectionOrderList: sectionOrderListReducer,
+    sectionList: sectionListReducer,
+    sectionTasksUpdate: sectionUpdateTaskReducer,
+    SectionOrderUpdate:SectionOrderUpdateReducer,
+    sectionUpdate:sectionUpdateReducer,
+    sectionCreate:sectionCreateReducer,
+    sectionDelete:sectionDeleteReducer
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

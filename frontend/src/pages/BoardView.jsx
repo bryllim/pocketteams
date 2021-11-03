@@ -15,7 +15,7 @@ const BoardView = () => {
                                 <p className="mb-35 wow fadeInLeft" data-wow-delay=".4s">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                 </p>
-                                <a href="#contact" class="theme-btn">Get Started</a>
+                                <a href="#contact" className="theme-btn">Get Started</a>
                             </div>
                         </div>
                     </div>
