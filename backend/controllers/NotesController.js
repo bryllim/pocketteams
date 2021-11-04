@@ -1,5 +1,6 @@
 const Note = require("../models/noteModel");
 const asyncHandler = require("express-async-handler");
+const User = require("../models/userModel");
  
 
 const getNotes = asyncHandler(async (req, res) => {
@@ -12,6 +13,13 @@ const createdNote = asyncHandler(async (req,res) => {
     console.log("createdNote")
     const { content } = req.body;
     
+    const note_exists = await Note.findOne({user: req.user._id});
+
+    //Check if there is already a note 
+    if(note_exists){
+        res.status(400)
+        throw new Error('Note already created');
+    }
 
     const note = new Note( { user: req.user._id, content } );
     const createdNote = await note.save();
