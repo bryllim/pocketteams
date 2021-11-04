@@ -58,23 +58,27 @@ const Notes = () => {
 
   useEffect(() => {
     dispatch(listNotes());
+    
   }, [dispatch, successCreate, successUpdate])
-
 
   const updateHandler = (e) => {
     e.preventDefault();
     if (!content) return
     dispatch(updateNoteAction( notes[0]._id, content ));
+
+    window.location.reload(false);
   }
+
   const createHandler = (e) => {
     const defaultContent = "Write your note here."
     e.preventDefault();
     if (!content) {
       dispatch(createNoteAction( defaultContent ));
-
     } 
-    history.push('/project')
+    window.location.reload(false);
   }
+
+  console.log("My notes: " + notes);
 
   return (
     <div className="sidebar-box recent-blog-box mb-30">
