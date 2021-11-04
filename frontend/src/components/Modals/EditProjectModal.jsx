@@ -39,7 +39,7 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
   }
 
   const reClass = () => {
-    let val = document.getElementById("test").value;
+    let val = document.getElementById("status").value;
 
     if (val == 1) {
       setColor("form-select form-select-sm ms-3 light");
@@ -123,7 +123,7 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
                       className={color}
                       aria-label="form-select-sm example"
                       id="status"
-                      onChange={(e) => setProjectStatus(e.target.value), reClass}
+                      onChange={(e) => setProjectStatus(e.target.value)}
                       defaultValue={projectStatus}
                     >
                       <option
@@ -142,16 +142,6 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
                       </option>
                     </select>
             </Form.Group>
-
-
-              {/* <label for="formGroupExampleInput2" class="form-label">
-                Dates
-              </label>
-              <div class="d-flex justify-content-between">
-                <input type="date" class=" d-inline" id="date" name="date" />
-                <span className="m-2">to</span>
-                <input type="date" class=" d-inline" id="date" name="date" />
-              </div> */}
             </div>
 
             <div className="sidebar-wrapper">

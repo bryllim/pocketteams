@@ -34,30 +34,7 @@ const Notes = (note) => {
   }, [dispatch, history, userInfo, successCreate, successUpdate,]);
 
 
-  // FOR Creating note BUTTON
-  const createHandler = (e) => {
-    const defaultContent = "Write your note here."
-    e.preventDefault();
-    if (!content) {
-      dispatch(createNoteAction( defaultContent ));
-
-    } 
-    history.push('/project')
-  }
-
-  // For update button
-  const updateHandler = (e) => {
-    e.preventDefault();
-    if (!content) return
-    dispatch(updateNoteAction( notes[0]._id, content ));
-  }
-
   // const defaultContent = 0;
-
-  // const textarea = document.querySelector('notes-text');
-
-  console.log(content)
-
 
   // for updating
   // useEffect(() => {
@@ -70,6 +47,28 @@ const Notes = (note) => {
   //   fetching();
   // }, [note._id]);
 
+
+// for updating note
+  const updateHandler = (e) => {
+    e.preventDefault();
+    if (!content) return
+    dispatch(updateNoteAction( notes[0]._id, content ));
+
+    window.location.reload(false);
+  }
+
+  //for creating note
+  const createHandler = (e) => {
+    const defaultContent = "Write your note here."
+    e.preventDefault();
+    if (!content) {
+      dispatch(createNoteAction( defaultContent ));
+    } 
+    window.location.reload(false);
+  }
+
+  console.log("My notes: " + notes);
+
   return (
     <div className="sidebar-box recent-blog-box mb-30">
         <form>
@@ -79,7 +78,7 @@ const Notes = (note) => {
             { loading && <Preload/> }
             {notes?.map((note) => (
               <textarea 
-              id="textarea"
+              // id="textarea"
               note={note.content}
               placeholder="Write your notes here."
               onChange={(e) => setContent(e.target.value)} 

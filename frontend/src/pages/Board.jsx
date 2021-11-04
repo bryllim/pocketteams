@@ -79,12 +79,6 @@ const Board = () => {
   const [sections, setSections] = useState(sectionDataList);
   const [sectionOrder,setSectionOrder] = useState(sectionOrderList);
 
-  useEffect(()=>{
-      if(dataList.loading === false){
-        setSections(sectionDataList)
-        setSectionOrder(sectionOrderList)
-      }
-  },[dataList])
 
   useEffect(() => {
     if(!(Object.entries(createdSection).length === 0)){
@@ -92,7 +86,12 @@ const Board = () => {
       console.log(createdSection)
       sectionCreate({sectionOrder,setSectionOrder,sections,setSections,createdSection})
     }
-  },[createdSection])
+
+    if(dataList.loading === false){
+      setSections(sectionDataList)
+      setSectionOrder(sectionOrderList)
+    }
+  },[createdSection, dataList.loading,  sectionDataList, sectionOrder, sectionOrderList, sections])
 
   return (
     <>
