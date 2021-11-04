@@ -6,14 +6,19 @@ import {
 } from "react-bootstrap";
 import React,{useContext} from "react";
 import {TaskContext} from "../../contexts/SectionContext"
-import {sectionDelete} from "../../functions/sectionFunctions"
 
 
 
-const DeleteSectionConfirmation = ({ showModal, hideModal,columnId,index }) => {
-  const {removeSection} = useContext(TaskContext)
+
+const DeleteSectionConfirmation = ({ showModal, hideModal,sectionId, index , removeSection}) => {
+
+  const {sections,setSections,sectionOrder,setSectionOrder,dispatch} = useContext(TaskContext)
+
+
+
   return (
     <>
+  
       <Modal centered show={showModal} onHide={hideModal}>
         <Modal.Header>
           <h5>Do you want to remove this section?</h5>
@@ -35,7 +40,7 @@ const DeleteSectionConfirmation = ({ showModal, hideModal,columnId,index }) => {
 
           <button
             className="theme-btn theme-btn-modal mx-0"
-            onClick={()=>removeSection(columnId,index)}
+            onClick={()=>removeSection({sections,setSections,sectionOrder,setSectionOrder,dispatch,sectionId,index})}
           >
             Remove Section
           </button>

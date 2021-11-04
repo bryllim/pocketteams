@@ -1,17 +1,26 @@
 
 
 const sectionDelete = ({sectionOrder,setSectionOrder,sections,setSections,sectionId,sectionOrderIndex}) =>{
-  const newSections = [...sections]
+  // console.log('sectionDelete')
+  // console.log(sections)
+  // console.log(sectionOrder)
+  // console.log(sectionId)
+  // const newSections = [...sections]
   const newOrder = [...sectionOrder]
-  const sectionIndex = sections.indexOf(sectionId)
-  newSections.splice(sectionIndex,1)
+  // const sectionIndex = sections.indexOf(sectionId)
+  // console.log(sectionIndex)
+  // newSections.splice(sectionIndex,1)
   newOrder.splice(sectionOrderIndex,1)
-  setSections([
-    ...newSections
-  ])
+  // setSections([
+  //   ...newSections
+  // ])
   setSectionOrder([
     ...newOrder
   ])
+
+  // console.log(newSections)
+  console.log(newOrder)
+
   return
 }
 
