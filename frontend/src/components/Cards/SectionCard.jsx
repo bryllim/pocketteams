@@ -5,9 +5,9 @@ import {TaskContext} from "../../contexts/SectionContext"
 import AddTaskModal from "../Modals/AddTaskModal";
 import { Dropdown } from "react-bootstrap";
 import DeleteSectionConfirmation from "../Modals/DeleteSectionConfirmation"
-import {deleteSection,renameSection,createSection} from "../../functions/sectionFunctions"
+import {sectionDelete,renameSection} from "../../functions/sectionFunctions"
 import { useDispatch} from "react-redux";
-import { updateSection} from "../../actions/sectionActions";
+import { updateSection, deleteSection} from "../../actions/sectionActions";
 
 const changeSection =({sectionTitle,sections,setSections,index,dispatch,sectionId}) => {
   if(sectionTitle === ''){
@@ -18,11 +18,15 @@ const changeSection =({sectionTitle,sections,setSections,index,dispatch,sectionI
   else{
     console.log("renameSection")
     renameSection({sectionTitle,sections,setSections,index})
-    dispatch(updateSection({section_name: sectionTitle,sectionId}))
+    dispatch(updateSection({ sectionTitle,sectionId}))
     return
   }
 }
 
+const removeSection = ({sectionOrder,setSectionOrder,sections,setSections,sectionId,index,dispatch}) =>{
+  sectionDelete({sectionOrder,setSectionOrder,sections,setSections,sectionOrderIndex:index,sectionId})
+  dispatch(deleteSection({section_id:sectionId}))
+}
 
 const SectionCard = ({sectionId,index,section}) => {
   //rework
@@ -60,7 +64,6 @@ const SectionCard = ({sectionId,index,section}) => {
 
   return (
     <>
-    
       <Draggable draggableId={sectionId} index={index} >
         {provided => {
           return(
@@ -166,7 +169,13 @@ const SectionCard = ({sectionId,index,section}) => {
          {/* MODALS */}
     </Draggable> 
     <AddTaskModal showModal={show} hideModal={handleClose} />
-    <DeleteSectionConfirmation showModal={showDeleteSection} hideModal={closeDeleteSection} sectionId={sectionId} index={index} />
+    <DeleteSectionConfirmation 
+      showModal={showDeleteSection} 
+      hideModal={closeDeleteSection} 
+      sectionId={sectionId} 
+      index={index} 
+      removeSection={removeSection}
+    />
     </>
   )}
 
