@@ -234,7 +234,7 @@ export const deleteSection = ({section_id}) => async (dispatch, getState) => {
             },
         };
 
-        const { data } = await axios.post(
+        const { data } = await axios.delete(
             `/api/sections/${section_id}`,
             config
         );

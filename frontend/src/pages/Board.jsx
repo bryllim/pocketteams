@@ -24,9 +24,6 @@ const addSection = async ({dispatch,section_order_id,sectionOrder,setSectionOrde
 const Board = () => {
   const section_order_id = '6179228d94d94e1c2c6c21e3'
   const dispatch = useDispatch();
-
-  
-
   const onDrag = ({result}) =>{ //transfer outside function component
     const itemType = result.type
     if(itemType === 'column'){
@@ -46,20 +43,6 @@ const Board = () => {
   }
 
   const createdSection = useSelector((state) => state.sectionCreate.data)
-  // const addSection =  async({dispatch,section_order_id,sectionOrder,setSectionOrder,sections,setSections})=>{
-  //   await dispatch(createSection({section_name: 'New Section',section_order_id})).then(()=>{
-
-
-  //     console.log(createdSection)
-  //      // sectionCreate({sectionOrder,setSectionOrder,sections,setSections,createdSection})
-  //    })
-     
-    
-  //  }
-   
-
-
-
   
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
@@ -96,7 +79,7 @@ const Board = () => {
 
   return (
     <>
-     <TaskContext.Provider value={{sections,setSections,sectionOrder,setSectionOrder}}>
+     <TaskContext.Provider value={{sections,setSections,sectionOrder,setSectionOrder,dispatch}}>
       <Navigation />
         <Container fluid className="board-container">
           <Row className="h-100">
@@ -129,9 +112,21 @@ const Board = () => {
                           >
                            
                            {(sectionOrder && sections)?(sectionOrder.map((sectionId,index)=>{
+
                             const section = sections.filter(obj => {
+                             
                               return obj._id === sectionId
                             })[0]
+                            // console.log('sections')
+                            // console.log(sections)
+                            // console.log(sectionOrder)
+                            // console.log(sectionId)
+                            // console.log(section)
+                        
+                           
+
+
+
                               return (
                                
                                       <div                                
