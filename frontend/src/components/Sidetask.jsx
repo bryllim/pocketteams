@@ -50,7 +50,7 @@ const SideTask = ({ showed, hide }) => {
             onClick={() => setMarkTask(!markTask)}
             className="theme-btn theme-btn-md mb-2 py-1"
           >
-            <i class="lni lni-checkmark-circle pe-2"></i>
+            <i className="lni lni-checkmark-circle pe-2"></i>
             {markTask ? "Mark as complete" : "Completed"}
           </button>
           <div className="d-flex align-items-center">
@@ -209,7 +209,7 @@ const SideTask = ({ showed, hide }) => {
           </div>
         </div>
         <div className="mt-2 d-flex align-items-start">
-          <i class="lni lni-user mx-2 line-icon"></i>
+          <i className="lni lni-user mx-2 line-icon"></i>
           <textarea
             className="mx-2 px-3 py-1 full form-control resize-0 radius label-font"
             placeholder="Write a comment"

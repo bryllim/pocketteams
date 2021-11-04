@@ -3,12 +3,15 @@ const asyncHandler = require("express-async-handler");
  
 
 const getNotes = asyncHandler(async (req, res) => {
+    console.log("getnotes")
         const notes = await Note.find( { user: req.user._id } );
         res.json(notes);
 });
 
 const createdNote = asyncHandler(async (req,res) => {
+    console.log("createdNote")
     const { content } = req.body;
+    
 
     const note = new Note( { user: req.user._id, content } );
     const createdNote = await note.save();
@@ -18,7 +21,7 @@ const createdNote = asyncHandler(async (req,res) => {
 
 const getNoteById = asyncHandler(async (req, res) => {
     const note = await Note.findById(note._id);
-
+    
     if(note) {
         res.json(note);
     } else {
@@ -27,9 +30,10 @@ const getNoteById = asyncHandler(async (req, res) => {
 });
 
 const updateNote = asyncHandler(async (req, res) => {
+    console.log('test')
     const { content } = req.body;
     const note = await Note.findById(req.params.id);
-
+  
     if (note.user.toString() !== req.user._id.toString() ) {
         res.status(401);
         throw new console.error("You can't perfrom this action");
