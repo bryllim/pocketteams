@@ -63,18 +63,20 @@ const Board = () => {
   const [sectionOrder,setSectionOrder] = useState(sectionOrderList);
 
 
-  useEffect(() => {
-    if(!(Object.entries(createdSection).length === 0)){
-      console.log('createdSection')
-      console.log(createdSection)
-      sectionCreate({sectionOrder,setSectionOrder,sections,setSections,createdSection})
-    }
-
+  useEffect(()=>{
     if(dataList.loading === false){
       setSections(sectionDataList)
       setSectionOrder(sectionOrderList)
     }
-  },[createdSection, dataList.loading,  sectionDataList, sectionOrder, sectionOrderList, sections])
+},[dataList])
+
+useEffect(() => {
+  if(!(Object.entries(createdSection).length === 0)){
+    console.log('createdSection')
+    console.log(createdSection)
+    sectionCreate({sectionOrder,setSectionOrder,sections,setSections,createdSection})
+  }
+},[createdSection])
 
   return (
     <>
