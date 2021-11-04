@@ -176,7 +176,7 @@ const SectionCard = ({sectionId,index,section}) => {
       index={index} 
       removeSection={removeSection}
     />
-    </>
+      </>
   )}
 
 export default SectionCard;
