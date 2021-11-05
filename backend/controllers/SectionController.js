@@ -80,6 +80,7 @@ const deleteSection = asyncHandler(async (req,res) => {
     }
 
     if(section){
+        //delete on section order
         await section.remove();
         res.json({message: "Section Removed"});
     }

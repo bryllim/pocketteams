@@ -1,42 +1,28 @@
 
 
 
-const addColumn =(order,setOrder,columns,setColumns) => {
-    const colName = 'test' + Math.floor((Math.random() * 10) + 1);
-    setColumns({
-        ...columns,
-        [colName]:{
-        name:colName,
-        items: []
-        }
+// const addColumn =(order,setOrder,columns,setColumns) => {
+//     const colName = 'test' + Math.floor((Math.random() * 10) + 1);
+//     setColumns({
+//         ...columns,
+//         [colName]:{
+//         name:colName,
+//         items: []
+//         }
+//     })
+//     setOrder([
+//         ...order,
+//         colName
+//     ])
+// }
+
+
+const taskRename = ({sectionId, sections, setSections, section_name,index}) => {
+    const newSections = [...sections];
+    newSections.forEach(section => {
+      return section._id === sectionId ? section.tasks[index] = section_name : null
     })
-    setOrder([
-        ...order,
-        colName
-    ])
+    setSections(newSections)
 }
 
-
-const editTitle = ({index, name, id,columnId, tasks,columns, setTask, setColumns}) =>{ 
-    const sourceTask = tasks.find(x => x.id === id)
-    if(name === ''){
-      const sourceColumn = columns[columnId];
-      const sourceItems = [...sourceColumn.items];
-      sourceItems.splice(index, 1);
-      setColumns({
-        ...columns,
-        [columnId]: {
-          ...sourceColumn,
-          items: sourceItems
-        },
-      });
-      return
-    }
-    sourceTask.content = name
-    setTask([
-      ...tasks
-    ])
-    return
-  }
-
-module.exports = {addColumn,editTitle}
+module.exports = {taskRename}

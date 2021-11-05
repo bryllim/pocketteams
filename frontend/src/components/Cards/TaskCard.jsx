@@ -1,19 +1,27 @@
 import React, { useState,useEffect,useContext} from "react";
 import SideTask from "../Sidetask";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
-import {TaskContext} from "../../contexts/SectionContext"
 import AddIcon from "../../assets_pocketdevs/assets/svg/AddIcon";
 import { Dropdown } from "react-bootstrap";
+import {editTitle} from "../../functions/TaskFunctions"
+import { TaskContext } from "../../contexts/SectionContext";
+import { deleteTask,updateTask } from "../../actions/taskActions";
 
-const TaskCard = ({task,index,columnId}) => {
+const changeTask = ({sectionId, sections, setSections, taskName,index}) =>{
+  editTitle({sectionId, sections, setSections, taskName,index});
+  dispatch()
+}
+
+const TaskCard = ({task,index,sectionId}) => {
   const [showNav, setShowNav] = useState(false);
   const [toggle, setToggle] = useState(true)
   const [name, setName] = useState(task.task_name)
-  const {editTitle} = useContext(TaskContext)
+  const taskId = task.task_id
+  const taskName = task.task_name
+  const {sections, setSections, dispatch} = useContext(TaskContext)
 
   useEffect(() => {
     // update the state of name when dragging
-    
     setName(task.task_name);
   },[task]);
   
@@ -71,14 +79,14 @@ const TaskCard = ({task,index,columnId}) => {
                 autoFocus
                 onBlur={(e)=>{
                   setToggle(true)
-                  editTitle(index,name,task.id,columnId);
+                  changeTask({sectionId, sections, setSections, taskName,index});
                   e.preventDefault()
                   e.stopPropagation()
                 }}
                 onKeyDown={(event) => {
                   if (event.key === 'Enter' || event.key === 'Escape') {
                     setToggle(true)
-                    editTitle(index,name,task.id,columnId);
+                    editTitle(index,name,task.id,sectionId);
                     event.preventDefault()
                     event.stopPropagation()
                 }}} 
