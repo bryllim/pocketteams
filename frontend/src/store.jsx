@@ -5,7 +5,8 @@ import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
 import { projectCreateReducer, projectListReducer, projectUpdateReducer } from './reducers/projectReducers';
 import { taskListReducer } from './reducers/taskReducers';
 import { sectionOrderListReducer, sectionListReducer ,sectionUpdateTaskReducer,SectionOrderUpdateReducer,sectionUpdateReducer,sectionCreateReducer,sectionDeleteReducer} from './reducers/sectionReducers';
-import {noteListReducer,noteCreateReducer,noteUpdateReducer} from './reducers/noteReducers';
+import { noteCreateReducer, noteListReducer, noteUpdateReducer } from './reducers/noteReducers';
+
 
 const reducer = combineReducers({
     userLogin: userLoginReducer,

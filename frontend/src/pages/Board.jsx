@@ -1,4 +1,4 @@
-import SideBar from "../components/Sidebar";
+import Sidebar from "../components/Sidebar";
 import Navigation from "../components/Navigation";
 import SectionCard from "../components/Cards/SectionCard";
 import { Breadcrumb, Col, Container, Row } from "react-bootstrap";
@@ -85,7 +85,7 @@ useEffect(() => {
         <Container fluid className="board-container">
           <Row className="h-100">
               <Col xl="3" className="d-flex flex-column h-100 d-none d-md-block d-md-none d-lg-block  d-lg-none d-xl-block">
-                <SideBar/>
+                <Sidebar/>
               </Col>
               <Col xl="9" className="d-flex flex-column h-100 col-md-12 ">
               <h3><Breadcrumb>
