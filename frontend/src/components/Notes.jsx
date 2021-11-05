@@ -4,11 +4,12 @@ import { listNotes, createNoteAction, updateNoteAction } from "../actions/noteAc
 import Preload from "../components/Preload";
 import ErrorMessage from "../components/ErrorMessage";
 import { useHistory } from "react-router";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+toast.configure();
 
-
-
-const Notes = (note) => {
+const Notes = () => {
   const dispatch = useDispatch();
 
   const noteList = useSelector((state) => state.noteList);
@@ -19,19 +20,27 @@ const Notes = (note) => {
   const history = useHistory();
 
   const [content, setContent] = useState(notes)
-
+  const [notif, setNotif] = useState()
+  
   const noteUpdate = useSelector((state) => state.noteUpdate);
   const { success: successUpdate } = noteUpdate;
 
   const noteCreate = useSelector((state) => state.noteCreate);
   const { success: successCreate } = noteCreate;
 
+  const notify = () => toast.success(notif, {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 2500,
+    
+  });
+
   useEffect(() => {
     dispatch(listNotes());
     if (!userInfo) {
       history.push("/");
     }
-  }, [dispatch, history, userInfo, successCreate, successUpdate,]);
+
+  }, [dispatch, history, userInfo, successCreate, successUpdate]);
 
 
   // const defaultContent = 0;
@@ -49,25 +58,33 @@ const Notes = (note) => {
 
 
 // for updating note
-  const updateHandler = (e) => {
-    e.preventDefault();
-    if (!content) return
-    dispatch(updateNoteAction( notes[0]._id, content ));
+  // const updateHandler = (e) => {
+  //   e.preventDefault();
+  //   if (!content) return
+  //   dispatch(updateNoteAction( notes[0]._id, content ));
 
-    window.location.reload(false);
-  }
+  //   window.location.reload(false);
+  // }
 
   //for creating note
-  const createHandler = (e) => {
+  const syncHandler = (e) => {
     const defaultContent = "Write your note here."
     e.preventDefault();
-    if (!content) {
+    if (notes.length === 0) {
       dispatch(createNoteAction( defaultContent ));
+      setNotif("Notes Created Successfully.")
+      notify()
+      window.location.reload(false)
     } 
-    window.location.reload(false);
-  }
+    if (notes.length >= 1) {
+      dispatch(updateNoteAction( notes[0]._id, content ));
+      setNotif("Notes Updated Successfully.")
+      notify()
+      }
+}
 
-  console.log("My notes: " + notes);
+
+  console.log(window.location.pathname);
 
   return (
     <div className="sidebar-box recent-blog-box mb-30">
@@ -92,9 +109,9 @@ const Notes = (note) => {
                 onClick={createHandler}>
                 <span>Create note</span>
                 </button>  */}
-                <button className="theme-btn theme-btn-md" onClick={ !content ? createHandler : updateHandler }>
+                <button className="theme-btn theme-btn-md" onClick={syncHandler}>
                 <i className="lni lni-cloud-sync me-2"></i>
-                <span>{ !content ? "Create note" : "Sync note" }</span>
+                <span>Sync note</span>
                 </button> 
             </div>
         </form>
