@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const userRoutes = require('./routes/UserRoutes');
 const projectRoutes = require('./routes/ProjectRoutes');
+const teamRoutes = require('./routes/TeamRoutes');
 const taskRoutes = require('./routes/taskRoutes');
 const noteRoutes = require('./routes/NoteRoutes');
 const sectionRoutes = require('./routes/SectionRoutes');
@@ -26,6 +27,7 @@ app.use('/api/tasks', taskRoutes)
 app.use('/api/note', noteRoutes)
 app.use('/api/sections', sectionRoutes)
 app.use('/api/sectionorder', sectionOrderRoutes)
+app.use('/api/teams', teamRoutes)
 
 app.use(NotFound);
 app.use(ErrorHandler);
