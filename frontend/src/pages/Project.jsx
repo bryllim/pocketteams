@@ -6,7 +6,7 @@ import Preload from "../components/Preload";
 import ErrorMessage from "../components/ErrorMessage";
 import { Breadcrumb, Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { listProjects } from "../actions/projectActions";
 import AddProjectModal from "../components/Modals/AddProjectModal";
 
@@ -28,7 +28,7 @@ const Project = () => {
 
   useEffect(() => {
     if (userInfo) {
-      history.push("/project");
+      history.push('/project');
     }
     dispatch(listProjects());
   }, [dispatch, successCreate, successUpdate, history, userInfo]);

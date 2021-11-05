@@ -227,15 +227,18 @@ p {
 .theme-btn-lg {
   padding: 0.75em 1.5em;
   font-size: 1.25rem;
+  cursor: pointer;
 }
 
 .theme-btn-md {
   padding: 0.75em 1em;
   font-size: 1rem;
+  cursor: pointer;
 }
 
 .theme-btn-sm {
   padding: 0.3em 0.7em;
+  cursor: pointer;
   font-size: 0.85rem;
 }
 
