@@ -17,10 +17,10 @@
 // }
 
 
-const taskRename = ({sectionId, sections, setSections, section_name,index}) => {
+const taskRename = ({sectionId, sections, setSections, taskName,index}) => {
     const newSections = [...sections];
     newSections.forEach(section => {
-      return section._id === sectionId ? section.tasks[index] = section_name : null
+      return section._id === sectionId ? section.tasks[index].task_name = taskName : null
     })
     setSections(newSections)
 }

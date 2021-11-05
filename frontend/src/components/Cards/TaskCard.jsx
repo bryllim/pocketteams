@@ -7,16 +7,15 @@ import {editTitle} from "../../functions/TaskFunctions"
 import { TaskContext } from "../../contexts/SectionContext";
 import { deleteTask,updateTask } from "../../actions/taskActions";
 
-const changeTask = ({sectionId, sections, setSections, taskName,index}) =>{
+const changeTask = ({sectionId, sections, setSections, taskName,index,dispatch}) =>{
   editTitle({sectionId, sections, setSections, taskName,index});
-  dispatch()
+  dispatch(updateTask({}))
 }
 
 const TaskCard = ({task,index,sectionId}) => {
   const [showNav, setShowNav] = useState(false);
   const [toggle, setToggle] = useState(true)
   const [name, setName] = useState(task.task_name)
-  const taskId = task.task_id
   const taskName = task.task_name
   const {sections, setSections, dispatch} = useContext(TaskContext)
 
@@ -79,14 +78,14 @@ const TaskCard = ({task,index,sectionId}) => {
                 autoFocus
                 onBlur={(e)=>{
                   setToggle(true)
-                  changeTask({sectionId, sections, setSections, taskName,index});
+                  changeTask({sectionId, sections, setSections, taskName,index,dispatch});
                   e.preventDefault()
                   e.stopPropagation()
                 }}
                 onKeyDown={(event) => {
                   if (event.key === 'Enter' || event.key === 'Escape') {
                     setToggle(true)
-                    editTitle(index,name,task.id,sectionId);
+                    changeTask({sectionId, sections, setSections, taskName,index,dispatch});
                     event.preventDefault()
                     event.stopPropagation()
                 }}} 
@@ -105,7 +104,7 @@ const TaskCard = ({task,index,sectionId}) => {
                     <Dropdown.Menu>
                         <Dropdown.Item onClick={()=>setShowNav(!showNav)}>Edit</Dropdown.Item>
                         <Dropdown.Item onClick={(e)=>{
-                          editTitle(index,'',task.id,columnId);
+                          changeTask({sectionId, sections, setSections, taskName,index,dispatch});;
                         }}>Remove</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
