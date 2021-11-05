@@ -2,10 +2,11 @@ import { createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
-import { projectCreateReducer, projectListReducer, projectUpdateReducer } from './reducers/projectReducers';
-import { taskListReducer } from './reducers/taskReducers';
+import { projectCreateReducer, projectDeleteReducer, projectListReducer, projectUpdateReducer } from './reducers/projectReducers';
+import { taskListReducer} from './reducers/taskReducers';
 import { sectionOrderListReducer, sectionListReducer ,sectionUpdateTaskReducer,SectionOrderUpdateReducer,sectionUpdateReducer,sectionCreateReducer,sectionDeleteReducer} from './reducers/sectionReducers';
 import {noteListReducer,noteCreateReducer,noteUpdateReducer} from './reducers/noteReducers';
+import { teamCreateReducer, teamDeleteReducer, teamtListReducer, teamUpdateReducer } from './reducers/teamReducers';
 
 const reducer = combineReducers({
     userLogin: userLoginReducer,
@@ -13,6 +14,11 @@ const reducer = combineReducers({
     projectList: projectListReducer,
     projectCreate: projectCreateReducer,
     projectUpdate: projectUpdateReducer,
+    projectDelete: projectDeleteReducer,
+    teamList: teamtListReducer,
+    teamCreate: teamCreateReducer,
+    teamUpdate: teamUpdateReducer,
+    teamDelete: teamDeleteReducer,
     taskList: taskListReducer,
     sectionOrderList: sectionOrderListReducer,
     sectionList: sectionListReducer,

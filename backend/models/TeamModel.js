@@ -1,4 +1,6 @@
-const projectSchema = mongoose.Scema(
+const mongoose = require("mongoose");
+
+const projectSchema = mongoose.Schema(
     {
         team_name:{
             type: String,
@@ -19,7 +21,7 @@ const projectSchema = mongoose.Scema(
         },
     },
     {
-        timestamps: TransformStreamDefaultController,
+        timestamps: true,
     }
 );
 
