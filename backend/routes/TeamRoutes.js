@@ -4,7 +4,7 @@ const { protect } = require("../middlewares/AuthMiddleware");
 
 const router = express.Router();
 
-router.route("/").get(protect, getTeams);
+router.route("/").get(protect, getTeam);
 router.route("/create").post(protect, createTeam);
 router.route("/:id").get(protect, getTeamById).put(protect, updateTeam).delete(protect, deleteTeam);
 //.put().delete();
