@@ -5,9 +5,6 @@ const Section = require("../models/SectionModel");
 
 const createTask = asyncHandler( async (req,res) => {
     const {task_name, task_description, section_id} = req.body;
-    console.log(task_name)
-    console.log(task_description)
-    console.log(section_id)
     try{
         if(!task_name || !task_description || !section_id){
             throw new Error("Please Fill all the Fields");
@@ -23,7 +20,7 @@ const createTask = asyncHandler( async (req,res) => {
                 if(sectionResponse === null){
                     throw new Error("sectionResponse");
                 }
-                res.status(201).json(createdtask._id);
+                res.status(201).json(createdtask);
                 console.log('done')
 
             }catch (err) {

@@ -43,7 +43,7 @@ const Board = () => {
   }
 
   const createdSection = useSelector((state) => state.sectionCreate.data)
-  const createdTask = useSelector((state) => state.taskCreate.data)
+  const createdTask = useSelector((state) => state.taskCreate)
   
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
@@ -69,13 +69,22 @@ const Board = () => {
       setSections(sectionDataList)
       setSectionOrder(sectionOrderList)
     }
-},[dataList])
+},[dataList,])
 
 useEffect(() => {
   if(!(Object.entries(createdSection).length === 0)){
     console.log('createdSection')
     console.log(createdSection)
     sectionCreate({sectionOrder,setSectionOrder,sections,setSections,createdSection})
+  }
+  if(createdTask.loading === false && createdTask.data !== undefined){
+    const newTask = createdTask.data
+    const sectionId = newTask.section_id
+    const section = sections.find(section => section._id === sectionId)
+    const newTaskList = [...section.tasks]
+    newTaskList.at(-1)._id = newTask._id
+    newTaskList.at(-1).task_name = newTask.task_name
+    setSections([...sections.map(section => section._id === sectionId ? {...section,tasks:newTaskList} : section)])
   }
 },[createdSection,createdTask])
 

@@ -9,6 +9,7 @@ import {sectionDelete,renameSection} from "../../functions/sectionFunctions"
 import { useDispatch} from "react-redux";
 import { updateSection, deleteSection} from "../../actions/sectionActions";
 import {createTask } from "../../actions/taskActions";
+import {taskCreate} from "../../functions/TaskFunctions"
 
 const changeSection =({sectionTitle,sections,setSections,index,dispatch,sectionId}) => {
   if(sectionTitle === ''){
@@ -30,8 +31,8 @@ const removeSection = ({sectionOrder,setSectionOrder,sections,setSections,sectio
 }
 
 
-const newTask = ({dispatch,sectionId}) =>{
-  dispatch(createTask({task_name:'temp',task_description:'temp',section_id:sectionId}))
+const newTask = ({sectionId, sections, setSections,dispatch}) =>{
+  taskCreate({sectionId, sections, setSections})
 }
 
 
@@ -159,7 +160,7 @@ const SectionCard = ({sectionId,index,section}) => {
                       })}
                       {provided.placeholder}
                       <div className="d-flex justify-content-center align-items-center theme-btn mx-auto my-4"  
-                      style={{width:"250px", height:"50px"}} onClick={()=>newTask({dispatch,sectionId})}>
+                      style={{width:"250px", height:"50px"}} onClick={()=>newTask({sectionId, sections, setSections,dispatch})}>
                             <button className="btn" type="button">
                                 <i className="lni lni-plus text-white"></i>
                             </button>

@@ -11,7 +11,12 @@ const changeTask = ({sectionId, sections, setSections, name,index,dispatch,taskI
   if(name === ''){
     taskRemove({sectionId, sections, setSections, index});
     dispatch(deleteTask({taskId}))
-  }else{
+  }
+  else if(taskId === '123'){
+    console.log('create')
+    dispatch(createTask({task_name:name,task_description:'tempdescription',section_id:sectionId}))
+  }
+  else{
     taskRename({sectionId, sections, setSections, name,index});
     dispatch(updateTask({task_name:name,task_id:taskId}))
   }
@@ -50,7 +55,6 @@ const TaskCard = ({task,index,sectionId}) => {
       {children}
     </p>
 ));
-
   return (
     <div>
       <Draggable
@@ -72,7 +76,7 @@ const TaskCard = ({task,index,sectionId}) => {
 
             >
               <div className="d-flex flex-row justify-content-between">
-
+         
               {toggle && name !== '' ?
               (<h6 className="hover-me" onClick={()=> editText()} >{name}</h6>)
               :

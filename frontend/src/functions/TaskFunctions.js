@@ -35,12 +35,12 @@ const taskRemove = ({sectionId, sections, setSections, index}) => {
     setSections(newSections)
 }
 
-// const taskCreate = ({sectionId, sections, setSections}) => { //change to section index
-//   const newSections = [...sections];
-//   newSections.forEach(section => {
-//     return section._id === sectionId ? section.tasks.push : null
-//   })
-//   setSections(newSections)
-// }
+const taskCreate = ({sectionId, sections, setSections}) => { //change to section index
+  const newSections = [...sections];
+  newSections.forEach(section => {
+    return section._id === sectionId ? section.tasks.push({task_name:'',_id:'123'}) : null
+  })
+  setSections(newSections)
+}
 
-module.exports = {taskRename,taskRemove}
+module.exports = {taskRename,taskRemove,taskCreate}

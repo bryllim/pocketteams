@@ -18,12 +18,12 @@ export const taskListReducer = (state = {tasks: []}, action) => {
     }
 };
 
-export const taskCreateReducer = (state = {tasks: []}, action) => {
+export const taskCreateReducer = (state = {data: []}, action) => {
     switch (action.type){
         case TASK_CREATE_REQUEST:
             return { loading: true };
         case TASK_CREATE_SUCCESS:
-            return { loading: false, allTasks: action.payload};
+            return { loading: false, data: action.payload};
         case TASK_CREATE_FAIL:
             return { loading: false, error: action.payload};
         default:
