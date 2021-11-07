@@ -43,6 +43,7 @@ const Board = () => {
   }
 
   const createdSection = useSelector((state) => state.sectionCreate.data)
+  const createdTask = useSelector((state) => state.taskCreate.data)
   
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
@@ -76,7 +77,7 @@ useEffect(() => {
     console.log(createdSection)
     sectionCreate({sectionOrder,setSectionOrder,sections,setSections,createdSection})
   }
-},[createdSection])
+},[createdSection,createdTask])
 
   return (
     <>

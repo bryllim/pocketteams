@@ -5,6 +5,9 @@ const Section = require("../models/SectionModel");
 
 const createTask = asyncHandler( async (req,res) => {
     const {task_name, task_description, section_id} = req.body;
+    console.log(task_name)
+    console.log(task_description)
+    console.log(section_id)
     try{
         if(!task_name || !task_description || !section_id){
             throw new Error("Please Fill all the Fields");
@@ -18,17 +21,21 @@ const createTask = asyncHandler( async (req,res) => {
                     { new: true, useFindAndModify: false },
                 );
                 if(sectionResponse === null){
-                    throw "Section doesn't exists"
+                    throw new Error("sectionResponse");
                 }
                 res.status(201).json(createdtask._id);
+                console.log('done')
 
             }catch (err) {
+                console.log('er2')
                 res.status(500).json(err);
             }
         }
     }
     catch (err) {
         res.status(400).json(err);
+        console.log('er3')
+
     }
 });
 
@@ -47,17 +54,18 @@ const getTasksBySection = asyncHandler( async (req,res) => {
 
 
 const deleteTaskById = asyncHandler( async (req,res) => {
+    console.log('deleteTaskById')
     try{
-        const {task_index} = req.body;
         const taskId = req.params.id
-        if(!task_index || !taskId){
+        if(!taskId){
             throw new Error("Please Fill all the Fields");
         }
         const task = await Task.findById(taskId)
         const section = await Section.findById(task.section_id)
         if(task && section){
             await task.remove().then(
-                section.tasks.splice(task_index,1),
+                taskIndex = section.tasks.indexOf(taskId),
+                section.tasks.splice(taskIndex,1),
                 await section.save()
             );
             res.json({message: "task Removed"});
@@ -74,6 +82,7 @@ const deleteTaskById = asyncHandler( async (req,res) => {
 
 const updateTaskById = asyncHandler( async (req,res) => {
     try{
+        console.log('updateTaskById')
         const {task_name,task_description} = req.body;
         const taskId = req.params.id
         if(!taskId){

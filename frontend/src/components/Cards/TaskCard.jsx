@@ -3,24 +3,34 @@ import SideTask from "../Sidetask";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 import AddIcon from "../../assets_pocketdevs/assets/svg/AddIcon";
 import { Dropdown } from "react-bootstrap";
-import {editTitle} from "../../functions/TaskFunctions"
+import {taskRename,taskRemove} from "../../functions/TaskFunctions"
 import { TaskContext } from "../../contexts/SectionContext";
-import { deleteTask,updateTask } from "../../actions/taskActions";
+import { deleteTask, updateTask,createTask } from "../../actions/taskActions";
 
-const changeTask = ({sectionId, sections, setSections, taskName,index,dispatch}) =>{
-  editTitle({sectionId, sections, setSections, taskName,index});
-  dispatch(updateTask({}))
+const changeTask = ({sectionId, sections, setSections, name,index,dispatch,taskId}) =>{
+  if(name === ''){
+    taskRemove({sectionId, sections, setSections, index});
+    dispatch(deleteTask({taskId}))
+  }else{
+    taskRename({sectionId, sections, setSections, name,index});
+    dispatch(updateTask({task_name:name,task_id:taskId}))
+  }
+}
+
+const removeTask = ({sectionId, sections, setSections, index,taskId,dispatch}) =>{
+  taskRemove({sectionId, sections, setSections, index});
+  dispatch(deleteTask({taskId,task_index:index}))
 }
 
 const TaskCard = ({task,index,sectionId}) => {
   const [showNav, setShowNav] = useState(false);
   const [toggle, setToggle] = useState(true)
   const [name, setName] = useState(task.task_name)
-  const taskName = task.task_name
   const {sections, setSections, dispatch} = useContext(TaskContext)
-
+  const taskId = task._id
   useEffect(() => {
     // update the state of name when dragging
+    console.log(task.task_name)
     setName(task.task_name);
   },[task]);
   
@@ -78,14 +88,14 @@ const TaskCard = ({task,index,sectionId}) => {
                 autoFocus
                 onBlur={(e)=>{
                   setToggle(true)
-                  changeTask({sectionId, sections, setSections, taskName,index,dispatch});
+                  changeTask({sectionId, sections, setSections, name,index,dispatch,taskId});
                   e.preventDefault()
                   e.stopPropagation()
                 }}
                 onKeyDown={(event) => {
                   if (event.key === 'Enter' || event.key === 'Escape') {
                     setToggle(true)
-                    changeTask({sectionId, sections, setSections, taskName,index,dispatch});
+                    changeTask({sectionId, sections, setSections, name,index,dispatch,taskId});
                     event.preventDefault()
                     event.stopPropagation()
                 }}} 
@@ -104,7 +114,7 @@ const TaskCard = ({task,index,sectionId}) => {
                     <Dropdown.Menu>
                         <Dropdown.Item onClick={()=>setShowNav(!showNav)}>Edit</Dropdown.Item>
                         <Dropdown.Item onClick={(e)=>{
-                          changeTask({sectionId, sections, setSections, taskName,index,dispatch});;
+                          removeTask({sectionId, sections, setSections, index,taskId,dispatch});;
                         }}>Remove</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>

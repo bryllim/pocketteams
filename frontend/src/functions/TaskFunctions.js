@@ -17,12 +17,30 @@
 // }
 
 
-const taskRename = ({sectionId, sections, setSections, taskName,index}) => {
+const taskRename = ({sectionId, sections, setSections, name,index}) => {
     const newSections = [...sections];
     newSections.forEach(section => {
-      return section._id === sectionId ? section.tasks[index].task_name = taskName : null
+      return section._id === sectionId ? section.tasks[index].task_name = name : null
+    })
+    console.log('newSections')
+    console.log(newSections)
+    setSections(newSections)
+}
+
+const taskRemove = ({sectionId, sections, setSections, index}) => {
+    const newSections = [...sections];
+    newSections.forEach(section => {
+      return section._id === sectionId ? section.tasks.splice(index, 1) : null
     })
     setSections(newSections)
 }
 
-module.exports = {taskRename}
+// const taskCreate = ({sectionId, sections, setSections}) => { //change to section index
+//   const newSections = [...sections];
+//   newSections.forEach(section => {
+//     return section._id === sectionId ? section.tasks.push : null
+//   })
+//   setSections(newSections)
+// }
+
+module.exports = {taskRename,taskRemove}

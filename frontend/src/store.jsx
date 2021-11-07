@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
 import { projectCreateReducer, projectListReducer, projectUpdateReducer } from './reducers/projectReducers';
-import { taskListReducer } from './reducers/taskReducers';
+import { taskListReducer,taskCreateReducer} from './reducers/taskReducers';
 import { sectionOrderListReducer, sectionListReducer ,sectionUpdateTaskReducer,SectionOrderUpdateReducer,sectionUpdateReducer,sectionCreateReducer,sectionDeleteReducer} from './reducers/sectionReducers';
 import {noteListReducer,noteCreateReducer,noteUpdateReducer} from './reducers/noteReducers';
 import {taskDeleteReducer} from './reducers/taskReducers';
@@ -24,7 +24,8 @@ const reducer = combineReducers({
     noteList: noteListReducer,
     noteCreate: noteCreateReducer,
     noteUpdate: noteUpdateReducer,
-    taskDelete: taskDeleteReducer
+    taskDelete: taskDeleteReducer,
+    taskCreate: taskCreateReducer
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

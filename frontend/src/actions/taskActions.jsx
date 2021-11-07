@@ -1,7 +1,8 @@
 import { 
     TASK_LIST_FAIL, TASK_LIST_REQUEST, TASK_LIST_SUCCESS, 
     TASK_DELETE_REQUEST, TASK_DELETE_FAIL, TASK_DELETE_SUCCESS,
-    TASK_UPDATE_REQUEST, TASK_UPDATE_FAIL, TASK_UPDATE_SUCCESS
+    TASK_UPDATE_REQUEST, TASK_UPDATE_FAIL, TASK_UPDATE_SUCCESS,
+    TASK_CREATE_REQUEST, TASK_CREATE_FAIL, TASK_CREATE_SUCCESS
 } from "../constants/taskConstants"
 import axios from "axios";
 
@@ -40,10 +41,10 @@ export const listTasks = () => async (dispatch, getState) => {
     }
 }
 
-export const deleteTask = ({sectionId,taskId,taskIndex}) => async (dispatch, getState) => {
+export const createTask = ({task_name,task_description,section_id}) => async (dispatch, getState) => {
     try{
         dispatch({
-            type: TASK_DELETE_REQUEST,
+            type: TASK_CREATE_REQUEST,
         });
 
     const {
@@ -55,15 +56,18 @@ export const deleteTask = ({sectionId,taskId,taskIndex}) => async (dispatch, get
             Authorization: `Bearer ${userInfo.token}`,
         },
     };
+    console.log(task_name)
+    console.log(task_description)
+    console.log(section_id)
 
-    const { data } = await axios.put(
-        `/api/tasks/${taskId}`,
-        {sectionId,taskIndex}, 
+    const { data } = await axios.post(
+        `/api/tasks/create`,
+        {task_name, task_description, section_id}, 
         config
     );
 
     dispatch({
-        type: TASK_DELETE_SUCCESS,
+        type: TASK_CREATE_SUCCESS,
         payload: data,
     })
 
@@ -74,13 +78,52 @@ export const deleteTask = ({sectionId,taskId,taskIndex}) => async (dispatch, get
         : error.message;
 
         dispatch({
+            type: TASK_CREATE_FAIL,
+            payload: message,
+        });
+    }
+}
+
+export const deleteTask = ({taskId, task_index}) => async (dispatch, getState) => {
+    try{
+        dispatch({
+            type: TASK_DELETE_REQUEST,
+        });
+
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        const { data } = await axios.delete(
+            `/api/tasks/${taskId}`,
+            config
+        );
+
+        dispatch({
+            type: TASK_DELETE_SUCCESS,
+            payload: data,
+        });
+    } catch (error) {
+        const message = 
+            error.response && error.response.data.message 
+                ? error.response.data.message 
+                : error.message;
+        dispatch({
             type: TASK_DELETE_FAIL,
             payload: message,
         });
     }
 }
 
-export const updateTask = ({task_name,task_description,section_id}) => async (dispatch, getState) => {
+
+export const updateTask = ({task_name,task_description,task_id}) => async (dispatch, getState) => {
     try{
         dispatch({
             type: TASK_UPDATE_REQUEST,
@@ -95,9 +138,10 @@ export const updateTask = ({task_name,task_description,section_id}) => async (di
             Authorization: `Bearer ${userInfo.token}`,
         },
     };
-
+    console.log("udpate task")
+    console.log(config)
     const { data } = await axios.put(
-        `/api/tasks/${section_id}`,
+        `/api/tasks/${task_id}`,
         {task_name,task_description}, 
         config
     );
