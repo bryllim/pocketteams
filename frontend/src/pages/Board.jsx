@@ -16,6 +16,7 @@ import {onDragEnd,orderSections} from "../functions/dragDropFunctions"
 import {sectionCreate} from "../functions/sectionFunctions"
 
 const addSection = async ({dispatch,section_order_id,sectionOrder,setSectionOrder,sections,setSections})=>{
+ sectionCreate({sectionOrder,setSectionOrder,sections,setSections})
  dispatch(createSection({section_name: 'New Section',section_order_id}))
  return
 }
@@ -42,7 +43,7 @@ const Board = () => {
     return
   }
 
-  const createdSection = useSelector((state) => state.sectionCreate.data)
+  const createdSection = useSelector((state) => state.sectionCreate)
   const createdTask = useSelector((state) => state.taskCreate)
   
   const history = useHistory();
@@ -72,10 +73,16 @@ const Board = () => {
 },[dataList,])
 
 useEffect(() => {
-  if(!(Object.entries(createdSection).length === 0)){
-    console.log('createdSection')
-    console.log(createdSection)
-    sectionCreate({sectionOrder,setSectionOrder,sections,setSections,createdSection})
+  if(createdSection.loading  === false && createdSection.data !== undefined){
+    const newSection = createdSection.data
+    const sectionId = newSection._id
+    const newSections = [...sections]
+    const newSectionOrder = [...sectionOrder]
+    newSections.at(-1)._id = sectionId
+    newSectionOrder.pop()
+    newSectionOrder.push(sectionId)
+    setSections(newSections)
+    setSectionOrder(newSectionOrder)
   }
   if(createdTask.loading === false && createdTask.data !== undefined){
     const newTask = createdTask.data
@@ -87,6 +94,9 @@ useEffect(() => {
     setSections([...sections.map(section => section._id === sectionId ? {...section,tasks:newTaskList} : section)])
   }
 },[createdSection,createdTask])
+
+console.log("sections",sections)
+console.log("sectionOrder",sectionOrder)
 
   return (
     <>

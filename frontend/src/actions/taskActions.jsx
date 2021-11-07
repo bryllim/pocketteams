@@ -56,9 +56,6 @@ export const createTask = ({task_name,task_description,section_id}) => async (di
             Authorization: `Bearer ${userInfo.token}`,
         },
     };
-    console.log(task_name)
-    console.log(task_description)
-    console.log(section_id)
 
     const { data } = await axios.post(
         `/api/tasks/create`,
