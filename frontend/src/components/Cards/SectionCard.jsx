@@ -8,8 +8,11 @@ import DeleteSectionConfirmation from "../Modals/DeleteSectionConfirmation"
 import {sectionDelete,renameSection} from "../../functions/sectionFunctions"
 import { useDispatch} from "react-redux";
 import { updateSection, deleteSection} from "../../actions/sectionActions";
+import {createTask } from "../../actions/taskActions";
+import {taskCreate} from "../../functions/TaskFunctions"
 
 const changeSection =({sectionTitle,sections,setSections,index,dispatch,sectionId}) => {
+  console.log(sectionTitle)
   if(sectionTitle === ''){
     console.log("Change")
     // renameSection()
@@ -18,7 +21,7 @@ const changeSection =({sectionTitle,sections,setSections,index,dispatch,sectionI
   else{
     console.log("renameSection")
     renameSection({sectionTitle,sections,setSections,index})
-    dispatch(updateSection({ sectionTitle,sectionId}))
+    dispatch(updateSection({ section_name:sectionTitle,sectionId}))
     return
   }
 }
@@ -27,6 +30,14 @@ const removeSection = ({sectionOrder,setSectionOrder,sections,setSections,sectio
   sectionDelete({sectionOrder,setSectionOrder,sections,setSections,sectionOrderIndex:index,sectionId})
   dispatch(deleteSection({section_id:sectionId}))
 }
+
+
+const newTask = ({sectionId, sections, setSections,dispatch}) =>{
+  taskCreate({sectionId, sections, setSections})
+}
+
+
+
 
 const SectionCard = ({sectionId,index,section}) => {
   //rework
@@ -60,8 +71,7 @@ const SectionCard = ({sectionId,index,section}) => {
       {children}
     </p>
 ));
-
-
+console.log(section.section_name,section._id,section.tasks)
   return (
     <>
       <Draggable draggableId={sectionId} index={index} >
@@ -152,7 +162,7 @@ const SectionCard = ({sectionId,index,section}) => {
                       })}
                       {provided.placeholder}
                       <div className="d-flex justify-content-center align-items-center theme-btn mx-auto my-4"  
-                      style={{width:"250px", height:"50px"}}>
+                      style={{width:"250px", height:"50px"}} onClick={()=>newTask({sectionId, sections, setSections,dispatch})}>
                             <button className="btn" type="button">
                                 <i className="lni lni-plus text-white"></i>
                             </button>

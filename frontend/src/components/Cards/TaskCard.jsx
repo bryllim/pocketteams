@@ -1,19 +1,40 @@
 import React, { useState,useEffect,useContext} from "react";
 import SideTask from "../Sidetask";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
-import {TaskContext} from "../../contexts/SectionContext"
 import AddIcon from "../../assets_pocketdevs/assets/svg/AddIcon";
 import { Dropdown } from "react-bootstrap";
+import {taskRename,taskRemove} from "../../functions/TaskFunctions"
+import { TaskContext } from "../../contexts/SectionContext";
+import { deleteTask, updateTask,createTask } from "../../actions/taskActions";
 
-const TaskCard = ({task,index,columnId}) => {
+const changeTask = ({sectionId, sections, setSections, name,index,dispatch,taskId}) =>{
+  if(name === ''){
+    taskRemove({sectionId, sections, setSections, index});
+    dispatch(deleteTask({taskId}))
+  }
+  else if(taskId === '123'){
+    console.log('create')
+    dispatch(createTask({task_name:name,task_description:'tempdescription',section_id:sectionId}))
+  }
+  else{
+    taskRename({sectionId, sections, setSections, name,index});
+    dispatch(updateTask({task_name:name,task_id:taskId}))
+  }
+}
+
+const removeTask = ({sectionId, sections, setSections, index,taskId,dispatch}) =>{
+  taskRemove({sectionId, sections, setSections, index});
+  dispatch(deleteTask({taskId,task_index:index}))
+}
+
+const TaskCard = ({task,index,sectionId}) => {
   const [showNav, setShowNav] = useState(false);
   const [toggle, setToggle] = useState(true)
   const [name, setName] = useState(task.task_name)
-  const {editTitle} = useContext(TaskContext)
-
+  const {sections, setSections, dispatch} = useContext(TaskContext)
+  const taskId = task._id
   useEffect(() => {
     // update the state of name when dragging
-    
     setName(task.task_name);
   },[task]);
   
@@ -33,7 +54,6 @@ const TaskCard = ({task,index,columnId}) => {
       {children}
     </p>
 ));
-
   return (
     <div>
       <Draggable
@@ -55,7 +75,7 @@ const TaskCard = ({task,index,columnId}) => {
 
             >
               <div className="d-flex flex-row justify-content-between">
-
+         
               {toggle && name !== '' ?
               (<h6 className="hover-me" onClick={()=> editText()} >{name}</h6>)
               :
@@ -71,14 +91,14 @@ const TaskCard = ({task,index,columnId}) => {
                 autoFocus
                 onBlur={(e)=>{
                   setToggle(true)
-                  editTitle(index,name,task.id,columnId);
+                  changeTask({sectionId, sections, setSections, name,index,dispatch,taskId});
                   e.preventDefault()
                   e.stopPropagation()
                 }}
                 onKeyDown={(event) => {
                   if (event.key === 'Enter' || event.key === 'Escape') {
                     setToggle(true)
-                    editTitle(index,name,task.id,columnId);
+                    changeTask({sectionId, sections, setSections, name,index,dispatch,taskId});
                     event.preventDefault()
                     event.stopPropagation()
                 }}} 
@@ -97,7 +117,7 @@ const TaskCard = ({task,index,columnId}) => {
                     <Dropdown.Menu>
                         <Dropdown.Item onClick={()=>setShowNav(!showNav)}>Edit</Dropdown.Item>
                         <Dropdown.Item onClick={(e)=>{
-                          editTitle(index,'',task.id,columnId);
+                          removeTask({sectionId, sections, setSections, index,taskId,dispatch});;
                         }}>Remove</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>

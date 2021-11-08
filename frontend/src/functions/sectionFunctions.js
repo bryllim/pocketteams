@@ -1,26 +1,12 @@
 
 
-const sectionDelete = ({sectionOrder,setSectionOrder,sections,setSections,sectionId,sectionOrderIndex}) =>{
-  // console.log('sectionDelete')
-  // console.log(sections)
-  // console.log(sectionOrder)
-  // console.log(sectionId)
-  // const newSections = [...sections]
+const sectionDelete = ({sectionOrder,setSectionOrder,sectionOrderIndex}) =>{
   const newOrder = [...sectionOrder]
-  // const sectionIndex = sections.indexOf(sectionId)
-  // console.log(sectionIndex)
-  // newSections.splice(sectionIndex,1)
   newOrder.splice(sectionOrderIndex,1)
-  // setSections([
-  //   ...newSections
-  // ])
   setSectionOrder([
     ...newOrder
   ])
-
-  // console.log(newSections)
   console.log(newOrder)
-
   return
 }
 
@@ -34,17 +20,18 @@ const renameSection = ({sectionTitle,sections,setSections,index}) =>{ //change t
   ])
 }
 
-const sectionCreate = ({sectionOrder,setSectionOrder,sections,setSections,createdSection}) =>{
+const sectionCreate = ({sectionOrder,setSectionOrder,sections,setSections}) =>{
   const newSections = [...sections]
   const newOrder = [...sectionOrder]
-  newSections.push(createdSection)
-  newOrder.push(createdSection._id)
+  newSections.push({section_name:'New Section',_id:'123',section_order_id: '6179228d94d94e1c2c6c21e3',tasks: []})
+  newOrder.push('123')
   setSections([
     ...newSections
   ])
   setSectionOrder([
     ...newOrder
   ])
+  console.log('newSections')
 }
 
 
