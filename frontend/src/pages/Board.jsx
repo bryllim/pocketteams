@@ -16,6 +16,7 @@ import {onDragEnd,orderSections} from "../functions/dragDropFunctions"
 import {sectionCreate} from "../functions/sectionFunctions"
 
 const addSection = async ({dispatch,section_order_id,sectionOrder,setSectionOrder,sections,setSections})=>{
+ sectionCreate({sectionOrder,setSectionOrder,sections,setSections})
  dispatch(createSection({section_name: 'New Section',section_order_id}))
  return
 }
@@ -26,13 +27,11 @@ const Board = () => {
   const dispatch = useDispatch();
   const onDrag = ({result}) =>{ //transfer outside function component
     const itemType = result.type
+    console.log('result', result)
     if(itemType === 'column'){
       if(result.destination.index === result.source.index ) return
-      
       const {sectionId,sourceDragIndex,destinationDragIndex} = orderSections({result,sectionOrder,setSectionOrder})
-      console.log("before Dispatch")
       dispatch(updateSectionOrder({sectionId,sourceDragIndex,destinationDragIndex,sectionOrderId}));
-      console.log("after Dispatch")
     }
     else{
       if (!result.destination) return;
@@ -42,7 +41,8 @@ const Board = () => {
     return
   }
 
-  const createdSection = useSelector((state) => state.sectionCreate.data)
+  const createdSection = useSelector((state) => state.sectionCreate)
+  const createdTask = useSelector((state) => state.taskCreate)
   
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
@@ -68,16 +68,31 @@ const Board = () => {
       setSections(sectionDataList)
       setSectionOrder(sectionOrderList)
     }
-},[dataList])
+},[dataList,])
 
 useEffect(() => {
-  if(!(Object.entries(createdSection).length === 0)){
-    console.log('createdSection')
-    console.log(createdSection)
-    sectionCreate({sectionOrder,setSectionOrder,sections,setSections,createdSection})
+  if(createdSection.loading  === false && createdSection.data !== undefined){
+    const newSection = createdSection.data
+    const sectionId = newSection._id
+    const newSections = [...sections]
+    const newSectionOrder = [...sectionOrder]
+    newSections.at(-1)._id = sectionId
+    newSectionOrder.pop()
+    newSectionOrder.push(sectionId)
+    setSections(newSections)
+    setSectionOrder(newSectionOrder)
   }
-},[createdSection])
-
+  if(createdTask.loading === false && createdTask.data !== undefined){
+    const newTask = createdTask.data
+    const sectionId = newTask.section_id
+    const section = sections.find(section => section._id === sectionId)
+    const newTaskList = [...section.tasks]
+    newTaskList.at(-1)._id = newTask._id
+    newTaskList.at(-1).task_name = newTask.task_name
+    setSections([...sections.map(section => section._id === sectionId ? {...section,tasks:newTaskList} : section)])
+  }
+},[createdSection,createdTask])
+console.log(sectionOrder)
   return (
     <>
      <TaskContext.Provider value={{sections,setSections,sectionOrder,setSectionOrder,dispatch}}>

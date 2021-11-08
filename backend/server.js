@@ -5,13 +5,12 @@ const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const userRoutes = require('./routes/UserRoutes');
 const projectRoutes = require('./routes/ProjectRoutes');
-const teamRoutes = require('./routes/TeamRoutes');
-const taskRoutes = require('./routes/taskRoutes');
+const taskRoutes = require('./routes/TaskRoutes');
 const noteRoutes = require('./routes/NoteRoutes');
 const sectionRoutes = require('./routes/SectionRoutes');
 const sectionOrderRoutes = require('./routes/SectionOrderRoutes');
 const { NotFound, ErrorHandler } = require('./middlewares/ErrorMiddleware');
-
+const teamRoutes = require('./routes/TeamRoutes');
 const app = express();
 dotenv.config();
 connectDB();
