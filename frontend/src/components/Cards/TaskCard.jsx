@@ -35,7 +35,6 @@ const TaskCard = ({task,index,sectionId}) => {
   const taskId = task._id
   useEffect(() => {
     // update the state of name when dragging
-    console.log(task.task_name)
     setName(task.task_name);
   },[task]);
   

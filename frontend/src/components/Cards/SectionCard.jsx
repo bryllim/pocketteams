@@ -12,6 +12,7 @@ import {createTask } from "../../actions/taskActions";
 import {taskCreate} from "../../functions/TaskFunctions"
 
 const changeSection =({sectionTitle,sections,setSections,index,dispatch,sectionId}) => {
+  console.log(sectionTitle)
   if(sectionTitle === ''){
     console.log("Change")
     // renameSection()
@@ -20,7 +21,7 @@ const changeSection =({sectionTitle,sections,setSections,index,dispatch,sectionI
   else{
     console.log("renameSection")
     renameSection({sectionTitle,sections,setSections,index})
-    dispatch(updateSection({ sectionTitle,sectionId}))
+    dispatch(updateSection({ section_name:sectionTitle,sectionId}))
     return
   }
 }
@@ -34,6 +35,8 @@ const removeSection = ({sectionOrder,setSectionOrder,sections,setSections,sectio
 const newTask = ({sectionId, sections, setSections,dispatch}) =>{
   taskCreate({sectionId, sections, setSections})
 }
+
+
 
 
 const SectionCard = ({sectionId,index,section}) => {
@@ -68,8 +71,7 @@ const SectionCard = ({sectionId,index,section}) => {
       {children}
     </p>
 ));
-
-
+console.log(section.section_name,section._id,section.tasks)
   return (
     <>
       <Draggable draggableId={sectionId} index={index} >

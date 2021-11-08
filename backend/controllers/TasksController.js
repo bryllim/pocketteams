@@ -2,7 +2,6 @@ const asyncHandler = require("express-async-handler");
 const Task = require("../models/TaskModel");
 const Section = require("../models/SectionModel");
 
-
 const createTask = asyncHandler( async (req,res) => {
     const {task_name, task_description, section_id} = req.body;
     try{

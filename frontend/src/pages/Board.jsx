@@ -27,13 +27,11 @@ const Board = () => {
   const dispatch = useDispatch();
   const onDrag = ({result}) =>{ //transfer outside function component
     const itemType = result.type
+    console.log('result', result)
     if(itemType === 'column'){
       if(result.destination.index === result.source.index ) return
-      
       const {sectionId,sourceDragIndex,destinationDragIndex} = orderSections({result,sectionOrder,setSectionOrder})
-      console.log("before Dispatch")
       dispatch(updateSectionOrder({sectionId,sourceDragIndex,destinationDragIndex,sectionOrderId}));
-      console.log("after Dispatch")
     }
     else{
       if (!result.destination) return;
@@ -94,10 +92,7 @@ useEffect(() => {
     setSections([...sections.map(section => section._id === sectionId ? {...section,tasks:newTaskList} : section)])
   }
 },[createdSection,createdTask])
-
-console.log("sections",sections)
-console.log("sectionOrder",sectionOrder)
-
+console.log(sectionOrder)
   return (
     <>
      <TaskContext.Provider value={{sections,setSections,sectionOrder,setSectionOrder,dispatch}}>

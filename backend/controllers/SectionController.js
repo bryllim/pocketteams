@@ -50,38 +50,56 @@ const getSectionById = asyncHandler( async (req,res) => {
 });
 
 const updateSection = asyncHandler(async (req,res) => {
-    const {section_name} = req.body;
-    console.log("Updated Section")
 
-    const section = await Section.findById(req.params.id);
+    try{
+        const {section_name} = req.body;
+        const section = await Section.findById(req.params.id);
+        console.log(section_name)
+        //Check if this Section belongs to the user
+        if(section.user.toString() !== req.user._id.toString()){
+            res.status(401);
+            throw new Error("You can't perform this action");
+        }
 
-    //Check if this Section belongs to the user
-    if(section.user.toString() !== req.user._id.toString()){
-        res.status(401);
-        throw new Error("You can't perform this action");
+        if(section){
+            section.section_name = section_name;
+            const updatedSection = await section.save();
+            res.json(updatedSection);
+        } else {
+            res.status(404);
+            throw new Error("Section not found");
+        }
+    }
+    catch(e) {
+        console.log(e);
+    // [Error: Uh oh!]
     }
 
-    if(section){
-        section.section_name = section_name;
-        const updatedSection = await section.save();
-        res.json(updatedSection);
-    } else {
-        res.status(404);
-        throw new Error("Section not found");
-    }
+
+
 });
 
 const deleteSection = asyncHandler(async (req,res) => {
     const section = await Section.findById(req.params.id);
-
+    const sectionOrder = await SectionOrder.findById(section.section_order_id);
+    const tasks = await Task.find({section_id: section._id});
     if(section.user.toString() !== req.user._id.toString()){
         res.status(401);
         throw new Error("You can't perform this action");   
     }
 
     if(section){
-        //delete on section order
-        await section.remove();
+        
+        await section.remove()
+        await sectionOrder.items.pull(section._id)
+        await sectionOrder.save()
+        //remove all tasks associated with this section
+        for(let i = 0; i < tasks.length; i++){
+            await tasks[i].remove()
+        }
+            
+        
+        console.log('section deleted')
         res.json({message: "Section Removed"});
     }
     
@@ -117,48 +135,27 @@ const updateSectionOrder = asyncHandler(async (req,res) => {
 });
 
 const updateSectionTask = asyncHandler(async (req,res) => {
-    console.log("Updat Section Task")
-
+    console.log("Update Section Task")
     const {sourceSectionId, destinationSectionId,sourceDragindex,destinationDragindex,type} = req.body;
     const taskId = req.params.id
-    // console.log(taskId)
-    // console.log(sourceSectionId)
-    // console.log(destinationSectionId)
     const task = await Task.findById(taskId);
     const sectionSource = await Section.findById(sourceSectionId);
     const sectionDestination = await Section.findById(destinationSectionId);
-
-
     //Check if this Section belongs to the user
     if(sectionSource.user.toString() !== req.user._id.toString()){
         res.status(401);
         throw new Error("You can't perform this action");
     }
-
-    if(type === 'column'){
-        const sourceData = await Section.findById(taskId)
-
-        .remove()
-
-    }
-
     if(task && sectionSource && sectionDestination){
         const sourceTasks = [...sectionSource.tasks]
         const destinationTasks = [...sectionDestination.tasks]
         task.section_id = destinationSectionId;
-
-        
-
-        // const filteredTasks = sourceTasks.filter(obj => 
-        //     obj._id === taskId
-        // )
         if(sourceSectionId === destinationSectionId){
             destinationTasks.splice(sourceDragindex,1)
             destinationTasks.splice(destinationDragindex,0,taskId)
             sectionDestination.tasks = destinationTasks
             await sectionDestination.save();
         }
-        
         else{
             sourceTasks.splice(sourceDragindex,1)
             destinationTasks.splice(destinationDragindex,0,taskId)
@@ -167,25 +164,15 @@ const updateSectionTask = asyncHandler(async (req,res) => {
             await sectionSource.save();
             await sectionDestination.save();
         }
-
-        
- 
-
-
-        console.log(sectionDestination.tasks)
+      
         console.log(sectionSource.tasks)
         console.log(sourceSectionId)
+        console.log(sectionDestination.tasks)
         console.log(destinationSectionId)
         // console.log(sourceTasks)
         // console.log(destinationTasks)
-     
-
-
         await task.save();
-  
-    
-    
-      
+
         res.json(sectionDestination);
 
     } else {
