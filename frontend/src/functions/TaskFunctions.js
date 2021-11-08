@@ -1,22 +1,3 @@
-
-
-
-// const addColumn =(order,setOrder,columns,setColumns) => {
-//     const colName = 'test' + Math.floor((Math.random() * 10) + 1);
-//     setColumns({
-//         ...columns,
-//         [colName]:{
-//         name:colName,
-//         items: []
-//         }
-//     })
-//     setOrder([
-//         ...order,
-//         colName
-//     ])
-// }
-
-
 const taskRename = ({sectionId, sections, setSections, name,index}) => {
     const newSections = [...sections];
     newSections.forEach(section => {
@@ -43,4 +24,15 @@ const taskCreate = ({sectionId, sections, setSections}) => { //change to section
   setSections(newSections)
 }
 
-module.exports = {taskRename,taskRemove,taskCreate}
+const taskUpdate = ({ sections, setSections,createdTask}) => {
+  console.log('taskUpdate3')
+  const newTask = createdTask.data
+  const sectionId = newTask.section_id
+  const section = sections.find(section => section._id === sectionId)
+  const newTaskList = [...section.tasks]
+  newTaskList.at(-1)._id = newTask._id
+  newTaskList.at(-1).task_name = newTask.task_name
+  setSections([...sections.map(section => section._id === sectionId ? {...section,tasks:newTaskList} : section)])
+}
+
+module.exports = {taskRename,taskRemove,taskCreate,taskUpdate}

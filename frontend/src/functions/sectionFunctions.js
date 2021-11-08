@@ -6,14 +6,12 @@ const sectionDelete = ({sectionOrder,setSectionOrder,sectionOrderIndex}) =>{
   setSectionOrder([
     ...newOrder
   ])
-  console.log(newOrder)
   return
 }
 
 
 const renameSection = ({sectionTitle,sections,setSections,index}) =>{ //change to sectionRename or sectionUpdate
   const newSections = [...sections]
-  console.log(sections)
   newSections[index].section_name = sectionTitle
   setSections([
     ...newSections
@@ -31,10 +29,18 @@ const sectionCreate = ({sectionOrder,setSectionOrder,sections,setSections}) =>{
   setSectionOrder([
     ...newOrder
   ])
-  console.log('newSections')
 }
 
+const sectionUpdate = ({sectionOrder,setSectionOrder,sections,setSections,createdSection}) =>{
+  const newSection = createdSection.data
+  const sectionId = newSection._id
+  const newSections = [...sections]
+  const newSectionOrder = [...sectionOrder]
+  newSections.at(-1)._id = sectionId
+  newSectionOrder.pop()
+  newSectionOrder.push(sectionId)
+  setSections(newSections)
+  setSectionOrder(newSectionOrder)
+}
 
-
-
-module.exports = {sectionDelete,renameSection,sectionCreate}
+module.exports = {sectionDelete,renameSection,sectionCreate,sectionUpdate}
