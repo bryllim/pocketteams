@@ -3,7 +3,7 @@ import SideTask from "../Sidetask";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 import AddIcon from "../../assets_pocketdevs/assets/svg/AddIcon";
 import { Dropdown } from "react-bootstrap";
-import {taskRename,taskRemove} from "../../functions/TaskFunctions"
+import {taskRename,taskRemove} from "../../functions/taskFunctions"
 import { TaskContext } from "../../contexts/SectionContext";
 import { deleteTask, updateTask,createTask } from "../../actions/taskActions";
 
@@ -33,6 +33,7 @@ const TaskCard = ({task,index,sectionId}) => {
   const [name, setName] = useState(task.task_name)
   const {sections, setSections, dispatch} = useContext(TaskContext)
   const taskId = task._id
+  const taskDescription = task.task_description
   useEffect(() => {
     // update the state of name when dragging
     setName(task.task_name);
@@ -94,7 +95,7 @@ const TaskCard = ({task,index,sectionId}) => {
                   changeTask({sectionId, sections, setSections, name,index,dispatch,taskId});
                   e.preventDefault()
                   e.stopPropagation()
-                }}
+                }}  
                 onKeyDown={(event) => {
                   if (event.key === 'Enter' || event.key === 'Escape') {
                     setToggle(true)
@@ -125,8 +126,7 @@ const TaskCard = ({task,index,sectionId}) => {
                 {/* <i onClick={() => setShowNav(!showNav)} className="lni lni-pencil p-2"></i> */}
               </div>
 
-            <p className="px-3 text-limit">Desc scrip scrip scrip ripti oscripti oscripti oscript ios crip tioscrip
-            tioscriptioscn</p>
+            <p className="px-3 text-limit">{taskDescription}</p>
 
             <div className="d-flex justify-content-between align-tasks-center">
 

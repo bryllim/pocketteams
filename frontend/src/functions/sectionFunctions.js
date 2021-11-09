@@ -1,5 +1,4 @@
-
-
+//delete only the sectionid on sectionOrder
 const sectionDelete = ({sectionOrder,setSectionOrder,sectionOrderIndex}) =>{
   const newOrder = [...sectionOrder]
   newOrder.splice(sectionOrderIndex,1)
@@ -9,8 +8,8 @@ const sectionDelete = ({sectionOrder,setSectionOrder,sectionOrderIndex}) =>{
   return
 }
 
-
-const renameSection = ({sectionTitle,sections,setSections,index}) =>{ //change to sectionRename or sectionUpdate
+//rename section on frontend
+const sectionRename = ({sectionTitle,sections,setSections,index}) =>{ //change to sectionRename or sectionUpdate
   const newSections = [...sections]
   newSections[index].section_name = sectionTitle
   setSections([
@@ -18,6 +17,7 @@ const renameSection = ({sectionTitle,sections,setSections,index}) =>{ //change t
   ])
 }
 
+//create section on frontend
 const sectionCreate = ({sectionOrder,setSectionOrder,sections,setSections}) =>{
   const newSections = [...sections]
   const newOrder = [...sectionOrder]
@@ -31,6 +31,7 @@ const sectionCreate = ({sectionOrder,setSectionOrder,sections,setSections}) =>{
   ])
 }
 
+//update section on frontend using data fronm backend
 const sectionUpdate = ({sectionOrder,setSectionOrder,sections,setSections,createdSection}) =>{
   const newSection = createdSection.data
   const sectionId = newSection._id
@@ -43,4 +44,4 @@ const sectionUpdate = ({sectionOrder,setSectionOrder,sections,setSections,create
   setSectionOrder(newSectionOrder)
 }
 
-module.exports = {sectionDelete,renameSection,sectionCreate,sectionUpdate}
+module.exports = {sectionDelete,sectionRename,sectionCreate,sectionUpdate}

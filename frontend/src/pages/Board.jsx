@@ -58,17 +58,15 @@ const Board = () => {
     dispatch(listSection());
   },[history, userInfo, dispatch])
 
-  useEffect(()=>{
-    if(dataList.loading === false){
-      setSections(sectionDataList)
-      setSectionOrder(sectionOrderList)
-    }
+useEffect(()=>{
+  if(dataList.loading === false && dataList.data !== undefined){
+    setSections(sectionDataList)
+    setSectionOrder(sectionOrderList)
+  }
 },[dataList])
 
 useEffect(() => {
-  console.log("Test")
   if(createdSection.loading  === false && createdSection.data !== undefined){
-    console.log("Test1")
     sectionUpdate({sectionOrder,setSectionOrder,sections,setSections,createdSection})
   }
  
@@ -79,9 +77,6 @@ useEffect(() => {
     taskUpdate({createdTask,sections,setSections})
   }
 },[createdTask])
-
-
-
 
   return (
     <>

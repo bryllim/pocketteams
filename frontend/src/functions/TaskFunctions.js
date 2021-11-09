@@ -1,3 +1,4 @@
+//rename task on frontend
 const taskRename = ({sectionId, sections, setSections, name,index}) => {
     const newSections = [...sections];
     newSections.forEach(section => {
@@ -8,6 +9,7 @@ const taskRename = ({sectionId, sections, setSections, name,index}) => {
     setSections(newSections)
 }
 
+//remove the task on frontend
 const taskRemove = ({sectionId, sections, setSections, index}) => {
     const newSections = [...sections];
     newSections.forEach(section => {
@@ -15,17 +17,17 @@ const taskRemove = ({sectionId, sections, setSections, index}) => {
     })
     setSections(newSections)
 }
-
+//add the task on frontend
 const taskCreate = ({sectionId, sections, setSections}) => { //change to section index
   const newSections = [...sections];
   newSections.forEach(section => {
-    return section._id === sectionId ? section.tasks.push({task_name:'',_id:'123'}) : null
+    return section._id === sectionId ? section.tasks.push({task_name:'',_id:'123', task_description:'tempdescription'}) : null
   })
   setSections(newSections)
 }
 
+//update the task on frontend using data from backend
 const taskUpdate = ({ sections, setSections,createdTask}) => {
-  console.log('taskUpdate3')
   const newTask = createdTask.data
   const sectionId = newTask.section_id
   const section = sections.find(section => section._id === sectionId)

@@ -44,9 +44,7 @@ const onDragEnd = ({result, sections, sectionOrder, setSections, setSectionOrder
   };
   
   const orderSections = ({result,sectionOrder,setSectionOrder}) => {
-    console.log('orderSections')
     if (!result.destination) {
-      console.log('error2')
       return;
     }
     const { source, destination , draggableId} = result;
@@ -59,9 +57,6 @@ const onDragEnd = ({result, sections, sectionOrder, setSections, setSectionOrder
     setSectionOrder(newSectionOrder)
     return {sectionId, sourceDragIndex, destinationDragIndex}
   }
-
-
-
   module.exports = {onDragEnd,orderSections}
 
 
