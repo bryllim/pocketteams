@@ -2,7 +2,7 @@ const asyncHandler = require("express-async-handler");
 const Team = require("../models/TeamModel");
 
 const getTeam = asyncHandler(async (req, res) => {
-    const team = await Team.find({user: req.user._id});
+    const team = await Team.find({user: req.user._id}).populate("projects").populate("users");
     res.json(team);
 });
 
