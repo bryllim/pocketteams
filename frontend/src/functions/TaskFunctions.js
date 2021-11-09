@@ -1,22 +1,4 @@
-
-
-
-// const addColumn =(order,setOrder,columns,setColumns) => {
-//     const colName = 'test' + Math.floor((Math.random() * 10) + 1);
-//     setColumns({
-//         ...columns,
-//         [colName]:{
-//         name:colName,
-//         items: []
-//         }
-//     })
-//     setOrder([
-//         ...order,
-//         colName
-//     ])
-// }
-
-
+//rename task on frontend
 const taskRename = ({sectionId, sections, setSections, name,index}) => {
     const newSections = [...sections];
     newSections.forEach(section => {
@@ -27,6 +9,7 @@ const taskRename = ({sectionId, sections, setSections, name,index}) => {
     setSections(newSections)
 }
 
+//remove the task on frontend
 const taskRemove = ({sectionId, sections, setSections, index}) => {
     const newSections = [...sections];
     newSections.forEach(section => {
@@ -34,13 +17,24 @@ const taskRemove = ({sectionId, sections, setSections, index}) => {
     })
     setSections(newSections)
 }
-
+//add the task on frontend
 const taskCreate = ({sectionId, sections, setSections}) => { //change to section index
   const newSections = [...sections];
   newSections.forEach(section => {
-    return section._id === sectionId ? section.tasks.push({task_name:'',_id:'123'}) : null
+    return section._id === sectionId ? section.tasks.push({task_name:'',_id:'123', task_description:'tempdescription'}) : null
   })
   setSections(newSections)
 }
 
-module.exports = {taskRename,taskRemove,taskCreate}
+//update the task on frontend using data from backend
+const taskUpdate = ({ sections, setSections,createdTask}) => {
+  const newTask = createdTask.data
+  const sectionId = newTask.section_id
+  const section = sections.find(section => section._id === sectionId)
+  const newTaskList = [...section.tasks]
+  newTaskList.at(-1)._id = newTask._id
+  newTaskList.at(-1).task_name = newTask.task_name
+  setSections([...sections.map(section => section._id === sectionId ? {...section,tasks:newTaskList} : section)])
+}
+
+module.exports = {taskRename,taskRemove,taskCreate,taskUpdate}
