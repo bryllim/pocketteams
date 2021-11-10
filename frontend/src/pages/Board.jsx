@@ -11,7 +11,7 @@ import {TaskContext}  from "../contexts/SectionContext"
 import { listSection, updateSectionTask,createSection, updateSectionOrder,} from "../actions/sectionActions";
 import {onDragEnd,orderSections} from "../functions/dragDropFunctions"
 import {sectionCreate,sectionUpdate} from "../functions/sectionFunctions"
-import { taskUpdate } from "../functions/TaskFunctions";
+import { taskUpdate } from "../functions/taskFunctions";
 
 const addSection = async ({dispatch,section_order_id,sectionOrder,setSectionOrder,sections,setSections})=>{
  sectionCreate({sectionOrder,setSectionOrder,sections,setSections})
@@ -47,8 +47,10 @@ const Board = () => {
   const sectionDataList= dataList.data.sectionDataList;
   const sectionOrderList = dataList.data.sectionOrderList;
   const sectionOrderId = dataList.data.sectionOrderId;
+
   const [sections, setSections] = useState(sectionDataList);
   const [sectionOrder,setSectionOrder] = useState(sectionOrderList);
+  
   const { userInfo } = userLogin;
 
   useEffect(() => {

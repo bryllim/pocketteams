@@ -6,26 +6,6 @@ const taskRename = ({ sectionId, sections, setSections, name, index }) => {
       ? (section.tasks[index].task_name = name)
       : null;
   });
-  console.log("newSections");
-  console.log(newSections);
-  setSections(newSections);
-};
-
-const taskDescRename = ({
-  sectionId,
-  sections,
-  setSections,
-  taskDesc,
-  index,
-}) => {
-  const newSections = [...sections];
-  newSections.forEach((section) => {
-    return section._id === sectionId
-      ? (section.tasks[index].task_description = taskDesc)
-      : null;
-  });
-  console.log("newSections");
-  console.log(newSections);
   setSections(newSections);
 };
 
@@ -68,10 +48,27 @@ const taskUpdate = ({ sections, setSections, createdTask }) => {
   ]);
 };
 
+const taskDescriptionUpdate = ({
+  sections,
+  setSections,
+  taskDescription,
+  index,
+  sectionId,
+}) => {
+  const newSections = [...sections];
+  newSections.forEach((section) => {
+    return section._id === sectionId
+      ? (section.tasks[index].task_description = taskDescription)
+      : null;
+  });
+
+  setSections(newSections);
+};
+
 module.exports = {
   taskRename,
-  taskDescRename,
   taskRemove,
   taskCreate,
   taskUpdate,
+  taskDescriptionUpdate,
 };

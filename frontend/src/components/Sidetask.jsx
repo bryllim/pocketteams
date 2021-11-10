@@ -2,10 +2,11 @@ import React, { useState, useEffect,useContext } from "react";
 import { Dropdown } from "react-bootstrap";
 import Comment from "../components/Comment";
 import SubTask from "../components/SubTask";
-import { TaskContext } from "../contexts/SectionContext";
-// import AddIcon from "../assets_pocketdevs/assets/svg/AddIcon";
-import {taskRename,taskDescRename,taskRemove} from "../functions/TaskFunctions"
-import { deleteTask, updateTask,createTask } from "../actions/taskActions";
+import {TaskContext } from "../contexts/SectionContext";
+import {taskRename,taskRemove,taskDescriptionUpdate} from "../functions/taskFunctions"
+import { deleteTask, updateTask,createTask,updateTaskDescription } from "../actions/taskActions";
+
+
 
 
 
@@ -20,13 +21,16 @@ const changeTask = ({sectionId, sections, setSections, name, taskDesc, index,dis
   }
   else{
     taskRename({sectionId, sections, setSections, name, index});
-    taskDescRename({sectionId, sections, setSections, taskDesc, index})
     dispatch(updateTask({task_name:name,task_id:taskId}))
   }
 }
 
+const changeTaskDescription = ({sections, setSections, taskDescription, index, sectionId, taskId,dispatch}) =>{
+  taskDescriptionUpdate({sections, setSections, taskDescription, index, sectionId})
+  dispatch(updateTaskDescription({task_description:taskDescription, task_id:taskId}))
+}
 
-const SideTask = ({ showed, hide, task, index, sectionId }) => {
+const SideTask = ({ showed, hide, task,index,sectionId }) => {
   const [markTask, setMarkTask] = useState(true);
   const [sectionName, setSectionName] = useState("section name");
   const [user, setUser] = useState("assign user");
@@ -34,16 +38,9 @@ const SideTask = ({ showed, hide, task, index, sectionId }) => {
     "form-select form-select-sm label-font ms-3"
   );
   const [name, setName] = useState(task.task_name)
-  const [taskDesc, setTaskDesc] = useState(task.task_description)
-  const taskId = task._id
+  const [taskDescription, setTaskDescription] = useState(task.task_description);
   const {sections, setSections, dispatch} = useContext(TaskContext)
-
-
-
-  useEffect(() => {
-    setName(task.task_name);
-  },[task]);
-
+  const taskId = task._id;
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p
@@ -110,6 +107,11 @@ const SideTask = ({ showed, hide, task, index, sectionId }) => {
                 onChange={(e) => {
                   setName(e.target.value)
                 }}
+                onBlur={(e)=>{
+                  changeTask({sectionId, sections, setSections, name,index,dispatch,taskId});
+                  e.preventDefault()
+                  e.stopPropagation()
+                }}  
                 onKeyDown={(event) => {
                   if (event.key === 'Enter' || event.key === 'Escape') {
                     changeTask({sectionId, sections, setSections, name, index, dispatch, taskId});
@@ -230,14 +232,19 @@ const SideTask = ({ showed, hide, task, index, sectionId }) => {
                     <div className="px-2">
                       <textarea
                         placeholder="Describe Task."
+                        value={taskDescription}
                         className="mt-3 radius px-3 form-control py-2 label-font resize-0"
-                        value={taskDesc}
                         onChange={(e) => {
-                          setTaskDesc(e.target.value)
+                          setTaskDescription(e.target.value)
                         }}
+                        onBlur={(e)=>{
+                          changeTaskDescription({sections, setSections, taskDescription, index, sectionId, taskId, dispatch});
+                          e.preventDefault()
+                          e.stopPropagation()
+                        }}  
                         onKeyDown={(event) => {
                           if (event.key === 'Enter' || event.key === 'Escape') {
-                            changeTask({sectionId, sections, setSections, taskDesc ,index,dispatch,taskId});
+                            changeTask({sectionId, sections, setSections, taskDescription ,index,dispatch,taskId});
                             event.preventDefault()
                             event.stopPropagation()
                         }}} 
