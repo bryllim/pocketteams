@@ -2,14 +2,27 @@ import React, { useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import Comment from "../components/Comment";
 import SubTask from "../components/SubTask";
+import {taskDescriptionUpdate} from "../functions/taskFunctions";
+import {useContext} from "react";
+import {TaskContext } from "../contexts/SectionContext";
+import {updateTaskDescription} from "../actions/taskActions";
 
-const SideTask = ({ showed, hide }) => {
+const changeTaskDescription = ({sections, setSections, taskDescription, index, sectionId, taskId,dispatch}) =>{
+  taskDescriptionUpdate({sections, setSections, taskDescription, index, sectionId})
+  dispatch(updateTaskDescription({task_description:taskDescription, task_id:taskId}))
+}
+
+const SideTask = ({ showed, hide, task,index,sectionId }) => {
   const [markTask, setMarkTask] = useState(true);
   const [sectionName, setSectionName] = useState("section name");
   const [user, setUser] = useState("assign user");
   const [color, setColor] = useState(
     "form-select form-select-sm label-font ms-3"
   );
+  
+  const [taskDescription, setTaskDescription] = useState(task.task_description);
+  const {sections, setSections, dispatch} = useContext(TaskContext)
+  const taskId = task._id;
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p
@@ -185,7 +198,16 @@ const SideTask = ({ showed, hide }) => {
                     <div className="px-2">
                       <textarea
                         placeholder="Describe Task."
+                        value={taskDescription}
                         className="mt-3 radius px-3 form-control py-2 label-font resize-0"
+                        onChange={(e) => {
+                          setTaskDescription(e.target.value)
+                        }}
+                        onBlur={(e)=>{
+                          changeTaskDescription({sections, setSections, taskDescription, index, sectionId, taskId, dispatch});
+                          e.preventDefault()
+                          e.stopPropagation()
+                        }}  
                       ></textarea>
                     </div>
                   </div>

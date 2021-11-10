@@ -12,6 +12,27 @@ const taskSchema = mongoose.Schema(
         task_end_date:{
             type: Date,
         },
+        task_priority:{
+            type:String
+        },
+        task_assigned_users:[{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+        }],
+        task_comments:[{
+            type:String
+        }],
+        // task_subtask:
+        // [{
+        //     subtask:{
+        //         name:{
+        //             type:String
+        //         },
+        //         isComplete:{
+        //             type:Boolean
+        //         }
+        //     }
+        // }],
         user: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
