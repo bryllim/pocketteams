@@ -4,8 +4,6 @@ const taskRename = ({sectionId, sections, setSections, name,index}) => {
     newSections.forEach(section => {
       return section._id === sectionId ? section.tasks[index].task_name = name : null
     })
-    console.log('newSections')
-    console.log(newSections)
     setSections(newSections)
 }
 

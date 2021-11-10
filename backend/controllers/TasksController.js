@@ -23,7 +23,7 @@ const createTask = asyncHandler( async (req,res) => {
                 console.log('done')
 
             }catch (err) {
-                console.log('er2')
+                console.log(err)
                 res.status(500).json(err);
             }
         }
@@ -81,20 +81,26 @@ const updateTaskById = asyncHandler( async (req,res) => {
         console.log('updateTaskById')
         const {task_name,task_description} = req.body;
         const taskId = req.params.id
-        if(!taskId){
+        if(!taskId && !task_description){
             throw new Error("Please Fill all the Fields");
         }
         const task = await Task.findById(taskId)
-        if(!task_description){
+        
+        if(task_name){
             task.task_name = task_name;
             await task.save();
             res.json({message: "task renamed"});
         }
-        else if(!task_name){
+        else if(task_description){
             task.task_description = task_description;
             await task.save();
             res.json({message: "task description updated"});
         }
+        // else if(task_subtask){
+        //     task.task_subtask = task_subtask;
+        //     await task.save();
+        //     res.json({message: "task subtask updated"});
+        // }
         else{
             res.status(404).json({message: "Request not found"});
             throw new Error("Request not found");
@@ -104,6 +110,5 @@ const updateTaskById = asyncHandler( async (req,res) => {
         res.status(400).json(err);
     }
 });
-
 
 module.exports = {createTask, getTasks,getTasksBySection,deleteTaskById,updateTaskById};
