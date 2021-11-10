@@ -135,11 +135,48 @@ export const updateTask = ({task_name,task_description,task_id}) => async (dispa
             Authorization: `Bearer ${userInfo.token}`,
         },
     };
-    console.log("udpate task")
-    console.log(config)
     const { data } = await axios.put(
         `/api/tasks/${task_id}`,
         {task_name,task_description}, 
+        config
+    );
+
+    dispatch({
+        type: TASK_UPDATE_SUCCESS,
+        payload: data,
+    })
+
+    } catch (error){
+        const message = 
+        error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+        dispatch({
+            type: TASK_UPDATE_FAIL,
+            payload: message,
+        });
+    }
+}
+
+export const updateTaskDescription = ({task_description,task_id}) => async (dispatch, getState) => {
+    try{
+        dispatch({
+            type: TASK_UPDATE_REQUEST,
+        });
+
+    const {
+        userLogin: {userInfo},
+    } = getState();
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+        },
+    };
+    const { data } = await axios.put(
+        `/api/tasks/update/description/${task_id}`,
+        {task_description}, 
         config
     );
 

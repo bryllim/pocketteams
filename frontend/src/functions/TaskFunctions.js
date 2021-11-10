@@ -35,4 +35,15 @@ const taskUpdate = ({ sections, setSections,createdTask}) => {
   setSections([...sections.map(section => section._id === sectionId ? {...section,tasks:newTaskList} : section)])
 }
 
-module.exports = {taskRename,taskRemove,taskCreate,taskUpdate}
+const taskDescriptionUpdate = ({sections, setSections, taskDescription, index, sectionId}) => {
+  const newSections = [...sections];
+  newSections.forEach(section => {
+    return section._id === sectionId ? section.tasks[index].task_description = taskDescription : null
+  })
+
+  setSections(newSections)
+}
+
+
+
+module.exports = {taskRename,taskRemove,taskCreate,taskUpdate,taskDescriptionUpdate}

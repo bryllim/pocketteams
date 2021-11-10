@@ -3,7 +3,7 @@ import SideTask from "../Sidetask";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 import AddIcon from "../../assets_pocketdevs/assets/svg/AddIcon";
 import { Dropdown } from "react-bootstrap";
-import {taskRename,taskRemove} from "../../functions/taskFunctions"
+import {taskRename,taskRemove,taskDescriptionUpdate} from "../../functions/taskFunctions"
 import { TaskContext } from "../../contexts/SectionContext";
 import { deleteTask, updateTask,createTask } from "../../actions/taskActions";
 
@@ -22,15 +22,18 @@ const changeTask = ({sectionId, sections, setSections, taskName,index,dispatch,t
   }
 }
 
-const updateTaskDescription = (taskId,taskDescription) =>{
 
-}
+
 const updateTaskName = ({sectionId, sections, setSections, index, taskId,taskName,dispatch}) =>{
   if(taskName === ''){
     taskRemove({sectionId, sections, setSections, index});
     dispatch(deleteTask({taskId}))
   }
-  else{//retaskNameTask
+  else if(taskId === '123'){
+    console.log('create')
+    dispatch(createTask({task_name:taskName,task_description:'tempdescription',section_id:sectionId}))
+  }
+  else{
     taskRename({sectionId, sections, setSections, taskName,index});
     dispatch(updateTask({task_name:taskName, task_id:taskId}))
   }
@@ -167,7 +170,7 @@ const TaskCard = ({task,index,sectionId}) => {
             </div>
           </div>)}}
     </Draggable>
-    <SideTask showed={showNav} hide={setShowNav} />
+    <SideTask showed={showNav} hide={setShowNav} task={task} index={index} sectionId ={sectionId}/>
   </div>
   );
 }
