@@ -3,7 +3,7 @@ import SideTask from "../Sidetask";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 import AddIcon from "../../assets_pocketdevs/assets/svg/AddIcon";
 import { Dropdown } from "react-bootstrap";
-import {taskRename,taskRemove} from "../../functions/taskFunctions"
+import {taskRename,taskRemove} from "../../functions/TaskFunctions"
 import { TaskContext } from "../../contexts/SectionContext";
 import { deleteTask, updateTask,createTask } from "../../actions/taskActions";
 
@@ -39,6 +39,7 @@ const TaskCard = ({task,index,sectionId}) => {
     setName(task.task_name);
   },[task]);
   
+  console.log("task:" + task)
 
   const editText = () => {
     setToggle(false)
@@ -144,7 +145,7 @@ const TaskCard = ({task,index,sectionId}) => {
             </div>
           </div>)}}
     </Draggable>
-    <SideTask showed={showNav} hide={setShowNav} />
+    <SideTask showed={showNav} hide={setShowNav} task={task} index={index} sectionId={sectionId} />
   </div>
   );
 }

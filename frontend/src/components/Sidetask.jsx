@@ -1,15 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { Dropdown } from "react-bootstrap";
 import Comment from "../components/Comment";
 import SubTask from "../components/SubTask";
+import { TaskContext } from "../contexts/SectionContext";
+// import AddIcon from "../assets_pocketdevs/assets/svg/AddIcon";
+import {taskRename,taskDescRename,taskRemove} from "../functions/TaskFunctions"
+import { deleteTask, updateTask,createTask } from "../actions/taskActions";
 
-const SideTask = ({ showed, hide }) => {
+
+
+const changeTask = ({sectionId, sections, setSections, name, taskDesc, index,dispatch,taskId}) =>{
+  if(name === ''){
+    taskRemove({sectionId, sections, setSections, index});
+    dispatch(deleteTask({taskId}))
+  }
+  else if(taskId === '123'){
+    console.log('create')
+    dispatch(createTask({task_name:name,task_description:'temp_description',section_id:sectionId}))
+  }
+  else{
+    taskRename({sectionId, sections, setSections, name, index});
+    taskDescRename({sectionId, sections, setSections, taskDesc, index})
+    dispatch(updateTask({task_name:name,task_id:taskId}))
+  }
+}
+
+
+const SideTask = ({ showed, hide, task, index, sectionId }) => {
   const [markTask, setMarkTask] = useState(true);
   const [sectionName, setSectionName] = useState("section name");
   const [user, setUser] = useState("assign user");
   const [color, setColor] = useState(
     "form-select form-select-sm label-font ms-3"
   );
+  const [name, setName] = useState(task.task_name)
+  const [taskDesc, setTaskDesc] = useState(task.task_description)
+  const taskId = task._id
+  const {sections, setSections, dispatch} = useContext(TaskContext)
+
+
+
+  useEffect(() => {
+    setName(task.task_name);
+  },[task]);
+
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p
@@ -36,6 +70,7 @@ const SideTask = ({ showed, hide }) => {
       setColor("form-select form-select-sm label-font ms-3 prio");
     }
   };
+
 
   return (
     <div
@@ -71,6 +106,16 @@ const SideTask = ({ showed, hide }) => {
                 className="py-2 full border-0 h3"
                 type="text"
                 placeholder="Write a task name"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value)
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === 'Escape') {
+                    changeTask({sectionId, sections, setSections, name, index, dispatch, taskId});
+                    event.preventDefault()
+                    event.stopPropagation()
+                }}} 
               ></input>
               <>
                 <div className="row mb-1 f-dark">
@@ -186,6 +231,16 @@ const SideTask = ({ showed, hide }) => {
                       <textarea
                         placeholder="Describe Task."
                         className="mt-3 radius px-3 form-control py-2 label-font resize-0"
+                        value={taskDesc}
+                        onChange={(e) => {
+                          setTaskDesc(e.target.value)
+                        }}
+                        onKeyDown={(event) => {
+                          if (event.key === 'Enter' || event.key === 'Escape') {
+                            changeTask({sectionId, sections, setSections, taskDesc ,index,dispatch,taskId});
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }}} 
                       ></textarea>
                     </div>
                   </div>
