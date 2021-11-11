@@ -35,7 +35,6 @@ const taskUpdate = ({ sections, setSections,createdTask}) => {
   const obj = newTaskList.find(task => task._id === tempTaskId)
   obj._id = newTask._id
   obj.task_name = newTask.task_name
-  console.log(newTaskList)
   setSections([...sections.map(section => section._id === sectionId ? {...section,tasks:newTaskList} : section)])
 }
 
