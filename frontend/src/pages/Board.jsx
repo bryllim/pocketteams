@@ -2,50 +2,55 @@ import Sidebar from "../components/Sidebar";
 import Navigation from "../components/Navigation";
 import SectionCard from "../components/Cards/SectionCard";
 import { Breadcrumb, Col, Container, Row } from "react-bootstrap";
-import { v4 as uuid } from 'uuid';
 import { useEffect, useState } from "react";
 import {DragDropContext, Droppable} from 'react-beautiful-dnd'
 import "../css/board.css"
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
-import { listTasks } from "../actions/taskActions";
 import {TaskContext}  from "../contexts/SectionContext"
 import { listSection, updateSectionTask,createSection, updateSectionOrder,} from "../actions/sectionActions";
-// import { onDragEnd,addColumn, editTitle} from "../functions/TaskFunctions";
 import {onDragEnd,orderSections} from "../functions/dragDropFunctions"
-import {sectionCreate} from "../functions/sectionFunctions"
+import {sectionCreate,sectionUpdate} from "../functions/sectionFunctions"
+import { taskUpdate } from "../functions/taskFunctions";
 
 const addSection = async ({dispatch,section_order_id,sectionOrder,setSectionOrder,sections,setSections})=>{
+ sectionCreate({sectionOrder,setSectionOrder,sections,setSections})
  dispatch(createSection({section_name: 'New Section',section_order_id}))
  return
+}
+
+const onDrag = ({result,dispatch,sectionOrder,setSectionOrder,sectionOrderId,sections,setSections}) =>{ //transfer outside function component
+  const itemType = result.type
+  console.log('result', result)
+  if(itemType === 'column'){
+    if(result.destination.index === result.source.index ) return
+    const {sectionId,sourceDragIndex,destinationDragIndex} = orderSections({result,sectionOrder,setSectionOrder})
+    dispatch(updateSectionOrder({sectionId,sourceDragIndex,destinationDragIndex,sectionOrderId}));
+  }
+  else{
+    if (!result.destination) return;
+    const {sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type} = onDragEnd({result,sections, sectionOrder, setSections,setSectionOrder})
+    dispatch(updateSectionTask({sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type}));
+  }
+  return
 }
 
 
 const Board = () => {
   const section_order_id = '6179228d94d94e1c2c6c21e3'
   const dispatch = useDispatch();
-  const onDrag = ({result}) =>{ //transfer outside function component
-    const itemType = result.type
-    if(itemType === 'column'){
-      if(result.destination.index === result.source.index ) return
-      
-      const {sectionId,sourceDragIndex,destinationDragIndex} = orderSections({result,sectionOrder,setSectionOrder})
-      console.log("before Dispatch")
-      dispatch(updateSectionOrder({sectionId,sourceDragIndex,destinationDragIndex,sectionOrderId}));
-      console.log("after Dispatch")
-    }
-    else{
-      if (!result.destination) return;
-      const {sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type} = onDragEnd({result,sections, sectionOrder, setSections,setSectionOrder})
-      dispatch(updateSectionTask({sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type}));
-    }
-    return
-  }
-
-  const createdSection = useSelector((state) => state.sectionCreate.data)
-  
   const history = useHistory();
+  const createdSection = useSelector((state) => state.sectionCreate)
+  const createdTask = useSelector((state) => state.taskCreate)
   const userLogin = useSelector((state) => state.userLogin);
+  const dataList = useSelector((state) => state.sectionList);
+  const sectionDataList= dataList.data.sectionDataList;
+  const sectionOrderList = dataList.data.sectionOrderList;
+  const sectionOrderId = dataList.data.sectionOrderId;
+
+  const [sections, setSections] = useState(sectionDataList);
+  const [sectionOrder,setSectionOrder] = useState(sectionOrderList);
+  
   const { userInfo } = userLogin;
 
   useEffect(() => {
@@ -55,28 +60,25 @@ const Board = () => {
     dispatch(listSection());
   },[history, userInfo, dispatch])
 
-  const dataList = useSelector((state) => state.sectionList);
-  const sectionDataList= dataList.data.sectionDataList;
-  const sectionOrderList = dataList.data.sectionOrderList;
-  const sectionOrderId = dataList.data.sectionOrderId;
-  const [sections, setSections] = useState(sectionDataList);
-  const [sectionOrder,setSectionOrder] = useState(sectionOrderList);
-
-
-  useEffect(()=>{
-    if(dataList.loading === false){
-      setSections(sectionDataList)
-      setSectionOrder(sectionOrderList)
-    }
+useEffect(()=>{
+  if(dataList.loading === false && dataList.data !== undefined){
+    setSections(sectionDataList)
+    setSectionOrder(sectionOrderList)
+  }
 },[dataList])
 
 useEffect(() => {
-  if(!(Object.entries(createdSection).length === 0)){
-    console.log('createdSection')
-    console.log(createdSection)
-    sectionCreate({sectionOrder,setSectionOrder,sections,setSections,createdSection})
+  if(createdSection.loading  === false && createdSection.data !== undefined){
+    sectionUpdate({sectionOrder,setSectionOrder,sections,setSections,createdSection})
   }
+ 
 },[createdSection])
+
+useEffect(() => {
+  if(createdTask.loading  === false && createdTask.data !== undefined){
+    taskUpdate({createdTask,sections,setSections})
+  }
+},[createdTask])
 
   return (
     <>
@@ -94,7 +96,7 @@ useEffect(() => {
             </Breadcrumb></h3>
                   <div className="d-flex scrolling-wrapper-x flex-nowrap flex-grow-1 task-board-wrapper my-3" >
                   <DragDropContext
-                    onDragEnd={result => onDrag({result})}
+                    onDragEnd={result => onDrag({result,dispatch,sectionOrder,setSectionOrder,sectionOrderId,sections,setSections})}
                   >
                     <Droppable 
                       droppableId="all-columns" direction="horizontal" type="column"
@@ -115,19 +117,8 @@ useEffect(() => {
                            {(sectionOrder && sections)?(sectionOrder.map((sectionId,index)=>{
 
                             const section = sections.filter(obj => {
-                             
                               return obj._id === sectionId
                             })[0]
-                            // console.log('sections')
-                            // console.log(sections)
-                            // console.log(sectionOrder)
-                            // console.log(sectionId)
-                            // console.log(section)
-                        
-                           
-
-
-
                               return (
                                
                                       <div                                

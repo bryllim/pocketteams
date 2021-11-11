@@ -5,20 +5,20 @@ import {TaskContext} from "../../contexts/SectionContext"
 import AddTaskModal from "../Modals/AddTaskModal";
 import { Dropdown } from "react-bootstrap";
 import DeleteSectionConfirmation from "../Modals/DeleteSectionConfirmation"
-import {sectionDelete,renameSection} from "../../functions/sectionFunctions"
+import {sectionDelete,sectionRename} from "../../functions/sectionFunctions"
 import { useDispatch} from "react-redux";
 import { updateSection, deleteSection} from "../../actions/sectionActions";
+import {taskCreate} from "../../functions/taskFunctions"
 
-const changeSection =({sectionTitle,sections,setSections,index,dispatch,sectionId}) => {
+const changeSection =({sectionTitle,sections,setSections,index,dispatch,sectionId,openDeleteSection}) => {
+  console.log(sectionTitle)
   if(sectionTitle === ''){
-    console.log("Change")
-    // renameSection()
+    openDeleteSection()
     return
   }
   else{
-    console.log("renameSection")
-    renameSection({sectionTitle,sections,setSections,index})
-    dispatch(updateSection({ sectionTitle,sectionId}))
+    sectionRename({sectionTitle,sections,setSections,index})
+    dispatch(updateSection({ section_name:sectionTitle,sectionId}))
     return
   }
 }
@@ -26,6 +26,11 @@ const changeSection =({sectionTitle,sections,setSections,index,dispatch,sectionI
 const removeSection = ({sectionOrder,setSectionOrder,sections,setSections,sectionId,index,dispatch}) =>{
   sectionDelete({sectionOrder,setSectionOrder,sections,setSections,sectionOrderIndex:index,sectionId})
   dispatch(deleteSection({section_id:sectionId}))
+}
+
+
+const newTask = ({sectionId, sections, setSections,dispatch}) =>{
+  taskCreate({sectionId, sections, setSections})
 }
 
 const SectionCard = ({sectionId,index,section}) => {
@@ -59,9 +64,7 @@ const SectionCard = ({sectionId,index,section}) => {
     >
       {children}
     </p>
-));
-
-
+)); 
   return (
     <>
       <Draggable draggableId={sectionId} index={index} >
@@ -91,14 +94,14 @@ const SectionCard = ({sectionId,index,section}) => {
                     onBlur={(e)=>{
                       //not working when clicking to other sections
                       setSectionToggleState(true)
-                      changeSection({sectionTitle,sections,setSections,index,dispatch,sectionId})
+                      changeSection({sectionTitle,sections,setSections,index,dispatch,sectionId,openDeleteSection})
                       e.preventDefault()
                       e.stopPropagation()
                     }}
                     onKeyDown={(event) => {
                       if (event.key === 'Enter' || event.key === 'Escape') {
                         setSectionToggleState(true)
-                        changeSection({sectionTitle,sections,setSections,index,dispatch,sectionId})
+                        changeSection({sectionTitle,sections,setSections,index,dispatch,sectionId,openDeleteSection})
                         event.preventDefault()
                         event.stopPropagation()
                       }}} 
@@ -107,7 +110,7 @@ const SectionCard = ({sectionId,index,section}) => {
                 
 
                   <button className="btn text-white ms-auto" type="button">
-                    <i className="lni lni-plus fs-5 "></i>
+                    <i className="lni lni-plus fs-5 " onClick={()=>newTask({sectionId, sections, setSections,dispatch})}></i>
                   </button>
 
                   <Dropdown>
@@ -152,7 +155,7 @@ const SectionCard = ({sectionId,index,section}) => {
                       })}
                       {provided.placeholder}
                       <div className="d-flex justify-content-center align-items-center theme-btn mx-auto my-4"  
-                      style={{width:"250px", height:"50px"}}>
+                      style={{width:"250px", height:"50px"}} onClick={()=>newTask({sectionId, sections, setSections,dispatch})}>
                             <button className="btn" type="button">
                                 <i className="lni lni-plus text-white"></i>
                             </button>
@@ -176,7 +179,7 @@ const SectionCard = ({sectionId,index,section}) => {
       index={index} 
       removeSection={removeSection}
     />
-    </>
+      </>
   )}
 
 export default SectionCard;

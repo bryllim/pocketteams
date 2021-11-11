@@ -21,10 +21,10 @@ export const sectionListReducer = (state = {data: []}, action) => { //change to 
     }
 };
 
-export const sectionCreateReducer = (state = {data: {}}, action) => {
+export const sectionCreateReducer = (state = {data: []}, action) => {
     switch (action.type){
         case SECTION_CREATE_REQUEST:
-            return { loading: true, data: {}};
+            return { loading: true, data: []};
         case SECTION_CREATE_SUCCESS:
             return { loading: false, data: action.payload};
         case SECTION_CREATE_FAIL:

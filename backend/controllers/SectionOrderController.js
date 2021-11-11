@@ -58,6 +58,7 @@ const updateSectionOrder = asyncHandler(async (req,res) => {
         const [removed] = sectionOrder.items.splice(sourceDragIndex,1) //mutating the array
         sectionOrder.items.splice(destinationDragIndex,0,removed)
         console.log('sectionOrder')
+        console.log(sectionOrder.items)
         const updatedSectionOrder = await sectionOrder.save();
         res.json(updatedSectionOrder);
     } else {
