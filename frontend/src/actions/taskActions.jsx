@@ -41,7 +41,7 @@ export const listTasks = () => async (dispatch, getState) => {
     }
 }
 
-export const createTask = ({task_name,task_description,section_id}) => async (dispatch, getState) => {
+export const createTask = ({task_name,task_description,section_id,task_temp_id}) => async (dispatch, getState) => {
     try{
         dispatch({
             type: TASK_CREATE_REQUEST,
@@ -59,7 +59,7 @@ export const createTask = ({task_name,task_description,section_id}) => async (di
 
     const { data } = await axios.post(
         `/api/tasks/create`,
-        {task_name, task_description, section_id}, 
+        {task_name, task_description, section_id, task_temp_id}, 
         config
     );
 
