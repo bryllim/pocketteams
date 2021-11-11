@@ -3,9 +3,9 @@ import { Form, Modal, Col, Row, Container, Image } from "react-bootstrap";
 import EditTeamCard from "../Cards/EditTeamCard";
 import pocketdevsLogo from "../../assets_pocketdevs/assets/img/profile/generated_profile.PNG";
 
-const EditTeamModal = ({ showModal, hideModal }) => {
+const EditTeamModal = ({ showModal, hideModal, data }) => {
 
-
+  console.log("Modal: " + data.team_name);
   return (
  
     <Modal centered size="lg" show={showModal} onHide={hideModal}>
@@ -23,12 +23,6 @@ const EditTeamModal = ({ showModal, hideModal }) => {
           <Row xs="1" sm="2" md="3" className="mx-auto">
             <Col>
               <EditTeamCard logo={pocketdevsLogo} />
-            </Col>
-            <Col>
-              <EditTeamCard logo={pocketdevsLogo}/>
-            </Col>
-            <Col>
-              <EditTeamCard logo={pocketdevsLogo}/>
             </Col>
           </Row>
         </Container>

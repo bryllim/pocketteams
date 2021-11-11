@@ -1,15 +1,35 @@
-import {
-  Form,
-  Modal,
-  Button,
-  Col,
-  Row,
-  DropdownButton,
-  Dropdown,
-  NavDropdown,
-} from "react-bootstrap";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {Form,Modal,Button,Col,Row,Dropdown,} from "react-bootstrap";
+import { createTeamAction } from "../../actions/teamActions"
 
 const AddTeam = ({ showModal, hideModal }) => {
+
+  const dispatch = useDispatch()
+  const [teamName, setTeamName] = useState("");
+  const [teamDescription, setTeamDescription] = useState("");
+  
+  const userLogin = useSelector((state) => state.userLogin);
+  const {userInfo} = userLogin;
+
+
+  const resetHandler = () => {
+    setTeamName("");
+    setTeamDescription("");
+  }
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(createTeamAction(teamName, teamDescription, userInfo._id, userInfo._id));
+    if (!teamName || !teamDescription || !userInfo._id) return;
+
+    resetHandler();
+    hideModal();
+    window.location.reload(false);
+  }
+  
+
+  
   return (
     <>
       <Modal centered show={showModal} onHide={hideModal}>
@@ -33,6 +53,7 @@ const AddTeam = ({ showModal, hideModal }) => {
                   name="team_name"
                   id="team_name"
                   required
+                  onChange={(e) => setTeamName(e.target.value)}
                 />
               </Col>
 
@@ -55,6 +76,7 @@ const AddTeam = ({ showModal, hideModal }) => {
                 id="description"
                 required
                 rows="10"
+                onChange={(e) => setTeamDescription(e.target.value)}
               />
             </Col>
             <Row>
@@ -68,11 +90,11 @@ const AddTeam = ({ showModal, hideModal }) => {
                   className="option"
                 />
                   <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">
+                    <Dropdown.Item>
                       Request Invites Only
                     </Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Private</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Public</Dropdown.Item>
+                    <Dropdown.Item>Private</Dropdown.Item>
+                    <Dropdown.Item>Public</Dropdown.Item>
                   </Dropdown.Menu>
               </Dropdown>
               </Col>
@@ -82,7 +104,7 @@ const AddTeam = ({ showModal, hideModal }) => {
         <Modal.Footer>
           <Button
             className="theme-btn theme-btn-modal mx-0"
-            onClick={hideModal}
+            onClick={submitHandler}
           >
             Create team
           </Button>

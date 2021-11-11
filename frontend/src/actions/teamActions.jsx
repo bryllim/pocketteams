@@ -49,7 +49,7 @@ export const listTeam = () => async (dispatch, getState) => {
     }
 }
 
-export const createTeamAction = (team_name, team_description, team_user_list) => async (dispatch, getState) => {
+export const createTeamAction = (team_name, team_description, owner, users) => async (dispatch, getState) => {
     try {
         dispatch({
             type: TEAM_CREATE_REQUEST,
@@ -68,7 +68,7 @@ export const createTeamAction = (team_name, team_description, team_user_list) =>
 
         const { data } = await axios.post(
             `api/teams/create`,
-            {team_name,team_description,team_user_list},
+            {team_name,team_description,owner, users},
             config
         );
 

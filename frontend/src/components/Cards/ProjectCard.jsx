@@ -20,7 +20,7 @@ const ProjectCard = ({data}) => {
   const handleClose = () => setShow(false);
   const handleShow= () => setShow(true);
 
-  const projectDelete = useSelector((state) => state.projectUpdate);
+  const projectDelete = useSelector((state) => state.projectDelete);
   const {loading: loadingDelete, error: errorDelete} = projectDelete;
 
   const handleDelete = (id) => {
@@ -71,7 +71,7 @@ const ProjectCard = ({data}) => {
             className="rounded me-3"
             style={{ height: "50px", width: "50px" }}
           />
-          <h4>{data.project_name}</h4>
+          <h4 className="text-limit">{data.project_name}</h4>
         </div>
         <div className="d-flex flex-fill flex-column mt-3">
           <p className="text-limit text-limit-project text-dark fs-6"> {data.project_description} </p>

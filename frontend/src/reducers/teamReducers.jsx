@@ -12,12 +12,12 @@ import {
     TEAM_DELETE_SUCCESS,
     TEAM_DELETE_FAIL } from "../constants/teamConstants";
 
-export const teamtListReducer = (state = {projects: []}, action) => {
+export const teamtListReducer = (state = {teams: []}, action) => {
     switch (action.type){
         case TEAM_LIST_REQUEST:
             return { loading: true };
         case TEAM_LIST_SUCCESS:
-            return { loading: false, projects: action.payload};
+            return { loading: false, teams: action.payload};
         case TEAM_LIST_FAIL:
             return { loading: false, error: action.payload};
         
@@ -31,7 +31,7 @@ export const teamCreateReducer = (state = {}, action) => {
         case TEAM_CREATE_REQUEST:
             return { loading: true };
         case TEAM_CREATE_SUCCESS:
-            return { loading: false, projects: action.payload};
+            return { loading: false, teams: action.payload};
         case TEAM_CREATE_FAIL:
             return { loading: false, error: action.payload};
         
@@ -45,7 +45,7 @@ export const teamUpdateReducer = (state = {}, action) => {
         case TEAM_UPDATE_REQUEST:
             return { loading: true };
         case TEAM_UPDATE_SUCCESS:
-            return { loading: false, projects: action.payload};
+            return { loading: false, teams: action.payload};
         case TEAM_UPDATE_FAIL:
             return { loading: false, error: action.payload};
         

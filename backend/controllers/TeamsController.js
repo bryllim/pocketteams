@@ -2,20 +2,22 @@ const asyncHandler = require("express-async-handler");
 const Team = require("../models/TeamModel");
 
 const getTeam = asyncHandler(async (req, res) => {
-    const team = await Team.find({user: req.user._id}).populate("projects").populate("users");
+    const team = await Team.find({owner: req.user._id}).populate("projects");
     res.json(team);
 });
 
 const createTeam = asyncHandler( async (req,res) => {
-    const {team_name, team_description} = req.body;
+    const {team_name, team_description, owner, users} = req.body;
 
     if(!team_name || !team_description){
         res.status(400)
         throw new Error("Please Fill all the Fields");
     } else {
         const team = new Team({
+            owner,
             team_name, 
-            team_description});
+            team_description,
+            users});
 
         const createdTeam = await team.save();
 
@@ -58,9 +60,9 @@ const updateTeam = asyncHandler(async (req,res) => {
 });
 
 const deleteTeam = asyncHandler(async (req,res) => {
-    const team = await team.findById(req.params.id);
+    const team = await Team.findById(req.params.id);
 
-    if(team.user.toString() !== req.user._id.toString()){
+    if(team.owner.toString() !== req.user._id.toString()){
         res.status(401);
         throw new Error("You can't perform this action");   
     }
