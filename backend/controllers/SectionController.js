@@ -1,7 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Section = require("../models/SectionModel");
 const Task = require("../models/TaskModel");
-const SectionOrder = require("../models/SectionOrderModel");
 const Project = require("../models/ProjectModel");
 const createSection = asyncHandler( async (req,res) => {
     const {section_name, project_id} = req.body;
@@ -11,7 +10,6 @@ const createSection = asyncHandler( async (req,res) => {
             res.status(400)
             throw new Error("Please Fill all the Fields");
         } else {
-            console.log('else')
             const section = new Section({user: req.user._id, section_name, project_id});
             const createdSection = await section.save();
             await Project.findByIdAndUpdate(
@@ -19,7 +17,7 @@ const createSection = asyncHandler( async (req,res) => {
                 { $push: { sections: createdSection} },
                 { new: true, useFindAndModify: false },
             );
-            res.status(201).json(   );
+            res.status(201).json(createdSection);
         }
     }
     catch(e) {
@@ -76,7 +74,7 @@ const updateSection = asyncHandler(async (req,res) => {
 
 const deleteSection = asyncHandler(async (req,res) => {
     const section = await Section.findById(req.params.id);
-    const sectionOrder = await SectionOrder.findById(section.project_id);
+    const sectionOrder = await Project.findById(section.project_id);
     const tasks = await Task.find({section_id: section._id});
     if(section.user.toString() !== req.user._id.toString()){
         res.status(401);

@@ -8,7 +8,7 @@ import "../css/board.css"
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import {TaskContext}  from "../contexts/SectionContext"
-import { listSection, updateSectionTask,createSection, updateSectionOrder,} from "../actions/sectionActions";
+import { updateSectionTask,createSection, updateSectionOrder,} from "../actions/sectionActions";
 import {onDragEnd,orderSections} from "../functions/dragDropFunctions"
 import {sectionCreate,sectionUpdate} from "../functions/sectionFunctions"
 import { taskUpdate } from "../functions/taskFunctions";
@@ -40,46 +40,32 @@ const Board = (props) => {
   const sectionOrderList = sectionList.map(order =>{
     return order._id
   })
-  console.log(sectionList,projectId)
   const dispatch = useDispatch();
   const history = useHistory();
   const createdSection = useSelector((state) => state.sectionCreate)
   const createdTask = useSelector((state) => state.taskCreate)
   const userLogin = useSelector((state) => state.userLogin);
-  // const dataList = useSelector((state) => state.sectionList);
-  // const projectId = dataList.data.projectId;
-
   const [sections, setSections] = useState(sectionList);
   const [sectionOrder,setSectionOrder] = useState(sectionOrderList);
-  
   const { userInfo } = userLogin;
 
   useEffect(() => {
     if (!userInfo) {
         history.push('/');
     } 
-    dispatch(listSection());
   },[history, userInfo, dispatch])
 
-// useEffect(()=>{
-//   if(dataList.loading === false && dataList.data !== undefined){
-//     setSections(sectionList)
-//     setSectionOrder(sectionOrderList)
-//   }
-// },[dataList])
+  useEffect(() => {
+    if(createdSection.loading  === false && createdSection.data !== undefined){
+      sectionUpdate({sectionOrder,setSectionOrder,sections,setSections,createdSection})
+    }
+  },[createdSection])
 
-useEffect(() => {
-  if(createdSection.loading  === false && createdSection.data !== undefined){
-    sectionUpdate({sectionOrder,setSectionOrder,sections,setSections,createdSection})
-  }
- 
-},[createdSection])
-
-useEffect(() => {
-  if(createdTask.loading  === false && createdTask.data !== undefined){
-    taskUpdate({createdTask,sections,setSections})
-  }
-},[createdTask])
+  useEffect(() => {
+    if(createdTask.loading  === false && createdTask.data !== undefined){
+      taskUpdate({createdTask,sections,setSections})
+    }
+  },[createdTask])
 
   return (
     <>
