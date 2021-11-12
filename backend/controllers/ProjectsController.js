@@ -2,7 +2,12 @@ const asyncHandler = require("express-async-handler");
 const Project = require("../models/ProjectModel");
 
 const getProjects = asyncHandler(async (req, res) => {
-    const projects = await Project.find({user: req.user._id});
+    const projects = await Project.find({user: req.user._id}).populate({
+        path: 'sections',
+        populate: {
+            path: 'tasks',
+        }
+    });;
     res.json(projects);
 });
 
@@ -22,8 +27,7 @@ const createProject = asyncHandler( async (req,res) => {
 });
 
 const getProjectById = asyncHandler( async (req,res) => {
-    const project = await Project.findById(req.params.id);
-
+    const project = await Project.findById(req.params.id)
     if(project){
         res.json(project);
     } else {
@@ -71,4 +75,25 @@ const deleteProject = asyncHandler(async (req,res) => {
     
 });
 
-module.exports = {getProjects, createProject, updateProject, deleteProject, getProjectById};
+const updateSectionOrder = asyncHandler(async (req,res) => {
+    const {sourceDragIndex,destinationDragIndex,sectionId} = req.body;
+    const project_id = req.params.id
+    const sectionOrder = await Project.findById(project_id);
+    //Check if this SectionOrder belongs to the user
+    if(sectionOrder.user.toString() !== req.user._id.toString()){
+        res.status(401);
+        throw new Error("You can't perform this action");
+    }
+    if(sectionOrder){
+        console.log('sectionOrder');
+        const [removed] = sectionOrder.sections.splice(sourceDragIndex,1) //mutating the array
+        sectionOrder.sections.splice(destinationDragIndex,0,removed)
+        const updatedSectionOrder = await sectionOrder.save();
+        res.json(updatedSectionOrder);
+    } else {
+        res.status(404);
+        throw new Error("SectionOrder not found");
+    }
+});
+
+module.exports = {getProjects, createProject, updateProject, deleteProject, getProjectById, updateSectionOrder};
