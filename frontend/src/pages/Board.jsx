@@ -35,7 +35,6 @@ const onDrag = ({result,dispatch,sectionOrder,setSectionOrder,sectionOrderId,sec
   return
 }
 
-
 const Board = () => {
   const section_order_id = '6179228d94d94e1c2c6c21e3'
   const dispatch = useDispatch();
@@ -62,6 +61,7 @@ const Board = () => {
 
 useEffect(()=>{
   if(dataList.loading === false && dataList.data !== undefined){
+    console.log('sectionDataList',sectionDataList)
     setSections(sectionDataList)
     setSectionOrder(sectionOrderList)
   }
@@ -76,6 +76,8 @@ useEffect(() => {
 
 useEffect(() => {
   if(createdTask.loading  === false && createdTask.data !== undefined){
+    console.log('sections',sections)
+    console.log('createdTask',createdTask)
     taskUpdate({createdTask,sections,setSections})
   }
 },[createdTask])

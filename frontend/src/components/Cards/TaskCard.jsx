@@ -6,15 +6,16 @@ import { Dropdown } from "react-bootstrap";
 import {taskRename,taskRemove,taskDescriptionUpdate} from "../../functions/taskFunctions"
 import { TaskContext } from "../../contexts/SectionContext";
 import { deleteTask, updateTask,createTask } from "../../actions/taskActions";
+import validator from 'validator';
 
 const changeTask = ({sectionId, sections, setSections, taskName,index,dispatch,taskId}) =>{
   if(taskName === ''){
     taskRemove({sectionId, sections, setSections, index});
     dispatch(deleteTask({taskId}))
   }
-  else if(taskId === '123'){
-    console.log('create')
-    dispatch(createTask({task_name:taskName,task_description:'tempdescription',section_id:sectionId}))
+  else if(validator.isUUID(taskId)){
+      console.log('update task')
+    // dispatch(createTask({task_name:taskName,task_description:'tempdescription',section_id:sectionId, task_temp_id:taskId}))
   }
   else{//retaskNameTask
     taskRename({sectionId, sections, setSections, taskName,index});
@@ -23,15 +24,14 @@ const changeTask = ({sectionId, sections, setSections, taskName,index,dispatch,t
 }
 
 
-
 const updateTaskName = ({sectionId, sections, setSections, index, taskId,taskName,dispatch}) =>{
   if(taskName === ''){
     taskRemove({sectionId, sections, setSections, index});
     dispatch(deleteTask({taskId}))
   }
-  else if(taskId === '123'){
-    console.log('create')
-    dispatch(createTask({task_name:taskName,task_description:'tempdescription',section_id:sectionId}))
+  else if(validator.isUUID(taskId)){
+    console.log('dispatch new Task')
+    dispatch(createTask({task_name:taskName,task_description:'tempdescription',section_id:sectionId, task_temp_id:taskId}))
   }
   else{
     taskRename({sectionId, sections, setSections, taskName,index});

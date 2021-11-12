@@ -3,24 +3,28 @@ const Task = require("../models/TaskModel");
 const Section = require("../models/SectionModel");
 
 const createTask = asyncHandler( async (req,res) => {
-    const {task_name, task_description, section_id} = req.body;
+    const {task_name, task_description, section_id,task_temp_id} = req.body;
     try{
         if(!task_name || !task_description || !section_id){
             throw new Error("Please Fill all the Fields");
         } else {
             try{
                 const task = new Task({user: req.user._id, task_name, task_description, section_id});
-                const createdtask = await task.save()
+                let createdTask = await task.save()
                 sectionResponse = await Section.findByIdAndUpdate(
                     section_id,
-                    { $push: { tasks: createdtask} },
+                    { $push: { tasks: createdTask} },
                     { new: true, useFindAndModify: false },
                 );
                 if(sectionResponse === null){
                     throw new Error("sectionResponse");
                 }
-                res.status(201).json(createdtask);
-                console.log('done')
+               
+                createdTask = createdTask.toObject();
+                createdTask.task_temp_id = task_temp_id;
+                res.status(201).json(createdTask);
+                
+                console.log(createdTask)
 
             }catch (err) {
                 console.log(err)
