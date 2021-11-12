@@ -76,23 +76,36 @@ const deleteProject = asyncHandler(async (req,res) => {
 });
 
 const updateSectionOrder = asyncHandler(async (req,res) => {
-    const {sourceDragIndex,destinationDragIndex,sectionId} = req.body;
-    const project_id = req.params.id
-    const sectionOrder = await Project.findById(project_id);
-    //Check if this SectionOrder belongs to the user
-    if(sectionOrder.user.toString() !== req.user._id.toString()){
-        res.status(401);
-        throw new Error("You can't perform this action");
+    try{
+        const {sourceDragIndex,destinationDragIndex} = req.body;
+        const project_id = req.params.id
+        //Check if this SectionOrder belongs to the user
+        // if(!sourceDragIndex || !destinationDragIndex){
+        //     let err = new Error("Please Fill all the Fields");
+        //     err.status = 400;
+        //     throw err;
+        // }
+        const sectionOrder = await Project.findById(project_id);
+        if(sectionOrder.user.toString() !== req.user._id.toString()){
+            let err = new Error("You can't perform this action");
+            err.status = 401;
+            throw err;
+        }
+        if(sectionOrder){
+            const [removed] = sectionOrder.sections.splice(sourceDragIndex,1) //mutating the array
+            sectionOrder.sections.splice(destinationDragIndex,0,removed)
+            const updatedSectionOrder = await sectionOrder.save();
+            console.log(updatedSectionOrder);
+            res.json(updatedSectionOrder);
+        } else {
+            let err = new Error("SectionOrder not found");
+            err.status = 404;
+            throw err;
     }
-    if(sectionOrder){
-        console.log('sectionOrder');
-        const [removed] = sectionOrder.sections.splice(sourceDragIndex,1) //mutating the array
-        sectionOrder.sections.splice(destinationDragIndex,0,removed)
-        const updatedSectionOrder = await sectionOrder.save();
-        res.json(updatedSectionOrder);
-    } else {
-        res.status(404);
-        throw new Error("SectionOrder not found");
+    }
+    catch (err) {
+        console.log(err.status,err.message);
+        res.status(err.status).json({message: err.message});
     }
 });
 

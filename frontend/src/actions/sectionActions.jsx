@@ -56,12 +56,12 @@ export const listSection = () => async (dispatch, getState) => {
     }
 }
 
-export const updateSectionOrder =({sectionId,sourceDragIndex,destinationDragIndex,project_id}) => async (dispatch, getState) => {
+export const updateSectionOrder =({sourceDragIndex,destinationDragIndex,project_id}) => async (dispatch, getState) => {
     try{
         dispatch({
             type: SECTION_ORDER_UPDATE_REQUEST,
         });
-
+        console.log(sourceDragIndex,destinationDragIndex,project_id)
     const {
         userLogin: {userInfo},
     } = getState();
@@ -74,7 +74,7 @@ export const updateSectionOrder =({sectionId,sourceDragIndex,destinationDragInde
     
     const { data } = await axios.put(
         `/api/projects/sectionorder/${project_id}`,
-        {sourceDragIndex,destinationDragIndex,sectionId}, 
+        {sourceDragIndex,destinationDragIndex}, 
         config
     );
 
