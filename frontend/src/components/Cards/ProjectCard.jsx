@@ -11,7 +11,11 @@ import ErrorMessage from "../ErrorMessage";
 const ProjectCard = ({data}) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const handleOnClick = useCallback(() => history.push("/board"), [history]);
+  // const handleOnClick = useCallback(() => history.push("/board"), [history]);
+
+  const handleOnClick = () => {
+      history.push("/board");
+  }
   const [editShow, setEditShow] = useState(false);
   const handleEditClose = () => setEditShow(false);
   const handleEditShow = () => setEditShow(true);

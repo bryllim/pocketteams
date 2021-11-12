@@ -88,7 +88,7 @@ export const createTeamAction = (team_name, team_description, owner, users) => a
     }
 };
 
-export const updateTeamAction = (id, team_name, team_description, team_user_list) => async (dispatch, getState) => {
+export const updateTeamAction = (id, team_name, team_description) => async (dispatch, getState) => {
     try{
         dispatch({
             type: TEAM_UPDATE_REQUEST,
@@ -107,7 +107,7 @@ export const updateTeamAction = (id, team_name, team_description, team_user_list
 
         const { data } = await axios.put(
             `/api/teams/${id}`,
-            {team_name, team_description, team_user_list}, 
+            {team_name, team_description}, 
             config
         );
 

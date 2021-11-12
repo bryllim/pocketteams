@@ -39,10 +39,10 @@ const getTeamById = asyncHandler( async (req,res) => {
 const updateTeam = asyncHandler(async (req,res) => {
     const {team_name, team_description} = req.body;
 
-    const team = await team.findById(req.params.id);
+    const team = await Team.findById(req.params.id);
 
     //Check if this team belongs to the user
-    if(team.user.toString() !== req.user._id.toString()){
+    if(team.owner.toString() !== req.user._id.toString()){
         res.status(401);
         throw new Error("You can't perform this action");
     }
