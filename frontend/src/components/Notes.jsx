@@ -83,9 +83,6 @@ const Notes = () => {
       }
 }
 
-
-  console.log(window.location.pathname);
-
   return (
     <div className="sidebar-box recent-blog-box mb-30">
         <form>

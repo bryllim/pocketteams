@@ -11,7 +11,7 @@ import {TaskContext}  from "../contexts/SectionContext"
 import { listSection, updateSectionTask,createSection, updateSectionOrder,} from "../actions/sectionActions";
 import {onDragEnd,orderSections} from "../functions/dragDropFunctions"
 import {sectionCreate,sectionUpdate} from "../functions/sectionFunctions"
-import { taskUpdate } from "../functions/taskFunctions";
+import { taskUpdate } from "../functions/TaskFunctions"
 
 const addSection = async ({dispatch,section_order_id,sectionOrder,setSectionOrder,sections,setSections})=>{
  sectionCreate({sectionOrder,setSectionOrder,sections,setSections})
@@ -60,25 +60,25 @@ const Board = () => {
     dispatch(listSection());
   },[history, userInfo, dispatch])
 
-useEffect(()=>{
-  if(dataList.loading === false && dataList.data !== undefined){
-    setSections(sectionDataList)
-    setSectionOrder(sectionOrderList)
-  }
-},[dataList])
+  useEffect(()=>{
+    if(dataList.loading === false && dataList.data !== undefined){
+      setSections(sectionDataList)
+      setSectionOrder(sectionOrderList)
+    }
+  },[dataList])
 
-useEffect(() => {
-  if(createdSection.loading  === false && createdSection.data !== undefined){
-    sectionUpdate({sectionOrder,setSectionOrder,sections,setSections,createdSection})
-  }
- 
-},[createdSection])
+  useEffect(() => {
+    if(createdSection.loading  === false && createdSection.data !== undefined){
+      sectionUpdate({sectionOrder,setSectionOrder,sections,setSections,createdSection})
+    }
+  
+  },[createdSection])
 
-useEffect(() => {
-  if(createdTask.loading  === false && createdTask.data !== undefined){
-    taskUpdate({createdTask,sections,setSections})
-  }
-},[createdTask])
+  useEffect(() => {
+    if(createdTask.loading  === false && createdTask.data !== undefined){
+      taskUpdate({createdTask,sections,setSections})
+    }
+  },[createdTask])
 
   return (
     <>

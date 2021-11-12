@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Dropdown } from "react-bootstrap";
 import Comment from "../components/Comment";
 import SubTask from "../components/SubTask";
-import {taskDescriptionUpdate} from "../functions/taskFunctions";
+import {taskDescriptionUpdate} from "../functions/TaskFunctions";
 import {useContext} from "react";
 import {TaskContext } from "../contexts/SectionContext";
 import {updateTaskDescription} from "../actions/taskActions";

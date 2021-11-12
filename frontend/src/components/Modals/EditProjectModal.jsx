@@ -94,7 +94,7 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
             <div class="mb-3">
               <input
                 type="text"
-                class="form-control text-center border-top-0 border-end-0 border-start-0 border-bottom  "
+                class="form-control text-center border-top-0 border-end-0 border-start-0 border-bottom"
                 id="formGroupExampleInput"
                 placeholder="Title"
                 defaultValue={projectName}
