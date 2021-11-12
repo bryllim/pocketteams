@@ -56,12 +56,12 @@ export const listSection = () => async (dispatch, getState) => {
     }
 }
 
-export const updateSectionOrder =({sectionId,sourceDragIndex,destinationDragIndex,sectionOrderId}) => async (dispatch, getState) => {
+export const updateSectionOrder =({sourceDragIndex,destinationDragIndex,project_id}) => async (dispatch, getState) => {
     try{
         dispatch({
             type: SECTION_ORDER_UPDATE_REQUEST,
         });
-
+        console.log(sourceDragIndex,destinationDragIndex,project_id)
     const {
         userLogin: {userInfo},
     } = getState();
@@ -73,8 +73,8 @@ export const updateSectionOrder =({sectionId,sourceDragIndex,destinationDragInde
     };
     
     const { data } = await axios.put(
-        `/api/sectionorder/${sectionOrderId}`,
-        {sourceDragIndex,destinationDragIndex,sectionId}, 
+        `/api/projects/sectionorder/${project_id}`,
+        {sourceDragIndex,destinationDragIndex}, 
         config
     );
 
@@ -177,7 +177,7 @@ export const updateSection = ({section_name, sectionId}) => async (dispatch, get
     }
 }
 
-export const createSection = ({section_name,section_order_id}) => async (dispatch, getState) => {
+export const createSection = ({section_name,project_id}) => async (dispatch, getState) => {
     try{
         dispatch({
             type: SECTION_CREATE_REQUEST,
@@ -196,7 +196,7 @@ export const createSection = ({section_name,section_order_id}) => async (dispatc
 
         const { data } = await axios.post(
             `/api/sections/create`,
-            {section_name,section_order_id}, 
+            {section_name,project_id}, 
             config
         );
 

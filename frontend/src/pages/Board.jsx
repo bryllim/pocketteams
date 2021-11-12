@@ -8,24 +8,24 @@ import "../css/board.css"
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import {TaskContext}  from "../contexts/SectionContext"
-import { listSection, updateSectionTask,createSection, updateSectionOrder,} from "../actions/sectionActions";
+import { updateSectionTask,createSection, updateSectionOrder,} from "../actions/sectionActions";
 import {onDragEnd,orderSections} from "../functions/dragDropFunctions"
 import {sectionCreate,sectionUpdate} from "../functions/sectionFunctions"
 import { taskUpdate } from "../functions/TaskFunctions"
 
-const addSection = async ({dispatch,section_order_id,sectionOrder,setSectionOrder,sections,setSections})=>{
+const addSection = async ({dispatch,projectId,sectionOrder,setSectionOrder,sections,setSections})=>{
  sectionCreate({sectionOrder,setSectionOrder,sections,setSections})
- dispatch(createSection({section_name: 'New Section',section_order_id}))
+ dispatch(createSection({section_name: 'New Section',project_id:projectId}))
  return
 }
 
-const onDrag = ({result,dispatch,sectionOrder,setSectionOrder,sectionOrderId,sections,setSections}) =>{ //transfer outside function component
+const onDrag = ({result,dispatch,sectionOrder,setSectionOrder,projectId,sections,setSections}) =>{ //transfer outside function component
   const itemType = result.type
   console.log('result', result)
   if(itemType === 'column'){
     if(result.destination.index === result.source.index ) return
     const {sectionId,sourceDragIndex,destinationDragIndex} = orderSections({result,sectionOrder,setSectionOrder})
-    dispatch(updateSectionOrder({sectionId,sourceDragIndex,destinationDragIndex,sectionOrderId}));
+    dispatch(updateSectionOrder({sectionId,sourceDragIndex,destinationDragIndex,project_id: projectId}));
   }
   else{
     if (!result.destination) return;
@@ -35,55 +35,40 @@ const onDrag = ({result,dispatch,sectionOrder,setSectionOrder,sectionOrderId,sec
   return
 }
 
-const Board = () => {
-  const section_order_id = '6179228d94d94e1c2c6c21e3'
+const Board = (props) => {
+  const {sectionList, projectId} = (props.location) || {};
+  const sectionOrderList = sectionList.map(order =>{
+    return order._id
+  })
   const dispatch = useDispatch();
   const history = useHistory();
   const createdSection = useSelector((state) => state.sectionCreate)
   const createdTask = useSelector((state) => state.taskCreate)
   const userLogin = useSelector((state) => state.userLogin);
-  const dataList = useSelector((state) => state.sectionList);
-  const sectionDataList= dataList.data.sectionDataList;
-  const sectionOrderList = dataList.data.sectionOrderList;
-  const sectionOrderId = dataList.data.sectionOrderId;
-
-  const [sections, setSections] = useState(sectionDataList);
+  const [sections, setSections] = useState(sectionList);
   const [sectionOrder,setSectionOrder] = useState(sectionOrderList);
-  
   const { userInfo } = userLogin;
 
   useEffect(() => {
     if (!userInfo) {
         history.push('/');
     } 
-    dispatch(listSection());
   },[history, userInfo, dispatch])
-
-useEffect(()=>{
-  if(dataList.loading === false && dataList.data !== undefined){
-    console.log('sectionDataList',sectionDataList)
-    setSections(sectionDataList)
-    setSectionOrder(sectionOrderList)
-  }
-},[dataList])
 
   useEffect(() => {
     if(createdSection.loading  === false && createdSection.data !== undefined){
       sectionUpdate({sectionOrder,setSectionOrder,sections,setSections,createdSection})
     }
-  
   },[createdSection])
 
-useEffect(() => {
-  if(createdTask.loading  === false && createdTask.data !== undefined){
-    console.log('sections',sections)
-    console.log('createdTask',createdTask)
-    taskUpdate({createdTask,sections,setSections})
-  }
-},[createdTask])
+  useEffect(() => {
+    if(createdTask.loading  === false && createdTask.data !== undefined){
+      taskUpdate({createdTask,sections,setSections})
+    }
+  },[createdTask])
 
   return (
-    <>
+    <>  
      <TaskContext.Provider value={{sections,setSections,sectionOrder,setSectionOrder,dispatch}}>
       <Navigation />
         <Container fluid className="board-container">
@@ -98,7 +83,7 @@ useEffect(() => {
             </Breadcrumb></h3>
                   <div className="d-flex scrolling-wrapper-x flex-nowrap flex-grow-1 task-board-wrapper my-3" >
                   <DragDropContext
-                    onDragEnd={result => onDrag({result,dispatch,sectionOrder,setSectionOrder,sectionOrderId,sections,setSections})}
+                    onDragEnd={result => onDrag({result,dispatch,sectionOrder,setSectionOrder,projectId,sections,setSections})}
                   >
                     <Droppable 
                       droppableId="all-columns" direction="horizontal" type="column"
@@ -155,7 +140,7 @@ useEffect(() => {
                  
                     <div className="pt-2">
                         <div className=" d-flex align-items-center justify-content-between border rounded-pill px-5 py-2 text-nowrap btn btn-outline-secondary" 
-                          onClick={() => addSection({dispatch,section_order_id,sectionOrder,setSectionOrder,sections,setSections})}
+                          onClick={() => addSection({dispatch,projectId,sectionOrder,setSectionOrder,sections,setSections})}
                         >
                             <i className="lni lni-plus me-2" ></i>
                             <h5>Add Section</h5>
