@@ -9,6 +9,7 @@ import {sectionDelete,sectionRename} from "../../functions/sectionFunctions"
 import { useDispatch} from "react-redux";
 import { updateSection, deleteSection} from "../../actions/sectionActions";
 import {taskCreate} from "../../functions/TaskFunctions"
+import { v4 as uuidv4 } from 'uuid'
 
 const changeSection =({sectionTitle,sections,setSections,index,dispatch,sectionId,openDeleteSection}) => {
   console.log(sectionTitle)
@@ -28,9 +29,9 @@ const removeSection = ({sectionOrder,setSectionOrder,sections,setSections,sectio
   dispatch(deleteSection({section_id:sectionId}))
 }
 
-
 const newTask = ({sectionId, sections, setSections,dispatch}) =>{
-  taskCreate({sectionId, sections, setSections})
+  const taskTempId = uuidv4()
+  taskCreate({sectionId, sections, setSections, taskTempId})
 }
 
 const SectionCard = ({sectionId,index,section}) => {
