@@ -68,7 +68,7 @@ const Board = (props) => {
   },[createdTask])
 
   return (
-    <>
+    <>  
      <TaskContext.Provider value={{sections,setSections,sectionOrder,setSectionOrder,dispatch}}>
       <Navigation />
         <Container fluid className="board-container">
