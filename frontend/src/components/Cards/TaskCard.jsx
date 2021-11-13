@@ -6,6 +6,7 @@ import { Dropdown } from "react-bootstrap";
 import {taskRename,taskRemove,taskDescriptionUpdate} from "../../functions/taskFunctions"
 import { TaskContext } from "../../contexts/SectionContext";
 import { deleteTask, updateTask,createTask } from "../../actions/taskActions";
+import validator from 'validator';
 
 // const changeTask = ({sectionId, sections, setSections, taskName,index,dispatch,taskId}) =>{
 //   if(taskName === ''){
@@ -25,17 +26,14 @@ import { deleteTask, updateTask,createTask } from "../../actions/taskActions";
 // }
 
 
-
 const updateTaskName = ({sectionId, sections, setSections, index, taskId,taskName,dispatch}) =>{
   if(taskName === ''){
     taskRemove({sectionId, sections, setSections, index});
     dispatch(deleteTask({taskId}))
   }
-  else if(taskId === '123'){
-    console.log('create')
-    const task_priority = "";
-    console.log(task_priority);
-    dispatch(createTask({task_name:taskName,task_description:'tempdescription',task_priority,section_id:sectionId}))
+  else if(validator.isUUID(taskId)){
+    console.log('dispatch new Task')
+    dispatch(createTask({task_name:taskName,task_description:'tempdescription',section_id:sectionId, task_temp_id:taskId}))
   }
   else{
     taskRename({sectionId, sections, setSections, taskName,index});

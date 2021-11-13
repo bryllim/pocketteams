@@ -8,7 +8,6 @@ const projectRoutes = require('./routes/ProjectRoutes');
 const taskRoutes = require('./routes/TaskRoutes');
 const noteRoutes = require('./routes/NoteRoutes');
 const sectionRoutes = require('./routes/SectionRoutes');
-const sectionOrderRoutes = require('./routes/SectionOrderRoutes');
 const { NotFound, ErrorHandler } = require('./middlewares/ErrorMiddleware');
 const teamRoutes = require('./routes/TeamRoutes');
 const app = express();
@@ -25,7 +24,6 @@ app.use('/api/projects', projectRoutes)
 app.use('/api/tasks', taskRoutes)
 app.use('/api/note', noteRoutes)
 app.use('/api/sections', sectionRoutes)
-app.use('/api/sectionorder', sectionOrderRoutes)
 app.use('/api/teams', teamRoutes)
 
 app.use(NotFound);

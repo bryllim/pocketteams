@@ -2,7 +2,12 @@ const asyncHandler = require("express-async-handler");
 const Project = require("../models/ProjectModel");
 
 const getProjects = asyncHandler(async (req, res) => {
-    const projects = await Project.find({user: req.user._id});
+    const projects = await Project.find({user: req.user._id}).populate({
+        path: 'sections',
+        populate: {
+            path: 'tasks',
+        }
+    });;
     res.json(projects);
 });
 
@@ -22,8 +27,7 @@ const createProject = asyncHandler( async (req,res) => {
 });
 
 const getProjectById = asyncHandler( async (req,res) => {
-    const project = await Project.findById(req.params.id);
-
+    const project = await Project.findById(req.params.id)
     if(project){
         res.json(project);
     } else {
@@ -71,4 +75,38 @@ const deleteProject = asyncHandler(async (req,res) => {
     
 });
 
-module.exports = {getProjects, createProject, updateProject, deleteProject, getProjectById};
+const updateSectionOrder = asyncHandler(async (req,res) => {
+    try{
+        const {sourceDragIndex,destinationDragIndex} = req.body;
+        const project_id = req.params.id
+        //Check if this SectionOrder belongs to the user
+        // if(!sourceDragIndex || !destinationDragIndex){
+        //     let err = new Error("Please Fill all the Fields");
+        //     err.status = 400;
+        //     throw err;
+        // }
+        const sectionOrder = await Project.findById(project_id);
+        if(sectionOrder.user.toString() !== req.user._id.toString()){
+            let err = new Error("You can't perform this action");
+            err.status = 401;
+            throw err;
+        }
+        if(sectionOrder){
+            const [removed] = sectionOrder.sections.splice(sourceDragIndex,1) //mutating the array
+            sectionOrder.sections.splice(destinationDragIndex,0,removed)
+            const updatedSectionOrder = await sectionOrder.save();
+            console.log(updatedSectionOrder);
+            res.json(updatedSectionOrder);
+        } else {
+            let err = new Error("SectionOrder not found");
+            err.status = 404;
+            throw err;
+    }
+    }
+    catch (err) {
+        console.log(err.status,err.message);
+        res.status(err.status).json({message: err.message});
+    }
+});
+
+module.exports = {getProjects, createProject, updateProject, deleteProject, getProjectById, updateSectionOrder};

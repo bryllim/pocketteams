@@ -32,7 +32,7 @@ const Project = () => {
     }
     dispatch(listProjects());
   }, [dispatch, successCreate, successUpdate, history, userInfo]);
-
+  
   return (
     <>
       <Navigation />

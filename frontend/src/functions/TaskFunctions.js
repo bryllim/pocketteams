@@ -18,15 +18,15 @@ const taskRemove = ({ sectionId, sections, setSections, index }) => {
   setSections(newSections);
 };
 //add the task on frontend
-const taskCreate = ({ sectionId, sections, setSections }) => {
+const taskCreate = ({ sectionId, sections, setSections, taskTempId }) => {
   //change to section index
   const newSections = [...sections];
   newSections.forEach((section) => {
     return section._id === sectionId
       ? section.tasks.push({
           task_name: "",
-          _id: "123",
-          task_description: "temporary description",
+          _id: taskTempId,
+          task_description: "tempdescription",
           task_priority: "",
         })
       : null;
@@ -37,11 +37,13 @@ const taskCreate = ({ sectionId, sections, setSections }) => {
 //update the task on frontend using data from backend
 const taskUpdate = ({ sections, setSections, createdTask }) => {
   const newTask = createdTask.data;
+  const tempTaskId = createdTask.data.task_temp_id;
   const sectionId = newTask.section_id;
   const section = sections.find((section) => section._id === sectionId);
   const newTaskList = [...section.tasks];
-  newTaskList.at(-1)._id = newTask._id;
-  newTaskList.at(-1).task_name = newTask.task_name;
+  const obj = newTaskList.find((task) => task._id === tempTaskId);
+  obj._id = newTask._id;
+  obj.task_name = newTask.task_name;
   setSections([
     ...sections.map((section) =>
       section._id === sectionId ? { ...section, tasks: newTaskList } : section
