@@ -1,11 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import { Dropdown } from "react-bootstrap";
 import Comment from "../components/Comment";
 import SubTask from "../components/SubTask";
-import {taskDescriptionUpdate} from "../functions/taskFunctions";
-import {useContext} from "react";
 import {TaskContext } from "../contexts/SectionContext";
-import {updateTaskDescription} from "../actions/taskActions";
+import {taskRename,taskRemove,taskDescriptionUpdate,taskPriorityUpdate} from "../functions/taskFunctions"
+import { deleteTask, updateTask,createTask,updateTaskDescription, updateTaskPriority } from "../actions/taskActions";
+
+const updateTaskName = ({sectionId, sections, setSections, index, taskId,taskName,dispatch}) =>{
+  if(taskName === ''){
+    taskRemove({sectionId, sections, setSections, index});
+    dispatch(deleteTask({taskId}))
+  }
+  else if(taskId === '123'){
+    console.log('create')
+    const task_priority = "light"
+    console.log(task_priority);
+    dispatch(createTask({task_name:taskName,task_description:'tempdescription',task_priority,section_id:sectionId}))
+  }
+  else{
+    taskRename({sectionId, sections, setSections, taskName,index});
+    dispatch(updateTask({task_name:taskName, task_id:taskId}))
+  }
+}
+const updateTaskEndDate = (taskId,taskEndDate) =>{
+
+}
+const updateTaskAssignedUsers = (taskId,taskAssignedUsers) =>{
+
+}
+
+const priorityStatus = ({taskNewPriority, taskId,dispatch,index,sectionId,sections,setSections}) => {
+  console.log("prioritystatus", taskNewPriority)
+  taskPriorityUpdate({sections,setSections,taskNewPriority,index,sectionId,})
+  dispatch(updateTaskPriority({task_priority:taskNewPriority, task_id:taskId}))
+  }
+
 
 const changeTaskDescription = ({sections, setSections, taskDescription, index, sectionId, taskId,dispatch}) =>{
   taskDescriptionUpdate({sections, setSections, taskDescription, index, sectionId})
@@ -19,10 +48,13 @@ const SideTask = ({ showed, hide, task,index,sectionId }) => {
   const [color, setColor] = useState(
     "form-select form-select-sm label-font ms-3"
   );
-  
+  const [name, setName] = useState(task.task_name)
   const [taskDescription, setTaskDescription] = useState(task.task_description);
-  const {sections, setSections, dispatch} = useContext(TaskContext)
+  const [taskPriority, setTaskPriority] = useState(task.task_priority);
+  const {sections, setSections, sectionOrder, setSectionOrder, dispatch} = useContext(TaskContext)
   const taskId = task._id;
+
+  console.log(taskPriority)
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p
@@ -36,19 +68,41 @@ const SideTask = ({ showed, hide, task,index,sectionId }) => {
     </p>
   ));
 
-  const reClass = () => {
-    let val = document.getElementById("test").value;
-
-    if (val == 1) {
+  useEffect(() => {
+    //to check/show the color
+    if (taskPriority === "light") {
       setColor("form-select form-select-sm label-font ms-3 light");
-    } else if (val == 2) {
+    } else if (taskPriority === "medium") {
       setColor("form-select form-select-sm label-font ms-3 medium");
-    } else if (val == 3) {
+    } else if (taskPriority === "heavy") {
       setColor("form-select form-select-sm label-font ms-3 heavy");
-    } else if (val === "select priority") {
+    }
+  },[task]);
+
+
+  const reClass = (e) => {
+    let taskNewPriority = ""
+
+    if (e.target.value === "light") {
+      setColor("form-select form-select-sm label-font ms-3 light");
+      setTaskPriority ("light")
+      taskNewPriority = "light"
+      priorityStatus({taskNewPriority, taskId,dispatch,index,sectionId,sections,setSections})
+    } else if (e.target.value === "medium") {
+      setColor("form-select form-select-sm label-font ms-3 medium");
+      setTaskPriority ("medium")
+      taskNewPriority = "medium"
+      priorityStatus({taskNewPriority, taskId,dispatch,index,sectionId,sections,setSections})
+    } else if (e.target.value === "heavy") {
+      setColor("form-select form-select-sm label-font ms-3 heavy");
+      setTaskPriority ("heavy")
+      taskNewPriority = "heavy"
+      priorityStatus({taskNewPriority, taskId,dispatch,index,sectionId,sections,setSections})
+    } else if (e.target.value === "select priority") {
       setColor("form-select form-select-sm label-font ms-3 prio");
     }
-  };
+  }; 
+
 
   return (
     <div
@@ -84,6 +138,21 @@ const SideTask = ({ showed, hide, task,index,sectionId }) => {
                 className="py-2 full border-0 h3"
                 type="text"
                 placeholder="Write a task name"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value)
+                }}
+                onBlur={(e)=>{
+                  updateTask({sectionId, sections, setSections, name,index,dispatch,taskId});
+                  e.preventDefault()
+                  e.stopPropagation()
+                }}  
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === 'Escape') {
+                    updateTask({sectionId, sections, setSections, name, index, dispatch, taskId});
+                    event.preventDefault()
+                    event.stopPropagation()
+                }}} 
               ></input>
               <>
                 <div className="row mb-1 f-dark">
@@ -107,18 +176,19 @@ const SideTask = ({ showed, hide, task,index,sectionId }) => {
                           </svg>
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
+                          <>
+                        {sections.map((section, index) => {
                           <Dropdown.Item
                             className="label-font-fw"
+                            value={section.section_name}
                             onClick={(e) => setSectionName("Requested")}
                           >
-                            Requested
+                            section name
+                            {/* {section.section_name} */}
+                            {console.log(section.section_name)}
                           </Dropdown.Item>
-                          <Dropdown.Item
-                            className="label-font-fw"
-                            onClick={(e) => setSectionName("To Do")}
-                          >
-                            To Do
-                          </Dropdown.Item>
+                        })}
+                        </>
                         </Dropdown.Menu>
                       </Dropdown>
                       <p className="label-font">{sectionName}</p>
@@ -169,24 +239,24 @@ const SideTask = ({ showed, hide, task,index,sectionId }) => {
                     <label className="label-font me-2">Priority: </label>
                     <select
                       className={color}
+                      onChange={reClass}
                       aria-label="form-select-sm example"
                       id="test"
-                      onChange={reClass}
+                      value={taskPriority}
                     >
                       <option
                         className="form-select-option label-font-fw prio"
                         aria-label="form-select-sm example"
-                        default
                       >
                         select priority
                       </option>
-                      <option className="light" value="1">
+                      <option className="light" value="light">
                         Light
                       </option>
-                      <option className="medium" value="2">
+                      <option className="medium" value="medium">
                         Medium
                       </option>
-                      <option className="heavy" value="3">
+                      <option className="heavy" value="heavy">
                         Heavy
                       </option>
                     </select>
@@ -208,6 +278,12 @@ const SideTask = ({ showed, hide, task,index,sectionId }) => {
                           e.preventDefault()
                           e.stopPropagation()
                         }}  
+                        onKeyDown={(event) => {
+                          if (event.key === 'Enter' || event.key === 'Escape') {
+                            changeTaskDescription({sectionId, sections, setSections, taskDescription ,index,dispatch,taskId});
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }}} 
                       ></textarea>
                     </div>
                   </div>

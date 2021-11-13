@@ -8,20 +8,22 @@ import { TaskContext } from "../../contexts/SectionContext";
 import { deleteTask, updateTask,createTask } from "../../actions/taskActions";
 import validator from 'validator';
 
-const changeTask = ({sectionId, sections, setSections, taskName,index,dispatch,taskId}) =>{
-  if(taskName === ''){
-    taskRemove({sectionId, sections, setSections, index});
-    dispatch(deleteTask({taskId}))
-  }
-  else if(validator.isUUID(taskId)){
-      console.log('update task')
-    // dispatch(createTask({task_name:taskName,task_description:'tempdescription',section_id:sectionId, task_temp_id:taskId}))
-  }
-  else{//retaskNameTask
-    taskRename({sectionId, sections, setSections, taskName,index});
-    dispatch(updateTask({task_name:taskName,task_id:taskId}))
-  }
-}
+// const changeTask = ({sectionId, sections, setSections, taskName,index,dispatch,taskId}) =>{
+//   if(taskName === ''){
+//     taskRemove({sectionId, sections, setSections, index});
+//     dispatch(deleteTask({taskId}))
+//   }
+//   else if(taskId === '123'){
+//     console.log('create')
+//     const task_priority = "light";
+//     console.log(task_priority);
+//     dispatch(createTask({task_name:taskName,task_description:'tempdescription',task_priority,section_id:sectionId}))
+//   }
+//   else{//retaskNameTask
+//     taskRename({sectionId, sections, setSections, taskName,index});
+//     dispatch(updateTask({task_name:taskName,task_id:taskId}))
+//   }
+// }
 
 
 const updateTaskName = ({sectionId, sections, setSections, index, taskId,taskName,dispatch}) =>{
@@ -65,6 +67,7 @@ const TaskCard = ({task,index,sectionId}) => {
     setTaskName(task.task_name);
   },[task]);
   
+  // console.log("task:" + task)
 
   const editText = () => {
     setToggle(false)
@@ -149,7 +152,6 @@ const TaskCard = ({task,index,sectionId}) => {
                     </Dropdown.Menu>
                 </Dropdown>
 
-                {/* <i onClick={() => setShowNav(!showNav)} className="lni lni-pencil p-2"></i> */}
               </div>
 
             <p className="px-3 text-limit">{taskDescription}</p>
