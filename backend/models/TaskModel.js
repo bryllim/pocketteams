@@ -26,17 +26,6 @@ const taskSchema = mongoose.Schema(
         type: String,
       },
     ],
-    // task_subtask:
-    // [{
-    //     subtask:{
-    //         name:{
-    //             type:String
-    //         },
-    //         isComplete:{
-    //             type:Boolean
-    //         }
-    //     }
-    // }],
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,

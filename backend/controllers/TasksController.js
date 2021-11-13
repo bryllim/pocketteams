@@ -3,36 +3,31 @@ const Task = require("../models/TaskModel");
 const Section = require("../models/SectionModel");
 
 const createTask = asyncHandler(async (req, res) => {
-  const { task_name, task_description, section_id } = req.body;
+  const { task_name, task_description, section_id, task_priority } = req.body;
   try {
+    console.log("task priority" + task_priority);
     if (!task_name || !task_description || !section_id) {
       throw new Error("Please Fill all the Fields");
     } else {
-      try {
-        const task = new Task({
-          user: req.user._id,
-          task_name,
-          task_description,
-          section_id,
-        });
-        const createdtask = await task.save();
-        sectionResponse = await Section.findByIdAndUpdate(
-          section_id,
-          { $push: { tasks: createdtask } },
-          { new: true, useFindAndModify: false }
-        );
-        if (sectionResponse === null) {
-          throw new Error("sectionResponse");
-        }
-        res.status(201).json(createdtask);
-        console.log("done");
-      } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
+      const task = new Task({
+        user: req.user._id,
+        task_name,
+        task_description,
+        task_priority,
+        section_id,
+      });
+      const createdtask = await task.save();
+      sectionResponse = await Section.findByIdAndUpdate(
+        section_id,
+        { $push: { tasks: createdtask } },
+        { new: true, useFindAndModify: false }
+      );
+      if (sectionResponse === null) {
+        throw new Error("sectionResponse");
       }
+      res.status(201).json(createdtask);
+      console.log("done");
     }
-    res.status(201).json(createdtask);
-    console.log("done");
   } catch (err) {
     console.log("er2");
     res.status(500).json(err);
@@ -168,8 +163,9 @@ const updateTaskAssignedUsersById = asyncHandler(async (req, res) => {
 const updateTaskPriorityById = asyncHandler(async (req, res) => {
   try {
     const { task_priority } = req.body;
+    console.log(task_priority);
     const task_id = req.params.id;
-    if (!task_id || !task_priority) {
+    if (!task_id) {
       let err = new Error("Please Fill all the Fields");
       err.status = 400;
       throw err;
@@ -178,6 +174,7 @@ const updateTaskPriorityById = asyncHandler(async (req, res) => {
     if (task) {
       task.task_priority = task_priority;
       await task.save();
+      console.log("taskpriosave");
       res
         .status(200)
         .json({ message: "task_priority " + task_id + " updated" });

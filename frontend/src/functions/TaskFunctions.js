@@ -26,7 +26,8 @@ const taskCreate = ({ sectionId, sections, setSections }) => {
       ? section.tasks.push({
           task_name: "",
           _id: "123",
-          task_description: "tempdescription",
+          task_description: "temporary description",
+          task_priority: "",
         })
       : null;
   });
@@ -65,10 +66,27 @@ const taskDescriptionUpdate = ({
   setSections(newSections);
 };
 
+const taskPriorityUpdate = ({
+  sections,
+  setSections,
+  taskNewPriority,
+  index,
+  sectionId,
+}) => {
+  const newSections = [...sections];
+  newSections.forEach((section) => {
+    return section._id === sectionId
+      ? (section.tasks[index].task_priority = taskNewPriority)
+      : null;
+  });
+  setSections(newSections);
+};
+
 module.exports = {
   taskRename,
   taskRemove,
   taskCreate,
   taskUpdate,
   taskDescriptionUpdate,
+  taskPriorityUpdate,
 };
