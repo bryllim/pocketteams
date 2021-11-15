@@ -9,13 +9,13 @@ import Preload from "../Preload";
 import ErrorMessage from "../ErrorMessage";
 
 const ProjectCard = ({data}) => {
-  console.log(data);
   const projectId = (data) ? data._id : null;
   const history = useHistory();
   const dispatch = useDispatch();
   const sectionList = (data && data.sections) ? data.sections: [];
   const handleOnClick = useCallback(() => history.push({pathname: '/board',
-  sectionList,projectId}), [history]);
+  sectionList,projectId}), [history, projectId]);
+
   const [editShow, setEditShow] = useState(false);
   const handleEditClose = () => setEditShow(false);
   const handleEditShow = () => setEditShow(true);

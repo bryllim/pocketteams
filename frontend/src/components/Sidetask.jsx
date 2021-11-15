@@ -3,7 +3,7 @@ import { Dropdown } from "react-bootstrap";
 import Comment from "../components/Comment";
 import SubTask from "../components/SubTask";
 import {TaskContext } from "../contexts/SectionContext";
-import {taskRename,taskRemove,taskDescriptionUpdate,taskPriorityUpdate} from "../functions/taskFunctions"
+import {taskRename,taskRemove,taskDescriptionUpdate,taskPriorityUpdate} from "../functions/TaskFunctions"
 import { deleteTask, updateTask,createTask,updateTaskDescription, updateTaskPriority } from "../actions/taskActions";
 
 const updateTaskName = ({sectionId, sections, setSections, index, taskId,taskName,dispatch}) =>{
