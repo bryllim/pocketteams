@@ -1,39 +1,40 @@
 const mongoose = require("mongoose");
 
 const SectionSchema = mongoose.Schema(
-    {
-        section_name:{
-            type: String,
-            required: true,
-        },
-        section_description:{
-            type: String,
-        },
-        section_start_date:{
-            type: Date,
-        },
-        section_end_date:{
-            type: Date,
-        },
-        user: {
-            type: mongoose.Schema.Types.ObjectId,
-            required: true,
-            ref: "User",
-        },
-        project_id:{
-            type: mongoose.Schema.Types.ObjectId,
-            required: true,
-            ref: "Project",
-        },
-        tasks:[{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Task",
-        }]
-    
+  {
+    section_name: {
+      type: String,
+      required: true,
     },
-    {
-        timestamps: true,
-    }
+    section_description: {
+      type: String,
+    },
+    section_start_date: {
+      type: Date,
+    },
+    section_end_date: {
+      type: Date,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
+    project_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Project",
+    },
+    tasks: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Task",
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
 );
 
 const Section = mongoose.model("Section", SectionSchema);

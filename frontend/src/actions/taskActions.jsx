@@ -56,7 +56,6 @@ export const createTask = ({task_name,task_description,section_id,task_temp_id,t
             Authorization: `Bearer ${userInfo.token}`,
         },
     };
-        console.log("taskpriority ", task_priority)
     const { data } = await axios.post(
         `/api/tasks/create`,
         {task_name, task_description, section_id, task_temp_id,task_priority}, 
@@ -80,6 +79,7 @@ export const createTask = ({task_name,task_description,section_id,task_temp_id,t
         });
     }
 }
+
 
 export const deleteTask = ({taskId, task_index}) => async (dispatch, getState) => {
     try{
