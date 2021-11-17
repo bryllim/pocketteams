@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, Modal, Col, Row, Container, Image } from "react-bootstrap";
 import EditTeamCard from "../Cards/EditTeamCard";
 import pocketdevsLogo from "../../assets_pocketdevs/assets/img/profile/generated_profile.PNG";
@@ -12,7 +12,7 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
 
   const [teamName, setTeamName] = useState(data.team_name);
   const [teamDescription, setTeamDescription] = useState(data.team_description);
-
+  const [teamAccess, setTeamAccess] = useState(data.team_access);
   const dispatch = useDispatch();
 
   const teamUpdate = useSelector((state) => state.teamUpdate);
@@ -20,8 +20,8 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
 
   const updateHandler = (e) => {
     e.preventDefault();
-    dispatch(updateTeamAction(data._id, teamName, teamDescription));
-    if(!teamName || !teamDescription)  return;
+    dispatch(updateTeamAction(data._id, teamName, teamDescription, teamAccess));
+    if(!teamName || !teamDescription || !teamAccess)  return;
 
     resetHandler();
     hideModal();
@@ -57,7 +57,6 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
                 class="form-control text-center border-top-0 border-end-0 border-start-0 border-bottom"
                 id="formGroupExampleInput"
                 defaultValue={data.team_name}
-                // onChange={(e)=> setProjectName(e.target.value)}
                 onChange={(e) => setTeamName(e.target.value)}
               />
             </Col>
@@ -83,7 +82,32 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
       </Modal.Body>
       <Modal.Footer>
         {loading && <Preload/>}
-        <button className="theme-btn theme-btn-modal mx-1" onClick={hideModal}> <i class="lni lni-plus"></i> Add Members </button>
+        <Form.Group className="search-form-box me-5">
+                  <Form.Label className="fs-6 my-auto me-3">
+                    {" "}
+                    User Access:{" "}
+                  </Form.Label>
+                  <select
+                    aria-label="form-select-sm example"
+                    id="test"
+                    defaultValue={teamAccess}
+                    onChange={(e) => setTeamAccess(e.target.value)}
+                  >
+                    <option className="form-select form-select-sm" value={null}>
+                      Set Access
+                    </option>
+                    <option className="form-select-sm" value="invite">
+                      Invite Only
+                    </option>
+                    <option className="form-select-sm" value="private">
+                      Private
+                    </option>
+                    <option className="form-select-sm" value="public">
+                      Public
+                    </option>
+                  </select>
+          </Form.Group>
+        <button className="theme-btn theme-btn-modal ms-5 mx-1" onClick={hideModal}> <i class="lni lni-plus"></i> Add Members </button>
         <button className="theme-btn theme-btn-modal mx-1" onClick={updateHandler}> Save Changes </button>
       </Modal.Footer>
     </Modal>

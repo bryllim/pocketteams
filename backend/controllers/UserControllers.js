@@ -72,4 +72,8 @@ const authUser = AsyncHandler(async (req, res) => {
     }
 });
 
+// const getUsers = asyncHandler(async (req,res) => {
+//     const users = await User.find({});
+// });
+
 module.exports = {registerUser, authUser};

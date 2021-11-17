@@ -34,7 +34,7 @@ export const listTeam = () => async (dispatch, getState) => {
 
     dispatch({
         type: TEAM_LIST_SUCCESS,
-        payload: data,
+        payload: data.reverse(),
     })
     } catch (error){
         const message = 
@@ -49,7 +49,7 @@ export const listTeam = () => async (dispatch, getState) => {
     }
 }
 
-export const createTeamAction = (team_name, team_description, owner, users) => async (dispatch, getState) => {
+export const createTeamAction = (team_name, team_description, team_access, owner, users) => async (dispatch, getState) => {
     try {
         dispatch({
             type: TEAM_CREATE_REQUEST,
@@ -68,7 +68,7 @@ export const createTeamAction = (team_name, team_description, owner, users) => a
 
         const { data } = await axios.post(
             `api/teams/create`,
-            {team_name,team_description,owner, users},
+            {team_name,team_description,team_access,owner, users},
             config
         );
 
@@ -88,7 +88,7 @@ export const createTeamAction = (team_name, team_description, owner, users) => a
     }
 };
 
-export const updateTeamAction = (id, team_name, team_description) => async (dispatch, getState) => {
+export const updateTeamAction = (id, team_name, team_description, team_access) => async (dispatch, getState) => {
     try{
         dispatch({
             type: TEAM_UPDATE_REQUEST,
@@ -107,7 +107,7 @@ export const updateTeamAction = (id, team_name, team_description) => async (disp
 
         const { data } = await axios.put(
             `/api/teams/${id}`,
-            {team_name, team_description}, 
+            {team_name, team_description, team_access}, 
             config
         );
 

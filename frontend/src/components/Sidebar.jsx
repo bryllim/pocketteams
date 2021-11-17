@@ -24,19 +24,22 @@ const Sidebar = () => {
   const {loading, teams, error} = teamList;
 
   useEffect(() => {
-    if (userInfo) {
-      history.push('/project');
+    if (!userInfo) {
+      history.push('/');
     }
+
+    if(teamList)
+
     dispatch(listTeam());
   }, [dispatch,history,userInfo])
 
   return (
     <div className="d-flex flex-column sidebar-wrapper scrolling-wrapper-y h-100">
       <ProfileCard />
+      { error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
+      { loading && <Preload/> }
       <div className="team-section-wrapper sidebar-box d-flex flex-column scrolling-wrapper-y mb-30 p-2">
-        { error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
-        { loading && <Preload/> }
-        { teams?.reverse().map((team) => (
+        { teams?.map((team) => (
           <TeamCard data={team}/>
         ))}
         {/* CREATE TEAM BUTTON */}
@@ -49,8 +52,8 @@ const Sidebar = () => {
         >
           Create New Team
         </button>
-        <AddTeam showModal={teamShow} hideModal={handleTeamClose} />
       </div>
+      <AddTeam showModal={teamShow} hideModal={handleTeamClose} />
       {/* NOTES */}
         <Notes />
     </div>

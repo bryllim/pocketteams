@@ -23,7 +23,7 @@ const Project = () => {
   const projectList = useSelector((state) => state.projectList);
   const { loading, projects, error } = projectList;
 
-  const projectUpdate = useSelector(state => state.projectUpdate);
+  const projectUpdate = useSelector((state) => state.projectUpdate);
   const { success: successUpdate}  = projectUpdate;
 
   useEffect(() => {

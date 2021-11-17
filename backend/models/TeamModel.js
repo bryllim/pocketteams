@@ -10,6 +10,10 @@ const projectSchema = mongoose.Schema(
             type: String,
             required: true,
         },
+        team_access:{
+            type: String,
+            required: true,
+        },
         owner:{
             type: mongoose.Schema.Types.ObjectId,
             required: true,

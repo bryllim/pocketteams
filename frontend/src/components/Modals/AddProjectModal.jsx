@@ -3,6 +3,7 @@ import { Form, Modal, Card, Dropdown, Row, Col, Button, DropdownButton } from "r
 import ErrorMessage from "../ErrorMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { createProjectAction } from "../../actions/projectActions";
+import Preload from "../Preload";
 // import ReactMarkdown from "react-markdown";
 
 const AddProjectModal = ({ showModal, hideModal }) => {
@@ -94,6 +95,7 @@ const AddProjectModal = ({ showModal, hideModal }) => {
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={null}>
+            {loading && <Preload/>}
             {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
             <Form.Group controlId="project_name" className="my-auto p-3">
               <Row>

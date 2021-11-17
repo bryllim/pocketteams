@@ -1,35 +1,41 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {Form,Modal,Button,Col,Row,Dropdown,} from "react-bootstrap";
-import { createTeamAction } from "../../actions/teamActions"
+import { Form, Modal, Button, Col, Row, Dropdown } from "react-bootstrap";
+import { createTeamAction } from "../../actions/teamActions";
+import Preload from "../Preload";
+import ErrorMessage from "../ErrorMessage";
 
 const AddTeam = ({ showModal, hideModal }) => {
-
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [teamName, setTeamName] = useState("");
+  const [teamAccess, setTeamAccess] = useState("");
   const [teamDescription, setTeamDescription] = useState("");
-  
+
   const userLogin = useSelector((state) => state.userLogin);
-  const {userInfo} = userLogin;
+  const { userInfo } = userLogin;
 
+  const teamCreate = useSelector((state) => state.teamCreate);
+  const {loading, error, team} = teamCreate;
 
-  const resetHandler = () => {
-    setTeamName("");
-    setTeamDescription("");
-  }
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(createTeamAction(teamName, teamDescription, userInfo._id, userInfo._id));
-    if (!teamName || !teamDescription || !userInfo._id) return;
+    dispatch(
+      createTeamAction(teamName, teamDescription, teamAccess,userInfo._id,userInfo._id)
+    );
+    if (!teamName || !teamDescription || !teamAccess ||!userInfo._id) return;
 
     resetHandler();
     hideModal();
     window.location.reload(false);
-  }
-  
+  };
 
-  
+  const resetHandler = () => {
+    setTeamName("");
+    setTeamAccess("");
+    setTeamDescription("");
+  };
+
   return (
     <>
       <Modal centered show={showModal} onHide={hideModal}>
@@ -46,6 +52,8 @@ const AddTeam = ({ showModal, hideModal }) => {
         <Modal.Body>
           <Col xs="12">
             <Row>
+              {loading && <Preload/>}
+              {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
               <Col md="6" className="mb-3">
                 <Form.Label>Team Name</Form.Label>
                 <Form.Control
@@ -67,7 +75,7 @@ const AddTeam = ({ showModal, hideModal }) => {
                 />
               </Col>
             </Row>
-            <Col md="12" className="mb-5">
+            <Col md="12" className="mb-2">
               <Form.Label>Description</Form.Label>
               <textarea
                 class="form-control"
@@ -80,23 +88,32 @@ const AddTeam = ({ showModal, hideModal }) => {
               />
             </Col>
             <Row>
-              <Col md="4">
-              <Form.Label className="px-4">User Access</Form.Label>
-              </Col>
-              <Col md="6">
-              <Dropdown>
-                <Dropdown.Toggle
-                  id="dropdown-custom-components"
-                  className="option"
-                />
-                  <Dropdown.Menu>
-                    <Dropdown.Item>
-                      Request Invites Only
-                    </Dropdown.Item>
-                    <Dropdown.Item>Private</Dropdown.Item>
-                    <Dropdown.Item>Public</Dropdown.Item>
-                  </Dropdown.Menu>
-              </Dropdown>
+              <Col>
+                <Form.Group className="d-flex my-3 search-form-box">
+                <Form.Label className="fs-6 my-auto me-3">
+                    {" "}
+                    User Access:{" "}
+                  </Form.Label>
+                  <select
+                    aria-label="form-select-sm example"
+                    id="test"
+                    defaultValue={teamAccess}
+                    onChange={(e) => setTeamAccess(e.target.value)}
+                  >
+                    <option className="form-select form-select-sm">
+                      Set Access
+                    </option>
+                    <option className="form-select-sm" value="invite">
+                      Invite Only
+                    </option>
+                    <option className="form-select-sm" value="private">
+                      Private
+                    </option>
+                    <option className="form-select-sm" value="public">
+                      Public
+                    </option>
+                  </select>
+                </Form.Group>
               </Col>
             </Row>
           </Col>

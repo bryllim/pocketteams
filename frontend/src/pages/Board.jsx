@@ -36,6 +36,8 @@ const onDrag = ({result,dispatch,sectionOrder,setSectionOrder,projectId,sections
 }
 
 const Board = (props) => {
+
+  console.log("Inside Board");
   const {sectionList, projectId} = (props.location) || {};
   const sectionOrderList = sectionList.map(order =>{
     return order._id

@@ -7,7 +7,7 @@ const getTeam = asyncHandler(async (req, res) => {
 });
 
 const createTeam = asyncHandler( async (req,res) => {
-    const {team_name, team_description, owner, users} = req.body;
+    const {team_name, team_description, team_access, owner, users} = req.body;
 
     if(!team_name || !team_description){
         res.status(400)
@@ -17,6 +17,7 @@ const createTeam = asyncHandler( async (req,res) => {
             owner,
             team_name, 
             team_description,
+            team_access,
             users});
 
         const createdTeam = await team.save();
@@ -37,7 +38,7 @@ const getTeamById = asyncHandler( async (req,res) => {
 });
 
 const updateTeam = asyncHandler(async (req,res) => {
-    const {team_name, team_description} = req.body;
+    const {team_name, team_description, team_access} = req.body;
 
     const team = await Team.findById(req.params.id);
 
@@ -50,6 +51,7 @@ const updateTeam = asyncHandler(async (req,res) => {
     if(team){
         team.team_name = team_name;
         team.team_description = team_description;
+        team.team_access = team_access;
 
         const updatedTeam = await team.save();
         res.json(updatedTeam);
