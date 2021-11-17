@@ -21,9 +21,10 @@ const taskSchema = mongoose.Schema(
         ref: "User",
       },
     ],
-    task_comments: [
+    tasks_comments: [
       {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Task",
       },
     ],
     user: {
