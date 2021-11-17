@@ -37,8 +37,8 @@ const SideTask = ({ showed, hide, task,index,sectionId }) => {
   ));
 
   const reClass = () => {
-    let val = document.getElementById("test").value;
-
+    let val = document.getElementById("test");
+    console.log('reClass', val.options[val.selectedIndex].value);
     if (val == 1) {
       setColor("form-select form-select-sm label-font ms-3 light");
     } else if (val == 2) {

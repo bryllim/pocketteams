@@ -111,10 +111,6 @@ const updateSectionOrder = asyncHandler(async (req,res) => {
         res.status(401);
         throw new Error("You can't perform this action");
     }
-
-
-  
-
     sections.splice(sectionOldIndex, 1);
     sections.splice(sectionNewIndex, 0, section);
 
@@ -128,7 +124,6 @@ const updateSectionOrder = asyncHandler(async (req,res) => {
 });
 
 const updateSectionTask = asyncHandler(async (req,res) => {
-    console.log("Update Section Task")
     const {sourceSectionId, destinationSectionId,sourceDragindex,destinationDragindex,type} = req.body;
     const taskId = req.params.id
     const task = await Task.findById(taskId);
@@ -157,13 +152,6 @@ const updateSectionTask = asyncHandler(async (req,res) => {
             await sectionSource.save();
             await sectionDestination.save();
         }
-      
-        console.log(sectionSource.tasks)
-        console.log(sourceSectionId)
-        console.log(sectionDestination.tasks)
-        console.log(destinationSectionId)
-        // console.log(sourceTasks)
-        // console.log(destinationTasks)
         await task.save();
 
         res.json(sectionDestination);

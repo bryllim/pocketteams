@@ -10,6 +10,7 @@ import { useDispatch} from "react-redux";
 import { updateSection, deleteSection} from "../../actions/sectionActions";
 import {taskCreate} from "../../functions/taskFunctions"
 import { v4 as uuidv4 } from 'uuid'
+
 const changeSection =({sectionTitle,sections,setSections,index,dispatch,sectionId,openDeleteSection}) => {
   console.log(sectionTitle)
   if(sectionTitle === ''){

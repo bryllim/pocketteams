@@ -27,6 +27,7 @@ const taskCreate = ({sectionId, sections, setSections,taskTempId}) => { //change
 
 //update the task on frontend using data from backend
 const taskUpdate = ({ sections, setSections,createdTask}) => {
+  if(!createdTask) return
   const newTask = createdTask.data
   const tempTaskId = createdTask.data.task_temp_id
   const sectionId = newTask.section_id

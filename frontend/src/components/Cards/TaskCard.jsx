@@ -7,6 +7,7 @@ import {taskRename,taskRemove,taskDescriptionUpdate} from "../../functions/taskF
 import { TaskContext } from "../../contexts/SectionContext";
 import { deleteTask, updateTask,createTask } from "../../actions/taskActions";
 import validator from 'validator';
+import "../../css/skeleton.css"
 
 const changeTask = ({sectionId, sections, setSections, taskName,index,dispatch,taskId}) =>{
   if(taskName === ''){
@@ -82,6 +83,9 @@ const TaskCard = ({task,index,sectionId}) => {
     </p>
 ));
   return (
+    <>
+    {console.log(task)}
+    {!validator.isUUID(taskId,4) ?(
     <div>
       <Draggable
         key={task._id}
@@ -90,6 +94,7 @@ const TaskCard = ({task,index,sectionId}) => {
       >
         {(provided, snapshot) => {
           return (
+          
             <div
               className="d-flex flex-column task-wrapper rounded"
               ref={provided.innerRef}
@@ -104,7 +109,12 @@ const TaskCard = ({task,index,sectionId}) => {
               <div className="d-flex flex-row justify-content-between">
          
               {toggle && taskName !== '' ?
-              (<h6 className="hover-me" onClick={()=> editText()} >{taskName}</h6>)
+              (
+              <>
+               <h6 className="skeleton skeleton-text title"></h6>
+              <h6 className="hover-me" onClick={()=> editText()} >{taskName}</h6>
+             
+              </>)
               :
               (<input
                 type="text"
@@ -151,9 +161,12 @@ const TaskCard = ({task,index,sectionId}) => {
 
                 {/* <i onClick={() => setShowNav(!showNav)} className="lni lni-pencil p-2"></i> */}
               </div>
-
+              <div >
+              <p class="skeleton skeleton-text"></p>
+              <p class="skeleton skeleton-text"></p>
+              </div>                        
             <p className="px-3 text-limit">{taskDescription}</p>
-
+                   
             <div className="d-flex justify-content-between align-tasks-center">
 
            
@@ -161,6 +174,8 @@ const TaskCard = ({task,index,sectionId}) => {
               <p>date</p>
               <div className="d-flex align-tasks-center">
                 <AddIcon className={"bi btn-outline-secondary rounded-circle ico"} />
+           
+                <div className="ico header-img skeleton"></div>           
                 <img
                   src="https://via.placeholder.com/100"
                   alt=""
@@ -171,9 +186,80 @@ const TaskCard = ({task,index,sectionId}) => {
           </div>)}}
     </Draggable>
     <SideTask showed={showNav} hide={setShowNav} task={task} index={index} sectionId ={sectionId}/>
-  </div>
-  );
-}
+  </div>):(
+        <div
+          className="d-flex flex-column task-wrapper rounded"
+        >
+          <div className="d-flex flex-row justify-content-between">
+          {toggle && taskName !== '' ?
+          (
+          <div class="position-relative">
+            <h6 className="hover-me" onClick={()=> editText()} >{taskName}</h6> 
+            <div class="spinner-border position-absolute top-100 start-100" role="status">
+            </div>
+          </div>
+          )
+          :
+          (<input
+            type="text"
+            maxlength="16"
+            className="border-top-0 border-end-0 border-start-0"
+            value={taskName}
+            onChange={(e) => {
+              setToggle(false)
+              setTaskName(e.target.value)
+            }}
+            autoFocus
+            onBlur={(e)=>{
+              setToggle(true)
+              updateTaskName({sectionId, sections, setSections, taskName,index,dispatch,taskId});
+              e.preventDefault()
+              e.stopPropagation()
+            }}  
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === 'Escape') {
+                setToggle(true)
+                updateTaskName({sectionId, sections, setSections, taskName,index,dispatch,taskId});
+                event.preventDefault()
+                event.stopPropagation()
+            }}} 
+          />)
+        }      
+            {/* <h6>{task.content}</h6> */}
+            <Dropdown>
+                <Dropdown.Toggle 
+                  as={CustomToggle} 
+                  id="dropdown-custom-components">
+                    <button className="btn p-0" type="button">
+                      <i className="lni lni-pencil p-2"></i>
+                    </button>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    <Dropdown.Item onClick={()=>setShowNav(!showNav)}>Edit</Dropdown.Item>
+                    <Dropdown.Item onClick={(e)=>{
+                      removeTask({sectionId, sections, setSections, index,taskId,dispatch});;
+                    }}>Remove</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+            {/* <i onClick={() => setShowNav(!showNav)} className="lni lni-pencil p-2"></i> */}
+          </div>
+        <p className="px-3 text-limit">{taskDescription}</p>
+        <div className="d-flex justify-content-between align-tasks-center">
+          <p>dateasdasd</p>
+          <div className="d-flex align-tasks-center">
+            <AddIcon className={"bi btn-outline-secondary rounded-circle ico"} />
+            <img
+              src="https://via.placeholder.com/100"
+              alt=""
+              className="rounded-circle ico mx-1"
+            />
+          </div>
+        </div>
+      </div>)
+    }
+</>
+  
+)}
 
 
 export default TaskCard;

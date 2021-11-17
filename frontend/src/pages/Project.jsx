@@ -50,7 +50,6 @@ const Project = () => {
                 <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>
               </Breadcrumb>
             </h3>
-            
             { error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
             { loading && <Preload/> }
             <div className="row row-cols-xxl-4 row-cols-xl-3 row-cols-md-2 g-md-2 g-2">
