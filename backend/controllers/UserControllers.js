@@ -72,8 +72,11 @@ const authUser = AsyncHandler(async (req, res) => {
     }
 });
 
-// const getUsers = asyncHandler(async (req,res) => {
-//     const users = await User.find({});
-// });
+const getUsers = AsyncHandler(async (req,res) => {
+    //const {input} = req.body;
+    // const users = await User.find({"email_address" : new RegExp("^"+input) }).select('email_address');
+    const users = await User.find({}).select('email_address');
+    res.json(users);
+});
 
-module.exports = {registerUser, authUser};
+module.exports = {registerUser, authUser, getUsers};

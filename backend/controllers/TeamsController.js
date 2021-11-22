@@ -7,7 +7,7 @@ const getTeam = asyncHandler(async (req, res) => {
 });
 
 const createTeam = asyncHandler( async (req,res) => {
-    const {team_name, team_description, team_access, owner, users} = req.body;
+    const {team_name, team_description, team_access, userList,owner, users} = req.body;
 
     if(!team_name || !team_description){
         res.status(400)
@@ -18,6 +18,7 @@ const createTeam = asyncHandler( async (req,res) => {
             team_name, 
             team_description,
             team_access,
+            userList,
             users});
 
         const createdTeam = await team.save();

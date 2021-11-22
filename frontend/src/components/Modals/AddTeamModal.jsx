@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Modal, Button, Col, Row, Dropdown } from "react-bootstrap";
 import { createTeamAction } from "../../actions/teamActions";
 import Preload from "../Preload";
 import ErrorMessage from "../ErrorMessage";
+import { getusers } from "../../actions/userActions";
 
 const AddTeam = ({ showModal, hideModal }) => {
   const dispatch = useDispatch();
   const [teamName, setTeamName] = useState("");
   const [teamAccess, setTeamAccess] = useState("");
   const [teamDescription, setTeamDescription] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [addedUsers, setAddedUsers] = useState([]);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -17,6 +20,8 @@ const AddTeam = ({ showModal, hideModal }) => {
   const teamCreate = useSelector((state) => state.teamCreate);
   const {loading, error, team} = teamCreate;
 
+  const userList = useSelector((state) => state.userList);
+  const {users} = userList;
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -35,6 +40,28 @@ const AddTeam = ({ showModal, hideModal }) => {
     setTeamAccess("");
     setTeamDescription("");
   };
+
+  const handleAdd = (input) => {
+    console.log("Who: " + input);
+  };
+
+  const memberInputHandler = (input) =>{
+    //If the seach has value
+    if(input !== ''){
+      const filteredData = users.filter((item) => {
+        return Object.values(item).join('').toLowerCase().includes(input.toLowerCase())
+      });
+      setSuggestions(filteredData);
+    }
+    //If the search has no value
+    else {
+      setSuggestions([]);
+    }
+  };
+
+  useEffect(() => {
+    dispatch(getusers());
+  }, [dispatch])
 
   return (
     <>
@@ -64,7 +91,6 @@ const AddTeam = ({ showModal, hideModal }) => {
                   onChange={(e) => setTeamName(e.target.value)}
                 />
               </Col>
-
               <Col md="6" className="mb-3">
                 <Form.Label>Members</Form.Label>
                 <Form.Control
@@ -72,7 +98,11 @@ const AddTeam = ({ showModal, hideModal }) => {
                   name="team_members"
                   id="team_members"
                   required
+                  onChange={(e) => memberInputHandler(e.target.value)}
                 />
+                {suggestions.map((items) => 
+                  <p className="mt-1 hover-me" onClick={ (e) => handleAdd(items.email_address)}>{items.email_address}</p>
+                )}
               </Col>
             </Row>
             <Col md="12" className="mb-2">
