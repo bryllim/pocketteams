@@ -9,7 +9,8 @@ import {
 } from "../constants/sectionConstants"
 import axios from "axios";
 
-export const listSection = () => async (dispatch, getState) => {
+export const listSection = ({project_id}) => async (dispatch, getState) => {
+    console.log("listSection")
     try{
         dispatch({
             type: SECTION_LIST_REQUEST,
@@ -26,22 +27,22 @@ export const listSection = () => async (dispatch, getState) => {
     };
 
     // const { data } = await axios.get(`/api/sections`, config);
-
-    const {data:projectData} = await axios.get(`/api/sectionorder/6179228d94d94e1c2c6c21e3`, config)
-
+    console.log("project_id here",project_id)
+    const {data:projectData} = await axios.get(`/api/sections/project/${project_id}`, config)
+    console.log("projectData",projectData)
     if(!projectData){
         throw new Error("Error");
     }
     
-    const sectionOrderList = projectData.items.map(order =>{
+    const sectionOrderList = projectData.map(order =>{
         return order._id
     })
 
-    const sectionDataList = projectData.items
-    const sectionOrderId = projectData._id
+    const sectionDataList = projectData
+    // const sectionOrderId = projectData._id
     dispatch({
         type: SECTION_LIST_SUCCESS,
-        payload: {sectionOrderList,sectionDataList,sectionOrderId,}
+        payload: {sectionOrderList,sectionDataList}
     })
     } catch (error){
         const message = 

@@ -7,7 +7,7 @@ const getProjects = asyncHandler(async (req, res) => {
         populate: {
             path: 'tasks',
         }
-    });;
+    });
     res.json(projects);
 });
 

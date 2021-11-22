@@ -9,32 +9,18 @@ import { deleteTask, updateTask,createTask } from "../../actions/taskActions";
 import validator from 'validator';
 import "../../css/skeleton.css"
 
-const changeTask = ({sectionId, sections, setSections, taskName,index,dispatch,taskId}) =>{
-  if(taskName === ''){
-    taskRemove({sectionId, sections, setSections, index});
-    dispatch(deleteTask({taskId}))
-  }
-  else if(validator.isUUID(taskId)){
-      console.log('update task')
-    // dispatch(createTask({task_name:taskName,task_description:'tempdescription',section_id:sectionId, task_temp_id:taskId}))
-  }
-  else{//retaskNameTask
-    taskRename({sectionId, sections, setSections, taskName,index});
-    dispatch(updateTask({task_name:taskName,task_id:taskId}))
-  }
-}
-
 
 const updateTaskName = ({sectionId, sections, setSections, index, taskId,taskName,dispatch}) =>{
+  console.log("Test",sections)
   if(taskName === ''){
     taskRemove({sectionId, sections, setSections, index});
     dispatch(deleteTask({taskId}))
   }
   else if(validator.isUUID(taskId)){
-    console.log('dispatch new Task')
     dispatch(createTask({task_name:taskName,task_description:'tempdescription',section_id:sectionId, task_temp_id:taskId}))
   }
   else{
+
     taskRename({sectionId, sections, setSections, taskName,index});
     dispatch(updateTask({task_name:taskName, task_id:taskId}))
   }
@@ -84,7 +70,6 @@ const TaskCard = ({task,index,sectionId}) => {
 ));
   return (
     <>
-    {console.log(task)}
     {!validator.isUUID(taskId,4) ?(
     <div>
       <Draggable
@@ -111,7 +96,7 @@ const TaskCard = ({task,index,sectionId}) => {
               {toggle && taskName !== '' ?
               (
               <>
-               <h6 className="skeleton skeleton-text title"></h6>
+               
               <h6 className="hover-me" onClick={()=> editText()} >{taskName}</h6>
              
               </>)
@@ -160,11 +145,7 @@ const TaskCard = ({task,index,sectionId}) => {
                 </Dropdown>
 
                 {/* <i onClick={() => setShowNav(!showNav)} className="lni lni-pencil p-2"></i> */}
-              </div>
-              <div >
-              <p class="skeleton skeleton-text"></p>
-              <p class="skeleton skeleton-text"></p>
-              </div>                        
+              </div>                    
             <p className="px-3 text-limit">{taskDescription}</p>
                    
             <div className="d-flex justify-content-between align-tasks-center">
@@ -175,7 +156,7 @@ const TaskCard = ({task,index,sectionId}) => {
               <div className="d-flex align-tasks-center">
                 <AddIcon className={"bi btn-outline-secondary rounded-circle ico"} />
            
-                <div className="ico header-img skeleton"></div>           
+                      
                 <img
                   src="https://via.placeholder.com/100"
                   alt=""

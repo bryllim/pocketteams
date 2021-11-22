@@ -42,6 +42,32 @@ const getSectionById = asyncHandler( async (req,res) => {
     res.json(section);
 });
 
+const getSectionByProjectId = asyncHandler( async (req,res) => {
+    try {
+        console.log('getSectionByProjectId');
+        const project_id = req.params.id;
+        if (!project_id) return
+      
+        const project   = await Project.findById(project_id).populate({
+            path: 'sections',
+            populate: {
+                path: 'tasks',
+            }
+        });
+        if(project){
+            const sections = project.sections
+            console.log(sections);
+            res.json(sections);
+        } else {
+            res.status(404);
+            throw new Error("Section not found");
+        }
+    }
+    catch(e) {
+        console.log(e);
+    }
+});
+
 const updateSection = asyncHandler(async (req,res) => {
 
     try{
@@ -162,4 +188,4 @@ const updateSectionTask = asyncHandler(async (req,res) => {
     }
 });
 
-module.exports = {createSection, getSections,getSectionById, updateSection, deleteSection,updateSectionOrder,updateSectionTask};
+module.exports = {createSection, getSections,getSectionById, updateSection, deleteSection,updateSectionOrder,updateSectionTask,getSectionByProjectId};

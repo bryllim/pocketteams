@@ -1,9 +1,10 @@
 
 //rename task on frontend
-const taskRename = ({sectionId, sections, setSections, name,index}) => {
-    const newSections = [...sections];
+const taskRename = ({sectionId, sections, setSections, taskName,index}) => {
+    const newSections  = JSON.parse(JSON.stringify(sections))
+    // const newSections = [...sections];
     newSections.forEach(section => {
-      return section._id === sectionId ? section.tasks[index].task_name = name : null
+      return section._id === sectionId ? section.tasks[index].task_name = taskName : null
     })
     setSections(newSections)
 }

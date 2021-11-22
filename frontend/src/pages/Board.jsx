@@ -12,6 +12,8 @@ import { updateSectionTask,createSection, updateSectionOrder,} from "../actions/
 import {onDragEnd,orderSections} from "../functions/dragDropFunctions"
 import {sectionCreate,sectionUpdate} from "../functions/sectionFunctions"
 import { taskUpdate } from "../functions/taskFunctions";
+import {listSection} from "../actions/sectionActions"
+import SkeletonSectionCard from "../components/Cards/SkeletonSectionCard"
 
 const addSection = async ({dispatch,projectId,sectionOrder,setSectionOrder,sections,setSections})=>{
  sectionCreate({sectionOrder,setSectionOrder,sections,setSections})
@@ -21,7 +23,6 @@ const addSection = async ({dispatch,projectId,sectionOrder,setSectionOrder,secti
 
 const onDrag = ({result,dispatch,sectionOrder,setSectionOrder,projectId,sections,setSections}) =>{ //transfer outside function component
   const itemType = result.type
-  console.log('result', result)
   if(itemType === 'column'){
     if(result.destination.index === result.source.index ) return
     const {sectionId,sourceDragIndex,destinationDragIndex} = orderSections({result,sectionOrder,setSectionOrder})
@@ -37,22 +38,31 @@ const onDrag = ({result,dispatch,sectionOrder,setSectionOrder,projectId,sections
 
 const Board = (props) => {
   const {sectionList, projectId} = (props.location) || {};
-  const sectionOrderList = sectionList.map(order =>{
-    return order._id
-  })
+  // const sectionOrderList = sectionList.map(order =>{
+  //   return order._id
+  // })
+  console.log("projectId", projectId)
   const dispatch = useDispatch();
   const history = useHistory();
+
   const createdSection = useSelector((state) => state.sectionCreate)
   const createdTask = useSelector((state) => state.taskCreate)
   const userLogin = useSelector((state) => state.userLogin);
-  const [sections, setSections] = useState(sectionList);
-  const [sectionOrder,setSectionOrder] = useState(sectionOrderList);
+
+  const dataList = useSelector((state) => state.sectionList);
+  // const sectionDataList= dataList.data.sectionDataList;
+  // const sectionOrderList = dataList.data.sectionOrderList;
+  // const sectionOrderId = dataList.data.sectionOrderId;
+
+  const [sections, setSections] = useState(null);
+  const [sectionOrder,setSectionOrder] = useState(null);
   const { userInfo } = userLogin;
 
   useEffect(() => {
     if (!userInfo) {
         history.push('/');
-    } 
+    }
+    dispatch(listSection({project_id:projectId})); 
   },[history, userInfo, dispatch])
 
   useEffect(() => {
@@ -66,6 +76,15 @@ const Board = (props) => {
       taskUpdate({createdTask,sections,setSections})
     }
   },[createdTask])
+
+  useEffect(() => {
+    if(dataList.loading  === false && dataList.data !== undefined){
+      const sectionDataList= dataList.data.sectionDataList;
+      const sectionOrderList = dataList.data.sectionOrderList;
+      setSections(sectionDataList)
+      setSectionOrder(sectionOrderList)
+    }
+  },[dataList])
 
   return (
     <>  
@@ -90,6 +109,9 @@ const Board = (props) => {
                     >
                       {provided => {
                         return(
+
+
+
                           <div
                             {...provided.droppableProps}
                             ref={provided.innerRef}
@@ -100,36 +122,59 @@ const Board = (props) => {
                             }}
                             className="pb-3"
                           >
-                           
-                           {(sectionOrder && sections)?(sectionOrder.map((sectionId,index)=>{
-
-                            const section = sections.filter(obj => {
-                              return obj._id === sectionId
-                            })[0]
-                              return (
-                               
-                                      <div                                
-                                        style={{
-                                          display: "flex",
-                                          flexDirection: "column",
-                                          alignItems: "center",
-                                          height:'100%',
-                                        }}
-                                        className = "py-2"
-                                        key={sectionId}
-                                       
-                                      >
-                                          <SectionCard
-                                          section = {section}
-                                          index={index}
-                                          provided={provided}
-                                          sectionId={sectionId}
-                                          />
-                                      </div>
-                              )
-                              
-                            })):<></>}
+                            
+                            {!sections ?(
+                              Array.from(Array(Math.floor(Math.random() * 6))).map((item,index) => {
+                                return(
+                                <div                                
+                                style={{
+                                  display: "flex",
+                                  flexDirection: "column",
+                                  alignItems: "center",
+                                  height:'100%',
+                                }}
+                                className = "py-2"
+                                >
+                                <SkeletonSectionCard/>
+                              </div>)
+                            }))
+                            
+                            : (
+                            
+                            sectionOrder?.map((sectionId,index)=>{
+                              const section = sections.filter(obj => {
+                                return obj._id === sectionId
+                              })[0]
+                                return (
+                                 
+                                        <div                                
+                                          style={{
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            alignItems: "center",
+                                            height:'100%',
+                                          }}
+                                          className = "py-2"
+                                          key={sectionId}
+                                         
+                                        >
+                                            <SectionCard
+                                            section = {section}
+                                            index={index}
+                                            provided={provided}
+                                            sectionId={sectionId}
+                                            />
+                                            
+                                        </div>
+                                )
+                                
+                              })
+                        
+                            
+                            
+                            )}
                             {provided.placeholder}
+                      
                           </div> 
                           
                       )}}
