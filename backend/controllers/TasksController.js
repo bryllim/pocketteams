@@ -36,7 +36,7 @@ const createTask = asyncHandler(async (req, res) => {
         createdTask.task_temp_id = task_temp_id;
         res.status(201).json(createdTask);
 
-        console.log(createdTask);
+        console.log(createdTask, sectionResponse);
       } catch (err) {
         console.log(err);
         res.status(500).json(err);
@@ -56,7 +56,7 @@ const getTasks = asyncHandler(async (req, res) => {
 const getTasksBySection = asyncHandler(async (req, res) => {
   const sectionId = req.params.sectionid;
   const tasks = await Task.find({ section: sectionId });
-  console.log(tasks);
+  console.log("Tasks", sectionId);
   res.json(tasks);
 });
 

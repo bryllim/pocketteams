@@ -32,7 +32,7 @@ const updateTaskName = ({sectionId, sections, setSections, index, taskId,taskNam
     dispatch(deleteTask({taskId}))
   }
   else if(validator.isUUID(taskId)){
-    console.log('dispatch new Task')
+    // console.log('dispatch new Task')
     dispatch(createTask({task_name:taskName,task_description:'tempdescription',section_id:sectionId, task_temp_id:taskId}))
   }
   else{
@@ -67,7 +67,7 @@ const TaskCard = ({task,index,sectionId}) => {
     setTaskName(task.task_name);
   },[task]);
   
-  // console.log("task:" + task)
+  // console.log()
 
   const editText = () => {
     setToggle(false)
@@ -172,7 +172,7 @@ const TaskCard = ({task,index,sectionId}) => {
             </div>
           </div>)}}
     </Draggable>
-    <SideTask showed={showNav} hide={setShowNav} task={task} index={index} sectionId ={sectionId}/>
+    <SideTask showed={showNav} hide={setShowNav} task={task} index={index} sectionId ={sectionId} section={sections}  />
   </div>
   );
 }

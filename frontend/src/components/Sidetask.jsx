@@ -4,7 +4,7 @@ import Comment from "../components/Comment";
 import SubTask from "../components/SubTask";
 import {TaskContext } from "../contexts/SectionContext";
 import {taskRename,taskRemove,taskDescriptionUpdate,taskPriorityUpdate} from "../functions/TaskFunctions"
-import { deleteTask, updateTask,createTask,updateTaskDescription, updateTaskPriority } from "../actions/taskActions";
+import { deleteTask, updateTask ,createTask,updateTaskDescription, updateTaskPriority } from "../actions/taskActions";
 
 const updateTaskName = ({sectionId, sections, setSections, index, taskId,taskName,dispatch}) =>{
   if(taskName === ''){
@@ -30,7 +30,7 @@ const updateTaskAssignedUsers = (taskId,taskAssignedUsers) =>{
 }
 
 const priorityStatus = ({taskNewPriority, taskId,dispatch,index,sectionId,sections,setSections}) => {
-  console.log("prioritystatus", taskNewPriority)
+  // console.log("prioritystatus", taskNewPriority)
   taskPriorityUpdate({sections,setSections,taskNewPriority,index,sectionId,})
   dispatch(updateTaskPriority({task_priority:taskNewPriority, task_id:taskId}))
   }
@@ -41,20 +41,20 @@ const changeTaskDescription = ({sections, setSections, taskDescription, index, s
   dispatch(updateTaskDescription({task_description:taskDescription, task_id:taskId}))
 }
 
-const SideTask = ({ showed, hide, task,index,sectionId }) => {
+const SideTask = ({ showed, hide, task,index,section ,sectionId }) => {
+  const {sections, setSections, sectionOrder, setSectionOrder, dispatch} = useContext(TaskContext)
   const [markTask, setMarkTask] = useState(true);
-  const [sectionName, setSectionName] = useState("section name");
+  const [sectionName, setSectionName] = useState("set section");
   const [user, setUser] = useState("assign user");
   const [color, setColor] = useState(
     "form-select form-select-sm label-font ms-3"
   );
-  const [name, setName] = useState(task.task_name)
+  const [taskName, setName] = useState(task.task_name)
   const [taskDescription, setTaskDescription] = useState(task.task_description);
   const [taskPriority, setTaskPriority] = useState(task.task_priority);
-  const {sections, setSections, sectionOrder, setSectionOrder, dispatch} = useContext(TaskContext)
   const taskId = task._id;
 
-  console.log(taskPriority)
+  // console.log(sectionId)
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p
@@ -138,18 +138,18 @@ const SideTask = ({ showed, hide, task,index,sectionId }) => {
                 className="py-2 full border-0 h3"
                 type="text"
                 placeholder="Write a task name"
-                value={name}
+                value={taskName}
                 onChange={(e) => {
                   setName(e.target.value)
                 }}
                 onBlur={(e)=>{
-                  updateTask({sectionId, sections, setSections, name,index,dispatch,taskId});
+                  updateTaskName({sectionId, sections, setSections, taskName ,index,dispatch,taskId});
                   e.preventDefault()
                   e.stopPropagation()
                 }}  
                 onKeyDown={(event) => {
                   if (event.key === 'Enter' || event.key === 'Escape') {
-                    updateTask({sectionId, sections, setSections, name, index, dispatch, taskId});
+                    updateTaskName({sectionId, sections, setSections, taskName, index, dispatch, taskId});
                     event.preventDefault()
                     event.stopPropagation()
                 }}} 
@@ -177,18 +177,16 @@ const SideTask = ({ showed, hide, task,index,sectionId }) => {
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                           <>
-                        {sections.map((section, index) => {
+                        {sections?.map((section) => {
                           <Dropdown.Item
                             className="label-font-fw"
                             value={section.section_name}
-                            onClick={(e) => setSectionName("Requested")}
-                          >
+                            // onClick={(e) => setSectionName("Requested")}
+                            >
                             section name
-                            {/* {section.section_name} */}
-                            {console.log(section.section_name)}
                           </Dropdown.Item>
                         })}
-                        </>
+                          </>
                         </Dropdown.Menu>
                       </Dropdown>
                       <p className="label-font">{sectionName}</p>
@@ -298,10 +296,6 @@ const SideTask = ({ showed, hide, task,index,sectionId }) => {
 
           {/* -----COMMENT SECTION----- */}
           <div className="full">
-            <Comment />
-            <Comment />
-            <Comment />
-            <Comment />
             <Comment />
             <Comment />
           </div>
