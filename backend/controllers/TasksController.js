@@ -49,7 +49,7 @@ const createTask = asyncHandler(async (req, res) => {
 });
 
 const getTasks = asyncHandler(async (req, res) => {
-  const tasks = await Task.find();
+  const tasks = await Task.find().populate("task_comments");
   res.json(tasks);
 });
 

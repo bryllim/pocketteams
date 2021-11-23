@@ -10,8 +10,9 @@ const asyncHandler = require("express-async-handler");
 // });
 
 const getComments = asyncHandler(async (req, res) => {
+  // const { task_id } = req.body;
+  // console.log("taskId", task_id);
   const comments = await Comments.find();
-  console.log("getComment", comments);
   res.json(comments);
 });
 
@@ -32,11 +33,11 @@ const createComment = asyncHandler(async (req, res) => {
         let createdComment = await comment.save();
         taskResponse = await Task.findByIdAndUpdate(
           task_id,
-          { $push: { tasks_comments: createdComments } },
+          { $push: { task_comments: createdComment } },
           { new: true, useFindAndModify: false }
         );
         if (taskResponse === null) {
-          throw new Error("sectionResponse");
+          throw new Error("commentRespone");
         }
 
         createdComment = createdComment.toObject();
