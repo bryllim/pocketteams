@@ -39,11 +39,11 @@ const SideTask = ({ showed, hide, task,index,sectionId }) => {
   const reClass = () => {
     let val = document.getElementById("test");
     console.log('reClass', val.options[val.selectedIndex].value);
-    if (val == 1) {
+    if (val === 1) {
       setColor("form-select form-select-sm label-font ms-3 light");
-    } else if (val == 2) {
+    } else if (val === 2) {
       setColor("form-select form-select-sm label-font ms-3 medium");
-    } else if (val == 3) {
+    } else if (val === 3) {
       setColor("form-select form-select-sm label-font ms-3 heavy");
     } else if (val === "select priority") {
       setColor("form-select form-select-sm label-font ms-3 prio");

@@ -39,6 +39,7 @@ const onDragEnd = ({result, sections, sectionOrder, setSections, setSectionOrder
       setSections([
         ...newSections,
       ]);
+      console.log('newSections',newSections)
     }
     return {sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type}
   };

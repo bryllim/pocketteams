@@ -1,6 +1,5 @@
 import { 
     SECTION_LIST_FAIL, SECTION_LIST_REQUEST, SECTION_LIST_SUCCESS,
-    SECTION_ORDER_LIST_SUCCESS,SECTION_ORDER_LIST_FAIL,
     SECTION_UPDATE_REQUEST,SECTION_UPDATE_SUCCESS,SECTION_UPDATE_FAIL,
     SECTION_ORDER_UPDATE_REQUEST, SECTION_ORDER_UPDATE_SUCCESS, SECTION_ORDER_UPDATE_FAIL,
     SECTION_TASK_UPDATE_REQUEST,SECTION_TASK_UPDATE_SUCCESS,SECTION_TASK_UPDATE_FAIL,
@@ -178,7 +177,7 @@ export const updateSection = ({section_name, sectionId}) => async (dispatch, get
     }
 }
 
-export const createSection = ({section_name,project_id}) => async (dispatch, getState) => {
+export const createSection = ({section_name,project_id, section_id}) => async (dispatch, getState) => {
     try{
         dispatch({
             type: SECTION_CREATE_REQUEST,
@@ -194,10 +193,10 @@ export const createSection = ({section_name,project_id}) => async (dispatch, get
                 Authorization: `Bearer ${userInfo.token}`,
             },
         };
-
+        console.log("section_id",section_id)
         const { data } = await axios.post(
             `/api/sections/create`,
-            {section_name,project_id}, 
+            {section_name,project_id,section_id}, 
             config
         );
 

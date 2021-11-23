@@ -4,21 +4,23 @@ import SectionCard from "../components/Cards/SectionCard";
 import { Breadcrumb, Col, Container, Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import {DragDropContext, Droppable} from 'react-beautiful-dnd'
-import "../css/board.css"
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import {TaskContext}  from "../contexts/SectionContext"
 import { updateSectionTask,createSection, updateSectionOrder,} from "../actions/sectionActions";
 import {onDragEnd,orderSections} from "../functions/dragDropFunctions"
-import {sectionCreate,sectionUpdate} from "../functions/sectionFunctions"
-import { taskUpdate } from "../functions/taskFunctions";
+import {sectionCreate} from "../functions/sectionFunctions"
 import {listSection} from "../actions/sectionActions"
 import SkeletonSectionCard from "../components/Cards/SkeletonSectionCard"
+import { ObjectID } from 'bson';
+import "../css/board.css"
 
 const addSection = async ({dispatch,projectId,sectionOrder,setSectionOrder,sections,setSections})=>{
- sectionCreate({sectionOrder,setSectionOrder,sections,setSections})
- dispatch(createSection({section_name: 'New Section',project_id:projectId}))
- return
+  const sectionId =  new ObjectID().toHexString()
+  const sectionName = "New Section";
+  sectionCreate({sectionOrder,setSectionOrder,sections,setSections,sectionId,projectId,sectionName})
+  dispatch(createSection({section_name: sectionName,project_id:projectId,section_id:sectionId}))
+  return
 }
 
 const onDrag = ({result,dispatch,sectionOrder,setSectionOrder,projectId,sections,setSections}) =>{ //transfer outside function component
@@ -37,23 +39,11 @@ const onDrag = ({result,dispatch,sectionOrder,setSectionOrder,projectId,sections
 }
 
 const Board = (props) => {
-  const {sectionList, projectId} = (props.location) || {};
-  // const sectionOrderList = sectionList.map(order =>{
-  //   return order._id
-  // })
-  console.log("projectId", projectId)
+  const { projectId} = (props.location) || {};
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const createdSection = useSelector((state) => state.sectionCreate)
-  const createdTask = useSelector((state) => state.taskCreate)
   const userLogin = useSelector((state) => state.userLogin);
-
   const dataList = useSelector((state) => state.sectionList);
-  // const sectionDataList= dataList.data.sectionDataList;
-  // const sectionOrderList = dataList.data.sectionOrderList;
-  // const sectionOrderId = dataList.data.sectionOrderId;
-
   const [sections, setSections] = useState(null);
   const [sectionOrder,setSectionOrder] = useState(null);
   const { userInfo } = userLogin;
@@ -63,19 +53,7 @@ const Board = (props) => {
         history.push('/');
     }
     dispatch(listSection({project_id:projectId})); 
-  },[history, userInfo, dispatch])
-
-  useEffect(() => {
-    if(createdSection.loading  === false && createdSection.data !== undefined){
-      sectionUpdate({sectionOrder,setSectionOrder,sections,setSections,createdSection})
-    }
-  },[createdSection])
-
-  useEffect(() => {
-    if(createdTask.loading  === false && createdTask.data !== undefined){
-      taskUpdate({createdTask,sections,setSections})
-    }
-  },[createdTask])
+  },[history, userInfo, dispatch, projectId]);
 
   useEffect(() => {
     if(dataList.loading  === false && dataList.data !== undefined){
@@ -85,7 +63,7 @@ const Board = (props) => {
       setSectionOrder(sectionOrderList)
     }
   },[dataList])
-
+  
   return (
     <>  
      <TaskContext.Provider value={{sections,setSections,sectionOrder,setSectionOrder,dispatch}}>
@@ -102,16 +80,16 @@ const Board = (props) => {
             </Breadcrumb></h3>
                   <div className="d-flex scrolling-wrapper-x flex-nowrap flex-grow-1 task-board-wrapper my-3" >
                   <DragDropContext
-                    onDragEnd={result => onDrag({result,dispatch,sectionOrder,setSectionOrder,projectId,sections,setSections})}
+                    onDragEnd={result => {
+                      onDrag({result,dispatch,sectionOrder,setSectionOrder,projectId,sections,setSections})
+                    }
+                  }
                   >
                     <Droppable 
                       droppableId="all-columns" direction="horizontal" type="column"
                     >
                       {provided => {
                         return(
-
-
-
                           <div
                             {...provided.droppableProps}
                             ref={provided.innerRef}
@@ -121,8 +99,7 @@ const Board = (props) => {
                               height:"100%"
                             }}
                             className="pb-3"
-                          >
-                            
+                          >                            
                             {!sections ?(
                               Array.from(Array(Math.floor(Math.random() * 6))).map((item,index) => {
                                 return(
@@ -137,52 +114,39 @@ const Board = (props) => {
                                 >
                                 <SkeletonSectionCard/>
                               </div>)
-                            }))
-                            
-                            : (
-                            
+                            }))                           
+                            : (                           
                             sectionOrder?.map((sectionId,index)=>{
                               const section = sections.filter(obj => {
                                 return obj._id === sectionId
                               })[0]
-                                return (
-                                 
-                                        <div                                
-                                          style={{
-                                            display: "flex",
-                                            flexDirection: "column",
-                                            alignItems: "center",
-                                            height:'100%',
-                                          }}
-                                          className = "py-2"
-                                          key={sectionId}
-                                         
-                                        >
-                                            <SectionCard
-                                            section = {section}
-                                            index={index}
-                                            provided={provided}
-                                            sectionId={sectionId}
-                                            />
-                                            
-                                        </div>
-                                )
-                                
-                              })
-                        
-                            
-                            
+                                return (                                
+                                  <div                                
+                                    style={{
+                                      display: "flex",
+                                      flexDirection: "column",
+                                      alignItems: "center",
+                                      height:'100%',
+                                    }}
+                                    className = "py-2"
+                                    key={sectionId}
+                                    
+                                  >
+                                      <SectionCard
+                                      section = {section}
+                                      index={index}
+                                      provided={provided}
+                                      sectionId={sectionId}
+                                      />                                          
+                                  </div>
+                                )                               
+                              })                     
                             )}
-                            {provided.placeholder}
-                      
-                          </div> 
-                          
-                      )}}
-                      
+                            {provided.placeholder}                     
+                          </div>                          
+                      )}}                     
                     </Droppable> 
-                  </DragDropContext>
-                
-                 
+                  </DragDropContext>                           
                     <div className="pt-2">
                         <div className=" d-flex align-items-center justify-content-between border rounded-pill px-5 py-2 text-nowrap btn btn-outline-secondary" 
                           onClick={() => addSection({dispatch,projectId,sectionOrder,setSectionOrder,sections,setSections})}

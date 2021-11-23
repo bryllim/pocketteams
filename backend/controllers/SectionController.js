@@ -2,16 +2,19 @@ const asyncHandler = require("express-async-handler");
 const Section = require("../models/SectionModel");
 const Task = require("../models/TaskModel");
 const Project = require("../models/ProjectModel");
+
 const createSection = asyncHandler( async (req,res) => {
-    const {section_name, project_id} = req.body;
+    const {section_name, project_id,section_id} = req.body;
     //need to validate first if user belongs to section order id
     try {
         if(!section_name || !project_id){ 
             res.status(400)
             throw new Error("Please Fill all the Fields");
         } else {
-            const section = new Section({user: req.user._id, section_name, project_id});
+            console.log("section_id",section_id);
+            const section = new Section({user: req.user._id,_id:section_id, section_name, project_id });
             const createdSection = await section.save();
+            console.log("createdSection", createdSection);
             await Project.findByIdAndUpdate(
                 project_id,
                 { $push: { sections: createdSection} },
@@ -84,10 +87,7 @@ const updateSection = asyncHandler(async (req,res) => {
             section.section_name = section_name;
             const updatedSection = await section.save();
             res.json(updatedSection);
-        } else {
-            res.status(404);
-            throw new Error("Section not found");
-        }
+        } 
     }
     catch(e) {
         console.log(e);
@@ -99,27 +99,32 @@ const updateSection = asyncHandler(async (req,res) => {
 });
 
 const deleteSection = asyncHandler(async (req,res) => {
-    const section = await Section.findById(req.params.id);
-    const sectionOrder = await Project.findById(section.project_id);
-    const tasks = await Task.find({section_id: section._id});
-    if(section.user.toString() !== req.user._id.toString()){
-        res.status(401);
-        throw new Error("You can't perform this action");   
-    }
-
-    if(section){
-        
-        await section.remove()
-        await sectionOrder.items.pull(section._id)
-        await sectionOrder.save()
-        //remove all tasks associated with this section
-        for(let i = 0; i < tasks.length; i++){
-            await tasks[i].remove()
+    try{
+        const section = await Section.findById(req.params.id);
+        const project = await Project.findById(section.project_id);
+        const tasks = await Task.find({section_id: section._id});
+        if(!section){
+            res.status(404);
+            throw new Error("Please Fill all the Fields");
         }
-            
-        
-        console.log('section deleted')
-        res.json({message: "Section Removed"});
+        if(section.user.toString() !== req.user._id.toString()){
+            res.status(401);
+            throw new Error("You can't perform this action");   
+        }
+        else{
+            await section.remove()
+            await project.sections.pull(section._id)
+            await project.save()
+            //remove all tasks associated with this section
+            for(let i = 0; i < tasks.length; i++){
+                await tasks[i].remove()
+            } 
+            console.log('section deleted')
+            res.json({message: "Section Removed"});
+        }
+    }
+    catch(e) {
+        console.log(e);
     }
     
 });
