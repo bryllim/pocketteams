@@ -4,9 +4,7 @@ import {
   Button,
   Col,
   Row,
-  DropdownButton,
   Dropdown,
-  NavDropdown,
 } from "react-bootstrap";
 
 const AddTeam = ({ showModal, hideModal }) => {

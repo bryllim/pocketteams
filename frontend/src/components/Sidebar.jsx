@@ -3,7 +3,6 @@ import ProfileCard from "./Cards/ProfileCard";
 import TeamCard from "./Cards/TeamCard";
 import { useState } from "react";
 import AddTeam from "./Modals/AddTeamModal";
-import { Row } from "react-bootstrap";
 
 const Sidebar = () => {
   const [teamShow, setTeamShow] = useState(false);

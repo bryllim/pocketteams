@@ -119,33 +119,32 @@ const SectionCard = ({sectionId,index,section}) => {
             key={index} 
             id="task"
           >  
-                {(provided,snapshot) => (  
-                    <div 
-                      ref={provided.innerRef}
-                      {...provided.droppableProps}
-                      // className="section-wrapper-internal scrolling-wrapper-y flex-nowrap pt-4 basecard">
-                      className="section-wrapper-internal flex-nowrap pt-4 basecard">
-                        {section.tasks.map((task,index) =>{
-                          return(
-                            <TaskCard
-                              sectionId={sectionId}
-                              provided={provided}
-                              snapshot={snapshot}
-                              task={task}
-                              index={index}
-                            />
-                          )
-                          })}
-                      {provided.placeholder}
-                      <div className="d-flex justify-content-center align-items-center theme-btn mx-auto my-4"  
-                      style={{width:"250px", height:"50px"}} onClick={()=>newTask({sectionId, sections, setSections,dispatch})}>
-                            <button className="btn" type="button">
-                                <i className="lni lni-plus text-white"></i>
-                            </button>
-                            <h6 className="text-white">Add Another</h6>
-                      </div>
-                    </div>
-                     )}  
+            {(provided,snapshot) => (  
+                <div 
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className="section-wrapper-internal scrolling-wrapper-y flex-nowrap pt-4 basecard">
+                    {section.tasks.map((task,index) =>{
+                      return(
+                        <TaskCard
+                          sectionId={sectionId}
+                          provided={provided}
+                          snapshot={snapshot}
+                          task={task}
+                          index={index}
+                        />  
+                      )
+                      })}
+                  {provided.placeholder}
+                  <div className="d-flex justify-content-center align-items-center theme-btn mx-auto my-4"  
+                  style={{width:"250px", height:"50px"}} onClick={()=>newTask({sectionId, sections, setSections,dispatch})}>
+                        <button className="btn" type="button">
+                            <i className="lni lni-plus text-white"></i>
+                        </button>
+                        <h6 className="text-white">Add Another</h6>
+                  </div>
+                </div>
+                  )}  
               </Droppable> 
             </div>
           )

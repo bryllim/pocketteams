@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Image, Row } from 'react-bootstrap'
+import {Image, Row } from 'react-bootstrap'
 
 const EditTeamCard = (props) => {
     const user = JSON.parse(localStorage.getItem("userInfo"));

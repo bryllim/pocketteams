@@ -4,13 +4,9 @@ import {
   Col,
   Row,
 } from "react-bootstrap";
-import React,{useContext,useState} from "react";
-import {TaskContext} from "../../contexts/SectionContext"
-
-
+import React from "react";
 
 const AddTaskModal = ({ showModal, hideModal }) => {
-  const {addTask,columns,setColumns} = useContext(TaskContext)
   
   return (
     <>

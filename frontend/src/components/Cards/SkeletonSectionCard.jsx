@@ -1,9 +1,9 @@
-import React,{useContext,useState,useRef} from "react";
+import React from "react";
 import { Droppable} from 'react-beautiful-dnd' 
 import AddIcon from "../../assets_pocketdevs/assets/svg/AddIcon";
 import { Dropdown } from "react-bootstrap";
 import "../../css/skeleton.css"
-const SkeletonSectionCard = ({sectionId,index,section}) => {
+const SkeletonSectionCard = () => {
     const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
         <p
           ref={ref}
@@ -32,13 +32,13 @@ const SkeletonSectionCard = ({sectionId,index,section}) => {
                 </Dropdown.Toggle>
                 </Dropdown>
             </div>
-            <Droppable>
+            <Droppable >
                 {(provided,snapshot) => {
                     return(
                         <div className="section-wrapper-internal scrolling-wrapper-y flex-nowrap pt-4 basecard">
                             { Array.from(Array(Math.floor(Math.random() * 5))).map((task, index) => {
                                 return (
-                                    <div className="d-flex flex-column task-wrapper rounded" >
+                                    <div className="d-flex flex-column task-wrapper rounded">
                                         <div className="d-flex flex-row justify-content-between">
                                             <h6 className="skeleton skeleton-text title"></h6>
                                             <Dropdown>
@@ -50,14 +50,14 @@ const SkeletonSectionCard = ({sectionId,index,section}) => {
                                                     </button>
                                                 </Dropdown.Toggle>
                                                 <Dropdown.Menu>
-                                                    <Dropdown.Item o>Edit</Dropdown.Item>
+                                                    <Dropdown.Item >Edit</Dropdown.Item>
                                                     <Dropdown.Item >Remove</Dropdown.Item>
                                                 </Dropdown.Menu>
                                             </Dropdown>
                                         </div>
                                             <div >
-                                                <p class="skeleton skeleton-text"></p>
-                                                <p class="skeleton skeleton-text"></p>
+                                                <p className="skeleton skeleton-text"></p>
+                                                <p className="skeleton skeleton-text"></p>
                                             </div>                          
                                             <div className="d-flex justify-content-between align-tasks-center">
                                                 <p>date</p>

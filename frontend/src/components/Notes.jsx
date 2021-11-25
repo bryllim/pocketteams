@@ -93,9 +93,9 @@ const Notes = () => {
             <hr className="default"></hr>
             { error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
             { loading && <Preload/> }
-            {notes?.map((note) => (
+            {notes?.map((note,index) => (
               <textarea 
-              // id="textarea"
+              key={index}
               note={note.content}
               placeholder="Write your notes here."
               onChange={(e) => setContent(e.target.value)} 

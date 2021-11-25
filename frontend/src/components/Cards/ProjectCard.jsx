@@ -1,6 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState,useMemo} from "react";
 import { useHistory } from "react-router-dom";
-import { Badge, Col, Dropdown, Row } from "react-bootstrap";
+import {Dropdown} from "react-bootstrap";
 import EditProjectModal from "../Modals/EditProjectModal";
 import AddProjectModal from "../Modals/AddProjectModal";
 import { deleteProjectAction } from "../../actions/projectActions";
@@ -13,9 +13,9 @@ const ProjectCard = ({data}) => {
   const projectId = (data) ? data._id : null;
   const history = useHistory();
   const dispatch = useDispatch();
-  const sectionList = (data && data.sections) ? data.sections: [];
+  const sectionList = useMemo(() => (data && data.sections) ? data.sections: [], [data]);
   const handleOnClick = useCallback(() => history.push({pathname: '/board',
-  sectionList,projectId}), [history]);
+  sectionList,projectId}), [history , sectionList, projectId]);
   const [editShow, setEditShow] = useState(false);
   const handleEditClose = () => setEditShow(false);
   const handleEditShow = () => setEditShow(true);

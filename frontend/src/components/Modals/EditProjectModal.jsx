@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { Form, Modal, Col, Row, Dropdown } from "react-bootstrap";
+import React, { useState } from "react";
+import { Form, Modal, Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProjectAction } from "../../actions/projectActions";
 import ErrorMessage from "../ErrorMessage";
@@ -38,19 +38,19 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
     setProjectStatus("");
   }
 
-  const reClass = () => {
-    let val = document.getElementById("status").value;
+  // const reClass = () => {
+  //   let val = document.getElementById("status").value;
 
-    if (val == 1) {
-      setColor("form-select form-select-sm ms-3 light");
-    } else if (val == 2) {
-      setColor("form-select form-select-sm ms-3 medium");
-    } else if (val == 3) {
-      setColor("form-select form-select-sm ms-3 heavy");
-    } else if (val == "select priority") {
-      setColor("form-select form-select-sm ms-3 prio");
-    }
-  };
+  //   if (val === 1) {
+  //     setColor("form-select form-select-sm ms-3 light");
+  //   } else if (val === 2) {
+  //     setColor("form-select form-select-sm ms-3 medium");
+  //   } else if (val === 3) {
+  //     setColor("form-select form-select-sm ms-3 heavy");
+  //   } else if (val === "select priority") {
+  //     setColor("form-select form-select-sm ms-3 prio");
+  //   }
+  // };
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p

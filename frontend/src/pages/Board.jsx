@@ -26,14 +26,18 @@ const addSection = async ({dispatch,projectId,sectionOrder,setSectionOrder,secti
 const onDrag = ({result,dispatch,sectionOrder,setSectionOrder,projectId,sections,setSections}) =>{ //transfer outside function component
   const itemType = result.type
   if(itemType === 'column'){
-    if(result.destination.index === result.source.index ) return
+   
+    if(result.destination === null || result.destination.index === result.source.index ) return
     const {sectionId,sourceDragIndex,destinationDragIndex} = orderSections({result,sectionOrder,setSectionOrder})
     dispatch(updateSectionOrder({sectionId,sourceDragIndex,destinationDragIndex,project_id: projectId}));
+    console.log("drag column",result)
+    console.log("drag",result.destination === null )
   }
   else{
     if (!result.destination) return;
     const {sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type} = onDragEnd({result,sections, sectionOrder, setSections,setSectionOrder})
     dispatch(updateSectionTask({sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type}));
+    console.log("moved ",taskId)
   }
   return
 }
@@ -87,6 +91,7 @@ const Board = (props) => {
                   >
                     <Droppable 
                       droppableId="all-columns" direction="horizontal" type="column"
+                      key="all-columns"
                     >
                       {provided => {
                         return(
@@ -103,7 +108,7 @@ const Board = (props) => {
                             {!sections ?(
                               Array.from(Array(Math.floor(Math.random() * 6))).map((item,index) => {
                                 return(
-                                <div                                
+                                <div                          
                                 style={{
                                   display: "flex",
                                   flexDirection: "column",
@@ -115,11 +120,13 @@ const Board = (props) => {
                                 <SkeletonSectionCard/>
                               </div>)
                             }))                           
-                            : (                           
-                            sectionOrder?.map((sectionId,index)=>{
+                            : 
+                            (                           
+                              sectionOrder?.map((sectionId,index)=>{
                               const section = sections.filter(obj => {
                                 return obj._id === sectionId
                               })[0]
+                              console.log("section tasks",section.tasks)
                                 return (                                
                                   <div                                
                                     style={{
@@ -130,14 +137,13 @@ const Board = (props) => {
                                     }}
                                     className = "py-2"
                                     key={sectionId}
-                                    
                                   >
-                                      <SectionCard
-                                      section = {section}
-                                      index={index}
-                                      provided={provided}
-                                      sectionId={sectionId}
-                                      />                                          
+                                    <SectionCard
+                                    section = {section}
+                                    index={index}
+                                    provided={provided}
+                                    sectionId={sectionId}
+                                    />                                          
                                   </div>
                                 )                               
                               })                     

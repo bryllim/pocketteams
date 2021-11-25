@@ -155,42 +155,74 @@ const updateSectionOrder = asyncHandler(async (req,res) => {
 });
 
 const updateSectionTask = asyncHandler(async (req,res) => {
-    const {sourceSectionId, destinationSectionId,sourceDragindex,destinationDragindex,type} = req.body;
-    const taskId = req.params.id
-    const task = await Task.findById(taskId);
-    const sectionSource = await Section.findById(sourceSectionId);
-    const sectionDestination = await Section.findById(destinationSectionId);
-    //Check if this Section belongs to the user
-    if(sectionSource.user.toString() !== req.user._id.toString()){
-        res.status(401);
-        throw new Error("You can't perform this action");
-    }
-    if(task && sectionSource && sectionDestination){
-        const sourceTasks = [...sectionSource.tasks]
-        const destinationTasks = [...sectionDestination.tasks]
-        task.section_id = destinationSectionId;
-        if(sourceSectionId === destinationSectionId){
-            destinationTasks.splice(sourceDragindex,1)
-            destinationTasks.splice(destinationDragindex,0,taskId)
-            sectionDestination.tasks = destinationTasks
-            await sectionDestination.save();
+    console.log('updateSectionTask');
+    try{
+        const {sourceSectionId, destinationSectionId,sourceDragindex,destinationDragindex,type} = req.body;
+        const taskId = req.params.id
+        const task = await Task.findById(taskId).exec();
+        console.log("sourceSectionId",sourceSectionId);
+        console.log("destinationSectionId",destinationSectionId);
+        const sectionSource = await Section.findById(sourceSectionId).exec();
+        const sectionDestination = await Section.findById(destinationSectionId).exec();
+        //Check if this Section belongs to the user
+        if(sectionSource.user.toString() !== req.user._id.toString()){
+            res.status(401);
+            throw new Error("You can't perform this action");
         }
-        else{
-            sourceTasks.splice(sourceDragindex,1)
-            destinationTasks.splice(destinationDragindex,0,taskId)
-            sectionSource.tasks = sourceTasks
-            sectionDestination.tasks = destinationTasks
-            await sectionSource.save();
-            await sectionDestination.save();
+        if(task && sectionSource && sectionDestination){
+            console.log('verified');
+            // const sourceTasks = [...sectionSource.tasks]
+            // const destinationTasks = [...sectionDestination.tasks]
+            task.section_id = destinationSectionId;
+            await task.save();
+            if(sourceSectionId === destinationSectionId){
+                await Section.findByIdAndUpdate(
+                    sourceSectionId,
+                    { $pull: { tasks: taskId } },
+                    { $push: { tasks:{
+                        $each: [taskId],
+                        $position: destinationDragindex
+                    }}}
+                );
+                // destinationTasks.splice(sourceDragindex,1)
+                // destinationTasks.splice(destinationDragindex,0,taskId)
+                // sectionDestination.tasks = destinationTasks
+                // await sectionDestination.save();
+            }
+            else{
+                await Section.findByIdAndUpdate(
+                    sourceSectionId,
+                    { $pull: { tasks: taskId } },
+                );
+                await Section.findByIdAndUpdate(
+                    {_id: destinationSectionId},
+                    { $push: { tasks:{
+                        $each: [taskId],
+                        $position: destinationDragindex
+                    }}}
+                );
+                // sourceTasks.splice(sourceDragindex,1)
+                // destinationTasks.splice(destinationDragindex,0,taskId)
+                // sectionSource.tasks = sourceTasks
+                // sectionDestination.tasks = destinationTasks
+                // await sectionSource.save();
+                // await sectionDestination.save();
+            }
+            // console.log(sectionSource.section_name,  sectionSource.tasks)
+            // console.log(sectionDestination.section_name, sectionDestination.tasks)
+            console.log('task updated')
+            res.json(sectionDestination);
+        } else {
+            res.status(404);
+            throw new Error("Section not found");
         }
-        await task.save();
-
-        res.json(sectionDestination);
-
-    } else {
-        res.status(404);
-        throw new Error("Section not found");
     }
+    catch(e) {
+        console.log(e);
+        res.status(500);
+        throw new Error("Uknown error");
+    }
+    
 });
 
 module.exports = {createSection, getSections,getSectionById, updateSection, deleteSection,updateSectionOrder,updateSectionTask,getSectionByProjectId};
