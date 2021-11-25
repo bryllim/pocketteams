@@ -52,6 +52,7 @@ const Board = (props) => {
   const [sectionOrder,setSectionOrder] = useState(null);
   const { userInfo } = userLogin;
 
+  console.log("sections:", sections)
   useEffect(() => {
     if (!userInfo) {
         history.push('/');

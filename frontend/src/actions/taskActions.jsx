@@ -41,7 +41,7 @@ export const listTasks = () => async (dispatch, getState) => {
     }
 }
 
-export const createTask = ({task_name,task_description,section_id,task_id}) => async (dispatch, getState) => {
+export const createTask = ({task_name,task_description,section_id,task_id,task_priority}) => async (dispatch, getState) => {
     try{
         dispatch({
             type: TASK_CREATE_REQUEST,
@@ -56,10 +56,9 @@ export const createTask = ({task_name,task_description,section_id,task_id}) => a
             Authorization: `Bearer ${userInfo.token}`,
         },
     };
-
     const { data } = await axios.post(
         `/api/tasks/create`,
-        {task_name, task_description, section_id, task_id}, 
+        {task_name, task_description, section_id, task_id,task_priority}, 
         config
     );
 
@@ -80,6 +79,7 @@ export const createTask = ({task_name,task_description,section_id,task_id}) => a
         });
     }
 }
+
 
 export const deleteTask = ({taskId, task_index}) => async (dispatch, getState) => {
     try{
@@ -197,4 +197,42 @@ export const updateTaskDescription = ({task_description,task_id}) => async (disp
         });
     }
 }
- 
+
+export const updateTaskPriority = ({task_priority,task_id}) => async (dispatch, getState) => {
+    try{
+        dispatch({
+            type: TASK_UPDATE_REQUEST,
+        });
+        console.log("update taskprio:", task_priority)
+    const {
+        userLogin: {userInfo},
+    } = getState();
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+        },
+    };
+    const { data } = await axios.put(
+        `/api/tasks/update/priority/${task_id}`,
+        {task_priority}, 
+        config
+    );
+
+    dispatch({
+        type: TASK_UPDATE_SUCCESS,
+        payload: data,
+    })
+
+    } catch (error){
+        const message = 
+        error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+        dispatch({
+            type: TASK_UPDATE_FAIL,
+            payload: message,
+        });
+    }
+}

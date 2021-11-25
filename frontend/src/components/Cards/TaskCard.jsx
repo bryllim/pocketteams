@@ -139,7 +139,7 @@ const TaskCard = ({task,index,sectionId,snapshot,dragTask}) => {
             </div>
           </div>)}}
     </Draggable>
-    <SideTask showed={showNav} hide={setShowNav} task={task} index={index} sectionId ={sectionId}/>
+    <SideTask showed={showNav} hide={setShowNav} task={task} index={index} sectionId ={sectionId} section={sections}  />
   </div>
 )}
 

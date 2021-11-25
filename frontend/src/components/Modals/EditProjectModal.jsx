@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Form, Modal, Dropdown } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProjectAction } from "../../actions/projectActions";
@@ -38,19 +38,18 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
     setProjectStatus("");
   }
 
-  // const reClass = () => {
-  //   let val = document.getElementById("status").value;
-
-  //   if (val === 1) {
-  //     setColor("form-select form-select-sm ms-3 light");
-  //   } else if (val === 2) {
-  //     setColor("form-select form-select-sm ms-3 medium");
-  //   } else if (val === 3) {
-  //     setColor("form-select form-select-sm ms-3 heavy");
-  //   } else if (val === "select priority") {
-  //     setColor("form-select form-select-sm ms-3 prio");
-  //   }
-  // };
+  const reClass = (e) => {
+    if (e.target.value === "light") {
+      setColor("form-select form-select-sm ms-3 light");
+    } else if (e.target.value === "medium") {
+      setColor("form-select form-select-sm ms-3 medium");
+    } else if (e.target.value === "heavy") {
+      setColor("form-select form-select-sm ms-3 heavy");
+    } else if (e.target.value === "set priority") {
+      setColor("form-select form-select-sm ms-3 prio");
+    }
+    setProjectStatus(e.target.value);
+  };
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p
@@ -63,6 +62,17 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
       {children}
     </p>
   ));
+
+  useEffect(() => {
+    //to check/show the color
+    if (projectStatus === "light") {
+      setColor("form-select form-select-sm ms-3 light");
+    } else if (projectStatus === "medium") {
+      setColor("form-select form-select-sm ms-3 medium");
+    } else if (projectStatus === "heavy") {
+      setColor("form-select form-select-sm ms-3 heavy");
+    }
+  },[projectStatus]);
 
   return (
     <Modal size="lg" centered show={showModal} onHide={hideModal}>
@@ -94,11 +104,11 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
             <div class="mb-3">
               <input
                 type="text"
-                class="form-control text-center border-top-0 border-end-0 border-start-0 border-bottom  "
+                class="form-control text-center border-top-0 border-end-0 border-start-0 border-bottom"
                 id="formGroupExampleInput"
                 placeholder="Title"
                 defaultValue={projectName}
-                onChange={(e)=> setProjectName(e.target.value)}
+                onChange={(e)=>setProjectName(e.target.value)}
               />
             </div>
 
@@ -123,7 +133,7 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
                       className={color}
                       aria-label="form-select-sm example"
                       id="status"
-                      onChange={(e) => setProjectStatus(e.target.value)}
+                      onChange={(e) => reClass(e)}
                       defaultValue={projectStatus}
                     >
                       <option

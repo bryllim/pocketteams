@@ -3,13 +3,14 @@ const express = require("express");
 const notes = require("./data/notes");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
-const userRoutes = require('./routes/UserRoutes');
-const projectRoutes = require('./routes/ProjectRoutes');
-const taskRoutes = require('./routes/TaskRoutes');
-const noteRoutes = require('./routes/NoteRoutes');
-const sectionRoutes = require('./routes/SectionRoutes');
-const { NotFound, ErrorHandler } = require('./middlewares/ErrorMiddleware');
-const teamRoutes = require('./routes/TeamRoutes');
+const userRoutes = require("./routes/UserRoutes");
+const projectRoutes = require("./routes/ProjectRoutes");
+const taskRoutes = require("./routes/TaskRoutes");
+const noteRoutes = require("./routes/NoteRoutes");
+const sectionRoutes = require("./routes/SectionRoutes");
+const { NotFound, ErrorHandler } = require("./middlewares/ErrorMiddleware");
+const teamRoutes = require("./routes/TeamRoutes");
+const commentsRoutes = require("./routes/CommentsRoutes");
 const app = express();
 dotenv.config();
 connectDB();
@@ -19,12 +20,13 @@ app.use(express.json());
 //     res.send("API is running.");
 // })
 
-app.use('/api/users', userRoutes);
-app.use('/api/projects', projectRoutes)
-app.use('/api/tasks', taskRoutes)
-app.use('/api/note', noteRoutes)
-app.use('/api/sections', sectionRoutes)
-app.use('/api/teams', teamRoutes)
+app.use("/api/users", userRoutes);
+app.use("/api/projects", projectRoutes);
+app.use("/api/tasks", taskRoutes);
+app.use("/api/note", noteRoutes);
+app.use("/api/sections", sectionRoutes);
+app.use("/api/teams", teamRoutes);
+app.use("/api/comments", commentsRoutes);
 
 app.use(NotFound);
 app.use(ErrorHandler);

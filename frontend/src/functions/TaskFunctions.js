@@ -1,4 +1,3 @@
-
 //rename task on frontend
 const taskRename = ({sectionId, sections, setSections, taskName,index}) => {
     const newSections  = JSON.parse(JSON.stringify(sections))
@@ -9,13 +8,13 @@ const taskRename = ({sectionId, sections, setSections, taskName,index}) => {
 }
 
 //remove the task on frontend
-const taskRemove = ({sectionId, sections, setSections, index}) => {
-    const newSections = [...sections];
-    newSections.forEach(section => {
-      return section._id === sectionId ? section.tasks.splice(index, 1) : null
-    })
-    setSections(newSections)
-}
+const taskRemove = ({ sectionId, sections, setSections, index }) => {
+  const newSections = [...sections];
+  newSections.forEach((section) => {
+    return section._id === sectionId ? section.tasks.splice(index, 1) : null;
+  });
+  setSections(newSections);
+};
 //add the task on frontend
 const taskCreate = ({sectionId, sections, setSections,taskId}) => { //change to section index
   const newSections = JSON.parse(JSON.stringify(sections));
@@ -27,13 +26,35 @@ const taskCreate = ({sectionId, sections, setSections,taskId}) => { //change to 
 
 const taskDescriptionUpdate = ({sections, setSections, taskDescription, index, sectionId}) => {
   const newSections = [...sections];
-  newSections.forEach(section => {
-    return section._id === sectionId ? section.tasks[index].task_description = taskDescription : null
-  })
+  newSections.forEach((section) => {
+    return section._id === sectionId
+      ? (section.tasks[index].task_description = taskDescription)
+      : null;
+  });
 
-  setSections(newSections)
-}
+  setSections(newSections);
+};
 
+const taskPriorityUpdate = ({
+  sections,
+  setSections,
+  taskNewPriority,
+  index,
+  sectionId,
+}) => {
+  const newSections = [...sections];
+  newSections.forEach((section) => {
+    return section._id === sectionId
+      ? (section.tasks[index].task_priority = taskNewPriority)
+      : null;
+  });
+  setSections(newSections);
+};
 
-
-module.exports = {taskRename,taskRemove,taskCreate,taskDescriptionUpdate}
+module.exports = {
+  taskRename,
+  taskRemove,
+  taskCreate,
+  taskDescriptionUpdate,
+  taskPriorityUpdate,
+};
