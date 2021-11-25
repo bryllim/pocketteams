@@ -6,6 +6,8 @@ import { TaskContext } from "../contexts/SectionContext";
 import { useSelector } from "react-redux";
 import Preload from "../components/Preload";
 import ErrorMessage from "../components/ErrorMessage";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   taskRename,
   taskRemove,
@@ -19,7 +21,9 @@ import {
   updateTaskDescription,
   updateTaskPriority,
 } from "../actions/taskActions";
-import { listComments, createComments } from "../actions/commentActions";
+import { listComments, createComments, updateComments } from "../actions/commentActions";
+
+toast.configure()
 
 const updateTaskName = ({
   sectionId,
@@ -99,6 +103,7 @@ const changeTaskDescription = ({
   );
 };
 
+
 const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
   const { sections, setSections, sectionOrder, setSectionOrder, dispatch } =
     useContext(TaskContext);
@@ -117,9 +122,17 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
   const commentList = useSelector((state) => state.commentList);
   const { loading, comments, error } = commentList;
   const [comment, setComment] = useState("");
-  
+  const [readOnly, setReadOnly] = useState("true");
+  const [notif, setNotif] = useState()
+  const notify = () => toast.success(notif, {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 2500,
+  });
   const commentCreate = useSelector((state) => state.commentCreate);
   const { success: successCreateComment } = commentCreate;
+  const commentUpdate = useSelector((state) => state.commentUpdate);
+  const { success: successUpdateComment } = commentUpdate;
+
 
   const giveComment = (e) => {
     // const defaultContent = "Write your note here."
@@ -130,6 +143,7 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
       window.location.reload(false)
       }
 }
+
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p
@@ -147,7 +161,7 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
   //useEffect to fetch comments
   useEffect(() => {
     dispatch(listComments(taskId));
-  }, [dispatch, taskId, successCreateComment]);
+  }, [dispatch, taskId, successCreateComment,successUpdateComment]);
   
   console.log(comments)
 
@@ -443,17 +457,46 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
           <div className="full">
             { error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
             { loading && <Preload/> }
-            {comments?.map((comment) => (
+            {comments?.filter(item => Object.values(item).includes(taskId))?.map((comment) => (
               <div className="d-flex align-items-center p-2">
                 <i className="lni lni-user mx-2 fas-icon"></i>
-                <input
-                  className="p-1 full border-bottom label-font input-border"
+                <textarea
+                  className="p-1 full label-font input-border resize-0"
                   type="text"
-                  readOnly="true"
+                  readOnly={readOnly}
                   defaultValue={comment.Comment_context}
+                  onChange={(e) => comment.Comment_context = e.target.value}
+                  onKeyDown={
+                    (e) => {
+                      if (e.key === "Enter" || e.key === "Escape") {
+                        dispatch(updateComments (comment._id, comment.Comment_context))
+                        setReadOnly(true)
+                        if (readOnly === true) {
+                        setReadOnly(true)
+                        } else {
+                          setNotif("Comment Updated Successfully.")
+                        notify()
+                        }
+                        e.preventDefault();
+                        e.stopPropagation();
+                      }
+                    }
+                  }
                 >
-                  {/* {console.log(comment.task_id, comment.Comment_context)} */}
-                </input>
+                </textarea>
+                <Dropdown>
+                    <Dropdown.Toggle 
+                      as={CustomToggle} 
+                      id="dropdown-custom-components">
+                        <button className="btn p-0" type="button">
+                          <i className="lni lni-pencil p-2"></i>
+                        </button>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                        <Dropdown.Item onClick={(e) => setReadOnly(false)}>Edit</Dropdown.Item>
+                        <Dropdown.Item>Remove</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
               </div>
             ))}
           </div>
