@@ -10,15 +10,25 @@ const projectSchema = mongoose.Schema(
             type: String,
             required: true,
         },
-        team_user_list:{
+        team_access:{
             type: String,
-            requierd: true,
+            required: true,
         },
-        user: {
+        owner:{
             type: mongoose.Schema.Types.ObjectId,
             required: true,
             ref: "User",
         },
+        users: [{
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: "User",
+        }],
+        projects:[{
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: "Project",
+        }]
     },
     {
         timestamps: true,

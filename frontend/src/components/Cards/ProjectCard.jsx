@@ -9,13 +9,13 @@ import Preload from "../Preload";
 import ErrorMessage from "../ErrorMessage";
 
 const ProjectCard = ({data}) => {
-  console.log(data);
   const projectId = (data) ? data._id : null;
   const history = useHistory();
   const dispatch = useDispatch();
   const sectionList = (data && data.sections) ? data.sections: [];
   const handleOnClick = useCallback(() => history.push({pathname: '/board',
-  sectionList,projectId}), [history]);
+  sectionList,projectId}), [history, projectId]);
+
   const [editShow, setEditShow] = useState(false);
   const handleEditClose = () => setEditShow(false);
   const handleEditShow = () => setEditShow(true);
@@ -24,7 +24,7 @@ const ProjectCard = ({data}) => {
   const handleClose = () => setShow(false);
   const handleShow= () => setShow(true);
 
-  const projectDelete = useSelector((state) => state.projectUpdate);
+  const projectDelete = useSelector((state) => state.projectDelete);
   const {loading: loadingDelete, error: errorDelete} = projectDelete;
 
   const handleDelete = (id) => {
@@ -75,17 +75,23 @@ const ProjectCard = ({data}) => {
             className="rounded me-3"
             style={{ height: "50px", width: "50px" }}
           />
-          <h4>{data.project_name}</h4>
+          <h4 className="text-limit">{data.project_name}</h4>
         </div>
         <div className="d-flex flex-fill flex-column mt-3">
           <p className="text-limit text-limit-project text-dark fs-6"> {data.project_description} </p>
           <div className="d-flex justify-content-between mt-auto">
-            <blockquote className="blockquote mb-0">
-                  <p>Created on{" "}<cite title="Source Title">{data.createdAt.substring(0,10)}</cite></p>
-            </blockquote>
-            <blockquote className="blockquote mb-0 hover-me" onClick={handleOnClick}>
-              <p>{" "}Open project <i className="bi bi-chevron-right"></i>{" "}</p>
-            </blockquote>
+            <Row>
+              <Col>
+                <blockquote className="blockquote mb-0">
+                      <p>Created on{" "}<cite title="Source Title">{data.createdAt.substring(0,10)}</cite></p>
+                </blockquote>
+                </Col>
+              <Col>
+                <blockquote className="blockquote mb-0 hover-me" onClick={handleOnClick}>
+                  <p>{" "}Open project <i className="bi bi-chevron-right"></i>{" "}</p>
+                </blockquote>
+              </Col>
+            </Row>
           </div>
         </div>
         <EditProjectModal data={data} showModal={editShow} hideModal={handleEditClose}/>

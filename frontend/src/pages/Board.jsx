@@ -11,7 +11,7 @@ import {TaskContext}  from "../contexts/SectionContext"
 import { updateSectionTask,createSection, updateSectionOrder,} from "../actions/sectionActions";
 import {onDragEnd,orderSections} from "../functions/dragDropFunctions"
 import {sectionCreate,sectionUpdate} from "../functions/sectionFunctions"
-import { taskUpdate } from "../functions/taskFunctions";
+import { taskUpdate } from "../functions/TaskFunctions"
 
 const addSection = async ({dispatch,projectId,sectionOrder,setSectionOrder,sections,setSections})=>{
  sectionCreate({sectionOrder,setSectionOrder,sections,setSections})
@@ -36,6 +36,8 @@ const onDrag = ({result,dispatch,sectionOrder,setSectionOrder,projectId,sections
 }
 
 const Board = (props) => {
+
+  console.log("Inside Board");
   const {sectionList, projectId} = (props.location) || {};
   const sectionOrderList = sectionList.map(order =>{
     return order._id
