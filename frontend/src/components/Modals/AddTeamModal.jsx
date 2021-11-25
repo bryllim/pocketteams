@@ -4,6 +4,7 @@ import { Form, Modal, Button, Col, Row, Dropdown } from "react-bootstrap";
 import { createTeamAction } from "../../actions/teamActions";
 import Preload from "../Preload";
 import ErrorMessage from "../ErrorMessage";
+import { toast } from 'react-toastify';
 import { getusers } from "../../actions/userActions";
 
 const AddTeam = ({ showModal, hideModal }) => {
@@ -23,12 +24,23 @@ const AddTeam = ({ showModal, hideModal }) => {
   const userList = useSelector((state) => state.userList);
   const {users} = userList;
 
+  const notifySuccess = (msg) => toast.success(msg, {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 2500,
+  });
+
+  const notifyError = (msg) => toast.info(msg, {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 2500,
+  });
+
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(
-      createTeamAction(teamName, teamDescription, teamAccess,userInfo._id,userInfo._id)
+      //change last to user id array
+      createTeamAction(teamName, teamDescription, teamAccess,userInfo._id,addedUsers)
     );
-    if (!teamName || !teamDescription || !teamAccess ||!userInfo._id) return;
+    if (!teamName || !teamDescription || !teamAccess) return;
 
     resetHandler();
     hideModal();
@@ -39,21 +51,29 @@ const AddTeam = ({ showModal, hideModal }) => {
     setTeamName("");
     setTeamAccess("");
     setTeamDescription("");
+    setAddedUsers([]);
+    setSuggestions([]);
   };
 
-  const handleAdd = (input) => {
-    console.log("Who: " + input);
+  const handleAdd = (val) => {
+    console.log(addedUsers.includes(val.email_address));
+    if(addedUsers.some(item => val.email_address === item.email_address)){
+      notifyError("User Exists");
+    } else {
+      notifySuccess("User Added");
+      addedUsers.push(val);
+    }
+    return;
   };
 
   const memberInputHandler = (input) =>{
-    //If the seach has value
+    //If the seacrh has value
     if(input !== ''){
       const filteredData = users.filter((item) => {
         return Object.values(item).join('').toLowerCase().includes(input.toLowerCase())
       });
       setSuggestions(filteredData);
     }
-    //If the search has no value
     else {
       setSuggestions([]);
     }
@@ -97,14 +117,23 @@ const AddTeam = ({ showModal, hideModal }) => {
                   type="text"
                   name="team_members"
                   id="team_members"
+                  value={addedUsers.email_address}
+                  placeholder="Search members here"
                   required
                   onChange={(e) => memberInputHandler(e.target.value)}
                 />
-                {suggestions.map((items) => 
-                  <p className="mt-1 hover-me" onClick={ (e) => handleAdd(items.email_address)}>{items.email_address}</p>
+                {suggestions.slice(0,3).map((item) => 
+                  <p className="mt-1 hover-me" onClick={ (e) => handleAdd(item)}>{item.email_address}</p>
                 )}
+                
               </Col>
             </Row>
+            <Row>
+              <Form.Label>Added Members: </Form.Label>
+                <p className="horizontal sidebar-wrapper mb-2">{
+                  addedUsers.map((item) => <p className="sidebar-box horizontal-container mx-1 mb-3">{item.email_address}</p>)
+                }</p>
+              </Row>
             <Col md="12" className="mb-2">
               <Form.Label>Description</Form.Label>
               <textarea

@@ -29,8 +29,8 @@ const Sidebar = () => {
     }
 
     if(teamList)
-
     dispatch(listTeam());
+    
   }, [dispatch,history,userInfo])
 
   return (

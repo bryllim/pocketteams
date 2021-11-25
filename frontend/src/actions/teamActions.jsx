@@ -1,4 +1,5 @@
-import { TEAM_CREATE_FAIL, 
+import { 
+    TEAM_CREATE_FAIL, 
     TEAM_CREATE_REQUEST, 
     TEAM_CREATE_SUCCESS, 
     TEAM_LIST_FAIL, 
@@ -9,7 +10,13 @@ import { TEAM_CREATE_FAIL,
     TEAM_UPDATE_SUCCESS,
     TEAM_DELETE_FAIL, 
     TEAM_DELETE_REQUEST, 
-    TEAM_DELETE_SUCCESS
+    TEAM_DELETE_SUCCESS,
+    TEAM_USER_DELETE_FAIL, 
+    TEAM_USER_DELETE_REQUEST, 
+    TEAM_USER_DELETE_SUCCESS,
+    TEAM_ADDUSER_REQUEST,
+    TEAM_ADDUSER_SUCCESS,
+    TEAM_ADDUSER_FAIL
  } from "../constants/teamConstants"
 import axios from "axios";
 
@@ -160,3 +167,75 @@ export const deleteTeamAction = (id) => async (dispatch, getState) => {
       });
     }
   };
+
+  export const deleteTeamUserAction = (id, user_id) => async (dispatch, getState) => {
+    try {
+        dispatch({
+          type: TEAM_USER_DELETE_REQUEST,
+        });
+    
+        const {
+          userLogin: { userInfo },
+        } = getState();
+    
+        const config = {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        };
+    
+        const { data } = await axios.delete(`/api/teams/deleteusers/${id}`, {user_id}, config);
+    
+        dispatch({
+          type: TEAM_USER_DELETE_SUCCESS,
+          payload: data,
+        });
+      } catch (error) {
+        const message =
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message;
+        dispatch({
+          type: TEAM_USER_DELETE_FAIL,
+          payload: message,
+        });
+      }
+  };
+
+export const updateTeamUser = (id, user_id) => async(dispatch,getState) => {
+    try{
+        dispatch({
+            type: TEAM_ADDUSER_REQUEST,
+        });
+
+        const {
+            userLogin: { userInfo },
+          } = getState();
+      
+        const config = {
+            headers: {
+              Authorization: `Bearer ${userInfo.token}`,
+            },
+          };
+
+        const { data } = await axios.put(
+            `/api/teams/addusers/${id}`,
+            {user_id}, 
+            config
+        );
+
+        dispatch({
+            type: TEAM_ADDUSER_SUCCESS,
+            payload: data,
+          });
+    } catch (error) {
+        const message = 
+            error.response && error.response.data.message 
+                ? error.response.data.message 
+                : error.message;
+        dispatch({
+            type: TEAM_ADDUSER_FAIL,
+            payload: message,
+        });
+    } 
+}

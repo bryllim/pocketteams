@@ -6,7 +6,7 @@ import { projectCreateReducer, projectDeleteReducer, projectListReducer, project
 import { taskListReducer} from './reducers/taskReducers';
 import { sectionOrderListReducer, sectionListReducer ,sectionUpdateTaskReducer,SectionOrderUpdateReducer,sectionUpdateReducer,sectionCreateReducer,sectionDeleteReducer} from './reducers/sectionReducers';
 import {noteListReducer,noteCreateReducer,noteUpdateReducer} from './reducers/noteReducers';
-import { teamCreateReducer, teamDeleteReducer, teamtListReducer, teamUpdateReducer } from './reducers/teamReducers';
+import { teamAddUserReducer, teamCreateReducer, teamDeleteReducer, teamtListReducer, teamUpdateReducer, teamUserDeleteReducer } from './reducers/teamReducers';
 import {taskDeleteReducer,taskCreateReducer} from './reducers/taskReducers';
 const reducer = combineReducers({
     userLogin: userLoginReducer,
@@ -21,6 +21,8 @@ const reducer = combineReducers({
     teamCreate: teamCreateReducer,
     teamUpdate: teamUpdateReducer,
     teamDelete: teamDeleteReducer,
+    teamUserDelete: teamUserDeleteReducer,
+    teammAddUser: teamAddUserReducer,
     taskList: taskListReducer,
     sectionOrderList: sectionOrderListReducer,
     sectionList: sectionListReducer,

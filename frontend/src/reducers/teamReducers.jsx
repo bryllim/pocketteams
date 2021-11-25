@@ -10,7 +10,13 @@ import {
     TEAM_UPDATE_FAIL,
     TEAM_DELETE_REQUEST, 
     TEAM_DELETE_SUCCESS,
-    TEAM_DELETE_FAIL } from "../constants/teamConstants";
+    TEAM_DELETE_FAIL, 
+    TEAM_USER_DELETE_REQUEST, 
+    TEAM_USER_DELETE_SUCCESS,
+    TEAM_USER_DELETE_FAIL, 
+    TEAM_ADDUSER_REQUEST,
+    TEAM_ADDUSER_SUCCESS,
+    TEAM_ADDUSER_FAIL} from "../constants/teamConstants";
 
 export const teamtListReducer = (state = {teams: []}, action) => {
     switch (action.type){
@@ -49,6 +55,33 @@ export const teamUpdateReducer = (state = {}, action) => {
         case TEAM_UPDATE_FAIL:
             return { loading: false, error: action.payload};
         
+        default:
+            return state;
+    }
+};
+
+export const teamUserDeleteReducer = (state = {}, action) => {
+    switch (action.type){
+        case TEAM_USER_DELETE_REQUEST:
+            return { loading: true };
+        case TEAM_USER_DELETE_SUCCESS:
+            return { loading: false, success: true};
+        case TEAM_USER_DELETE_FAIL:
+            return { loading: false, error: action.payload, success: false};
+        
+        default:
+            return state;
+    }
+};
+
+export const teamAddUserReducer = (state = {teams: []}, action) => {
+    switch (action.type){
+        case TEAM_ADDUSER_REQUEST:
+            return { loading: true };
+        case TEAM_ADDUSER_SUCCESS:
+            return { loading: false, teams: action.payload};
+        case TEAM_ADDUSER_FAIL:
+            return { loading: false, error: action.payload};
         default:
             return state;
     }

@@ -73,11 +73,13 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
               />
             </Col>
           </Row>
-          <Row xs="1" sm="2" md="3" className="mx-auto">
-            <Col>
-              <EditTeamCard logo={pocketdevsLogo} />
-            </Col>
-          </Row>
+          <div className="horizontal">
+            {
+              data.users?.map((users) => (
+                <EditTeamCard logo={pocketdevsLogo} data={users} teamId={data._id} />
+              ))
+            }
+           </div>
         </Container>
       </Modal.Body>
       <Modal.Footer>

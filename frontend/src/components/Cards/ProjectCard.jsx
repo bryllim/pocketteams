@@ -80,12 +80,18 @@ const ProjectCard = ({data}) => {
         <div className="d-flex flex-fill flex-column mt-3">
           <p className="text-limit text-limit-project text-dark fs-6"> {data.project_description} </p>
           <div className="d-flex justify-content-between mt-auto">
-            <blockquote className="blockquote mb-0">
-                  <p>Created on{" "}<cite title="Source Title">{data.createdAt.substring(0,10)}</cite></p>
-            </blockquote>
-            <blockquote className="blockquote mb-0 hover-me" onClick={handleOnClick}>
-              <p>{" "}Open project <i className="bi bi-chevron-right"></i>{" "}</p>
-            </blockquote>
+            <Row>
+              <Col>
+                <blockquote className="blockquote mb-0">
+                      <p>Created on{" "}<cite title="Source Title">{data.createdAt.substring(0,10)}</cite></p>
+                </blockquote>
+                </Col>
+              <Col>
+                <blockquote className="blockquote mb-0 hover-me" onClick={handleOnClick}>
+                  <p>{" "}Open project <i className="bi bi-chevron-right"></i>{" "}</p>
+                </blockquote>
+              </Col>
+            </Row>
           </div>
         </div>
         <EditProjectModal data={data} showModal={editShow} hideModal={handleEditClose}/>
