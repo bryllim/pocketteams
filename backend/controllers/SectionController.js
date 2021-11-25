@@ -162,28 +162,30 @@ const updateSectionTask = asyncHandler(async (req,res) => {
         const task = await Task.findById(taskId).exec();
         console.log("sourceSectionId",sourceSectionId);
         console.log("destinationSectionId",destinationSectionId);
-        const sectionSource = await Section.findById(sourceSectionId).exec();
-        const sectionDestination = await Section.findById(destinationSectionId).exec();
+
         //Check if this Section belongs to the user
-        if(sectionSource.user.toString() !== req.user._id.toString()){
-            res.status(401);
-            throw new Error("You can't perform this action");
-        }
-        if(task && sectionSource && sectionDestination){
+        // if(sectionSource.user.toString() !== req.user._id.toString()){
+        //     res.status(401);
+        //     throw new Error("You can't perform this action");
+        // }
+        if(task){
             console.log('verified');
             // const sourceTasks = [...sectionSource.tasks]
             // const destinationTasks = [...sectionDestination.tasks]
-            task.section_id = destinationSectionId;
-            await task.save();
+      
             if(sourceSectionId === destinationSectionId){
                 await Section.findByIdAndUpdate(
-                    sourceSectionId,
+                    {_id:sourceSectionId},
                     { $pull: { tasks: taskId } },
-                    { $push: { tasks:{
-                        $each: [taskId],
-                        $position: destinationDragindex
-                    }}}
                 );
+                await Section.findByIdAndUpdate(
+                    {_id:sourceSectionId},
+                    { $push:{tasks:{
+                        $each:[taskId],
+                        $position:destinationDragindex
+                    }}},
+                );
+                
                 // destinationTasks.splice(sourceDragindex,1)
                 // destinationTasks.splice(destinationDragindex,0,taskId)
                 // sectionDestination.tasks = destinationTasks
@@ -191,7 +193,7 @@ const updateSectionTask = asyncHandler(async (req,res) => {
             }
             else{
                 await Section.findByIdAndUpdate(
-                    sourceSectionId,
+                    {_id: sourceSectionId},
                     { $pull: { tasks: taskId } },
                 );
                 await Section.findByIdAndUpdate(
@@ -208,8 +210,13 @@ const updateSectionTask = asyncHandler(async (req,res) => {
                 // await sectionSource.save();
                 // await sectionDestination.save();
             }
-            // console.log(sectionSource.section_name,  sectionSource.tasks)
-            // console.log(sectionDestination.section_name, sectionDestination.tasks)
+            task.section_id = destinationSectionId;
+            await task.save();
+           
+            const sectionSource = await Section.findById(sourceSectionId).exec();
+            const sectionDestination = await Section.findById(destinationSectionId).exec();
+             console.log(sectionSource.section_name,  sectionSource.tasks)
+            console.log(sectionDestination.section_name, sectionDestination.tasks)
             console.log('task updated')
             res.json(sectionDestination);
         } else {
