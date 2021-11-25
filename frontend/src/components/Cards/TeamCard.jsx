@@ -1,17 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddMember from "../Modals/AddMemberModal";
 import { Button, Accordion, Card, Dropdown } from "react-bootstrap";
 import EditTeam from "../Modals/EditTeamModal";
+import { deleteTeamAction } from "../../actions/teamActions";
+import { useDispatch, useSelector } from "react-redux";
+import Preload from "../Preload";
+import ErrorMessage from "../ErrorMessage";
 
-const TeamCard = () => {
+const TeamCard = ({data}) => {
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const [editShow, setEditShow] = useState(false);
   const handleEditClose = () => setEditShow(false);
   const handleEditShow = () => setEditShow(true);
+
+  const teamDelete = useSelector((state) => state.teamDelete);
+  const {loading: loadingDelete, error:errorDelete} = teamDelete;
+
+  const handleDelete = (id) =>{
+    if(window.confirm("Are you sure?")){
+      dispatch(deleteTeamAction(id));
+      window.location.reload(false);
+    }
+  }
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p
@@ -29,8 +43,10 @@ const TeamCard = () => {
   return (
     <div>
       <Accordion defaultActiveKey="0" className="pt-3 px-3">
-        <h4>Teamname
+        <h4>{data.team_name}
         <button type="d-flex button btn" className="btn">
+        {loadingDelete && <Preload/>}
+        {errorDelete && (<ErrorMessage varaint="danger">{errorDelete}</ErrorMessage>)}
         <Dropdown>
                 <Dropdown.Toggle 
                 as={CustomToggle} 
@@ -39,8 +55,9 @@ const TeamCard = () => {
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                     <Dropdown.Item onClick={handleEditShow}>Edit</Dropdown.Item>
-                    <Dropdown.Item onClick={null}>Remove</Dropdown.Item>
+                    <Dropdown.Item onClick={() => handleDelete(data._id)}>Remove</Dropdown.Item>
                 </Dropdown.Menu>
+                <EditTeam data={data} showModal={editShow} hideModal={handleEditClose} />
         </Dropdown>
         </button>
         </h4>
@@ -103,17 +120,15 @@ const TeamCard = () => {
                 className="list-group-item list-group-item-action active"
                 aria-current="true"
               >
-                The current link item
+                {data.team_description}
               </p>
-              <p href="#" className="list-group-item list-group-item-action">
-                Project A
-              </p>
-              <p href="#" className="list-group-item list-group-item-action">
-                Project B
-              </p>
-              <p href="#" className="list-group-item list-group-item-action">
-                Project C
-              </p>
+              {
+                data.projects?.reverse().map((project) => (
+                  <p className="list-group-item list-group-item-action">
+                     {project.project_name}
+                  </p>
+                ))  
+              }    
             </div>
           </Card.Body>
         </Accordion.Collapse>
@@ -121,7 +136,6 @@ const TeamCard = () => {
 
       {/* MODALS */}
       <AddMember showModal={show} hideModal={handleClose} />
-      <EditTeam user={user} showModal={editShow} hideModal={handleEditClose} />
       <hr className="team"></hr>
     </div>
   );

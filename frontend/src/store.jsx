@@ -1,16 +1,18 @@
 import { createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { userLoginReducer, userRegisterReducer } from './reducers/userReducers';
+import { userLoginReducer, userRegisterReducer, userListReducer, userAddReducer } from './reducers/userReducers';
 import { projectCreateReducer, projectDeleteReducer, projectListReducer, projectUpdateReducer } from './reducers/projectReducers';
 import { taskListReducer} from './reducers/taskReducers';
 import { sectionOrderListReducer, sectionListReducer ,sectionUpdateTaskReducer,SectionOrderUpdateReducer,sectionUpdateReducer,sectionCreateReducer,sectionDeleteReducer} from './reducers/sectionReducers';
 import {noteListReducer,noteCreateReducer,noteUpdateReducer} from './reducers/noteReducers';
-import { teamCreateReducer, teamDeleteReducer, teamtListReducer, teamUpdateReducer } from './reducers/teamReducers';
+import { teamAddUserReducer, teamCreateReducer, teamDeleteReducer, teamtListReducer, teamUpdateReducer, teamUserDeleteReducer } from './reducers/teamReducers';
 import {taskDeleteReducer,taskCreateReducer} from './reducers/taskReducers';
 const reducer = combineReducers({
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
+    userList: userListReducer,
+    userAdd: userAddReducer,
     projectList: projectListReducer,
     projectCreate: projectCreateReducer,
     projectUpdate: projectUpdateReducer,
@@ -19,6 +21,8 @@ const reducer = combineReducers({
     teamCreate: teamCreateReducer,
     teamUpdate: teamUpdateReducer,
     teamDelete: teamDeleteReducer,
+    teamUserDelete: teamUserDeleteReducer,
+    teammAddUser: teamAddUserReducer,
     taskList: taskListReducer,
     sectionOrderList: sectionOrderListReducer,
     sectionList: sectionListReducer,

@@ -22,7 +22,6 @@ function App() {
   }, []);
 
   //Check if user is logged in
-  const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const [loggedIn, setLoggedIn] = useState(false);
