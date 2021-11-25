@@ -10,15 +10,15 @@ const asyncHandler = require("express-async-handler");
 // });
 
 const getComments = asyncHandler(async (req, res) => {
+  // const { task_id } = req.body;
+  // console.log("taskId", task_id);
   const comments = await Comments.find();
-  console.log("getComment", comments);
   res.json(comments);
 });
 
 // create Comment
 const createComment = asyncHandler(async (req, res) => {
   const { Comment_context, task_id } = req.body;
-  console.log(task_id);
   try {
     if (!Comment_context) {
       throw new Error("Please Fill all the Fields");
@@ -32,11 +32,11 @@ const createComment = asyncHandler(async (req, res) => {
         let createdComment = await comment.save();
         taskResponse = await Task.findByIdAndUpdate(
           task_id,
-          { $push: { tasks_comments: createdComments } },
+          { $push: { task_comments: createdComment } },
           { new: true, useFindAndModify: false }
         );
         if (taskResponse === null) {
-          throw new Error("sectionResponse");
+          throw new Error("commentRespone");
         }
 
         createdComment = createdComment.toObject();
@@ -55,4 +55,36 @@ const createComment = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { getComments, createComment };
+const updateComment = asyncHandler(async (req, res) => {
+  try {
+    const { Comment_context, user } = req.body;
+    const commentId = req.params.id;
+    const comment = await Comments.findById(commentId);
+    console.log("comment here:", comment);
+    if (comment.user.toString() !== req.user._id.toString()) {
+      res.status(401);
+      throw new Error("You can't perform this action.");
+    }
+    // if (!Comment_context) {
+    //   let err = new Error("Please Fill all the Fields");
+    //   err.status = 400;
+    //   throw err;
+    // }
+
+    if (comment) {
+      comment.Comment_context = Comment_context;
+      await comment.save();
+      res
+        .status(200)
+        .json({ message: "Comment_context " + comment + " updated" });
+    } else {
+      res.status(404);
+      throw new Error("Comment not found");
+    }
+  } catch (err) {
+    console.log(err.status, err.message);
+    res.status(err.status).json({ message: err.message });
+  }
+});
+
+module.exports = { getComments, createComment, updateComment };

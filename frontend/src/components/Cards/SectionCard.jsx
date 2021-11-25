@@ -8,7 +8,7 @@ import DeleteSectionConfirmation from "../Modals/DeleteSectionConfirmation"
 import {sectionDelete,sectionRename} from "../../functions/sectionFunctions"
 import { useDispatch} from "react-redux";
 import { updateSection, deleteSection} from "../../actions/sectionActions";
-import {taskCreate} from "../../functions/TaskFunctions"
+import {taskCreate} from "../../functions/taskFunctions"
 import { v4 as uuidv4 } from 'uuid'
 
 const changeSection =({sectionTitle,sections,setSections,index,dispatch,sectionId,openDeleteSection}) => {

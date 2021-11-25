@@ -11,7 +11,7 @@ import {TaskContext}  from "../contexts/SectionContext"
 import { updateSectionTask,createSection, updateSectionOrder,} from "../actions/sectionActions";
 import {onDragEnd,orderSections} from "../functions/dragDropFunctions"
 import {sectionCreate,sectionUpdate} from "../functions/sectionFunctions"
-import { taskUpdate } from "../functions/TaskFunctions"
+import { taskUpdate } from "../functions/taskFunctions"
 
 const addSection = async ({dispatch,projectId,sectionOrder,setSectionOrder,sections,setSections})=>{
  sectionCreate({sectionOrder,setSectionOrder,sections,setSections})
@@ -51,6 +51,7 @@ const Board = (props) => {
   const [sectionOrder,setSectionOrder] = useState(sectionOrderList);
   const { userInfo } = userLogin;
 
+  console.log("sections:", sections)
   useEffect(() => {
     if (!userInfo) {
         history.push('/');

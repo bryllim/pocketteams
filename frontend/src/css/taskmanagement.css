@@ -60,7 +60,8 @@ ul li a {
 }
 
 .input-border {
-  border: 1px solid #ced4da;
+  border: 0;
+  border-bottom: 1px solid rgb(230, 222, 222);
 }
 
 .line-icon {
@@ -89,7 +90,7 @@ ul li a {
 }
 
 .resize-0 {
-  resize: none;
+  resize: auto;
 }
 
 .prio {
