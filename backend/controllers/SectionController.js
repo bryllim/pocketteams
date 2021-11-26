@@ -159,7 +159,7 @@ const updateSectionTask = asyncHandler(async (req,res) => {
     try{
         const {sourceSectionId, destinationSectionId,sourceDragindex,destinationDragindex,type} = req.body;
         const taskId = req.params.id
-        const task = await Task.findById(taskId).exec();
+        
         console.log("sourceSectionId",sourceSectionId);
         console.log("destinationSectionId",destinationSectionId);
 
@@ -168,11 +168,18 @@ const updateSectionTask = asyncHandler(async (req,res) => {
         //     res.status(401);
         //     throw new Error("You can't perform this action");
         // }
+
+        const task = await Task.findByIdAndUpdate(taskId, {section_id: destinationSectionId}, {new: true});
+        // if (err) return handleError(err);
+        // if(task.section_id.toString() !== sourceSectionId.toString()) return handleError(err);
+        // task.section_id = destinationSectionId;
+        // task.save(function (err, updatedTask) {
+        //     if (err) return handleError(err);
+        //     console.log('Task updated!');
+        // });
         if(task){
             console.log('verified');
-            // const sourceTasks = [...sectionSource.tasks]
-            // const destinationTasks = [...sectionDestination.tasks]
-      
+
             if(sourceSectionId === destinationSectionId){
                 await Section.findByIdAndUpdate(
                     {_id:sourceSectionId},
@@ -185,11 +192,6 @@ const updateSectionTask = asyncHandler(async (req,res) => {
                         $position:destinationDragindex
                     }}},
                 );
-                
-                // destinationTasks.splice(sourceDragindex,1)
-                // destinationTasks.splice(destinationDragindex,0,taskId)
-                // sectionDestination.tasks = destinationTasks
-                // await sectionDestination.save();
             }
             else{
                 await Section.findByIdAndUpdate(
@@ -203,23 +205,21 @@ const updateSectionTask = asyncHandler(async (req,res) => {
                         $position: destinationDragindex
                     }}}
                 );
-                // sourceTasks.splice(sourceDragindex,1)
-                // destinationTasks.splice(destinationDragindex,0,taskId)
-                // sectionSource.tasks = sourceTasks
-                // sectionDestination.tasks = destinationTasks
-                // await sectionSource.save();
-                // await sectionDestination.save();
             }
-            task.section_id = destinationSectionId;
-            await task.save();
-           
-            const sectionSource = await Section.findById(sourceSectionId).exec();
-            const sectionDestination = await Section.findById(destinationSectionId).exec();
-             console.log(sectionSource.section_name,  sectionSource.tasks)
-            console.log(sectionDestination.section_name, sectionDestination.tasks)
+
+
+
+            // const sourceTasks = [...sectionSource.tasks]
+            // const destinationTasks = [...sectionDestination.tasks]
+            // task.section_id = destinationSectionId;
+            // await task.save();
+            // const sectionSource = await Section.findById(sourceSectionId).exec();
+            // const sectionDestination = await Section.findById(destinationSectionId).exec();
+            // console.log(sectionSource.section_name,  sectionSource.tasks)
+            // console.log(sectionDestination.section_name, sectionDestination.tasks)
             console.log('task updated')
-            res.json(sectionDestination);
-        } else {
+            res.status(200);
+        } else{
             res.status(404);
             throw new Error("Section not found");
         }

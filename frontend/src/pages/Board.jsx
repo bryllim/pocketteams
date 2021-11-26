@@ -12,6 +12,7 @@ import {onDragEnd,orderSections} from "../functions/dragDropFunctions"
 import {sectionCreate} from "../functions/sectionFunctions"
 import {listSection} from "../actions/sectionActions"
 import SkeletonSectionCard from "../components/Cards/SkeletonSectionCard"
+import useInterval from "../components/useInterval"
 import { ObjectID } from 'bson';
 import "../css/board.css"
 
@@ -42,6 +43,10 @@ const onDrag = ({result,dispatch,sectionOrder,setSectionOrder,projectId,sections
   return
 }
 
+const getLatest = ({dispatch,projectId})=>{
+  dispatch(listSection({project_id:projectId}));
+}
+
 const Board = (props) => {
   const { projectId} = (props.location) || {};
   const dispatch = useDispatch();
@@ -52,13 +57,29 @@ const Board = (props) => {
   const [sectionOrder,setSectionOrder] = useState(null);
   const { userInfo } = userLogin;
 
+  
+
   console.log("sections:", sections)
   useEffect(() => {
     if (!userInfo) {
         history.push('/');
     }
-    dispatch(listSection({project_id:projectId})); 
-  },[history, userInfo, dispatch, projectId]);
+  },[history, userInfo]);
+
+  useEffect(() => {
+    dispatch(listSection({project_id:projectId}));
+  }, [dispatch,projectId]);
+
+  // useInterval(() => {
+  //   console.log("new data:")
+  //   dispatch(listSection({project_id:projectId}));
+  // }, 5000);
+
+
+  // setTimeout(() => {
+  //   dispatch(listSection({project_id:projectId}));
+  //   console.log("refresh")
+  // }, 5000)
 
   useEffect(() => {
     if(dataList.loading  === false && dataList.data !== undefined){
