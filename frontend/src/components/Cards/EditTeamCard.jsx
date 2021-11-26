@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Image, Row } from "react-bootstrap";
+import { Image, Row } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { deleteTeamUserAction } from "../../actions/teamActions";
 

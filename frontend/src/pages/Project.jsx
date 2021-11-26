@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Navigation from "../components/Navigation";
 import ProjectCard from "../components/Cards/ProjectCard";
@@ -6,9 +6,9 @@ import Preload from "../components/Preload";
 import ErrorMessage from "../components/ErrorMessage";
 import { Breadcrumb, Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useLocation } from "react-router";
+import { useHistory } from "react-router";
 import { listProjects } from "../actions/projectActions";
-import AddProjectModal from "../components/Modals/AddProjectModal";
+
 
 const Project = () => {
   
@@ -50,13 +50,12 @@ const Project = () => {
                 <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>
               </Breadcrumb>
             </h3>
-            
             { error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
             { loading && <Preload/> }
             <div className="row row-cols-xxl-4 row-cols-xl-3 row-cols-md-2 g-md-2 g-2">
             <Col><ProjectCard/></Col>
-            { projects?.reverse().map((project) => (
-              <Col><ProjectCard data={project}/></Col>
+            { projects?.reverse().map((project,index) => (
+              <Col key={index}><ProjectCard data={project}/></Col>
             ))}
             </div>
           </Col>

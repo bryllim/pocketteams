@@ -3,7 +3,6 @@ import ProfileCard from "./Cards/ProfileCard";
 import TeamCard from "./Cards/TeamCard";
 import { useEffect, useState } from "react";
 import AddTeam from "./Modals/AddTeamModal";
-import { Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { listTeam } from "../actions/teamActions";

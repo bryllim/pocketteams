@@ -1,13 +1,4 @@
 import React, { useState } from "react";
-import {
-  Button,
-  Col,
-  Container,
-  Form,
-  Image,
-  Modal,
-  Row,
-} from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { logout } from "../../actions/userActions";

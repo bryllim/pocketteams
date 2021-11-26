@@ -2,16 +2,13 @@ const asyncHandler = require("express-async-handler");
 const Project = require("../models/ProjectModel");
 
 const getProjects = asyncHandler(async (req, res) => {
-  const projects = await Project.find({ user: req.user._id }).populate({
-    path: "sections",
-    populate: {
-      path: "tasks",
-      populate: {
-        path: "task_comments",
-      },
-    },
-  });
-  res.json(projects);
+    const projects = await Project.find({user: req.user._id}).populate({
+        path: 'sections',
+        populate: {
+            path: 'tasks',
+        }
+    });
+    res.json(projects);
 });
 
 const createProject = asyncHandler(async (req, res) => {
