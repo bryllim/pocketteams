@@ -1,13 +1,20 @@
 import React from "react";
 import { Col, Image, Row } from "react-bootstrap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteTeamUserAction } from "../../actions/teamActions";
 
 const EditTeamCard = (props) => {
   const dispatch = useDispatch();
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  const teamUserDelete = useSelector((state) => state.teamUserDelete);
+  const {loading, error} = teamUserDelete
+
   const handleClick = (id, userId) => {
-    console.log("hi");
+    console.log("ID: " + id);
+    console.log("User ID: " + userId);
     if(window.confirm("Are you sure?")){
       dispatch(deleteTeamUserAction(id, userId));
     }

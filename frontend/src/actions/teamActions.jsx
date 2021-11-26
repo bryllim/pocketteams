@@ -184,7 +184,7 @@ export const deleteTeamAction = (id) => async (dispatch, getState) => {
           },
         };
     
-        const { data } = await axios.delete(`/api/teams/deleteusers/${id}`, {user_id}, config);
+        const { data } = await axios.put(`/api/teams/deleteusers/${id}`,{user_id},config);
     
         dispatch({
           type: TEAM_USER_DELETE_SUCCESS,
@@ -219,7 +219,7 @@ export const updateTeamUser = (id, user_id) => async(dispatch,getState) => {
           };
 
         const { data } = await axios.put(
-            `/api/teams/addusers/${id}`,
+            `/api/teams/users/${id}`,
             {user_id}, 
             config
         );

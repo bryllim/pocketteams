@@ -13,13 +13,18 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
   const [teamName, setTeamName] = useState(data.team_name);
   const [teamDescription, setTeamDescription] = useState(data.team_description);
   const [teamAccess, setTeamAccess] = useState(data.team_access);
+  const [users, setUsers] = useState(data.users);
   const dispatch = useDispatch();
 
   const teamUpdate = useSelector((state) => state.teamUpdate);
   const {loading, error} = teamUpdate;
 
+  const teamUserDelete = useSelector((state) => state.teamUserDelete);
+  const {loading: loadingDelete, userlist ,error: errorDelete} = teamUserDelete
+
   const updateHandler = (e) => {
     e.preventDefault();
+    
     dispatch(updateTeamAction(data._id, teamName, teamDescription, teamAccess));
     if(!teamName || !teamDescription || !teamAccess)  return;
 
@@ -32,6 +37,10 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
     setTeamName("");
     setTeamDescription("");
   }
+
+  useEffect(() => {
+    setUsers(userlist);
+  }, [teamUserDelete])
 
   return (
     <Modal centered size="lg" show={showModal} onHide={hideModal}>
@@ -75,8 +84,8 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
           </Row>
           <div className="horizontal">
             {
-              data.users?.map((users) => (
-                <EditTeamCard logo={pocketdevsLogo} data={users} teamId={data._id} />
+              data.users?.map((userslist) => (
+                <EditTeamCard logo={pocketdevsLogo} data={userslist} teamId={data._id} />
               ))
             }
            </div>
