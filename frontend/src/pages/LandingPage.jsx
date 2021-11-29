@@ -12,6 +12,10 @@ import { useSelector } from 'react-redux'
 import Dave from '.././assets_pocketdevs/assets/img/team/Dave.svg'
 import Lester from '.././assets_pocketdevs/assets/img/team/Lester.svg'
 import Seb from '.././assets_pocketdevs/assets/img/team/Seb.svg'
+import createTeam from '../assets_pocketdevs/assets/videos/createTeam.mp4'
+import createProject from '../assets_pocketdevs/assets/videos/createProject.mp4'
+import createTask from '../assets_pocketdevs/assets/videos/createTask.mp4'
+
 
 const LandingPage = ({history}) => {
 
@@ -33,8 +37,9 @@ const LandingPage = ({history}) => {
                 <div className="container">
                     <div className="row align-items-center">
                         <div className="col-xl-5 col-lg-6">
-                            <div className="hero-content-wrapper">                          
-                                <h1 className="mb-25 example-fade-text" data-wow-delay=".2s">Pocket Teams</h1>
+                            <div className="hero-content-wrapper">
+                                <h1 className="mb-0 example-fade-text text-danger" data-wow-delay=".2s">INTRODUCING</h1>                          
+                                <h1 className="mb-25 example-fade-text" data-wow-delay=".2s">PocketTeams</h1>
                                 <p className="mb-35 wow fadeInLeft" data-wow-delay=".4s">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                 </p>
@@ -142,7 +147,8 @@ const LandingPage = ({history}) => {
                                     <div className="col-lg-2"></div>
                                     <div className="col-lg-5">
                                         <div className="timeline-img">
-                                            <img src={image1} alt=""/>
+                                            <video src={createTeam} width="100%" autoplay="true" loop muted/>
+                                            {/* <img src={image1} alt=""/> */}
                                         </div>
                                     </div>
                                 </div>
@@ -153,7 +159,7 @@ const LandingPage = ({history}) => {
                                 <div className="row align-items-center">
                                     <div className="col-lg-5">
                                         <div className="timeline-img">
-                                            <img src={image3} alt=""/>
+                                        <video src={createProject} width="100%" autoplay="true" loop muted/>
                                         </div>
                                     </div>
                                     <div className="col-lg-2"></div>
@@ -184,7 +190,7 @@ const LandingPage = ({history}) => {
                                     <div className="col-lg-2"></div>
                                     <div className="col-lg-5">
                                         <div className="timeline-img">
-                                            <img src={image4} alt=""/>
+                                        <video src={createTask} width="100%" autoplay="true" loop muted/>
                                         </div>
                                     </div>
                                 </div>
@@ -221,10 +227,9 @@ const LandingPage = ({history}) => {
                     <div className="row">
                         <div className="col-xl-6 col-lg-7 col-md-9 mx-auto ">
                             <div className="section-title text-center mb-55">
-                                <h1 className="wow fadeInUpt text-light" data-wow-delay=".4s">Pocket Teams</h1>
                                 <h2 className="wow fadeInUp text-light" data-wow-delay=".4s">Pricing</h2>
                             <p className="wow fadeInUp text-light" data-wow-delay=".4s">
-                            Pocket Teams is a simple and easy to use task management tool for your projects.</p>
+                            PocketTeams is a simple and easy to use task management tool for your projects.</p>
                             </div>
                         </div>
                     </div>
@@ -236,14 +241,15 @@ const LandingPage = ({history}) => {
                                         <div className="box-icon-style mx-auto">
                                             <i class="lni lni-calendar text-danger"></i>
                                         </div>
-                                        <h4 className="mb-10 ">FREE</h4>
+                                        <h3 className="mb-10 ">IT'S COMPLETLY</h3>
+                                        <h1 className="mb-10 ">FREE!</h1>
                                         <p>For Everyone</p>
                                     </div>
-                                    <div className="pricing-price">
+                                    <div className="pricing-price mb-30">
                                         <h2 className="price">$0</h2>
                                         <p>Per Month</p>
                                     </div>
-                                    <div className="pricing-list">
+                                    {/* <div className="pricing-list">
                                             <ul>
                                                 <li>Unlimited Users</li>
                                                 <li>Unlimited Projects</li>
@@ -251,7 +257,7 @@ const LandingPage = ({history}) => {
                                                 <li>Unlimited Bandwidth</li>
                                                 <li>Unlimited Support</li>
                                             </ul>
-                                    </div>
+                                    </div> */}
                                     <div className="pricing-btn">
                                         <a href="#" className="btn btn-primary">Get Started</a>
                                     </div>
