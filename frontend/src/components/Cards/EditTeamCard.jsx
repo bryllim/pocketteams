@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { deleteTeamUserAction } from "../../actions/teamActions";
 
 const EditTeamCard = (props) => {
@@ -12,14 +13,20 @@ const EditTeamCard = (props) => {
   const teamUserDelete = useSelector((state) => state.teamUserDelete);
   const {loading, error} = teamUserDelete
 
+  const notifySuccess = (msg) => toast.success(msg, {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 2500,
+  });
+
   const handleClick = (id, userId) => {
-    console.log("ID: " + id);
-    console.log("User ID: " + userId);
     if(window.confirm("Are you sure?")){
       dispatch(deleteTeamUserAction(id, userId));
+      window.location.reload(false);
+      notifySuccess();
     }
     //Delete user
   };
+
 
   return (
     <div className="sidebar-wrapper mt-10 mb-10 mx-1">

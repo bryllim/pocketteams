@@ -7,20 +7,18 @@ import ErrorMessage from "../ErrorMessage";
 import Preload from "../Preload";
 import { updateTeamAction } from "../../actions/teamActions";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
+
 
 const EditTeamModal = ({ showModal, hideModal, data }) => {
 
   const [teamName, setTeamName] = useState(data.team_name);
   const [teamDescription, setTeamDescription] = useState(data.team_description);
   const [teamAccess, setTeamAccess] = useState(data.team_access);
-  const [users, setUsers] = useState(data.users);
   const dispatch = useDispatch();
 
   const teamUpdate = useSelector((state) => state.teamUpdate);
   const {loading, error} = teamUpdate;
-
-  const teamUserDelete = useSelector((state) => state.teamUserDelete);
-  const {loading: loadingDelete, userlist ,error: errorDelete} = teamUserDelete
 
   const updateHandler = (e) => {
     e.preventDefault();
@@ -39,8 +37,8 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
   }
 
   useEffect(() => {
-    setUsers(userlist);
-  }, [teamUserDelete, userlist])
+    
+  }, [data])
 
   return (
     <Modal centered size="lg" show={showModal} onHide={hideModal}>
@@ -92,7 +90,6 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        {loading && <Preload/>}
         <Form.Group className="search-form-box me-5">
                   <Form.Label className="fs-6 my-auto me-3">
                     {" "}
