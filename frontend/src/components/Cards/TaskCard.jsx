@@ -3,7 +3,7 @@ import SideTask from "../Sidetask";
 import {Draggable} from 'react-beautiful-dnd'
 import AddIcon from "../../assets_pocketdevs/assets/svg/AddIcon";
 import { Dropdown } from "react-bootstrap";
-import {taskRename,taskRemove} from "../../functions/TaskFunctions"
+import {taskRename,taskRemove} from "../../functions/taskFunctions"
 import { TaskContext } from "../../contexts/SectionContext";
 import { deleteTask, updateTask,createTask } from "../../actions/taskActions";
 import "../../css/skeleton.css"
