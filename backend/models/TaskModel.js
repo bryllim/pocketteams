@@ -21,10 +21,10 @@ const taskSchema = mongoose.Schema(
         ref: "User",
       },
     ],
-    tasks_comments: [
+    task_comments: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Task",
+        ref: "Comment",
       },
     ],
     user: {

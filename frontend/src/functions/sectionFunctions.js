@@ -1,6 +1,21 @@
+//create section on frontend
+const sectionCreate = ({sectionOrder,setSectionOrder,sections,setSections,sectionId,projectId,sectionName}) =>{
+  const newSections  = JSON.parse(JSON.stringify(sections))
+  const newOrder  = JSON.parse(JSON.stringify(sectionOrder))
+  newSections.push({section_name:sectionName,_id:sectionId, project_id: projectId, tasks: []})
+  newOrder.push(sectionId)
+  setSections([
+    ...newSections
+  ])
+  setSectionOrder([
+    ...newOrder
+  ])
+}
+
+
 //delete only the sectionid on sectionOrder
 const sectionDelete = ({sectionOrder,setSectionOrder,sectionOrderIndex}) =>{
-  const newOrder = [...sectionOrder]
+  const newOrder  = JSON.parse(JSON.stringify(sectionOrder))
   newOrder.splice(sectionOrderIndex,1)
   setSectionOrder([
     ...newOrder
@@ -10,38 +25,11 @@ const sectionDelete = ({sectionOrder,setSectionOrder,sectionOrderIndex}) =>{
 
 //rename section on frontend
 const sectionRename = ({sectionTitle,sections,setSections,index}) =>{ //change to sectionRename or sectionUpdate
-  const newSections = [...sections]
+  const newSections  = JSON.parse(JSON.stringify(sections))
   newSections[index].section_name = sectionTitle
   setSections([
     ...newSections
   ])
 }
 
-//create section on frontend
-const sectionCreate = ({sectionOrder,setSectionOrder,sections,setSections}) =>{
-  const newSections = [...sections]
-  const newOrder = [...sectionOrder]
-  newSections.push({section_name:'New Section',_id:'123',section_order_id: '6179228d94d94e1c2c6c21e3',tasks: []})
-  newOrder.push('123')
-  setSections([
-    ...newSections
-  ])
-  setSectionOrder([
-    ...newOrder
-  ])
-}
-
-//update section on frontend using data fronm backend
-const sectionUpdate = ({sectionOrder,setSectionOrder,sections,setSections,createdSection}) =>{
-  const newSection = createdSection.data
-  const sectionId = newSection._id
-  const newSections = [...sections]
-  const newSectionOrder = [...sectionOrder]
-  newSections.at(-1)._id = sectionId
-  newSectionOrder.pop()
-  newSectionOrder.push(sectionId)
-  setSections(newSections)
-  setSectionOrder(newSectionOrder)
-}
-
-module.exports = {sectionDelete,sectionRename,sectionCreate,sectionUpdate}
+module.exports = {sectionDelete,sectionRename,sectionCreate}

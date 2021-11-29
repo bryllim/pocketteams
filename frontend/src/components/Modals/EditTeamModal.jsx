@@ -1,9 +1,8 @@
-import { useEffect, useState } from "react";
-import { Form, Modal, Col, Row, Container, Image } from "react-bootstrap";
+import {useState} from "react";
+import { Form, Modal, Col, Row, Container } from "react-bootstrap";
 import EditTeamCard from "../Cards/EditTeamCard";
 import pocketdevsLogo from "../../assets_pocketdevs/assets/img/profile/generated_profile.PNG";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProjectAction } from "../../actions/projectActions";
 import ErrorMessage from "../ErrorMessage";
 import Preload from "../Preload";
 import { updateTeamAction } from "../../actions/teamActions";

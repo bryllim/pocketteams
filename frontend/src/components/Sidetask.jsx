@@ -1,60 +1,147 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Dropdown } from "react-bootstrap";
-import Comment from "../components/Comment";
+// import Comment from "../components/Comment";
 import SubTask from "../components/SubTask";
-import {TaskContext } from "../contexts/SectionContext";
-import {taskRename,taskRemove,taskDescriptionUpdate,taskPriorityUpdate} from "../functions/TaskFunctions"
-import { deleteTask, updateTask ,createTask,updateTaskDescription, updateTaskPriority } from "../actions/taskActions";
+import { TaskContext } from "../contexts/SectionContext";
+import { useSelector } from "react-redux";
+import Preload from "../components/Preload";
+import ErrorMessage from "../components/ErrorMessage";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {
+  taskRename,
+  taskRemove,
+  taskDescriptionUpdate,
+  taskPriorityUpdate,
+} from "../functions/taskFunctions";
+import {
+  deleteTask,
+  updateTask,
+  createTask,
+  updateTaskDescription,
+  updateTaskPriority,
+} from "../actions/taskActions";
+import { listComments, createComments, updateComments } from "../actions/commentActions";
 
-const updateTaskName = ({sectionId, sections, setSections, index, taskId,taskName,dispatch}) =>{
-  if(taskName === ''){
-    taskRemove({sectionId, sections, setSections, index});
-    dispatch(deleteTask({taskId}))
+toast.configure()
+
+const updateTaskName = ({
+  sectionId,
+  sections,
+  setSections,
+  index,
+  taskId,
+  taskName,
+  dispatch,
+}) => {
+  if (taskName === "") {
+    taskRemove({ sectionId, sections, setSections, index });
+    dispatch(deleteTask({ taskId }));
+  } else if (taskId === "123") {
+    const task_priority = "light";
+    dispatch(
+      createTask({
+        task_name: taskName,
+        task_description: "tempdescription",
+        task_priority,
+        section_id: sectionId,
+      })
+    );
+  } else {
+    taskRename({ sectionId, sections, setSections, taskName, index });
+    dispatch(updateTask({ task_name: taskName, task_id: taskId }));
   }
-  else if(taskId === '123'){
-    console.log('create')
-    const task_priority = "light"
-    console.log(task_priority);
-    dispatch(createTask({task_name:taskName,task_description:'tempdescription',task_priority,section_id:sectionId}))
-  }
-  else{
-    taskRename({sectionId, sections, setSections, taskName,index});
-    dispatch(updateTask({task_name:taskName, task_id:taskId}))
-  }
-}
-const updateTaskEndDate = (taskId,taskEndDate) =>{
+};
+const updateTaskEndDate = (taskId, taskEndDate) => {};
+const updateTaskAssignedUsers = (taskId, taskAssignedUsers) => {};
 
-}
-const updateTaskAssignedUsers = (taskId,taskAssignedUsers) =>{
-
-}
-
-const priorityStatus = ({taskNewPriority, taskId,dispatch,index,sectionId,sections,setSections}) => {
+const priorityStatus = ({
+  taskNewPriority,
+  taskId,
+  dispatch,
+  index,
+  sectionId,
+  sections,
+  setSections,
+}) => {
   // console.log("prioritystatus", taskNewPriority)
-  taskPriorityUpdate({sections,setSections,taskNewPriority,index,sectionId,})
-  dispatch(updateTaskPriority({task_priority:taskNewPriority, task_id:taskId}))
-  }
+  taskPriorityUpdate({
+    sections,
+    setSections,
+    taskNewPriority,
+    index,
+    sectionId,
+  });
+  dispatch(
+    updateTaskPriority({ task_priority: taskNewPriority, task_id: taskId })
+  );
+};
+
+const changeTaskDescription = ({
+  sections,
+  setSections,
+  taskDescription,
+  index,
+  sectionId,
+  taskId,
+  dispatch,
+}) => {
+  taskDescriptionUpdate({
+    sections,
+    setSections,
+    taskDescription,
+    index,
+    sectionId,
+  });
+  dispatch(
+    updateTaskDescription({
+      task_description: taskDescription,
+      task_id: taskId,
+    })
+  );
+};
 
 
-const changeTaskDescription = ({sections, setSections, taskDescription, index, sectionId, taskId,dispatch}) =>{
-  taskDescriptionUpdate({sections, setSections, taskDescription, index, sectionId})
-  dispatch(updateTaskDescription({task_description:taskDescription, task_id:taskId}))
-}
-
-const SideTask = ({ showed, hide, task,index,section ,sectionId }) => {
-  const {sections, setSections, sectionOrder, setSectionOrder, dispatch} = useContext(TaskContext)
+const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
+  const { sections, setSections, sectionOrder, setSectionOrder, dispatch } =
+    useContext(TaskContext);
   const [markTask, setMarkTask] = useState(true);
   const [sectionName, setSectionName] = useState("set section");
   const [user, setUser] = useState("assign user");
   const [color, setColor] = useState(
     "form-select form-select-sm label-font ms-3"
   );
-  const [taskName, setName] = useState(task.task_name)
+  const [taskName, setName] = useState(task.task_name);
   const [taskDescription, setTaskDescription] = useState(task.task_description);
   const [taskPriority, setTaskPriority] = useState(task.task_priority);
   const taskId = task._id;
 
-  // console.log(sectionId)
+  //for comments
+  const commentList = useSelector((state) => state.commentList);
+  const { loading, comments, error } = commentList;
+  const [comment, setComment] = useState("");
+  const [readOnly, setReadOnly] = useState("true");
+  const [notif, setNotif] = useState()
+  const notify = () => toast.success(notif, {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 2500,
+  });
+  const commentCreate = useSelector((state) => state.commentCreate);
+  const { success: successCreateComment } = commentCreate;
+  const commentUpdate = useSelector((state) => state.commentUpdate);
+  const { success: successUpdateComment } = commentUpdate;
+
+
+  const giveComment = (e) => {
+    // const defaultContent = "Write your note here."
+    e.preventDefault(); 
+    if (comment.length === 0) return; 
+    if (comment.length >= 1) {
+      dispatch(createComments ( taskId, comment ));
+      window.location.reload(false)
+      }
+}
+
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p
@@ -67,9 +154,15 @@ const SideTask = ({ showed, hide, task,index,section ,sectionId }) => {
       {children}
     </p>
   ));
-
+  
+  
+  //useEffect to fetch comments
   useEffect(() => {
-    //to check/show the color
+    dispatch(listComments(taskId));
+  }, [dispatch, taskId, successCreateComment,successUpdateComment]);
+  
+  //useEffect to check/show the color of Priority
+  useEffect(() => {
     if (taskPriority === "light") {
       setColor("form-select form-select-sm label-font ms-3 light");
     } else if (taskPriority === "medium") {
@@ -78,31 +171,59 @@ const SideTask = ({ showed, hide, task,index,section ,sectionId }) => {
       setColor("form-select form-select-sm label-font ms-3 heavy");
     }
   },[task]);
-
-
+// function for priority
   const reClass = (e) => {
-    let taskNewPriority = ""
+    let taskNewPriority = "";
 
     if (e.target.value === "light") {
       setColor("form-select form-select-sm label-font ms-3 light");
-      setTaskPriority ("light")
-      taskNewPriority = "light"
-      priorityStatus({taskNewPriority, taskId,dispatch,index,sectionId,sections,setSections})
+      setTaskPriority("light");
+      taskNewPriority = "light";
+      priorityStatus({
+        taskNewPriority,
+        taskId,
+        dispatch,
+        index,
+        sectionId,
+        sections,
+        setSections,
+      });
     } else if (e.target.value === "medium") {
       setColor("form-select form-select-sm label-font ms-3 medium");
-      setTaskPriority ("medium")
-      taskNewPriority = "medium"
-      priorityStatus({taskNewPriority, taskId,dispatch,index,sectionId,sections,setSections})
+      setTaskPriority("medium");
+      taskNewPriority = "medium";
+      priorityStatus({
+        taskNewPriority,
+        taskId,
+        dispatch,
+        index,
+        sectionId,
+        sections,
+        setSections,
+      });
     } else if (e.target.value === "heavy") {
       setColor("form-select form-select-sm label-font ms-3 heavy");
-      setTaskPriority ("heavy")
-      taskNewPriority = "heavy"
-      priorityStatus({taskNewPriority, taskId,dispatch,index,sectionId,sections,setSections})
+      setTaskPriority("heavy");
+      taskNewPriority = "heavy";
+      priorityStatus({
+        taskNewPriority,
+        taskId,
+        dispatch,
+        index,
+        sectionId,
+        sections,
+        setSections,
+      });
     } else if (e.target.value === "select priority") {
       setColor("form-select form-select-sm label-font ms-3 prio");
     }
-  }; 
+  };
 
+  //function for setSections TODO send the targetvalue to backend
+  const sectionSetter = (e) => {
+    const selectedSection = e.target.value;
+    setSectionName(selectedSection.toString())
+  }
 
   return (
     <div
@@ -140,19 +261,36 @@ const SideTask = ({ showed, hide, task,index,section ,sectionId }) => {
                 placeholder="Write a task name"
                 value={taskName}
                 onChange={(e) => {
-                  setName(e.target.value)
+                  setName(e.target.value);
                 }}
-                onBlur={(e)=>{
-                  updateTaskName({sectionId, sections, setSections, taskName ,index,dispatch,taskId});
-                  e.preventDefault()
-                  e.stopPropagation()
-                }}  
+                onBlur={(e) => {
+                  updateTaskName({
+                    sectionId,
+                    sections,
+                    setSections,
+                    taskName,
+                    index,
+                    dispatch,
+                    taskId,
+                  });
+                  e.preventDefault();
+                  e.stopPropagation();
+                }}
                 onKeyDown={(event) => {
-                  if (event.key === 'Enter' || event.key === 'Escape') {
-                    updateTaskName({sectionId, sections, setSections, taskName, index, dispatch, taskId});
-                    event.preventDefault()
-                    event.stopPropagation()
-                }}} 
+                  if (event.key === "Enter" || event.key === "Escape") {
+                    updateTaskName({
+                      sectionId,
+                      sections,
+                      setSections,
+                      taskName,
+                      index,
+                      dispatch,
+                      taskId,
+                    });
+                    event.preventDefault();
+                    event.stopPropagation();
+                  }
+                }}
               ></input>
               <>
                 <div className="row mb-1 f-dark">
@@ -177,15 +315,15 @@ const SideTask = ({ showed, hide, task,index,section ,sectionId }) => {
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
                           <>
-                        {sections?.map((section) => {
-                          <Dropdown.Item
-                            className="label-font-fw"
-                            value={section.section_name}
-                            // onClick={(e) => setSectionName("Requested")}
-                            >
-                            section name
-                          </Dropdown.Item>
-                        })}
+                            {sections?.map((section) => (
+                              <Dropdown.Item
+                                className="label-font-fw"
+                                value={section.section_name}
+                                onClick={(e) => setSectionName(e.target.outerText)}
+                              >
+                                {section.section_name}
+                              </Dropdown.Item>
+                            ))}
                           </>
                         </Dropdown.Menu>
                       </Dropdown>
@@ -269,19 +407,36 @@ const SideTask = ({ showed, hide, task,index,section ,sectionId }) => {
                         value={taskDescription}
                         className="mt-3 radius px-3 form-control py-2 label-font resize-0"
                         onChange={(e) => {
-                          setTaskDescription(e.target.value)
+                          setTaskDescription(e.target.value);
                         }}
-                        onBlur={(e)=>{
-                          changeTaskDescription({sections, setSections, taskDescription, index, sectionId, taskId, dispatch});
-                          e.preventDefault()
-                          e.stopPropagation()
-                        }}  
+                        onBlur={(e) => {
+                          changeTaskDescription({
+                            sections,
+                            setSections,
+                            taskDescription,
+                            index,
+                            sectionId,
+                            taskId,
+                            dispatch,
+                          });
+                          e.preventDefault();
+                          e.stopPropagation();
+                        }}
                         onKeyDown={(event) => {
-                          if (event.key === 'Enter' || event.key === 'Escape') {
-                            changeTaskDescription({sectionId, sections, setSections, taskDescription ,index,dispatch,taskId});
-                            event.preventDefault()
-                            event.stopPropagation()
-                        }}} 
+                          if (event.key === "Enter" || event.key === "Escape") {
+                            changeTaskDescription({
+                              sectionId,
+                              sections,
+                              setSections,
+                              taskDescription,
+                              index,
+                              dispatch,
+                              taskId,
+                            });
+                            event.preventDefault();
+                            event.stopPropagation();
+                          }
+                        }}
                       ></textarea>
                     </div>
                   </div>
@@ -296,8 +451,50 @@ const SideTask = ({ showed, hide, task,index,section ,sectionId }) => {
 
           {/* -----COMMENT SECTION----- */}
           <div className="full">
-            <Comment />
-            <Comment />
+            { error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
+            { loading && <Preload/> }
+            {comments?.filter(item => Object.values(item).includes(taskId))?.map((comment) => (
+              <div className="d-flex align-items-center p-2">
+                <i className="lni lni-user mx-2 fas-icon"></i>
+                <textarea
+                  className="p-1 full label-font input-border resize-0"
+                  type="text"
+                  readOnly={readOnly}
+                  defaultValue={comment.Comment_context}
+                  onChange={(e) => comment.Comment_context = e.target.value}
+                  onKeyDown={
+                    (e) => {
+                      if (e.key === "Enter" || e.key === "Escape") {
+                        dispatch(updateComments (comment._id, comment.Comment_context))
+                        setReadOnly(true)
+                        if (readOnly === true) {
+                        setReadOnly(true)
+                        } else {
+                          setNotif("Comment Updated Successfully.")
+                        notify()
+                        }
+                        e.preventDefault();
+                        e.stopPropagation();
+                      }
+                    }
+                  }
+                >
+                </textarea>
+                <Dropdown>
+                    <Dropdown.Toggle 
+                      as={CustomToggle} 
+                      id="dropdown-custom-components">
+                        <button className="btn p-0" type="button">
+                          <i className="lni lni-pencil p-2"></i>
+                        </button>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                        <Dropdown.Item onClick={(e) => setReadOnly(false)}>Edit</Dropdown.Item>
+                        <Dropdown.Item>Remove</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+              </div>
+            ))}
           </div>
         </div>
         <div className="mt-2 d-flex align-items-start">
@@ -305,10 +502,15 @@ const SideTask = ({ showed, hide, task,index,section ,sectionId }) => {
           <textarea
             className="mx-2 px-3 py-1 full form-control resize-0 radius label-font"
             placeholder="Write a comment"
+            onChange={(e) => setComment(e.target.value)}
+            value={comment}
           ></textarea>
         </div>
         <div className="d-flex justify-content-end me-2">
-          <button className="theme-btn theme-btn-sm py-1 my-1">Comment</button>
+          <button 
+          className="theme-btn theme-btn-sm py-1 my-1"
+          onClick={giveComment}
+          >Comment</button>
         </div>
       </div>
     </div>
