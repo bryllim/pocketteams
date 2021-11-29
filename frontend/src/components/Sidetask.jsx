@@ -21,7 +21,7 @@ import {
   updateTaskDescription,
   updateTaskPriority,
 } from "../actions/taskActions";
-import { listComments, createComments, updateComments } from "../actions/commentActions";
+import { listComments, createComments, updateComments, deleteComment} from "../actions/commentActions";
 
 toast.configure()
 
@@ -123,8 +123,7 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
   const { loading, comments, error } = commentList;
   const [comment, setComment] = useState("");
   const [readOnly, setReadOnly] = useState("true");
-  const [notif, setNotif] = useState()
-  const notify = () => toast.success(notif, {
+  const notifySuccess = (msg) => toast.success(msg, {
     position: toast.POSITION.BOTTOM_RIGHT,
     autoClose: 2500,
   });
@@ -460,7 +459,7 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
             {comments?.filter(item => Object.values(item).includes(taskId))?.map((comment) => (
               <div className="d-flex align-items-center p-2">
                 <i className="lni lni-user mx-2 fas-icon"></i>
-                <textarea
+                <input
                   className="p-1 full label-font input-border resize-0"
                   type="text"
                   readOnly={readOnly}
@@ -474,8 +473,7 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
                         if (readOnly === true) {
                         setReadOnly(true)
                         } else {
-                          setNotif("Comment Updated Successfully.")
-                        notify()
+                          notifySuccess("Comment Updated Successfully.")
                         }
                         e.preventDefault();
                         e.stopPropagation();
@@ -483,7 +481,7 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
                     }
                   }
                 >
-                </textarea>
+                </input>
                 <Dropdown>
                     <Dropdown.Toggle 
                       as={CustomToggle} 
@@ -494,7 +492,10 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                         <Dropdown.Item onClick={(e) => setReadOnly(false)}>Edit</Dropdown.Item>
-                        <Dropdown.Item>Remove</Dropdown.Item>
+                        <Dropdown.Item onClick={(e) => {
+                          e.preventDefault(); 
+                          dispatch(deleteComment( comment._id ));
+                        }}>Remove</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
               </div>

@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Task = require("../models/TaskModel");
 const Section = require("../models/SectionModel");
+const Comment = require("../models/CommentsModel");
 
 const createTask = asyncHandler(async (req, res) => {
   const {
@@ -69,6 +70,7 @@ const deleteTaskById = asyncHandler(async (req, res) => {
     }
     const task = await Task.findById(task_id);
     const section = await Section.findById(task.section_id);
+    const comments = await Comment.find({ task_id: task._id });
     if (task && section) {
       await task
         .remove()
@@ -77,6 +79,10 @@ const deleteTaskById = asyncHandler(async (req, res) => {
           section.tasks.splice(taskIndex, 1),
           await section.save()
         );
+      //remove all comments inside this task
+      for (let i = 0; i < comments.length; i++) {
+        await comments[i].remove();
+      }
       res.json({ message: "task Removed" });
     } else {
       res.status(404).json({ message: "Request not found" });

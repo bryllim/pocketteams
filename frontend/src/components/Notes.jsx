@@ -28,10 +28,9 @@ const Notes = () => {
   const noteCreate = useSelector((state) => state.noteCreate);
   const { success: successCreate } = noteCreate;
 
-  const notify = () => toast.success(notif, {
+  const notifySuccess = (msg) => toast.success(msg, {
     position: toast.POSITION.BOTTOM_RIGHT,
     autoClose: 2500,
-    
   });
 
   useEffect(() => {
@@ -72,14 +71,12 @@ const Notes = () => {
     e.preventDefault();
     if (notes.length === 0) {
       dispatch(createNoteAction( defaultContent ));
-      setNotif("Notes Created Successfully.")
-      notify()
+      notifySuccess("Note Created Successfully.")
       window.location.reload(false)
     } 
     if (notes.length >= 1) {
       dispatch(updateNoteAction( notes[0]._id, content ));
-      setNotif("Notes Updated Successfully.")
-      notify()
+      notifySuccess("Note Updated Successfully.")
       }
 }
   // console.log(window.location.pathname);
