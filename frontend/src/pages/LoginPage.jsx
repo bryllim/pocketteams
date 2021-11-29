@@ -19,6 +19,10 @@ const LoginPage = () => {
     const {loading, error, userInfo} = userLogin;
 
     useEffect(() => {
+        document.title = "PocketTeams - Login"
+      }, [])
+
+    useEffect(() => {
         if(userInfo){
             history.push('/project');
         }

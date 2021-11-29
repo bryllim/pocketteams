@@ -24,6 +24,10 @@ const RegisterPage = () => {
 
     const userRegister = useSelector((state) => state.userRegister)
     const { loading, error, userInfo } = userRegister;
+    
+    useEffect(() => {
+        document.title = "PocketTeams - register"
+      }, [])
 
     useEffect(() => {
         if(userInfo){

@@ -45,7 +45,7 @@ const onDrag = ({result,dispatch,sectionOrder,setSectionOrder,projectId,sections
 }
 
 const Board = (props) => {
-  console.log("board")
+  
   const { projectId} = (props.location) || {};
   const dispatch = useDispatch();
   const history = useHistory();
@@ -89,6 +89,9 @@ const Board = (props) => {
     };
   });
 
+  useEffect(() => {
+    document.title = "PocketTeams - Board"
+  }, [])
 
   useEffect(() => {
     if (!userInfo) {

@@ -25,7 +25,9 @@ const Project = () => {
 
   const projectUpdate = useSelector((state) => state.projectUpdate);
   const { success: successUpdate}  = projectUpdate;
-
+  useEffect(() => {
+    document.title = "PocketTeams - Project"
+  }, [])
   useEffect(() => {
     if (userInfo) {
       history.push('/project');
