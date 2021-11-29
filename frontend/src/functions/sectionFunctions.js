@@ -32,4 +32,19 @@ const sectionRename = ({sectionTitle,sections,setSections,index}) =>{ //change t
   ])
 }
 
-module.exports = {sectionDelete,sectionRename,sectionCreate}
+const sectionTaskUpdate = ({sections,setSections,task,dragProps}) =>{
+  const newSections  = JSON.parse(JSON.stringify(sections))
+  const sectionId = task.section_id
+  const sourceSectionId = dragProps.sourceSectionId
+  const sourceDragindex = dragProps.sourceDragindex
+  const destinationDragindex = dragProps.destinationDragindex
+  newSections.forEach(section => {
+    return section._id === sourceSectionId ? section.tasks.splice(sourceDragindex,1) : null
+  })
+  newSections.forEach(section => {
+    return section._id === sectionId ? section.tasks[destinationDragindex] = task : null
+  })
+  setSections(newSections)
+}
+
+module.exports = {sectionDelete,sectionRename,sectionCreate,sectionTaskUpdate}

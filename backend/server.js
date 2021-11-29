@@ -1,6 +1,5 @@
 //Get the package from node.js
 const express = require("express");
-const notes = require("./data/notes");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const userRoutes = require("./routes/UserRoutes");
@@ -16,9 +15,6 @@ dotenv.config();
 connectDB();
 app.use(express.json());
 
-// app.get("/", (req,res) => {
-//     res.send("API is running.");
-// })
 
 app.use("/api/users", userRoutes);
 app.use("/api/projects", projectRoutes);
@@ -33,5 +29,26 @@ app.use(ErrorHandler);
 
 const PORT = process.env.PORT || 5000;
 
+
 //Web server
-app.listen(PORT, console.log(`Server started on PORT ${PORT}`));
+const server = app.listen(PORT, console.log(`Server started on PORT ${PORT}`));
+
+//Socket.io
+const io = require('socket.io')(server, {
+  cors: {
+    origin: '*',
+  }
+});
+io.on("connection", function (socket) {
+  socket.on("Join_Board", (projectId) => {
+    socket.join(projectId);
+    socket.to(projectId).emit("New_User_Joined ", projectId);
+    console.log("user ",socket.id," joined ",projectId);
+  });
+  socket.on("Update_Section_Task", (data) => {
+    console.log("new data",data);
+    socket.to(data.projectId).emit("New_Section_Update", data);
+    console.log("Someone Updated the Section")
+  });
+  console.log("Made socket connection");
+});

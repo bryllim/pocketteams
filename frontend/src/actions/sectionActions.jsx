@@ -26,7 +26,6 @@ export const listSection = ({project_id}) => async (dispatch, getState) => {
     };
 
     // const { data } = await axios.get(`/api/sections`, config);
-    console.log("project_id here",project_id)
     const {data:projectData} = await axios.get(`/api/sections/project/${project_id}`, config)
     console.log("projectData",projectData)
     if(!projectData){
@@ -97,7 +96,7 @@ export const updateSectionOrder =({sourceDragIndex,destinationDragIndex,project_
 }
 
 
-export const updateSectionTask = ({sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type}) => async (dispatch, getState) => {
+export const updateSectionTask = ({sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type,task}) => async (dispatch, getState) => {
     try{
         dispatch({
             type: SECTION_TASK_UPDATE_REQUEST,
@@ -116,10 +115,10 @@ export const updateSectionTask = ({sourceSectionId,destinationSectionId,taskId,s
 
         const { data } = await axios.put(
             `/api/sections/tasks/${taskId}`,
-            {sourceSectionId, destinationSectionId,sourceDragindex,destinationDragindex,type}, 
+            {sourceSectionId, destinationSectionId, sourceDragindex,destinationDragindex,type,task}, 
             config
         );
-
+        
         dispatch({
             type: SECTION_TASK_UPDATE_SUCCESS,
             payload: data,

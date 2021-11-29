@@ -6,6 +6,7 @@ import App from './App';
 import { Provider } from 'react-redux';
 import store from './store';
 import reportWebVitals from './reportWebVitals';
+import { SocketContext,socket } from './contexts/SocketContext';
 //CSS IMPORTS HERE
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './assets_pocketdevs/assets/css/animate.css'
@@ -21,9 +22,11 @@ import 'react-bootstrap'
 
 
 ReactDOM.render(
+  <SocketContext.Provider value={socket}>
   <Provider store={store}>
     <App />
-  </Provider>,
+  </Provider>
+  </SocketContext.Provider>,
   document.getElementById('root')
 );
 

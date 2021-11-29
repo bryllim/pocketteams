@@ -29,6 +29,8 @@
     "mongoose": "^6.0.5",
     "nodemon": "^2.0.12",
     "react-calendar": "^3.4.0",
-    "react-modal": "^3.14.3"
+    "react-modal": "^3.14.3",
+    "socket.io": "^4.4.0",
+    "socket.io-client": "^4.4.0"
   }
 }

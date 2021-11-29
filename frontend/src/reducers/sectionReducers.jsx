@@ -78,7 +78,7 @@ export const sectionUpdateTaskReducer = (state = {order: []}, action) => {
         case SECTION_TASK_UPDATE_REQUEST:
             return { loading: true };
         case SECTION_TASK_UPDATE_SUCCESS:
-            return { loading: false, order: action.payload};
+            return { loading: false, data: action.payload};
         case SECTION_TASK_UPDATE_FAIL:
             return { loading: false, error: action.payload};
         default:
