@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import ErrorMessage from "../ErrorMessage";
 import Preload from "../Preload";
 import { updateTeamAction } from "../../actions/teamActions";
+import { useEffect } from "react";
 
 const EditTeamModal = ({ showModal, hideModal, data }) => {
 
@@ -39,7 +40,7 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
 
   useEffect(() => {
     setUsers(userlist);
-  }, [teamUserDelete])
+  }, [teamUserDelete, userlist])
 
   return (
     <Modal centered size="lg" show={showModal} onHide={hideModal}>

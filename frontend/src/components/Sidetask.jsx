@@ -13,7 +13,7 @@ import {
   taskRemove,
   taskDescriptionUpdate,
   taskPriorityUpdate,
-} from "../functions/taskFunctions";
+} from "../functions/TaskFunctions";
 import {
   deleteTask,
   updateTask,
