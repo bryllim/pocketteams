@@ -6,8 +6,8 @@ const router = express.Router();
 
 router.route("/").get(protect, getTeam);
 router.route("/create").post(createTeam);
-router.route("/addusers/:id").get(getTeamById).put(updateTeamUser)
-router.route("/deleteusers/:id").delete(protect, deleteUser)
+router.route("/users/:id").get(getTeamById).put(updateTeamUser);
+router.route("/deleteusers/:id").get(getTeamById).put(protect,deleteUser);
 router.route("/:id").get(protect, getTeamById).put(protect, updateTeam).delete(protect, deleteTeam);
 //.put().delete();
 
