@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import Preload from "./components/Preload";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router";
+import { Redirect } from "react-router";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -27,7 +27,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
 
     useEffect(() => {
-        if(userInfo == null){
+        if(userInfo === null){
           setLoggedIn(false);
         } else {
           setLoggedIn(true);

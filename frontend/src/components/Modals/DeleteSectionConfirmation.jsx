@@ -1,24 +1,18 @@
-import {
-  Form,
-  Modal,
-  Col,
-  Row,
-} from "react-bootstrap";
-import React,{useContext} from "react";
-import {TaskContext} from "../../contexts/SectionContext"
+import { Modal } from "react-bootstrap";
+import React, { useContext } from "react";
+import { TaskContext } from "../../contexts/SectionContext";
 
-
-
-
-const DeleteSectionConfirmation = ({ showModal, hideModal,sectionId, index , removeSection}) => {
-
-  const {sections,setSections,sectionOrder,setSectionOrder,dispatch} = useContext(TaskContext)
-
-
-
+const DeleteSectionConfirmation = ({
+  showModal,
+  hideModal,
+  sectionId,
+  index,
+  removeSection,
+}) => {
+  const { sections, setSections, sectionOrder, setSectionOrder, dispatch } =
+    useContext(TaskContext);
   return (
     <>
-  
       <Modal centered show={showModal} onHide={hideModal}>
         <Modal.Header>
           <h5>Do you want to remove this section?</h5>
@@ -29,7 +23,6 @@ const DeleteSectionConfirmation = ({ showModal, hideModal,sectionId, index , rem
             aria-label="Close"
           ></button>
         </Modal.Header>
-
         <Modal.Footer>
           <button
             className="btn btn-outline-secondary  theme-btn-modal rounded-pill"
@@ -37,15 +30,22 @@ const DeleteSectionConfirmation = ({ showModal, hideModal,sectionId, index , rem
           >
             Cancel
           </button>
-
           <button
             className="theme-btn theme-btn-modal mx-0"
-            onClick={()=>removeSection({sections,setSections,sectionOrder,setSectionOrder,dispatch,sectionId,index})}
+            onClick={() =>
+              removeSection({
+                sections,
+                setSections,
+                sectionOrder,
+                setSectionOrder,
+                dispatch,
+                sectionId,
+                index,
+              })
+            }
           >
             Remove Section
           </button>
-
-          
         </Modal.Footer>
       </Modal>
     </>

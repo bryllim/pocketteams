@@ -13,7 +13,7 @@ import {
   taskRemove,
   taskDescriptionUpdate,
   taskPriorityUpdate,
-} from "../functions/taskFunctions";
+} from "../functions/TaskFunctions";
 import {
   deleteTask,
   updateTask,
@@ -38,9 +38,7 @@ const updateTaskName = ({
     taskRemove({ sectionId, sections, setSections, index });
     dispatch(deleteTask({ taskId }));
   } else if (taskId === "123") {
-    console.log("create");
     const task_priority = "light";
-    console.log(task_priority);
     dispatch(
       createTask({
         task_name: taskName,
@@ -162,8 +160,6 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
     dispatch(listComments(taskId));
   }, [dispatch, taskId, successCreateComment,successUpdateComment]);
   
-  console.log(comments)
-
   //useEffect to check/show the color of Priority
   useEffect(() => {
     if (taskPriority === "light") {

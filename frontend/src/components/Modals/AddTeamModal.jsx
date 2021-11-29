@@ -61,7 +61,7 @@ const AddTeam = ({ showModal, hideModal }) => {
       notifyError("User Exists");
     } else {
       notifySuccess("User Added");
-      addedUsers.push(val);
+      setAddedUsers([...addedUsers, val]);
     }
     return;
   };

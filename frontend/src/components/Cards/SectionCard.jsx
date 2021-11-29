@@ -1,4 +1,4 @@
-import React,{useContext,useState,useRef} from "react";
+import React,{useContext,useState} from "react";
 import TaskCard from './TaskCard'
 import { Droppable, Draggable} from 'react-beautiful-dnd' 
 import {TaskContext} from "../../contexts/SectionContext"
@@ -8,11 +8,10 @@ import DeleteSectionConfirmation from "../Modals/DeleteSectionConfirmation"
 import {sectionDelete,sectionRename} from "../../functions/sectionFunctions"
 import { useDispatch} from "react-redux";
 import { updateSection, deleteSection} from "../../actions/sectionActions";
-import {taskCreate} from "../../functions/taskFunctions"
-import { v4 as uuidv4 } from 'uuid'
+import {taskCreate} from "../../functions/TaskFunctions"
+import { ObjectID } from 'bson';
 
 const changeSection =({sectionTitle,sections,setSections,index,dispatch,sectionId,openDeleteSection}) => {
-  console.log(sectionTitle)
   if(sectionTitle === ''){
     openDeleteSection()
     return
@@ -23,38 +22,28 @@ const changeSection =({sectionTitle,sections,setSections,index,dispatch,sectionI
     return
   }
 }
-
-const removeSection = ({sectionOrder,setSectionOrder,sections,setSections,sectionId,index,dispatch}) =>{
+const removeSection = ({sectionOrder,setSectionOrder,sections,setSections,sectionId,index,dispatch}) =>{ 
   sectionDelete({sectionOrder,setSectionOrder,sections,setSections,sectionOrderIndex:index,sectionId})
-  dispatch(deleteSection({section_id:sectionId}))
+  dispatch(deleteSection({section_id:sectionId,project_id:sections[index].project_id}))
 }
-
 const newTask = ({sectionId, sections, setSections,dispatch}) =>{
-  const taskTempId = uuidv4()
-  taskCreate({sectionId, sections, setSections, taskTempId})
+  const taskId =  new ObjectID().toHexString()
+  taskCreate({sectionId, sections, setSections, taskId})
+  return
 }
 
 const SectionCard = ({sectionId,index,section}) => {
   //rework
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const [editShow, setEditShow] = useState(false);
-  const handleEditClose = () => setEditShow(false);
-
-  const handleEditShow = () => setEditShow(true);
-  
   const [showDeleteSection, setShowDeleteSection] = useState(false);
   const closeDeleteSection = () => setShowDeleteSection(false)
   const openDeleteSection = () => setShowDeleteSection(true)
-
   const [sectionTitle, setSectionTitle] = useState(section.section_name)
   const [sectionToggleState,setSectionToggleState] = useState(true)
-
   const {sections,setSections} = useContext(TaskContext)
-
   const dispatch = useDispatch();
+  
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p
       ref={ref}
@@ -65,7 +54,7 @@ const SectionCard = ({sectionId,index,section}) => {
     >
       {children}
     </p>
-)); 
+));
   return (
     <>
       <Draggable draggableId={sectionId} index={index} >
@@ -107,13 +96,10 @@ const SectionCard = ({sectionId,index,section}) => {
                         event.stopPropagation()
                       }}} 
                   />)
-                }
-                
-
+                }               
                   <button className="btn text-white ms-auto" type="button">
                     <i className="lni lni-plus fs-5 " onClick={()=>newTask({sectionId, sections, setSections,dispatch})}></i>
                   </button>
-
                   <Dropdown>
                     <Dropdown.Toggle 
                       as={CustomToggle} 
@@ -127,45 +113,38 @@ const SectionCard = ({sectionId,index,section}) => {
                         <Dropdown.Item onClick={openDeleteSection}>Remove</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
-
-                  
-             
               </div>
-          <Droppable droppableId={section._id} key={index} id="task">
-                {(provided,snapshot) => {
-                  
-
-                  return(
-                  
-                    <div 
-                      {...provided.droppableProps}
-                      ref={provided.innerRef}
-                      className="section-wrapper-internal scrolling-wrapper-y flex-nowrap pt-4 basecard">
-                        {section.tasks.map((task, index) => {
-                          return (
-                            <div key={index}>
-                            <TaskCard
-                              sectionId={sectionId}
-                              provided={provided}
-                              snapshot={snapshot}
-                              task={task}
-                              index={index}
-                            />
-                            </div>       
-                          )
+          <Droppable 
+            droppableId={section._id} 
+            key={index} 
+            id="task"
+          >  
+            {(provided,snapshot) => (  
+                <div 
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  className="section-wrapper-internal scrolling-wrapper-y flex-nowrap pt-4 basecard">
+                    {section.tasks.map((task,index) =>{
+                      return(
+                        <TaskCard
+                          sectionId={sectionId}
+                          provided={provided}
+                          snapshot={snapshot}
+                          task={task}
+                          index={index}
+                        />  
+                      )
                       })}
-                      {provided.placeholder}
-                      <div className="d-flex justify-content-center align-items-center theme-btn mx-auto my-4"  
-                      style={{width:"250px", height:"50px"}} onClick={()=>newTask({sectionId, sections, setSections,dispatch})}>
-                            <button className="btn" type="button">
-                                <i className="lni lni-plus text-white"></i>
-                            </button>
-                            <h6 className="text-white">Add Another</h6>
-                      </div>
-                    </div>
-                     
-                  )
-                }}  
+                  {provided.placeholder}
+                  <div className="d-flex justify-content-center align-items-center theme-btn mx-auto my-4"  
+                  style={{width:"250px", height:"50px"}} onClick={()=>newTask({sectionId, sections, setSections,dispatch})}>
+                        <button className="btn" type="button">
+                            <i className="lni lni-plus text-white"></i>
+                        </button>
+                        <h6 className="text-white">Add Another</h6>
+                  </div>
+                </div>
+                  )}  
               </Droppable> 
             </div>
           )

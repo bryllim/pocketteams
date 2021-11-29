@@ -1,7 +1,8 @@
 const onDragEnd = ({result, sections, sectionOrder, setSections, setSectionOrder}) => {
-    console.log('onDragEnd')
+    if (!result.destination) return;
+
     const { source, destination, type } = result;
-    const newSections = [...sections]
+    const newSections = JSON.parse(JSON.stringify(sections));
     const sourceSectionId = source.droppableId
     const destinationSectionId = destination.droppableId
     const taskId = result.draggableId
@@ -11,34 +12,22 @@ const onDragEnd = ({result, sections, sectionOrder, setSections, setSectionOrder
     const destinationSection = newSections[destinationIndex]
     const sourceDragindex = source.index;
     const destinationDragindex = destination.index;
-    if (!result.destination) {
-      console.log('error')
-      return;
-    }
+  
     if (source.droppableId !== destination.droppableId) {
-      const sourceTasks = [...sourceSection.tasks];
-      const destTasks = [...destinationSection.tasks];
-      const [removed] = sourceTasks.splice(source.index, 1);
-      
+      const sourceTasks = JSON.parse(JSON.stringify(sourceSection.tasks));
+      const destTasks = JSON.parse(JSON.stringify(destinationSection.tasks));
+      const [removed] = sourceTasks.splice(source.index, 1); 
       destTasks.splice(destination.index, 0, removed);
-      
       newSections[sourceIndex] = {...sourceSection,tasks:sourceTasks}
       newSections[destinationIndex] = {...destinationSection,tasks:destTasks}
-      console.log('newSections',newSections)
-      setSections([
-        ...newSections,
-      ]);
-      
-
+      setSections(newSections);
     } else {
       const sourceSection = newSections[sourceIndex];
-      const sourceTasks = [...sourceSection.tasks];
+      const sourceTasks = JSON.parse(JSON.stringify(sourceSection.tasks));
       const [removed] = sourceTasks.splice(source.index, 1);
       sourceTasks.splice(destination.index, 0, removed);
       newSections[sourceIndex] = {...sourceSection,tasks:sourceTasks}
-      setSections([
-        ...newSections,
-      ]);
+      setSections(newSections);
     }
     return {sourceSectionId,destinationSectionId,taskId,sourceDragindex,destinationDragindex,type}
   };
@@ -51,7 +40,7 @@ const onDragEnd = ({result, sections, sectionOrder, setSections, setSectionOrder
     const sectionId = draggableId;
     const sourceDragIndex = source.index;
     const destinationDragIndex = destination.index;
-    const newSectionOrder = [...sectionOrder]
+    const newSectionOrder = JSON.parse(JSON.stringify(sectionOrder))
     const [removed] = newSectionOrder.splice(sourceDragIndex, 1)
     newSectionOrder.splice(destinationDragIndex,0,removed)
     setSectionOrder(newSectionOrder)

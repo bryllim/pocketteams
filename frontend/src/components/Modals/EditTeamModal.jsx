@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
-import { Form, Modal, Col, Row, Container, Image } from "react-bootstrap";
+import {useState} from "react";
+import { Form, Modal, Col, Row, Container } from "react-bootstrap";
 import EditTeamCard from "../Cards/EditTeamCard";
 import pocketdevsLogo from "../../assets_pocketdevs/assets/img/profile/generated_profile.PNG";
 import { useDispatch, useSelector } from "react-redux";
-import { updateProjectAction } from "../../actions/projectActions";
 import ErrorMessage from "../ErrorMessage";
 import Preload from "../Preload";
 import { updateTeamAction } from "../../actions/teamActions";
+import { useEffect } from "react";
+import { toast } from "react-toastify";
+
 
 const EditTeamModal = ({ showModal, hideModal, data }) => {
 
@@ -20,6 +22,7 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
 
   const updateHandler = (e) => {
     e.preventDefault();
+    
     dispatch(updateTeamAction(data._id, teamName, teamDescription, teamAccess));
     if(!teamName || !teamDescription || !teamAccess)  return;
 
@@ -32,6 +35,10 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
     setTeamName("");
     setTeamDescription("");
   }
+
+  useEffect(() => {
+    
+  }, [data])
 
   return (
     <Modal centered size="lg" show={showModal} onHide={hideModal}>
@@ -75,15 +82,14 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
           </Row>
           <div className="horizontal">
             {
-              data.users?.map((users) => (
-                <EditTeamCard logo={pocketdevsLogo} data={users} teamId={data._id} />
+              data.users?.map((userslist) => (
+                <EditTeamCard logo={pocketdevsLogo} data={userslist} teamId={data._id} />
               ))
             }
            </div>
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        {loading && <Preload/>}
         <Form.Group className="search-form-box me-5">
                   <Form.Label className="fs-6 my-auto me-3">
                     {" "}
