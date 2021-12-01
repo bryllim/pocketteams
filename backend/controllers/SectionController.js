@@ -4,22 +4,16 @@ const Task = require("../models/TaskModel");
 const Project = require("../models/ProjectModel");
 
 const createSection = asyncHandler( async (req,res) => {
-    const {section_name, project_id,section_id} = req.body;
+    const {newSection} = req.body;
     //need to validate first if user belongs to section order id
     try {
-        if(!section_name || !project_id){ 
+        if(!newSection){ 
             res.status(400)
             throw new Error("Please Fill all the Fields");
         } else {
-            console.log("section_id",section_id);
-            const section = new Section({user: req.user._id,_id:section_id, section_name, project_id });
+            newSection.user = req.user.id;
+            const section = new Section(newSection);
             const createdSection = await section.save();
-            console.log("createdSection", createdSection);
-            await Project.findByIdAndUpdate(
-                project_id,
-                { $push: { sections: createdSection} },
-                { new: true, useFindAndModify: false },
-            );
             res.status(201).json(createdSection);
         }
     }
@@ -47,53 +41,40 @@ const getSectionById = asyncHandler( async (req,res) => {
 
 const getSectionByProjectId = asyncHandler( async (req,res) => {
     try {
-        const project_id = req.params.id;
-        if (!project_id) return
-      
-        const project   = await Project.findById(project_id).populate({
-            path: 'sections',
-            populate: {
-                path: 'tasks',
-            }
-        });
-        if(project){
-            const sections = project.sections
-            res.json(sections);
-        } else {
-            res.status(404);
-            throw new Error("Section not found");
+        const sections = await Section.find({project_id: req.params.id})
+        if(sections){
+            res.status(200).json(sections);
         }
-    }
-    catch(e) {
+        else {
+            res.status(500)
+           throw new Error("No Sections Found");
+        }
+    } catch(e) {
         console.log(e);
+        res.status(500)
+        throw new Error(e);
     }
 });
 
 const updateSection = asyncHandler(async (req,res) => {
-
+    const _id = req.params.id
+    const updates = Object.keys(req.body);
+    const allowedUpdates = ['section_name', 'order']
+    const isValidOperation = updates.every(
+        (update) => allowedUpdates.includes(update))
+    if (!isValidOperation)
+        return res.status(400).send({ error: 'Invalid updates!' })
     try{
-        const {section_name} = req.body;
-        const section = await Section.findById(req.params.id);
-        console.log(section_name)
-        //Check if this Section belongs to the user
-        if(section.user.toString() !== req.user._id.toString()){
-            res.status(401);
-            throw new Error("You can't perform this action");
-        }
-
-        if(section){
-            section.section_name = section_name;
-            const updatedSection = await section.save();
-            res.json(updatedSection);
-        } 
+        const section = await Section.findByIdAndUpdate(_id, req.body, {
+            new: true});
+        if(!section)
+            return res.status(404).json({message: "Section not found"});
+        res.status(200).json(section);
     }
     catch(e) {
         console.log(e);
-    // [Error: Uh oh!]
+        res.status(500)
     }
-
-
-
 });
 
 const deleteSection = asyncHandler(async (req,res) => {

@@ -3,17 +3,18 @@ const Task = require("../models/TaskModel");
 const Section = require("../models/SectionModel");
 
 const createTask = asyncHandler( async (req,res) => {
-    const {task_name, task_description, section_id,task_id} = req.body;
+    const {newTask} = req.body;
+    newTask.user = req.user.id;
+    console.log(newTask);
     try{
-        if(!task_name || !task_description || !section_id){
+        if(!newTask){
             throw new Error("Please Fill all the Fields");
         } else {
             try{
-                console.log("task_id",task_id);
-                const task = new Task({user: req.user._id, task_name, task_description, section_id, _id:task_id});
+                const task = new Task(newTask);
                 let createdTask = await task.save()
                 sectionResponse = await Section.findByIdAndUpdate(
-                    section_id,
+                  newTask.section_id,
                     { $push: { tasks: createdTask} },
                     { new: true, useFindAndModify: false },
                 );
@@ -28,9 +29,9 @@ const createTask = asyncHandler( async (req,res) => {
                 res.status(500).json(err);
             }
         }
-  } catch (err) {
-    res.status(400).json(err);
-    console.log("er3");
+  } catch (e) {
+    res.status(400).json(e);
+    console.log(e);
   }
 });
 
@@ -241,6 +242,28 @@ const updateTaskEndDateById = asyncHandler(async (req, res) => {
   }
 });
 
+
+const getTaskByProjectId = asyncHandler(async (req, res) => {
+  try {
+    const tasks = await Task.find({ project_id: req.params.id });
+    if (tasks) {
+      res.status(200).json(tasks);
+    } else {
+      res.status(500)
+      throw new Error("Request not found");
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500)
+    throw new Error(err);
+  }
+});
+
+
+
+
+
+
 module.exports = {
   createTask,
   getTasks,
@@ -251,4 +274,5 @@ module.exports = {
   updateTaskAssignedUsersById,
   updateTaskPriorityById,
   updateTaskNameById,
+  getTaskByProjectId,
 };

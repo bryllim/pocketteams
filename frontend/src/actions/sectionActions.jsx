@@ -8,8 +8,7 @@ import {
 } from "../constants/sectionConstants"
 import axios from "axios";
 
-export const listSection = ({project_id}) => async (dispatch, getState) => {
-    console.log("listSection")
+export const listSectionByProjectId = ({project_id}) => async (dispatch, getState) => {
     try{
         dispatch({
             type: SECTION_LIST_REQUEST,
@@ -24,23 +23,11 @@ export const listSection = ({project_id}) => async (dispatch, getState) => {
             Authorization: `Bearer ${userInfo.token}`,
         },
     };
+    const {data} = await axios.get(`/api/sections/project/${project_id}`, config)
 
-    // const { data } = await axios.get(`/api/sections`, config);
-    const {data:projectData} = await axios.get(`/api/sections/project/${project_id}`, config)
-    console.log("projectData",projectData)
-    if(!projectData){
-        throw new Error("Error");
-    }
-    
-    const sectionOrderList = projectData.map(order =>{
-        return order._id
-    })
-
-    const sectionDataList = projectData
-    // const sectionOrderId = projectData._id
     dispatch({
         type: SECTION_LIST_SUCCESS,
-        payload: {sectionOrderList,sectionDataList}
+        payload: data
     })
     } catch (error){
         const message = 
@@ -137,7 +124,7 @@ export const updateSectionTask = ({sourceSectionId,destinationSectionId,taskId,s
 }
 
 
-export const updateSection = ({section_name, sectionId}) => async (dispatch, getState) => {
+export const updateSection = ({params, sectionId}) => async (dispatch, getState) => {
     try{
         dispatch({
             type: SECTION_UPDATE_REQUEST,
@@ -154,9 +141,9 @@ export const updateSection = ({section_name, sectionId}) => async (dispatch, get
             },
         };
 
-        const { data } = await axios.put(
+        const { data } = await axios.patch(
             `/api/sections/${sectionId}`,
-            {section_name}, 
+            params, 
             config
         );
 
@@ -176,7 +163,7 @@ export const updateSection = ({section_name, sectionId}) => async (dispatch, get
     }
 }
 
-export const createSection = ({section_name,project_id, section_id}) => async (dispatch, getState) => {
+export const createSection = (newSection) => async (dispatch, getState) => {
     try{
         dispatch({
             type: SECTION_CREATE_REQUEST,
@@ -192,10 +179,9 @@ export const createSection = ({section_name,project_id, section_id}) => async (d
                 Authorization: `Bearer ${userInfo.token}`,
             },
         };
-        console.log("section_id",section_id)
         const { data } = await axios.post(
             `/api/sections/create`,
-            {section_name,project_id,section_id}, 
+            {newSection}, 
             config
         );
 
@@ -253,11 +239,7 @@ export const deleteSection = ({section_id}) => async (dispatch, getState) => {
         });
     }
 }
-
-
-
-
-
+    
 
 
 

@@ -1,11 +1,11 @@
 //create section on frontend
-const sectionCreate = ({sectionOrder,setSectionOrder,sections,setSections,sectionId,projectId,sectionName}) =>{
-  const newSections  = JSON.parse(JSON.stringify(sections))
+const sectionCreate = ({sectionOrder,setSectionOrder,sections,setSections,newSection}) =>{
+  const cloneSection  = JSON.parse(JSON.stringify(sections))
   const newOrder  = JSON.parse(JSON.stringify(sectionOrder))
-  newSections.push({section_name:sectionName,_id:sectionId, project_id: projectId, tasks: []})
-  newOrder.push(sectionId)
+  cloneSection.push(newSection)
+  newOrder.push(newSection._id)
   setSections([
-    ...newSections
+    ...cloneSection
   ])
   setSectionOrder([
     ...newOrder

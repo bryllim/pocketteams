@@ -10,6 +10,7 @@ import { useDispatch} from "react-redux";
 import { updateSection, deleteSection} from "../../actions/sectionActions";
 import {taskCreate} from "../../functions/taskFunctions"
 import { ObjectID } from 'bson';
+import midString from "../../functions/ordering"
 
 const changeSection =({sectionTitle,sections,setSections,index,dispatch,sectionId,openDeleteSection}) => {
   if(sectionTitle === ''){
@@ -26,9 +27,18 @@ const removeSection = ({sectionOrder,setSectionOrder,sections,setSections,sectio
   sectionDelete({sectionOrder,setSectionOrder,sections,setSections,sectionOrderIndex:index,sectionId})
   dispatch(deleteSection({section_id:sectionId,project_id:sections[index].project_id}))
 }
-const newTask = ({sectionId, sections, setSections,dispatch}) =>{
-  const taskId =  new ObjectID().toHexString()
-  taskCreate({sectionId, sections, setSections, taskId})
+const newTask = ({sectionId, sections, setSections,section}) =>{
+  const tasks = section.tasks ? section.tasks:[];
+  const totalTasks = tasks.length
+  const newTask = {
+    task_name: '',
+    description: '',
+    section_id: sectionId,
+    project_id: section.project_id,
+    order: totalTasks === 0 ? 'n' : midString(tasks[totalTasks - 1].order, ''),
+    _id: new ObjectID().toHexString(),
+  }
+  taskCreate({sectionId, sections, setSections, newTask})
   return
 }
 
@@ -98,7 +108,7 @@ const SectionCard = ({sectionId,index,section}) => {
                   />)
                 }               
                   <button className="btn text-white ms-auto" type="button">
-                    <i className="lni lni-plus fs-5 " onClick={()=>newTask({sectionId, sections, setSections,dispatch})}></i>
+                    <i className="lni lni-plus fs-5 " onClick={()=>newTask({sectionId, sections, setSections, section})}></i>
                   </button>
                   <Dropdown>
                     <Dropdown.Toggle 
@@ -137,7 +147,7 @@ const SectionCard = ({sectionId,index,section}) => {
                       })}
                   {provided.placeholder}
                   <div className="d-flex justify-content-center align-items-center theme-btn mx-auto my-4"  
-                  style={{width:"250px", height:"50px"}} onClick={()=>newTask({sectionId, sections, setSections,dispatch})}>
+                  style={{width:"250px", height:"50px"}} onClick={()=>newTask({sectionId, sections, setSections,section})}>
                         <button className="btn" type="button">
                             <i className="lni lni-plus text-white"></i>
                         </button>

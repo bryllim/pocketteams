@@ -1,4 +1,4 @@
-const onDragEnd = ({result, sections, sectionOrder, setSections, setSectionOrder}) => {
+const onDragEndd = ({result, sections, sectionOrder, setSections, setSectionOrder}) => {
     if (!result.destination) return;
 
     const { source, destination, type } = result;
@@ -49,7 +49,6 @@ const onDragEnd = ({result, sections, sectionOrder, setSections, setSectionOrder
     setSectionOrder(newSectionOrder)
     return {sectionId, sourceDragIndex, destinationDragIndex}
   }
-  module.exports = {onDragEnd,orderSections}
 
-
+  module.exports = {onDragEndd,orderSections}
   // export default onDragEnd;

@@ -99,16 +99,24 @@ const deleteTeam = asyncHandler(async (req,res) => {
 });
 
 const deleteUser = asyncHandler(async (req,res) => {
-    const team = await Team.findById({users: req.params.userId});
+    const team = await Team.findById(req.params.id);
+    const {user_id} = req.body;
 
     if(team.owner.toString() !== req.user._id.toString()){
         res.status(401);
         throw new Error("You can't perform this action");   
     }
 
+    console.log("team id: " + team._id);
+
+    //remove the matching user_id from the users array inside team
     if(team){
-        await team.remove();
-        res.json({message: "Team Removed"});
+        const updatedTeam = await Team.findByIdAndUpdate(
+            {_id:team._id},
+            { $pull: {users: user_id} },
+            { new: true},
+        );
+        res.json(updatedTeam);
     }
 });
 

@@ -16,7 +16,8 @@ const updateTaskName = ({sectionId, sections, setSections, index, taskId,taskNam
   }
   else if(task.task_name === ''){
     taskRename({sectionId, sections, setSections, taskName,index});
-    dispatch(createTask({task_name:taskName,task_description:'tempdescription', section_id:sectionId, task_id:taskId}))
+    task.task_name = taskName
+    dispatch(createTask(task))
   }
   else{
     taskRename({sectionId, sections, setSections, taskName,index});
