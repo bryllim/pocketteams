@@ -12,11 +12,14 @@ import {
   createSection,
   updateSectionOrder,
 } from "../actions/sectionActions";
-import { onDragEnd, orderSections } from "../functions/dragDropFunctions";
+import onDragEnd from '../functions/dragDrop';
+import { orderSections } from "../functions/dragDropFunctions";
 import { sectionCreate } from "../functions/sectionFunctions";
-import { listSection } from "../actions/sectionActions";
+import { listSectionByProjectId, updateSection} from "../actions/sectionActions";
+import {listTaskByProjectId} from '../actions/taskActions'
 import SkeletonSectionCard from "../components/Cards/SkeletonSectionCard";
 import { ObjectID } from "bson";
+import midString from "../functions/ordering";
 import "../css/board.css";
 
 const addSection = async ({
@@ -27,97 +30,49 @@ const addSection = async ({
   sections,
   setSections,
 }) => {
-  const sectionId = new ObjectID().toHexString();
-  const sectionName = "New Section";
+  const totalSections = sections.length;
+  const newSection = {
+    _id: new ObjectID().toHexString(),
+    section_name: "New Section",
+    order: totalSections === 0 ? 'n' : midString(sections[totalSections - 1].order, ''),
+    project_id: projectId,
+    tasks: [],
+  }
   sectionCreate({
     sectionOrder,
     setSectionOrder,
     sections,
     setSections,
-    sectionId,
-    projectId,
-    sectionName,
+    newSection
   });
   dispatch(
-    createSection({
-      section_name: sectionName,
-      project_id: projectId,
-      section_id: sectionId,
-    })
+    createSection(newSection)
   );
   return;
 };
 
-const onDrag = ({
-  result,
-  dispatch,
-  sectionOrder,
-  setSectionOrder,
-  projectId,
-  sections,
-  setSections,
-}) => {
-  //transfer outside function component
-  const itemType = result.type;
-  if (itemType === "column") {
-    if (
-      result.destination === null ||
-      result.destination.index === result.source.index
-    )
-      return;
-    const { sectionId, sourceDragIndex, destinationDragIndex } = orderSections({
-      result,
-      sectionOrder,
-      setSectionOrder,
-    });
-    dispatch(
-      updateSectionOrder({
-        sectionId,
-        sourceDragIndex,
-        destinationDragIndex,
-        project_id: projectId,
-      })
-    );
-    console.log("drag column", result);
-    console.log("drag", result.destination === null);
-  } else {
-    if (!result.destination) return;
-    const {
-      sourceSectionId,
-      destinationSectionId,
-      taskId,
-      sourceDragindex,
-      destinationDragindex,
-      type,
-    } = onDragEnd({
-      result,
-      sections,
-      sectionOrder,
-      setSections,
-      setSectionOrder,
-    });
-    dispatch(
-      updateSectionTask({
-        sourceSectionId,
-        destinationSectionId,
-        taskId,
-        sourceDragindex,
-        destinationDragindex,
-        type,
-      })
-    );
-  }
-  return;
-};
+const onDrag = ({result,data,dispatch}) => {
+  const newData = onDragEnd({result,data});
+  if(newData) dispatch(updateSection({
+    params:newData,
+    sectionId:result.draggableId
+  }));
+  return
+}
+  
 
 const Board = (props) => {
   const { projectId } = props.location || {};
   const dispatch = useDispatch();
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
-  const dataList = useSelector((state) => state.sectionList);
+  // const dataList = useSelector((state) => state.sectionList);
+  const {loading:sectionLoading, data:sectionList} = useSelector((state) => state.sectionList);
+  const {loading:taskLoading, data:taskList} = useSelector((state) => state.taskList);
+  
   const [sections, setSections] = useState(null);
   const [sectionOrder, setSectionOrder] = useState(null);
+
   const { userInfo } = userLogin;
 
   useEffect(() => {
@@ -127,27 +82,54 @@ const Board = (props) => {
   }, [history, userInfo]);
 
   useEffect(() => {
-    dispatch(listSection({ project_id: projectId }));
+    dispatch(listSectionByProjectId({ project_id: projectId }));
+    dispatch(listTaskByProjectId({ project_id: projectId }));
   }, [dispatch, projectId]);
 
-  // useInterval(() => {
-  //   console.log("new data:")
-  //   dispatch(listSection({project_id:projectId}));
-  // }, 5000);
-
-  // setTimeout(() => {
-  //   dispatch(listSection({project_id:projectId}));
-  //   console.log("refresh")
-  // }, 5000)
-
   useEffect(() => {
-    if (dataList.loading === false && dataList.data !== undefined) {
-      const sectionDataList = dataList.data.sectionDataList;
-      const sectionOrderList = dataList.data.sectionOrderList;
-      setSections(sectionDataList);
-      setSectionOrder(sectionOrderList);
+    if (!sectionLoading && !taskLoading && sectionList && taskList) {
+      console.log('sectionList',sectionList);
+      if (sectionList.length === 0 || taskList.length === 0){
+        setSections(sectionList);
+        setSectionOrder(sectionList);
+        return;
+      }
+
+      sectionList.sort((a, b) =>{
+          let orderA = a.order
+          let orderB = b.order
+          return orderA.localeCompare(orderB)//using String.prototype.localCompare()
+        }
+      );
+      const sectionIds = sectionList.map((section) => section._id);
+
+      taskList.sort((a, b) =>{
+          let orderA = a.order
+          let orderB = b.order
+          return orderA.localeCompare(orderB)//using String.prototype.localCompare()
+        } 
+      );
+      sectionList.forEach((section) => {
+        section.tasks = taskList.filter((task) => task.section_id === section._id);
+        section.tasks = section.tasks.sort((a, b) =>{
+            let orderA = a.order
+            let orderB = b.order
+            return orderA.localeCompare(orderB)//using String.prototype.localCompare()
+        });
+      });
+      setSectionOrder(sectionIds)
+      setSections(sectionList);
     }
-  }, [dataList]);
+  }, [sectionList, taskList, sectionLoading, taskLoading]);
+
+  // useEffect(() => {
+  //   if (dataList.loading === false && dataList.data !== undefined) {
+  //     const sectionDataList = dataList.data.sectionDataList;
+  //     const sectionOrderList = dataList.data.sectionOrderList;
+  //     setSections(sectionDataList);
+  //     setSectionOrder(sectionOrderList);
+  //   }
+  // }, [dataList]);
 
   return (
     <>
@@ -181,14 +163,15 @@ const Board = (props) => {
               <div className="d-flex scrolling-wrapper-x flex-nowrap flex-grow-1 task-board-wrapper my-3">
                 <DragDropContext
                   onDragEnd={(result) => {
+                    const data ={}
+                    data.sections = sections;
+                    data.sectionOrder = sectionOrder;
+                    data.setSections = setSections;
+                    data.setSectionOrder = setSectionOrder;
                     onDrag({
                       result,
                       dispatch,
-                      sectionOrder,
-                      setSectionOrder,
-                      projectId,
-                      sections,
-                      setSections,
+                      data
                     });
                   }}
                 >
@@ -232,7 +215,6 @@ const Board = (props) => {
                                 const section = sections.filter((obj) => {
                                   return obj._id === sectionId;
                                 })[0];
-                                console.log("section tasks", section.tasks);
                                 return (
                                   <div
                                     style={{

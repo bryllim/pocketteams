@@ -6,7 +6,7 @@ import {
 } from "../constants/taskConstants"
 import axios from "axios";
 
-export const listTasks = () => async (dispatch, getState) => {
+export const listTaskByProjectId = ({project_id}) => async (dispatch, getState) => {
     try{
         dispatch({
             type: TASK_LIST_REQUEST,
@@ -22,7 +22,9 @@ export const listTasks = () => async (dispatch, getState) => {
         },
     };
 
-    const { data } = await axios.get(`/api/tasks`, config);
+    const { data } = await axios.get(`/api/tasks/project/${project_id}`, config);
+
+    console.log("data", data)
 
     dispatch({
         type: TASK_LIST_SUCCESS,
@@ -41,7 +43,7 @@ export const listTasks = () => async (dispatch, getState) => {
     }
 }
 
-export const createTask = ({task_name,task_description,section_id,task_id,task_priority}) => async (dispatch, getState) => {
+export const createTask = (newTask) => async (dispatch, getState) => {
     try{
         dispatch({
             type: TASK_CREATE_REQUEST,
@@ -58,7 +60,7 @@ export const createTask = ({task_name,task_description,section_id,task_id,task_p
     };
     const { data } = await axios.post(
         `/api/tasks/create`,
-        {task_name, task_description, section_id, task_id,task_priority}, 
+        {newTask}, 
         config
     );
 

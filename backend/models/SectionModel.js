@@ -25,6 +25,10 @@ const SectionSchema = mongoose.Schema(
       required: true,
       ref: "Project",
     },
+    order:{
+      type:String,
+      required:true
+    },
     tasks: [
       {
         type: mongoose.Schema.Types.ObjectId,

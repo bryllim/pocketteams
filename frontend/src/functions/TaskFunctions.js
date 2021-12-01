@@ -16,10 +16,10 @@ const taskRemove = ({ sectionId, sections, setSections, index }) => {
   setSections(newSections);
 };
 //add the task on frontend
-const taskCreate = ({sectionId, sections, setSections,taskId}) => { //change to section index
+const taskCreate = ({sectionId, sections, setSections,newTask}) => { //change to section index
   const newSections = JSON.parse(JSON.stringify(sections));
   newSections.forEach(section => {
-    return section._id === sectionId ? section.tasks.push({task_name:'',_id: taskId, task_description:'tempdescription'}) : null
+    return section._id === sectionId ? section.tasks.push(newTask) : null
   })
   setSections(newSections)
 }
@@ -50,6 +50,7 @@ const taskPriorityUpdate = ({
   });
   setSections(newSections);
 };
+
 
 module.exports = {
   taskRename,
