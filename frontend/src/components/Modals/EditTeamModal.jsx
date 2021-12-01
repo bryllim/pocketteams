@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import ErrorMessage from "../ErrorMessage";
 import Preload from "../Preload";
 import { updateTeamAction } from "../../actions/teamActions";
-import { useEffect } from "react";
 import { toast } from "react-toastify";
 
 
