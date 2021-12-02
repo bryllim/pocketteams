@@ -45,10 +45,8 @@ io.on("connection", function (socket) {
     socket.to(projectId).emit("New_User_Joined ", projectId);
     console.log("user ",socket.id," joined ",projectId);
   });
-  socket.on("Update_Section_Task", (data) => {
+  socket.on("Update_Section", (data) => {
     console.log("new data",data);
-    socket.to(data.projectId).emit("New_Section_Update", data);
-    console.log("Someone Updated the Section")
+    socket.to(data.project_id).emit("New_Section_Update", data);
   });
-  console.log("Made socket connection");
 });

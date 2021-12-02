@@ -15,9 +15,10 @@ import {
 } from "../actions/sectionActions";
 import onDragEnd from '../functions/dragDrop';
 import { orderSections } from "../functions/dragDropFunctions";
-import { sectionCreate } from "../functions/sectionFunctions";
+import { sectionCreate,sectionUpdate } from "../functions/sectionFunctions";
+import {taskUpdate} from '../functions/taskFunctions';
 import { listSectionByProjectId, updateSection} from "../actions/sectionActions";
-import {listTaskByProjectId} from '../actions/taskActions'
+import {listTaskByProjectId,updateTask} from '../actions/taskActions'
 import SkeletonSectionCard from "../components/Cards/SkeletonSectionCard";
 import { ObjectID } from "bson";
 import midString from "../functions/ordering";
@@ -54,15 +55,23 @@ const addSection = async ({
 
 const onDrag = ({result,data,dispatch}) => {
   const newData = onDragEnd({result,data});
-  if(newData) dispatch(updateSection({
+  if(newData && result.type === 'column') dispatch(updateSection({
     params:newData,
     sectionId:result.draggableId
   }));
+  else if(newData) dispatch(updateTask({
+    params:newData,
+    taskId:result.draggableId
+  }));
+  else{
+    console.log('error');
+  };
   return
 }
   
 
 const Board = (props) => {
+  console.log('Board');
   const { projectId } = props.location || {};
   const dispatch = useDispatch();
   const history = useHistory();
@@ -70,25 +79,59 @@ const Board = (props) => {
   // const dataList = useSelector((state) => state.sectionList);
   const {loading:sectionLoading, data:sectionList} = useSelector((state) => state.sectionList);
   const {loading:taskLoading, data:taskList} = useSelector((state) => state.taskList);
+  const {loading:sectionUpdateLoading, data:sectionUpdateData} = useSelector((state) => state.sectionUpdate);
+  const {loading:taskUpdateLoading, data:taskUpdateData} = useSelector((state) => state.taskUpdate);
+
   const [sections, setSections] = useState(null);
   const [sectionOrder, setSectionOrder] = useState(null);
   const { userInfo } = userLogin;
   const socket = useContext(SocketContext);
+  
+  console.log("sections",sections)
+  console.log("sectionOrder",sectionOrder)
+
   useEffect(() => {
     socket.emit("Join_Board", projectId);
     //subscribe to board events
     socket.on("New_User_Joined" , (data)=>{
       console.log("new user joined")
     })
-  
     return () => {
-      // before the component is destroyed
-      // unbind all event handlers used in this component
       socket.off("Join_Board");
       console.log("unsubscribe to board events")
     };
   }, [socket,projectId]);
 
+
+  useEffect(() => {
+    socket.on("New_Section_Update" , (data)=>{
+      sectionUpdate({sections,setSections, sectionOrder, setSectionOrder,sectionData:data})
+    })
+    return () => {
+      socket.off("New_Section_Update");
+    };
+  }, [socket,sections,sectionOrder]);
+
+  useEffect(() => {
+    socket.on("New_Task_Update" , (data)=>{
+      taskUpdate({sections,setSections, sectionOrder, setSectionOrder,taskData:data})
+    })
+    return () => {
+      socket.off("New_Task_Update");
+    };
+  }, [socket,sections,sectionOrder]);
+
+  useEffect(() => {
+    if (!sectionUpdateLoading && sectionUpdateData) {
+      socket.emit("Update_Section", sectionUpdateData);
+    }
+  }, [sectionUpdateData,socket,sectionUpdateLoading]);
+
+  useEffect(() => {
+    if (!taskUpdateLoading && taskUpdateData) {
+      socket.emit("Update_Task", taskUpdateData);
+    }
+  }, [taskUpdateData,socket,taskUpdateLoading]);
 
   useEffect(() => {
     if (!userInfo) {
@@ -103,12 +146,7 @@ const Board = (props) => {
 
   useEffect(() => {
     if (!sectionLoading && !taskLoading && sectionList && taskList) {
-      console.log('sectionList',sectionList);
-      if (sectionList.length === 0 || taskList.length === 0){
-        setSections(sectionList);
-        setSectionOrder(sectionList);
-        return;
-      }
+   
 
       sectionList.sort((a, b) =>{
           let orderA = a.order
@@ -177,7 +215,7 @@ const Board = (props) => {
                     onDrag({
                       result,
                       dispatch,
-                      data
+                      data,
                     });
                   }}
                 >

@@ -122,7 +122,7 @@ export const deleteTask = ({taskId, task_index}) => async (dispatch, getState) =
 }
 
 
-export const updateTask = ({task_name,task_description,task_id}) => async (dispatch, getState) => {
+export const updateTask = ({params,taskId}) => async (dispatch, getState) => {
     try{
         dispatch({
             type: TASK_UPDATE_REQUEST,
@@ -137,9 +137,9 @@ export const updateTask = ({task_name,task_description,task_id}) => async (dispa
             Authorization: `Bearer ${userInfo.token}`,
         },
     };
-    const { data } = await axios.put(
-        `/api/tasks/${task_id}`,
-        {task_name,task_description}, 
+    const { data } = await axios.patch(
+        `/api/tasks/${taskId}`,
+        params, 
         config
     );
 

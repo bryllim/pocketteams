@@ -146,7 +146,6 @@ export const updateSection = ({params, sectionId}) => async (dispatch, getState)
             params, 
             config
         );
-
         dispatch({
             type: SECTION_UPDATE_SUCCESS,
             payload: data,
@@ -162,6 +161,8 @@ export const updateSection = ({params, sectionId}) => async (dispatch, getState)
         });
     }
 }
+
+
 
 export const createSection = (newSection) => async (dispatch, getState) => {
     try{

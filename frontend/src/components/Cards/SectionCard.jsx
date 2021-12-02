@@ -19,7 +19,10 @@ const changeSection =({sectionTitle,sections,setSections,index,dispatch,sectionI
   }
   else{
     sectionRename({sectionTitle,sections,setSections,index})
-    dispatch(updateSection({ section_name:sectionTitle,sectionId}))
+    const newData = {
+      section_name: sectionTitle,
+    }
+    dispatch(updateSection({ params:newData, sectionId}))
     return
   }
 }
@@ -43,7 +46,6 @@ const newTask = ({sectionId, sections, setSections,section}) =>{
 }
 
 const SectionCard = ({sectionId,index,section}) => {
-  //rework
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const [showDeleteSection, setShowDeleteSection] = useState(false);

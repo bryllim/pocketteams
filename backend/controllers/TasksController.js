@@ -75,35 +75,23 @@ const deleteTaskById = asyncHandler(async (req, res) => {
 });
 
 const updateTaskById = asyncHandler(async (req, res) => {
+  const _id = req.params.id
+  const updates = Object.keys(req.body);
+  const allowedUpdates = ['task_name','task_description', 'order']
+  const isValidOperation = updates.every(
+      (update) => allowedUpdates.includes(update))
+  if (!isValidOperation)
+      return res.status(400).send({ error: 'Invalid updates!' })
   try {
-    console.log("updateTaskById");
-    const { task_name, task_description } = req.body;
-    const task_id = req.params.id;
-    if (!task_id && !task_description) {
-      throw new Error("Please Fill all the Fields");
-    }
-    const task = await Task.findById(task_id);
-
-    if (task_name) {
-      task.task_name = task_name;
-      await task.save();
-      res.json({ message: "task renamed" });
-    } else if (task_description) {
-      task.task_description = task_description;
-      await task.save();
-      res.json({ message: "task description updated" });
-    }
-    // else if(task_subtask){
-    //     task.task_subtask = task_subtask;
-    //     await task.save();
-    //     res.json({message: "task subtask updated"});
-    // }
-    else {
-      res.status(404).json({ message: "Request not found" });
-      throw new Error("Request not found");
-    }
-  } catch (err) {
-    console.log(err);
+    const task = await Task.findByIdAndUpdate(_id, req.body, {
+      new: true});
+    if(!task)
+      return res.status(404).json({message: "Task not found"});
+    res.status(200).json(task);
+  }
+  catch(e) {
+    console.log(e);
+    res.status(500)
   }
 });
 

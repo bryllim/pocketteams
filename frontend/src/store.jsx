@@ -7,7 +7,7 @@ import { taskListReducer} from './reducers/taskReducers';
 import { sectionOrderListReducer, sectionListReducer ,sectionUpdateTaskReducer,SectionOrderUpdateReducer,sectionUpdateReducer,sectionCreateReducer,sectionDeleteReducer} from './reducers/sectionReducers';
 import {noteListReducer,noteCreateReducer,noteUpdateReducer} from './reducers/noteReducers';
 import { teamAddUserReducer, teamCreateReducer, teamDeleteReducer, teamtListReducer, teamUpdateReducer, teamUserDeleteReducer } from './reducers/teamReducers';
-import {taskDeleteReducer,taskCreateReducer} from './reducers/taskReducers';
+import {taskDeleteReducer,taskCreateReducer,taskUpdateReducer} from './reducers/taskReducers';
 import {commentCreateReducer, commentListReducer, commentUpdateReducer} from './reducers/commentReducers';
 const reducer = combineReducers({
     userLogin: userLoginReducer,
@@ -37,6 +37,7 @@ const reducer = combineReducers({
     noteUpdate: noteUpdateReducer,
     taskDelete: taskDeleteReducer,
     taskCreate: taskCreateReducer,
+    taskUpdate: taskUpdateReducer,
     commentList: commentListReducer,
     commentCreate: commentCreateReducer,
     commentUpdate: commentUpdateReducer

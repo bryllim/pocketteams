@@ -47,4 +47,23 @@ const sectionTaskUpdate = ({sections,setSections,task,dragProps}) =>{
   setSections(newSections)
 }
 
-module.exports = {sectionDelete,sectionRename,sectionCreate,sectionTaskUpdate}
+const sectionUpdate = ({sections,setSections, sectionOrder, setSectionOrder,sectionData}) =>{
+  console.log("sectionData",sectionData.order)
+  const newSections  = JSON.parse(JSON.stringify(sections))
+  const newSectionOrder  = JSON.parse(JSON.stringify(sectionOrder))
+  newSections.find((section,index) => section._id === sectionData._id ? section.order=sectionData.order:null)
+  newSections.sort((a, b) =>{
+    let orderA = a.order
+    let orderB = b.order
+    return orderA.localeCompare(orderB)//using String.prototype.localCompare()
+  });
+
+  const sectionIds = newSections.map((section) => section._id);
+  setSections(newSections)
+  setSectionOrder(sectionIds);
+  console.log("newSections", newSections)
+  console.log("newSectionOrder", newSectionOrder)
+  return
+}
+
+module.exports = {sectionDelete,sectionRename,sectionCreate,sectionTaskUpdate,sectionUpdate}

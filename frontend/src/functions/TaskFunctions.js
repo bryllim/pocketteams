@@ -51,6 +51,19 @@ const taskPriorityUpdate = ({
   setSections(newSections);
 };
 
+const taskUpdate =({
+  sections,
+  setSections,
+  newTask
+}) => {
+  const newSections = JSON.parse(JSON.stringify(sections))
+  newSections.forEach(section => {
+    return section._id === sectionId ? section.tasks[index] = taskData : null
+  })
+  setSections(newSections)
+}
+
+
 
 module.exports = {
   taskRename,

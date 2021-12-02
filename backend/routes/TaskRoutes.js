@@ -19,7 +19,7 @@ router.route("/create").post(protect, createTask);
 // router.route("/:sectionid").get(protect, getTasksBySection);
 router
   .route("/:id")
-  .put(protect, updateTaskById)
+  .patch(protect, updateTaskById)
   .delete(protect, deleteTaskById);
 router.route("/update/description/:id").put(protect, updateTaskDescriptionById);
 router
