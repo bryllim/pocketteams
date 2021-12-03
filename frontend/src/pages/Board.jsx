@@ -13,7 +13,7 @@ import {
   createSection,
   updateSectionOrder,
 } from "../actions/sectionActions";
-import onDragEnd from '../functions/dragDrop';
+import onDragEnd from '../functions/dragDrop2';
 import { orderSections } from "../functions/dragDropFunctions";
 import { sectionCreate,sectionUpdate } from "../functions/sectionFunctions";
 import {taskUpdate} from '../functions/taskFunctions';
@@ -23,28 +23,27 @@ import SkeletonSectionCard from "../components/Cards/SkeletonSectionCard";
 import { ObjectID } from "bson";
 import midString from "../functions/ordering";
 import "../css/board.css";
+import { set } from "mongoose";
 
 const addSection = async ({
   dispatch,
-  projectId,
-  sectionOrder,
-  setSectionOrder,
-  sections,
-  setSections,
+  initialData,
+  setInitialData,
+  projectId
 }) => {
-  const totalSections = sections.length;
+  const sectionOrder = initialData.sectionOrder;
+  const sections = initialData.sections;
+  const totalSections = sectionOrder.length;
   const newSection = {
     _id: new ObjectID().toHexString(),
     section_name: "New Section",
-    order: totalSections === 0 ? 'n' : midString(sections[totalSections - 1].order, ''),
+    order: totalSections === 0 ? 'n' : midString(sections[sectionOrder[totalSections - 1]].order, ''),
     project_id: projectId,
-    tasks: [],
+    taskIds: [],
   }
   sectionCreate({
-    sectionOrder,
-    setSectionOrder,
-    sections,
-    setSections,
+    initialData,
+    setInitialData,
     newSection
   });
   dispatch(
@@ -71,7 +70,6 @@ const onDrag = ({result,data,dispatch}) => {
   
 
 const Board = (props) => {
-  console.log('Board');
   const { projectId } = props.location || {};
   const dispatch = useDispatch();
   const history = useHistory();
@@ -82,14 +80,16 @@ const Board = (props) => {
   const {loading:sectionUpdateLoading, data:sectionUpdateData} = useSelector((state) => state.sectionUpdate);
   const {loading:taskUpdateLoading, data:taskUpdateData} = useSelector((state) => state.taskUpdate);
 
+  const [initialData, setInitialData] = useState({});
+  console.log("🚀 ~ file: Board.jsx ~ line 83 ~ Board ~ initialData", initialData)
+ 
+  const [initDone, setInitDone] = useState(false);
+
   const [sections, setSections] = useState(null);
   const [sectionOrder, setSectionOrder] = useState(null);
   const { userInfo } = userLogin;
   const socket = useContext(SocketContext);
   
-  console.log("sections",sections)
-  console.log("sectionOrder",sectionOrder)
-
   useEffect(() => {
     socket.emit("Join_Board", projectId);
     //subscribe to board events
@@ -102,7 +102,6 @@ const Board = (props) => {
     };
   }, [socket,projectId]);
 
-
   useEffect(() => {
     socket.on("New_Section_Update" , (data)=>{
       sectionUpdate({sections,setSections, sectionOrder, setSectionOrder,sectionData:data})
@@ -113,25 +112,28 @@ const Board = (props) => {
   }, [socket,sections,sectionOrder]);
 
   useEffect(() => {
-    socket.on("New_Task_Update" , (data)=>{
-      taskUpdate({sections,setSections, sectionOrder, setSectionOrder,taskData:data})
+    socket.on("New_Board_Update", (data)=>{
+      console.log("🚀 ~ file: Board.jsx ~ line 123 ~ Board ~ data", data)
+      setInitialData(data);
     })
     return () => {
       socket.off("New_Task_Update");
     };
-  }, [socket,sections,sectionOrder]);
+  }, [socket,initialData]);
+
+  // useEffect(() => {
+  //   if (!sectionUpdateLoading && sectionUpdateData) {
+  //     socket.emit("Update_Section", sectionUpdateData);
+  //   }
+  // }, [sectionUpdateData,socket,sectionUpdateLoading]);
 
   useEffect(() => {
-    if (!sectionUpdateLoading && sectionUpdateData) {
-      socket.emit("Update_Section", sectionUpdateData);
+    if (!taskUpdateLoading && !sectionUpdateLoading) {
+      if(!taskUpdateData || !sectionUpdateData) return;
+      console.log("🚀 ~ file: Board.jsx ~ line 133 ~ Board ~ taskUpdateData", taskUpdateData)
+      socket.emit("Update_Board", {initialData,projectId});
     }
-  }, [sectionUpdateData,socket,sectionUpdateLoading]);
-
-  useEffect(() => {
-    if (!taskUpdateLoading && taskUpdateData) {
-      socket.emit("Update_Task", taskUpdateData);
-    }
-  }, [taskUpdateData,socket,taskUpdateLoading]);
+  }, [taskUpdateData,socket,taskUpdateLoading,sectionUpdateLoading,sectionUpdateData]);
 
   useEffect(() => {
     if (!userInfo) {
@@ -146,32 +148,41 @@ const Board = (props) => {
 
   useEffect(() => {
     if (!sectionLoading && !taskLoading && sectionList && taskList) {
-   
-
-      sectionList.sort((a, b) =>{
+      const prevState = { tasks: {}, sections: {}, sectionOrder: [] };
+      const getTaskIds = (id) => {
+        const filteredTasks = taskList.filter(task => task.section_id === id );
+        filteredTasks.sort((a, b) =>{
           let orderA = a.order
           let orderB = b.order
           return orderA.localeCompare(orderB)//using String.prototype.localCompare()
-        }
-      );
-      const sectionIds = sectionList.map((section) => section._id);
-
-      taskList.sort((a, b) =>{
-          let orderA = a.order
-          let orderB = b.order
-          return orderA.localeCompare(orderB)//using String.prototype.localCompare()
-        } 
-      );
-      sectionList.forEach((section) => {
-        section.tasks = taskList.filter((task) => task.section_id === section._id);
-        section.tasks = section.tasks.sort((a, b) =>{
-            let orderA = a.order
-            let orderB = b.order
-            return orderA.localeCompare(orderB)//using String.prototype.localCompare()
         });
-      });
-      setSectionOrder(sectionIds)
-      setSections(sectionList);
+        const taskIds = [];
+        filteredTasks.forEach((task) => taskIds.push(task._id));
+        return taskIds;
+      };
+        
+
+      const setContent = () => {
+        taskList.forEach((task) => (prevState.tasks[task._id] = task));
+        const newSectionList = JSON.parse(JSON.stringify(sectionList));
+        const sortedSectionList = newSectionList.sort((a, b) =>{
+          let orderA = a.order
+          let orderB = b.order
+          return orderA.localeCompare(orderB)//using String.prototype.localCompare()
+        });
+      
+        
+        sortedSectionList.forEach((section) => {
+          prevState.sections[section._id] = {
+            ...section,
+            taskIds: getTaskIds(section._id),
+          }
+          prevState.sectionOrder.push(section._id);
+        });
+      }
+      setContent()
+      setInitialData({ ...prevState });
+      setInitDone(true);
     }
   }, [sectionList, taskList, sectionLoading, taskLoading]);
 
@@ -184,6 +195,8 @@ const Board = (props) => {
           sectionOrder,
           setSectionOrder,
           dispatch,
+          initialData,
+          setInitialData,
         }}
       >
         <Navigation />
@@ -207,11 +220,13 @@ const Board = (props) => {
               <div className="d-flex scrolling-wrapper-x flex-nowrap flex-grow-1 task-board-wrapper my-3">
                 <DragDropContext
                   onDragEnd={(result) => {
-                    const data ={}
-                    data.sections = sections;
-                    data.sectionOrder = sectionOrder;
-                    data.setSections = setSections;
-                    data.setSectionOrder = setSectionOrder;
+                    const data = {}
+                    // data.sections = sections;
+                    // data.sectionOrder = sectionOrder;
+                    // data.setSections = setSections;
+                    // data.setSectionOrder = setSectionOrder;
+                    data.initialData = initialData;
+                    data.setInitialData = setInitialData;
                     onDrag({
                       result,
                       dispatch,
@@ -237,7 +252,7 @@ const Board = (props) => {
                           }}
                           className="pb-3"
                         >
-                          {!sections
+                          {!initDone
                             ? Array.from(
                                 Array(Math.floor(Math.random() * 6))
                               ).map((item, index) => {
@@ -255,10 +270,11 @@ const Board = (props) => {
                                   </div>
                                 );
                               })
-                            : sectionOrder?.map((sectionId, index) => {
-                                const section = sections.filter((obj) => {
-                                  return obj._id === sectionId;
-                                })[0];
+
+                          
+                            : initialData.sectionOrder.map((sectionId, index) => {
+                                const section = initialData.sections[sectionId];
+                                const tasks = section.taskIds.map((taskId) => initialData.tasks[taskId]);
                                 return (
                                   <div
                                     style={{
@@ -271,10 +287,10 @@ const Board = (props) => {
                                     key={sectionId}
                                   >
                                     <SectionCard
+                                      sectionId={section._id}
                                       section={section}
+                                      tasks={tasks}
                                       index={index}
-                                      provided={provided}
-                                      sectionId={sectionId}
                                     />
                                   </div>
                                 );
@@ -291,11 +307,10 @@ const Board = (props) => {
                     onClick={() =>
                       addSection({
                         dispatch,
-                        projectId,
-                        sectionOrder,
-                        setSectionOrder,
-                        sections,
-                        setSections,
+                        initialData,
+                        setInitialData,
+                        projectId
+                
                       })
                     }
                   >

@@ -45,8 +45,8 @@ io.on("connection", function (socket) {
     socket.to(projectId).emit("New_User_Joined ", projectId);
     console.log("user ",socket.id," joined ",projectId);
   });
-  socket.on("Update_Section", (data) => {
-    console.log("new data",data);
-    socket.to(data.project_id).emit("New_Section_Update", data);
+  socket.on("Update_Board", ({initialData,projectId}) => {
+    console.log("Update_Board",projectId);
+    socket.to(projectId).emit("New_Board_Update", initialData);
   });
 });

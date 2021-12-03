@@ -48,36 +48,20 @@ const getTasksBySection = asyncHandler(async (req, res) => {
 });
 
 const deleteTaskById = asyncHandler(async (req, res) => {
-  console.log("deleteTaskById");
   try {
-    const task_id = req.params.id;
-    if (!task_id) {
-      throw new Error("Please Fill all the Fields");
-    }
-    const task = await Task.findById(task_id);
-    const section = await Section.findById(task.section_id);
-    if (task && section) {
-      await task
-        .remove()
-        .then(
-          (taskIndex = section.tasks.indexOf(task_id)),
-          section.tasks.splice(taskIndex, 1),
-          await section.save()
-        );
-      res.json({ message: "task Removed" });
-    } else {
-      res.status(404).json({ message: "Request not found" });
-      throw new Error("Request not found");
-    }
+    await Task.findByIdAndDelete(req.params.id);
+    console.log("Task Deleted", req.params.id);
+    res.status(200).json();
   } catch (err) {
-    res.status(400).json(err);
+    console.log(err);
+    res.status(500).json(err);
   }
 });
 
 const updateTaskById = asyncHandler(async (req, res) => {
   const _id = req.params.id
   const updates = Object.keys(req.body);
-  const allowedUpdates = ['task_name','task_description', 'order']
+  const allowedUpdates = ['task_name','task_description', 'order','section_id']
   const isValidOperation = updates.every(
       (update) => allowedUpdates.includes(update))
   if (!isValidOperation)
@@ -87,6 +71,7 @@ const updateTaskById = asyncHandler(async (req, res) => {
       new: true});
     if(!task)
       return res.status(404).json({message: "Task not found"});
+    console.log("Task Updated ", _id);
     res.status(200).json(task);
   }
   catch(e) {

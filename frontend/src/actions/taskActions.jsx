@@ -83,7 +83,7 @@ export const createTask = (newTask) => async (dispatch, getState) => {
 }
 
 
-export const deleteTask = ({taskId, task_index}) => async (dispatch, getState) => {
+export const deleteTask = ({taskId}) => async (dispatch, getState) => {
     try{
         dispatch({
             type: TASK_DELETE_REQUEST,
@@ -142,7 +142,7 @@ export const updateTask = ({params,taskId}) => async (dispatch, getState) => {
         params, 
         config
     );
-
+    console.log("data", data)
     dispatch({
         type: TASK_UPDATE_SUCCESS,
         payload: data,

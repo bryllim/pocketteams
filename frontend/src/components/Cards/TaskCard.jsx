@@ -9,34 +9,77 @@ import { deleteTask, updateTask,createTask } from "../../actions/taskActions";
 import "../../css/skeleton.css"
 
 
-const updateTaskName = ({sectionId, sections, setSections, index, taskId,taskName,dispatch,task}) =>{
+const updateTaskName = ({
+  sectionId, 
+  sections, 
+  setSections, 
+  index, 
+  taskId,
+  taskName,
+  dispatch,
+  task,
+  initialData,
+  setInitialData}) =>{
   if(taskName === ''){
-    taskRemove({sectionId, sections, setSections, index});
+    taskRemove({
+      initialData,
+      setInitialData,
+      taskId,
+      index,
+      sectionId,
+      dispatch
+    });
     dispatch(deleteTask({taskId}))
   }
   else if(task.task_name === ''){
-    taskRename({sectionId, sections, setSections, taskName,index});
+    taskRename({
+      initialData,
+      setInitialData,
+      taskName,
+      taskId});
     task.task_name = taskName
     dispatch(createTask(task))
   }
   else{
-    taskRename({sectionId, sections, setSections, taskName,index});
-    dispatch(updateTask({task_name:taskName, task_id:taskId}))
+    const newData = taskRename({
+      initialData,
+      setInitialData,
+      taskName,
+      taskId});
+    dispatch(updateTask({params:newData,taskId}))
   }
 }
-const removeTask = ({sectionId, sections, setSections, index,taskId,dispatch}) =>{
-  taskRemove({sectionId, sections, setSections, index});
-  dispatch(deleteTask({taskId,task_index:index}))
+const removeTask = ({
+  initialData,
+  setInitialData,
+  taskId,
+  index,
+  sectionId,
+  dispatch}) =>{
+  taskRemove({
+    initialData,
+    setInitialData,
+    taskId,
+    sectionId,
+    index
+  });
+  dispatch(deleteTask({taskId}))
 }
 
-const TaskCard = ({task,index,sectionId,snapshot,dragTask}) => {
-      
-  const {sections, setSections, dispatch} = useContext(TaskContext)
+const TaskCard = ({task,index,sectionId}) => {
+  const {
+    sections, 
+    setSections, 
+    dispatch,
+    initialData,
+    setInitialData} = useContext(TaskContext)
   const [showNav, setShowNav] = useState(false);
   const [toggle, setToggle] = useState(true)
   const [taskName, setTaskName] = useState(task.task_name)
   const taskId = task._id
   const taskDescription = task.task_description
+  
+ 
   useEffect(() => {
     // update the state of taskName when dragging
     setTaskName(task.task_name);
@@ -95,14 +138,14 @@ const TaskCard = ({task,index,sectionId,snapshot,dragTask}) => {
                 autoFocus
                 onBlur={(e)=>{
                   setToggle(true)
-                  updateTaskName({sectionId, sections, setSections, taskName,index,dispatch,taskId,task});
+                  updateTaskName({sectionId, sections, setSections, taskName,index,dispatch,taskId,task,initialData,setInitialData});
                   e.preventDefault()
                   e.stopPropagation()
                 }}  
                 onKeyDown={(event) => {
                   if (event.key === 'Enter' || event.key === 'Escape') {
                     setToggle(true)
-                    updateTaskName({sectionId, sections, setSections, taskName,index,dispatch,taskId,task});
+                    updateTaskName({sectionId, sections, setSections, taskName,index,dispatch,taskId,task,initialData,setInitialData});
                     event.preventDefault()
                     event.stopPropagation()
                 }}} 
@@ -120,7 +163,13 @@ const TaskCard = ({task,index,sectionId,snapshot,dragTask}) => {
                     <Dropdown.Menu>
                         <Dropdown.Item onClick={()=>setShowNav(!showNav)}>Edit</Dropdown.Item>
                         <Dropdown.Item onClick={(e)=>{
-                          removeTask({sectionId, sections, setSections, index,taskId,dispatch});;
+                          removeTask({
+                            initialData,
+                            setInitialData,
+                            taskId,
+                            index,
+                            sectionId,
+                            dispatch});
                         }}>Remove</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
@@ -132,7 +181,7 @@ const TaskCard = ({task,index,sectionId,snapshot,dragTask}) => {
               <div className="d-flex align-tasks-center">
                 <AddIcon className={"bi btn-outline-secondary rounded-circle ico"} />
                 <img
-                  src="https://via.placeholder.com/100"
+                  // src="https://via.placeholder.com/100"
                   alt=""
                   className="rounded-circle ico mx-1"
                 />
@@ -140,7 +189,8 @@ const TaskCard = ({task,index,sectionId,snapshot,dragTask}) => {
             </div>
           </div>)}}
     </Draggable>
-    <SideTask showed={showNav} hide={setShowNav} task={task} index={index} sectionId ={sectionId} section={sections}  />
+    {/* <SideTask showed={showNav} hide={setShowNav} task={task} index={index} sectionId ={sectionId} section={sections}  /> */}
+    {/* sidetask causing delay, need fix */}
   </div>
 )}
 

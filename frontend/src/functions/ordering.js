@@ -3,8 +3,6 @@ export default function midString(prev, next) {
     var n
     var pos
     let str
-    console.log("prev: " + prev)
-    console.log("next: " + next)
     for (pos = 0; p === n; pos++) {
       // find leftmost non-matching character
       p = pos < prev.length ? prev.charCodeAt(pos) : 96

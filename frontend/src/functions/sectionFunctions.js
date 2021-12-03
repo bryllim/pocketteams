@@ -1,35 +1,52 @@
 //create section on frontend
-const sectionCreate = ({sectionOrder,setSectionOrder,sections,setSections,newSection}) =>{
-  const cloneSection  = JSON.parse(JSON.stringify(sections))
-  const newOrder  = JSON.parse(JSON.stringify(sectionOrder))
-  cloneSection.push(newSection)
-  newOrder.push(newSection._id)
-  setSections([
-    ...cloneSection
-  ])
-  setSectionOrder([
-    ...newOrder
-  ])
+const sectionCreate = ({
+  initialData,
+  setInitialData,
+  newSection}) =>{
+  const sections = JSON.parse(JSON.stringify(initialData.sections))
+  const sectionOrder = JSON.parse(JSON.stringify(initialData.sectionOrder))
+  sections[newSection._id] = newSection
+  sectionOrder.push(newSection._id)
+  setInitialData({
+    ...initialData,
+    sectionOrder: sectionOrder,
+    sections: sections
+    
+  })
 }
 
 
 //delete only the sectionid on sectionOrder
-const sectionDelete = ({sectionOrder,setSectionOrder,sectionOrderIndex}) =>{
-  const newOrder  = JSON.parse(JSON.stringify(sectionOrder))
-  newOrder.splice(sectionOrderIndex,1)
-  setSectionOrder([
-    ...newOrder
-  ])
+const sectionDelete = ({
+  initialData,
+  setInitialData,
+  sectionId,
+  index}) =>{
+  const sections = JSON.parse(JSON.stringify(initialData.sections))
+  const sectionOrder = JSON.parse(JSON.stringify(initialData.sectionOrder))
+  sectionOrder.splice(index,1)
+  delete sections[sectionId]
+  setInitialData({
+    ...initialData,
+    sectionOrder: sectionOrder,
+    sections: sections
+  })
   return
 }
 
 //rename section on frontend
-const sectionRename = ({sectionTitle,sections,setSections,index}) =>{ //change to sectionRename or sectionUpdate
-  const newSections  = JSON.parse(JSON.stringify(sections))
-  newSections[index].section_name = sectionTitle
-  setSections([
-    ...newSections
-  ])
+const sectionRename = ({
+  sectionTitle,
+  initialData,
+  setInitialData,
+  sectionId,
+}) =>{ //change to sectionRename or sectionUpdate
+  const sections = JSON.parse(JSON.stringify(initialData.sections))
+  sections[sectionId].section_name = sectionTitle
+  setInitialData({
+    ...initialData,
+    sections: sections
+  })
 }
 
 const sectionTaskUpdate = ({sections,setSections,task,dragProps}) =>{

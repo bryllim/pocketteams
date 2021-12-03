@@ -203,7 +203,7 @@ export const createSection = (newSection) => async (dispatch, getState) => {
 }
 
 
-export const deleteSection = ({section_id}) => async (dispatch, getState) => {
+export const deleteSection = ({sectionId}) => async (dispatch, getState) => {
     try{
         dispatch({
             type: SECTION_DELETE_REQUEST,
@@ -221,7 +221,7 @@ export const deleteSection = ({section_id}) => async (dispatch, getState) => {
         };
 
         const { data } = await axios.delete(
-            `/api/sections/${section_id}`,
+            `/api/sections/${sectionId}`,
             config
         );
 

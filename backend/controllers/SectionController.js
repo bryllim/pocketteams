@@ -79,33 +79,18 @@ const updateSection = asyncHandler(async (req,res) => {
 
 const deleteSection = asyncHandler(async (req,res) => {
     try{
-        const section = await Section.findById(req.params.id);
-        const project = await Project.findById(section.project_id);
-        const tasks = await Task.find({section_id: section._id});
-        if(!section){
-            res.status(404);
-            throw new Error("Please Fill all the Fields");
-        }
-        if(section.user.toString() !== req.user._id.toString()){
-            res.status(401);
-            throw new Error("You can't perform this action");   
-        }
-        else{
-            await section.remove()
-            await project.sections.pull(section._id)
-            await project.save()
-            //remove all tasks associated with this section
-            for(let i = 0; i < tasks.length; i++){
-                await tasks[i].remove()
-            } 
-            console.log('section deleted')
-            res.json({message: "Section Removed"});
-        }
+        Promise.all([
+        await Section.deleteOne({_id:req.params.id}),
+        await Task.deleteMany({section_id: req.params.id})
+        ]).then(() => {
+            console.log("Deleted ", req.params.id);
+            res.status(200).json({message: "Section Deleted"});
+        })
     }
     catch(e) {
         console.log(e);
+        res.status(500)
     }
-    
 });
 
 
