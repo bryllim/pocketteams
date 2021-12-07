@@ -83,24 +83,39 @@ const taskUpdate =({
   setInitialData,
   newTask
 }) => {
-  const tasks = JSON.parse(JSON.stringify(initialData.tasks))
-  const sections = JSON.parse(JSON.stringify(initialData.sections))
-  tasks[newTask._id] = newTask
-  const newTaskIds = Object.values(tasks).map(task => task._id)
-  console.log("🚀 ~ file: taskFunctions.js ~ line 90 ~ newTaskIds", newTaskIds)
-  // newTaskIds.sort((a, b) =>{
-  //   let orderA = a.order
-  //   let orderB = b.order
-  //   return orderA.localeCompare(orderB)//using String.prototype.localCompare()
-  // });
-
-  // sections[newTask.section_id].taskIds = newTaskIds
- 
-  // setInitialData({
-  //   ...initialData,
-  //   tasks:tasks,
-  //   sections:sections
-  // })
+  const newInitialData = JSON.parse(JSON.stringify(initialData))
+  const getTaskIds = (id) => {
+    const filteredTasks = newInitialData.tasks.filter(task => task.section_id === id );
+    filteredTasks.sort((a, b) =>{
+      let orderA = a.order
+      let orderB = b.order
+      return orderA.localeCompare(orderB)//using String.prototype.localCompare()
+    });
+    const taskIds = [];
+    filteredTasks.forEach((task) => taskIds.push(task._id));
+    return taskIds;
+  };
+  
+  const setContent = () => {
+    newInitialData.tasks[newTask._id] = newTask
+    const newSectionList = JSON.parse(JSON.stringify(initialData.sections));
+    const sortedSectionList = newSectionList.sort((a, b) =>{
+      let orderA = a.order
+      let orderB = b.order
+      return orderA.localeCompare(orderB)//using String.prototype.localCompare()
+    });
+  
+    sortedSectionList.forEach((section) => {
+      newInitialData.sections[section._id] = {
+        ...section,
+        taskIds: getTaskIds(section._id),
+      }
+      newInitialData.sectionOrder.push(section._id);
+    });
+  }
+  setContent()
+  setInitialData({ ...newInitialData });
+  // setInitDone(true);
   
 }
 

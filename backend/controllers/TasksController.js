@@ -22,7 +22,7 @@ const createTask = asyncHandler( async (req,res) => {
                     throw new Error("sectionResponse");
                 }
                 res.status(201).json();
-                console.log("createdTask",createdTask)
+                console.log("createdTask",createdTask._id)
 
             }catch (err) {
                 console.log(err)

@@ -1,4 +1,4 @@
-import React,{useContext,useState} from "react";
+import React,{useContext,useState,useEffect} from "react";
 import TaskCard from './TaskCard'
 import { Droppable, Draggable} from 'react-beautiful-dnd' 
 import {TaskContext} from "../../contexts/SectionContext"
@@ -84,6 +84,9 @@ const SectionCard = ({index,section,sectionId,tasks}) => {
   const {sections,setSections,initialData,setInitialData} = useContext(TaskContext)
   const dispatch = useDispatch();
   
+  useEffect(() => {
+    setSectionTitle(section.section_name)
+  }, [section])
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <p
       ref={ref}

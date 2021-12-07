@@ -49,4 +49,8 @@ io.on("connection", function (socket) {
     console.log("Update_Board",projectId);
     socket.to(projectId).emit("New_Board_Update", initialData);
   });
+  socket.on("Update_Task", ({taskUpdateData,projectId}) => {
+    console.log("Update_Task",projectId);
+    socket.to(projectId).emit("New_Task_Update", taskUpdateData);
+  });  
 });

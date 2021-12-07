@@ -81,7 +81,7 @@ const Board = (props) => {
   const {loading:taskUpdateLoading, data:taskUpdateData} = useSelector((state) => state.taskUpdate);
 
   const [initialData, setInitialData] = useState({});
-  console.log("🚀 ~ file: Board.jsx ~ line 83 ~ Board ~ initialData", initialData)
+
  
   const [initDone, setInitDone] = useState(false);
 
@@ -103,37 +103,50 @@ const Board = (props) => {
   }, [socket,projectId]);
 
   useEffect(() => {
-    socket.on("New_Section_Update" , (data)=>{
-      sectionUpdate({sections,setSections, sectionOrder, setSectionOrder,sectionData:data})
-    })
-    return () => {
-      socket.off("New_Section_Update");
-    };
-  }, [socket,sections,sectionOrder]);
-
-  useEffect(() => {
     socket.on("New_Board_Update", (data)=>{
       console.log("🚀 ~ file: Board.jsx ~ line 123 ~ Board ~ data", data)
       setInitialData(data);
+      return
     })
-    return () => {
-      socket.off("New_Task_Update");
-    };
-  }, [socket,initialData]);
-
-  // useEffect(() => {
-  //   if (!sectionUpdateLoading && sectionUpdateData) {
-  //     socket.emit("Update_Section", sectionUpdateData);
-  //   }
-  // }, [sectionUpdateData,socket,sectionUpdateLoading]);
+    socket.on("New_Task_Update", (data)=>{
+      console.log("New Task", data)
+      taskUpdate({
+        initialData, 
+        setInitialData,
+        data
+      });
+      return
+    })
+  }, [socket]);
 
   useEffect(() => {
-    if (!taskUpdateLoading && !sectionUpdateLoading) {
-      if(!taskUpdateData || !sectionUpdateData) return;
-      console.log("🚀 ~ file: Board.jsx ~ line 133 ~ Board ~ taskUpdateData", taskUpdateData)
-      socket.emit("Update_Board", {initialData,projectId});
+    if(taskUpdateLoading === true) return
+    if(!taskUpdateData) return
+    if (initialData && !(Object.keys(initialData).length === 0)) {
+        console.log('taskUpdateLoading')
+        socket.emit("Update_Board", {initialData,projectId});
     }
-  }, [taskUpdateData,socket,taskUpdateLoading,sectionUpdateLoading,sectionUpdateData]);
+  }, [taskUpdateLoading,taskUpdateData]);
+
+  useEffect(() => {
+    if(sectionUpdateLoading === true) return
+    if(!sectionUpdateData) return
+    if (initialData && !(Object.keys(initialData).length === 0)) {
+      console.log('sectionUpdateLoading')
+        socket.emit("Update_Board", {initialData,projectId});
+    }
+  }, [sectionUpdateLoading,sectionUpdateData]);
+
+
+  // useEffect(() => {
+  //   console.log('taskUpdateLoading',taskUpdateData)
+  //   if(taskUpdateLoading === true) return
+  //   if(!taskUpdateData) return
+  //   if(!(Object.keys(taskUpdateData).length === 0)){
+  //     console.log('taskUpdateData',taskUpdateData)
+  //     socket.emit("Update_Task", {taskUpdateData,projectId});
+  //   }
+  // }, [taskUpdateData,taskUpdateLoading]);
 
   useEffect(() => {
     if (!userInfo) {
@@ -160,8 +173,6 @@ const Board = (props) => {
         filteredTasks.forEach((task) => taskIds.push(task._id));
         return taskIds;
       };
-        
-
       const setContent = () => {
         taskList.forEach((task) => (prevState.tasks[task._id] = task));
         const newSectionList = JSON.parse(JSON.stringify(sectionList));
@@ -184,8 +195,8 @@ const Board = (props) => {
       setInitialData({ ...prevState });
       setInitDone(true);
     }
-  }, [sectionList, taskList, sectionLoading, taskLoading]);
-
+  }, [sectionLoading, taskLoading]);
+  console.log("initialData", initialData)
   return (
     <>
       <TaskContext.Provider
