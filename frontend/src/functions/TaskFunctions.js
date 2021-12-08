@@ -81,11 +81,16 @@ const taskPriorityUpdate = ({
 const taskUpdate =({
   initialData, 
   setInitialData,
-  newTask
+  newTask,
 }) => {
+  console.log("taskUpdate",newTask)
+  console.log("initialData",initialData)
   const newInitialData = JSON.parse(JSON.stringify(initialData))
   const getTaskIds = (id) => {
-    const filteredTasks = newInitialData.tasks.filter(task => task.section_id === id );
+    const tasks = JSON.parse(JSON.stringify(newInitialData.tasks));
+    const newTasks = Object.values(tasks).map((task) => task)
+    const filteredTasks = newTasks.filter((task) => task.section_id === id)
+    console.log("filteredTasks",filteredTasks)
     filteredTasks.sort((a, b) =>{
       let orderA = a.order
       let orderB = b.order
@@ -93,31 +98,34 @@ const taskUpdate =({
     });
     const taskIds = [];
     filteredTasks.forEach((task) => taskIds.push(task._id));
+    console.log("taskIds",taskIds)
     return taskIds;
   };
   
   const setContent = () => {
-    newInitialData.tasks[newTask._id] = newTask
-    const newSectionList = JSON.parse(JSON.stringify(initialData.sections));
-    const sortedSectionList = newSectionList.sort((a, b) =>{
-      let orderA = a.order
-      let orderB = b.order
-      return orderA.localeCompare(orderB)//using String.prototype.localCompare()
-    });
-  
-    sortedSectionList.forEach((section) => {
+    newInitialData.tasks[newTask._id] = newTask;
+    // newInitialData.tasks[newTask._id] = newTask
+    // const newSectionList = JSON.parse(JSON.stringify(initialData.sections));
+    // console.log("newSectionList",newSectionList)
+    // const sortedSectionList = newSectionList.sort((a, b) =>{
+    //   let orderA = a.order
+    //   let orderB = b.order
+    //   return orderA.localeCompare(orderB)//using String.prototype.localCompare()
+    // });
+    const newSections = JSON.parse(JSON.stringify(newInitialData.sections));
+    console.log("newSections",newSections)
+    Object.values(newSections).map((section) => { 
       newInitialData.sections[section._id] = {
         ...section,
         taskIds: getTaskIds(section._id),
       }
-      newInitialData.sectionOrder.push(section._id);
-    });
-  }
-  setContent()
-  setInitialData({ ...newInitialData });
-  // setInitDone(true);
-  
+  })
 }
+setContent()
+console.log("newInitialData",newInitialData)
+setInitialData({ ...newInitialData });
+}
+
 
 
 

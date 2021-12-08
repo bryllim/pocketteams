@@ -43,7 +43,7 @@ const onDragEnd = ({result,data}) => {
       sectionOrder: newListOrder,
       sections: {
         ...initialData.sections,
-        draggableId: destinationColumn
+        [draggableId]: destinationColumn
       }
     };
     setInitialData(newData);
@@ -51,9 +51,6 @@ const onDragEnd = ({result,data}) => {
   }
   const startList = initialData.sections[source.droppableId];
   const endList = initialData.sections[destination.droppableId];
-  console.log("startList", startList);
-  console.log("endList", endList);
-
   if (startList === endList) {
     const section = startList;
 
@@ -93,7 +90,7 @@ const onDragEnd = ({result,data}) => {
       },
       tasks: {
         ...initialData.tasks,
-        draggableId: destinationTask
+        [draggableId]: destinationTask
       }
     };
     setInitialData(newData);
@@ -124,6 +121,7 @@ const onDragEnd = ({result,data}) => {
   };
   const destinationTask = initialData.tasks[draggableId];
   destinationTask.order = newOrder;
+  destinationTask.section_id = destination.droppableId;
   const endTaskIds = Array.from(endList.taskIds);
   endTaskIds.splice(destination.index, 0, draggableId);
   const newEndList = {
@@ -139,7 +137,7 @@ const onDragEnd = ({result,data}) => {
     },
     tasks: {
       ...initialData.tasks,
-      draggableId: destinationTask
+      [draggableId]: destinationTask
     }
   };
   setInitialData(newData);

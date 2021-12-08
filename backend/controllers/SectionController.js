@@ -79,12 +79,13 @@ const updateSection = asyncHandler(async (req,res) => {
 
 const deleteSection = asyncHandler(async (req,res) => {
     try{
+        const sectionId = req.params.id
         Promise.all([
-        await Section.deleteOne({_id:req.params.id}),
+        await Section.deleteOne({_id:sectionId}),
         await Task.deleteMany({section_id: req.params.id})
         ]).then(() => {
             console.log("Deleted ", req.params.id);
-            res.status(200).json({message: "Section Deleted"});
+            res.status(200).json(sectionId);
         })
     }
     catch(e) {

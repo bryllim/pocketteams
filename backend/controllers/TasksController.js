@@ -4,35 +4,16 @@ const Section = require("../models/SectionModel");
 
 const createTask = asyncHandler( async (req,res) => {
     const {newTask} = req.body;
-    newTask.user = req.user.id;
-    console.log(newTask);
+    newTask.user = req.user.id; 
     try{
-        if(!newTask){
-            throw new Error("Please Fill all the Fields");
-        } else {
-            try{
-                const task = new Task(newTask);
-                let createdTask = await task.save()
-                sectionResponse = await Section.findByIdAndUpdate(
-                  newTask.section_id,
-                    { $push: { tasks: createdTask} },
-                    { new: true, useFindAndModify: false },
-                );
-                if(sectionResponse === null){
-                    throw new Error("sectionResponse");
-                }
-                res.status(201).json();
-                console.log("createdTask",createdTask._id)
-
-            }catch (err) {
-                console.log(err)
-                res.status(500).json(err);
-            }
-        }
-  } catch (e) {
-    res.status(400).json(e);
-    console.log(e);
-  }
+        const task = new Task(newTask);
+        await task.save();
+        res.status(201).json(newTask);
+        console.log("Created task");
+      }catch(err){
+        console.log("err",err);
+        res.status(400).json(err);
+      }
 });
 
 const getTasks = asyncHandler(async (req, res) => {
@@ -48,10 +29,11 @@ const getTasksBySection = asyncHandler(async (req, res) => {
 });
 
 const deleteTaskById = asyncHandler(async (req, res) => {
+  const taskId = req.params.id;
   try {
-    await Task.findByIdAndDelete(req.params.id);
-    console.log("Task Deleted", req.params.id);
-    res.status(200).json();
+    const task = await Task.findByIdAndDelete(taskId);
+    console.log("Task Deleted", req.params.id, task);
+    res.status(200).json(task);
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

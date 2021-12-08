@@ -15,9 +15,17 @@ import {
 } from "../actions/sectionActions";
 import onDragEnd from '../functions/dragDrop2';
 import { orderSections } from "../functions/dragDropFunctions";
-import { sectionCreate,sectionUpdate } from "../functions/sectionFunctions";
-import {taskUpdate} from '../functions/taskFunctions';
-import { listSectionByProjectId, updateSection} from "../actions/sectionActions";
+import { 
+  sectionCreate,
+  sectionUpdate,
+  sectionDelete } from "../functions/sectionFunctions";
+import {
+  taskUpdate,
+  taskCreate,
+  taskRemove} from '../functions/taskFunctions';
+import { 
+  listSectionByProjectId, 
+  updateSection} from "../actions/sectionActions";
 import {listTaskByProjectId,updateTask} from '../actions/taskActions'
 import SkeletonSectionCard from "../components/Cards/SkeletonSectionCard";
 import { ObjectID } from "bson";
@@ -67,7 +75,6 @@ const onDrag = ({result,data,dispatch}) => {
   };
   return
 }
-  
 
 const Board = (props) => {
   const { projectId } = props.location || {};
@@ -79,6 +86,18 @@ const Board = (props) => {
   const {loading:taskLoading, data:taskList} = useSelector((state) => state.taskList);
   const {loading:sectionUpdateLoading, data:sectionUpdateData} = useSelector((state) => state.sectionUpdate);
   const {loading:taskUpdateLoading, data:taskUpdateData} = useSelector((state) => state.taskUpdate);
+  const {loading:taskCreateLoading, data: taskCreateData} = useSelector((state) => state.taskCreate);
+  const {loading:sectionCreateLoading, data: sectionCreateData} = useSelector((state) => state.sectionCreate);
+  const {
+    error: sectionDeleteError, 
+    data: sectionDeleteData,
+    loading: sectionDeleteLoading
+  } = useSelector((state) => state.sectionDelete);
+  const {
+    error: taskDeleteError,
+    data: taskDeleteData,
+    loading: taskDeleteLoading
+  } = useSelector((state) => state.taskDelete);
 
   const [initialData, setInitialData] = useState({});
 
@@ -94,39 +113,75 @@ const Board = (props) => {
     socket.emit("Join_Board", projectId);
     //subscribe to board events
     socket.on("New_User_Joined" , (data)=>{
-      console.log("new user joined")
+      console.log("new user joined", data)
     })
-    return () => {
-      socket.off("Join_Board");
-      console.log("unsubscribe to board events")
-    };
+    console.log("Test1")  
   }, [socket,projectId]);
 
   useEffect(() => {
     socket.on("New_Board_Update", (data)=>{
-      console.log("🚀 ~ file: Board.jsx ~ line 123 ~ Board ~ data", data)
       setInitialData(data);
-      return
+      // return
     })
-    socket.on("New_Task_Update", (data)=>{
-      console.log("New Task", data)
-      taskUpdate({
-        initialData, 
+    socket.on("New_Create_Task", (data)=>{
+      taskCreate({
+        initialData,
         setInitialData,
-        data
+        newTask:data,
+        sectionId:data.section_id
       });
-      return
     })
-  }, [socket]);
+    
+    socket.on("New_Create_Section", (data)=>{
+      sectionCreate({
+        initialData,
+        setInitialData,
+        newSection:data
+      });
+    })
+
+    socket.on("New_Delete_Section", (data)=>{
+      const index = initialData.sectionOrder.indexOf(data)
+      sectionDelete({
+        initialData,
+        setInitialData,
+        sectionId:data,
+        index
+      });
+    })
+
+    socket.on("New_Delete_Task", (data)=>{
+      console.log("New_Delete_Task", data)
+      const index = initialData.sections[data.section_id].taskIds.indexOf(data._id)
+      taskRemove({
+        initialData,
+        setInitialData,
+        taskId:data,
+        sectionId:data.section_id,
+        index
+      });
+    })
+
+
+
+    return () => {
+      socket.emit("Leave_Board", projectId);
+      socket.off("New_Board_Update");
+      socket.off("New_Create_Task");
+      socket.off("New_Create_Section");
+      socket.off("New_Delete_Section");
+      socket.off("New_Delete_Task");
+    }
+  }, [socket,initialData]);
 
   useEffect(() => {
     if(taskUpdateLoading === true) return
     if(!taskUpdateData) return
     if (initialData && !(Object.keys(initialData).length === 0)) {
-        console.log('taskUpdateLoading')
+        console.log('taskUpdateLoading', initialData)
         socket.emit("Update_Board", {initialData,projectId});
     }
-  }, [taskUpdateLoading,taskUpdateData]);
+  }, [taskUpdateLoading]);
 
   useEffect(() => {
     if(sectionUpdateLoading === true) return
@@ -135,18 +190,43 @@ const Board = (props) => {
       console.log('sectionUpdateLoading')
         socket.emit("Update_Board", {initialData,projectId});
     }
-  }, [sectionUpdateLoading,sectionUpdateData]);
+  }, [sectionUpdateLoading]);
 
 
-  // useEffect(() => {
-  //   console.log('taskUpdateLoading',taskUpdateData)
-  //   if(taskUpdateLoading === true) return
-  //   if(!taskUpdateData) return
-  //   if(!(Object.keys(taskUpdateData).length === 0)){
-  //     console.log('taskUpdateData',taskUpdateData)
-  //     socket.emit("Update_Task", {taskUpdateData,projectId});
-  //   }
-  // }, [taskUpdateData,taskUpdateLoading]);
+  useEffect(() => {
+    if(taskCreateLoading === true) return
+    if(!taskCreateData) return
+    if(!(Object.keys(taskCreateData).length === 0)){
+      socket.emit("Create_Task", {taskCreateData,projectId});
+    }
+  }, [taskCreateLoading,taskCreateData]);
+
+  useEffect(() => {
+    if(sectionCreateLoading === true) return
+    if(!sectionCreateData) return
+    if(!(Object.keys(sectionCreateData).length === 0)){
+      socket.emit("Create_Section", {sectionCreateData,projectId});
+    }
+  }, [sectionCreateLoading,sectionCreateData]);
+
+  useEffect(() => {
+    if(sectionDeleteLoading === true) return
+    if(!sectionDeleteData) return
+    if(!(Object.keys(sectionDeleteData).length === 0)){
+      console.log("sectionDeleteData", sectionDeleteData)
+      socket.emit("Delete_Section", {sectionDeleteData,projectId});
+    }
+  }, [sectionDeleteLoading,sectionDeleteData]);
+
+  useEffect(() => {
+    if(taskDeleteLoading === true) return
+    if(!taskDeleteData) return
+    if(!(Object.keys(taskDeleteData).length === 0)){
+      socket.emit("Delete_Task", {taskDeleteData,projectId});
+    }
+  }, [taskDeleteLoading,taskDeleteData]);
+
+
 
   useEffect(() => {
     if (!userInfo) {
@@ -196,7 +276,8 @@ const Board = (props) => {
       setInitDone(true);
     }
   }, [sectionLoading, taskLoading]);
-  console.log("initialData", initialData)
+  console.log('intialData',initialData);
+
   return (
     <>
       <TaskContext.Provider
@@ -285,6 +366,7 @@ const Board = (props) => {
                           
                             : initialData.sectionOrder.map((sectionId, index) => {
                                 const section = initialData.sections[sectionId];
+                                console.log('section',section);
                                 const tasks = section.taskIds.map((taskId) => initialData.tasks[taskId]);
                                 return (
                                   <div

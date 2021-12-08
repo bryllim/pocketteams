@@ -6,17 +6,17 @@ const sectionCreate = ({
   const sections = JSON.parse(JSON.stringify(initialData.sections))
   const sectionOrder = JSON.parse(JSON.stringify(initialData.sectionOrder))
   sections[newSection._id] = newSection
+  sections[newSection._id].taskIds = [] //taskIds should be created here, not outside the function
   sectionOrder.push(newSection._id)
   setInitialData({
     ...initialData,
     sectionOrder: sectionOrder,
-    sections: sections
-    
+    sections: sections,
   })
 }
 
 
-//delete only the sectionid on sectionOrder
+//delete only the sectionid on sectionOrder, should delete tasks alsos
 const sectionDelete = ({
   initialData,
   setInitialData,
