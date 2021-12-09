@@ -16,6 +16,7 @@ const ProjectCard = ({data}) => {
   const sectionList = useMemo(() => (data && data.sections) ? data.sections: [], [data]);
   const handleOnClick = useCallback(() => history.push({pathname: '/board',
   sectionList,projectId}), [history , sectionList, projectId]);
+
   const [editShow, setEditShow] = useState(false);
   const handleEditClose = () => setEditShow(false);
   const handleEditShow = () => setEditShow(true);

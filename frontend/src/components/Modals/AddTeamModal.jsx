@@ -90,7 +90,7 @@ const AddTeam = ({ showModal, hideModal }) => {
           <h5>Create New Team</h5>
           <button
             type="button"
-            class="btn-close me-2"
+            className="btn-close me-2"
             onClick={hideModal}
             aria-label="Close"
           ></button>
@@ -137,7 +137,7 @@ const AddTeam = ({ showModal, hideModal }) => {
             <Col md="12" className="mb-2">
               <Form.Label>Description</Form.Label>
               <textarea
-                class="form-control"
+                className="form-control"
                 type="text"
                 name="description"
                 id="description"

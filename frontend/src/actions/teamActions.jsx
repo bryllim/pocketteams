@@ -16,7 +16,10 @@ import {
     TEAM_USER_DELETE_SUCCESS,
     TEAM_ADDUSER_REQUEST,
     TEAM_ADDUSER_SUCCESS,
-    TEAM_ADDUSER_FAIL
+    TEAM_ADDUSER_FAIL,
+    TEAM_PROJECT_DELETE_REQUEST,
+    TEAM_PROJECT_DELETE_SUCCESS,
+    TEAM_PROJECT_DELETE_FAIL
  } from "../constants/teamConstants"
 import axios from "axios";
 
@@ -168,7 +171,41 @@ export const deleteTeamAction = (id) => async (dispatch, getState) => {
     }
   };
 
-  export const deleteTeamUserAction = (id, user_id) => async (dispatch, getState) => {
+  export const deleteTeamProjectAction = (id, project_id) => async (dispatch, getState) => {
+    try {
+        dispatch({
+          type: TEAM_PROJECT_DELETE_REQUEST,
+        });
+    
+        const {
+          userLogin: { userInfo },
+        } = getState();
+    
+        const config = {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        };
+    
+        const { data } = await axios.put(`/api/teams/deleteprojects/${id}`,{project_id},config);
+    
+        dispatch({
+          type: TEAM_PROJECT_DELETE_SUCCESS,
+          payload: data,
+        });
+      } catch (error) {
+        const message =
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message;
+        dispatch({
+          type: TEAM_PROJECT_DELETE_FAIL,
+          payload: message,
+        });
+      }
+  };
+
+  export const deleteTeamUserAction = (id, project_id) => async (dispatch, getState) => {
     try {
         dispatch({
           type: TEAM_USER_DELETE_REQUEST,
@@ -184,7 +221,7 @@ export const deleteTeamAction = (id) => async (dispatch, getState) => {
           },
         };
     
-        const { data } = await axios.put(`/api/teams/deleteusers/${id}`,{user_id},config);
+        const { data } = await axios.put(`/api/teams/deleteusers/${id}`,{project_id},config);
     
         dispatch({
           type: TEAM_USER_DELETE_SUCCESS,
@@ -202,7 +239,7 @@ export const deleteTeamAction = (id) => async (dispatch, getState) => {
       }
   };
 
-export const updateTeamUser = (id, user_id) => async(dispatch,getState) => {
+export const updateTeamUser = (id, users) => async(dispatch,getState) => {
     try{
         dispatch({
             type: TEAM_ADDUSER_REQUEST,
@@ -220,7 +257,7 @@ export const updateTeamUser = (id, user_id) => async(dispatch,getState) => {
 
         const { data } = await axios.put(
             `/api/teams/users/${id}`,
-            {user_id}, 
+            {users}, 
             config
         );
 
@@ -238,4 +275,42 @@ export const updateTeamUser = (id, user_id) => async(dispatch,getState) => {
             payload: message,
         });
     } 
+}
+
+export const updateTeamProject = (id, projects) => async(dispatch,getState) => {
+  try{
+      dispatch({
+          type: TEAM_ADDUSER_REQUEST,
+      });
+
+      const {
+          userLogin: { userInfo },
+        } = getState();
+    
+      const config = {
+          headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+          },
+        };
+
+      const { data } = await axios.put(
+          `/api/teams/projects/${id}`,
+          {projects}, 
+          config
+      );
+
+      dispatch({
+          type: TEAM_ADDUSER_SUCCESS,
+          payload: data,
+        });
+  } catch (error) {
+      const message = 
+          error.response && error.response.data.message 
+              ? error.response.data.message 
+              : error.message;
+      dispatch({
+          type: TEAM_ADDUSER_FAIL,
+          payload: message,
+      });
+  } 
 }

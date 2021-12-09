@@ -27,9 +27,6 @@ const Project = () => {
   const { success: successUpdate}  = projectUpdate;
 
   useEffect(() => {
-    if (userInfo) {
-      history.push('/project');
-    }
     dispatch(listProjects());
   }, [dispatch, successCreate, successUpdate, history, userInfo]);
   

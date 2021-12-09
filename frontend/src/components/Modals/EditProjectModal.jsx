@@ -80,7 +80,7 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
         <h5>Edit Project</h5>
         <button
           type="button"
-          class="btn-close me-2"
+          className="btn-close me-2"
           onClick={hideModal}
           aria-label="Close"
         ></button>
@@ -101,10 +101,10 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
               style={{ height: "150px", width: "150px" }}
             />
 
-            <div class="mb-3">
+            <div className="mb-3">
               <input
                 type="text"
-                class="form-control text-center border-top-0 border-end-0 border-start-0 border-bottom"
+                className="form-control text-center border-top-0 border-end-0 border-start-0 border-bottom"
                 id="formGroupExampleInput"
                 placeholder="Title"
                 defaultValue={projectName}
@@ -112,13 +112,13 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
               />
             </div>
 
-            <div class="mb-3 align-self-stretch">
-              <label for="formGroupExampleInput" class="form-label">
+            <div className="mb-3 align-self-stretch">
+              <label for="formGroupExampleInput" className="form-label">
                 Description
               </label>
               <input
                 type="text"
-                class="form-control border-top-0 border-end-0 border-start-0 border-bottom"
+                className="form-control border-top-0 border-end-0 border-start-0 border-bottom"
                 id="formGroupExampleInput"
                 placeholder="Example input placeholder"
                 defaultValue={projectDescription}
@@ -126,7 +126,7 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
               />
             </div>
 
-            <div class="mb-3 align-self-stretch">
+            <div className="mb-3 align-self-stretch">
             <Form.Group className="d-flex my-auto p-3 search-form-box">
             <Form.Label className="text-dark fs-6 my-auto"> Project Status:  </Form.Label>
                     <select
@@ -159,8 +159,8 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
                 className="d-flex flex-row basecard align-items-center align-self-stretch sidebar-box search-form-box"
                 style={{ height: "115px" }}
               >
-                <button type="d-flex button" class="btn">
-                  <i class="bi bi-caret-right-fill" />
+                <button type="d-flex button" className="btn">
+                  <i className="bi bi-caret-right-fill" />
                 </button>
 
                 <img
@@ -182,7 +182,7 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
                   style={{ width: "auto", height: "60px" }}
                 />
 
-                <button type="button" class="btn ms-auto align-self-start">
+                <button type="button" className="btn ms-auto align-self-start">
                   <Dropdown>
                     <Dropdown.Toggle
                       as={CustomToggle}
@@ -197,7 +197,6 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
                   </Dropdown>
                 </button>
               </div>
-              <AddMemberModal showModal={show} hideModal={handleClose} />
             </div>
           </div>
         </div>

@@ -61,9 +61,6 @@ const Board = (props) => {
 
   console.log("sections:", sections)
   useEffect(() => {
-    if (!userInfo) {
-        history.push('/');
-    }
   },[history, userInfo]);
 
   useEffect(() => {
