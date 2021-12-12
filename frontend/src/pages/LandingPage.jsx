@@ -12,9 +12,9 @@ import { useSelector } from 'react-redux'
 import Dave from '.././assets_pocketdevs/assets/img/team/Dave.svg'
 import Lester from '.././assets_pocketdevs/assets/img/team/Lester.svg'
 import Seb from '.././assets_pocketdevs/assets/img/team/Seb.svg'
-import createTeam from '../assets_pocketdevs/assets/videos/createTeam.mp4'
-import createProject from '../assets_pocketdevs/assets/videos/createProject.mp4'
-import createTask from '../assets_pocketdevs/assets/videos/createTask.mp4'
+import createTeam from '../assets_pocketdevs/assets/videos/createTeam.webm'
+import createProject from '../assets_pocketdevs/assets/videos/createProject.webm'
+import createTask from '../assets_pocketdevs/assets/videos/createTask.webm'
 
 
 const LandingPage = ({history}) => {
@@ -38,7 +38,7 @@ const LandingPage = ({history}) => {
                     <div className="row align-items-center">
                         <div className="col-xl-5 col-lg-6">
                             <div className="hero-content-wrapper">
-                                <h1 className="mb-0 example-fade-text text-danger" data-wow-delay=".2s">INTRODUCING</h1>                          
+                                <h3 className="mb-0 example-fade-text text-danger" data-wow-delay=".2s">INTRODUCING</h3>                          
                                 <h1 className="mb-25 example-fade-text" data-wow-delay=".2s">PocketTeams</h1>
                                 <p className="mb-35 wow fadeInLeft" data-wow-delay=".4s">Lorem ipsum dolor sit amet, consectetur adipiscing elit,
                                     sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.

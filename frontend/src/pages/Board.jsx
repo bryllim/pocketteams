@@ -165,7 +165,6 @@ const Board = (props) => {
 
 
     return () => {
-      socket.emit("Leave_Board", projectId);
       socket.off("New_Board_Update");
       socket.off("New_Create_Task");
       socket.off("New_Create_Section");

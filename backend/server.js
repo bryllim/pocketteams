@@ -66,6 +66,6 @@ io.on("connection", function (socket) {
   });
   socket.on("Delete_Task", ({taskDeleteData,projectId}) => {
     console.log("Delete_Task");
-    socket.to(projectId).emit("New_Delete_Task", taskDeleteData[0]);
+    socket.to(projectId).emit("New_Delete_Task", taskDeleteData);
   });
 });
