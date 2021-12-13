@@ -71,7 +71,7 @@ export const teamUserDeleteReducer = (state = {}, action) => {
         case TEAM_USER_DELETE_REQUEST:
             return { loading: true };
         case TEAM_USER_DELETE_SUCCESS:
-            return { loading: false, userlist: action.payload ,success: true};
+            return { loading: false, data: action.payload ,success: true};
         case TEAM_USER_DELETE_FAIL:
             return { loading: false, error: action.payload, success: false};
         default:
@@ -123,7 +123,7 @@ export const teamDeleteReducer = (state = {}, action) => {
       case TEAM_DELETE_REQUEST:
         return { loading: true };
       case TEAM_DELETE_SUCCESS:
-        return { loading: false, success: true };
+        return { loading: false, success: true , data: action.payload};
       case TEAM_DELETE_FAIL:
         return { loading: false, error: action.payload, success: false };
       default:

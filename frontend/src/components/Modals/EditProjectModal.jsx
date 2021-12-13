@@ -11,14 +11,11 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [projectName, setProjectName] = useState(data.project_name);
-  const [projectDescription, setProjectDescription] = useState(data.project_description);
-  const [projectStatus, setProjectStatus] = useState(data.project_status);
+  const [projectName, setProjectName] = useState(null);
+  const [projectDescription, setProjectDescription] = useState(null);
+  const [projectStatus, setProjectStatus] = useState(null);
 
   const dispatch = useDispatch();
-
-  const projectUpdate = useSelector((state) => state.projectUpdate);
-  const {loading, error} = projectUpdate;
 
   const [color, setColor] = useState("form-select form-select-sm ms-3");
 
@@ -29,8 +26,13 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
 
     resetHandler();
     hideModal();
-    window.location.reload(false);
   }
+
+  useEffect(() => {
+    setProjectName(data.project_name);
+    setProjectDescription(data.project_description);
+    setProjectStatus(data.project_status);
+  }, [data])
 
   const resetHandler = () => {
     setProjectName("");
@@ -74,6 +76,7 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
     }
   },[projectStatus]);
 
+
   return (
     <Modal size="lg" centered show={showModal} onHide={hideModal}>
       <Modal.Header>
@@ -87,13 +90,11 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
       </Modal.Header>
 
       <Modal.Body>
-        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
         <div className="d-flex flex-column align-items-center">
           <div
             className="d-flex flex-column  align-items-center "
             style={{ width: "500px" }}
           >
-            {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
             <img
               src="https://via.placeholder.com/150"
               alt=""
@@ -203,7 +204,6 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
       </Modal.Body>
 
       <Modal.Footer>
-        {loading && <Preload/>}
         <button className="theme-btn theme-btn-modal mx-0" onClick={updateHandler}>
           Save Changes
         </button>

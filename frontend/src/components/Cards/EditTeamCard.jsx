@@ -15,14 +15,16 @@ const EditTeamCard = (props) => {
   const teamUserDelete = useSelector((state) => state.teamUserDelete);
   const {loading, error} = teamUserDelete
 
+  //
+
   const notifySuccess = (msg) => toast.success(msg, {
     position: toast.POSITION.BOTTOM_RIGHT,
     autoClose: 2500,
   });
 
-  const handleClick = (id, userId) => {
+  const handleClick = (id, user_Id) => {
     if(window.confirm("Are you sure?")){
-      dispatch(deleteTeamUserAction(id, userId));
+      dispatch(deleteTeamUserAction(id, user_Id));
       notifySuccess();
       window.location.reload(false);
     }

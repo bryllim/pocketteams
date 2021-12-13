@@ -8,7 +8,7 @@ const getTeam = asyncHandler(async (req, res) => {
 });
 
 const createTeam = asyncHandler( async (req,res) => {
-    const {team_name, team_description, team_access, owner, users} = req.body;
+    const {team_name, team_description, team_access, owner, users, projects} = req.body;
 
     if(!team_name || !team_description){
         res.status(400)
@@ -19,7 +19,9 @@ const createTeam = asyncHandler( async (req,res) => {
             team_description,
             team_access,
             owner,
-            users});
+            users,
+            projects,
+        });
         const createdTeam = await team.save();
         res.status(201).json(createdTeam);
     }
@@ -62,9 +64,7 @@ const updateTeam = asyncHandler(async (req,res) => {
 
 const updateTeamUser = asyncHandler(async (req,res) => {
     const team = await Team.findById(req.params.id);
-    console.log("Owner: " + team.owner.toString());
     const {users} = req.body;
-    console.log("users: " + users);
 
     //Check if this team belongs to the user
     if(team.owner.toString() !== req.user._id.toString()){
@@ -108,7 +108,7 @@ const updateTeamProject = asyncHandler(async (req,res) => {
 
 const deleteTeam = asyncHandler(async (req,res) => {
     const team = await Team.findById(req.params.id);
-
+    const teamID = team._id;
     if(team.owner.toString() !== req.user._id.toString()){
         res.status(401);
         throw new Error("You can't perform this action");   
@@ -116,7 +116,7 @@ const deleteTeam = asyncHandler(async (req,res) => {
 
     if(team){
         await team.remove();
-        res.json({message: "Team Removed"});
+        res.json(teamID);
     }
 });
 
@@ -129,7 +129,7 @@ const deleteUser = asyncHandler(async (req,res) => {
         throw new Error("You can't perform this action");   
     }
 
-    console.log("team id: " + team._id);
+    console.log("USER ID: " + user_id);
 
     //remove the matching user_id from the users array inside team
     if(team){

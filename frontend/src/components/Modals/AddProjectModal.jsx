@@ -4,6 +4,7 @@ import ErrorMessage from "../ErrorMessage";
 import { useDispatch, useSelector } from "react-redux";
 import { createProjectAction } from "../../actions/projectActions";
 import Preload from "../Preload";
+import { toast } from "react-toastify";
 // import ReactMarkdown from "react-markdown";
 
 const AddProjectModal = ({ showModal, hideModal }) => {
@@ -17,22 +18,8 @@ const AddProjectModal = ({ showModal, hideModal }) => {
 
   const dispatch = useDispatch();
   const projectCreate = useSelector((state) => state.projectCreate);
-  const {loading,error } = projectCreate;
+  const {loading, error } = projectCreate;
   const [color, setColor] = useState("form-select form-select-sm ms-3");
-
-  // const reClass = () => {
-  //   let val = document.getElementById("test").value;
-
-  //   if (val === 1) {
-  //     setColor("form-select form-select-sm ms-3 light");
-  //   } else if (val === 2) {
-  //     setColor("form-select form-select-sm ms-3 medium");
-  //   } else if (val === 3) {
-  //     setColor("form-select form-select-sm ms-3 heavy");
-  //   } else if (val === "select priority") {
-  //     setColor("form-select form-select-sm ms-3 prio");
-  //   }
-  // };
 
   const postDetails = (pics) => {
     if (
@@ -71,14 +58,11 @@ const AddProjectModal = ({ showModal, hideModal }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(
-      createProjectAction(projectName, projectDescription, projectStatus)
-    );
+    dispatch(createProjectAction(projectName, projectDescription, projectStatus));
     if (!projectName || !projectDescription || !projectStatus) return;
 
     resetHandler();
     hideModal();
-    window.location.reload(false);
   };
 
   return (

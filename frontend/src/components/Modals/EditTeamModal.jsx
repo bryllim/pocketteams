@@ -9,10 +9,10 @@ import { updateTeamAction } from "../../actions/teamActions";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import AddMemberModal from "./AddMemberModal";
+import axios from "axios";
 
 
 const EditTeamModal = ({ showModal, hideModal, data }) => {
-
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);

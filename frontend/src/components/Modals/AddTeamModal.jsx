@@ -14,12 +14,13 @@ const AddTeam = ({ showModal, hideModal }) => {
   const [teamDescription, setTeamDescription] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [addedUsers, setAddedUsers] = useState([]);
+  const [teamProjects] = useState([]);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   const teamCreate = useSelector((state) => state.teamCreate);
-  const {loading, error, team} = teamCreate;
+  const {loading, error} = teamCreate;
 
   const userList = useSelector((state) => state.userList);
   const {users} = userList;
@@ -38,13 +39,12 @@ const AddTeam = ({ showModal, hideModal }) => {
     e.preventDefault();
     dispatch(
       //change last to user id array
-      createTeamAction(teamName, teamDescription, teamAccess,userInfo._id,addedUsers)
+      createTeamAction(teamName, teamDescription, teamAccess,userInfo._id,addedUsers, teamProjects)
     );
     if (!teamName || !teamDescription || !teamAccess) return;
 
     resetHandler();
     hideModal();
-    window.location.reload(false);
   };
 
   const resetHandler = () => {
