@@ -8,17 +8,26 @@ import Preload from "../Preload";
 import { updateTeamAction } from "../../actions/teamActions";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
+import AddMemberModal from "./AddMemberModal";
+import axios from "axios";
 
 
 const EditTeamModal = ({ showModal, hideModal, data }) => {
 
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const [teamName, setTeamName] = useState(data.team_name);
   const [teamDescription, setTeamDescription] = useState(data.team_description);
   const [teamAccess, setTeamAccess] = useState(data.team_access);
+  const [teamUsers, setTeamUsers] = useState([]);
   const dispatch = useDispatch();
 
   const teamUpdate = useSelector((state) => state.teamUpdate);
   const {loading, error} = teamUpdate;
+
+  const teamUserDelete = useSelector((state) => state.teamUserDelete);
+  const {loading: loadingDelete, error: errorDelete} = teamUserDelete;
 
   const updateHandler = (e) => {
     e.preventDefault();
@@ -37,11 +46,17 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
   }
 
   useEffect(() => {
-    
-  }, [data])
+    if(data.users){
+      setTeamUsers(data.users);
+    } else {
+      setTeamUsers([]);
+    }
+  }, [data, teamUserDelete, dispatch])
 
   return (
     <Modal centered size="lg" show={showModal} onHide={hideModal}>
+      {loadingDelete && <Preload/>}
+      {errorDelete && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       <Modal.Header>
         <h5>Edit Team</h5>
         {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
@@ -82,7 +97,7 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
           </Row>
           <div className="horizontal">
             {
-              data.users?.map((userslist) => (
+              teamUsers.map((userslist) => (
                 <EditTeamCard logo={pocketdevsLogo} data={userslist} teamId={data._id} />
               ))
             }
@@ -115,8 +130,9 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
                     </option>
                   </select>
           </Form.Group>
-        <button className="theme-btn theme-btn-modal ms-5 mx-1" onClick={hideModal}> <i class="lni lni-plus"></i> Add Members </button>
+        <button className="theme-btn theme-btn-modal ms-5 mx-1" onClick={handleShow}> <i class="lni lni-plus"></i> Add Members </button>
         <button className="theme-btn theme-btn-modal mx-1" onClick={updateHandler}> Save Changes </button>
+        <AddMemberModal showModal={show} hideModal={hideModal} data={data} />
       </Modal.Footer>
     </Modal>
   );

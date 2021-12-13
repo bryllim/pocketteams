@@ -46,6 +46,7 @@ const onDragEnd = ({result, sections, sectionOrder, setSections, setSectionOrder
     setSectionOrder(newSectionOrder)
     return {sectionId, sourceDragIndex, destinationDragIndex}
   }
+  
   module.exports = {onDragEnd,orderSections}
 
 

@@ -8,14 +8,17 @@ import { useDispatch, useSelector } from "react-redux";
 import Preload from "../Preload";
 import ErrorMessage from "../ErrorMessage";
 import { Row,Col } from "react-bootstrap";
+import Swal from 'sweetalert2'
 
 const ProjectCard = ({data}) => {
   const projectId = (data) ? data._id : null;
+
   const history = useHistory();
   const dispatch = useDispatch();
   const sectionList = useMemo(() => (data && data.sections) ? data.sections: [], [data]);
   const handleOnClick = useCallback(() => history.push({pathname: '/board',
   sectionList,projectId}), [history , sectionList, projectId]);
+
   const [editShow, setEditShow] = useState(false);
   const handleEditClose = () => setEditShow(false);
   const handleEditShow = () => setEditShow(true);
@@ -28,10 +31,21 @@ const ProjectCard = ({data}) => {
   const {loading: loadingDelete, error: errorDelete} = projectDelete;
 
   const handleDelete = (id) => {
-    if(window.confirm("Are you sure?")){
-      dispatch(deleteProjectAction(id));
-      window.location.reload(false);
-    }
+    Swal.fire({
+      title: 'Warning',
+      text: 'Are you sure you want to delete this project?',
+      icon: 'error',
+      showDenyButton: true,
+      confirmButtonText: 'Yes',
+      denyButtonText: `No`,
+      confirmButtonColor: '#dc3741',
+      denyButtonColor: '#6c757d'
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        dispatch(deleteProjectAction(id));
+      } 
+    })
   }
 
   const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -48,7 +62,6 @@ const ProjectCard = ({data}) => {
 
   return (
     <div className="sidebar-wrapper m-0 p-2">
-      {loadingDelete && <Preload/>}
       {errorDelete && (<ErrorMessage varaint="danger">{errorDelete}</ErrorMessage>)}
       {data ?
       <div className="d-flex flex-column sidebar-box basecard project-card px-4 pb-4 pt-2">
