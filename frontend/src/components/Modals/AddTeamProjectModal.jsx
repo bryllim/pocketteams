@@ -3,27 +3,33 @@ import { Form, Modal, Col, Row } from "react-bootstrap";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { updateTeamUser } from "../../actions/teamActions";
+import { updateTeamProject } from "../../actions/teamActions";
+import { useEffect } from "react";
+import { listProjects } from "../../actions/projectActions";
 
-const AddMemberModal = ({ showModal, hideModal, data }) => {
+const AddTeamProjectModal = ({ showModal, hideModal, data }) => {
   const userList = useSelector((state) => state.userList);
   const { users } = userList;
+
+  const projectList = useSelector((state) => state.projectList);
+  const { loading, projects, error } = projectList;
 
   const dispatch = useDispatch();
 
   const [suggestions, setSuggestions] = useState([]);
-  const [addedUsers, setAddedUsers] = useState(data.users);
+  const [addedProjects, setaddedProjects] = useState(data.projects);
+
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(updateTeamUser(data._id, addedUsers));
+    dispatch(updateTeamProject(data._id, addedProjects));
     window.location.reload(false);
   }
 
   const memberInputHandler = (input) => {
     //If the seacrh has value
     if (input !== "") {
-      const filteredData = users.filter((item) => {
+      const filteredData = projects.filter((item) => {
         return Object.values(item)
           .join("")
           .toLowerCase()
@@ -36,17 +42,17 @@ const AddMemberModal = ({ showModal, hideModal, data }) => {
   };
 
   const resetHandler = () => {
-    setAddedUsers([]);
+    setaddedProjects([]);
     setSuggestions([]);
   };
 
   const handleAdd = (val) => {
-    console.log(addedUsers.includes(val.email_address));
-    if (addedUsers.some((item) => val.email_address === item.email_address)) {
-      notifyError("User Exists");
+    console.log(addedProjects.includes(val.project_name));
+    if (addedProjects.some((item) => val.project_name === item.project_name)) {
+      notifyError("Already Added");
     } else {
-      notifySuccess("User Added");
-      setAddedUsers([...addedUsers, val]);
+      notifySuccess("Project Added");
+      setaddedProjects([...addedProjects, val]);
     }
     return;
   };
@@ -62,12 +68,16 @@ const AddMemberModal = ({ showModal, hideModal, data }) => {
       position: toast.POSITION.BOTTOM_RIGHT,
       autoClose: 2500,
     });
+  
+    useEffect(() => {
+      dispatch(listProjects());
+    }, [dispatch])
 
   return (
     <>
       <Modal centered show={showModal} onHide={hideModal}>
         <Modal.Header>
-          <h5>Add Member</h5>
+          <h5>Add Project</h5>
           <button
             type="button"
             class="btn-close me-2"
@@ -84,22 +94,22 @@ const AddMemberModal = ({ showModal, hideModal, data }) => {
                 name="team_members"
                 id="team_members"
                 className="mb-3"
-                value={addedUsers.email_address}
-                placeholder="Search members here"
+                value={addedProjects.project_name}
+                placeholder="Search projects here"
                 required
                 onChange={(e) => memberInputHandler(e.target.value)}
               />
               {suggestions.slice(0, 3).map((item) => (
                 <p className="mt-1 hover-me text-dark text-center" onClick={(e) => handleAdd(item)}>
-                  {item.email_address}
+                  {item.project_name}
                 </p>
               ))}
               <Row>
-                <Form.Label>Added Members: </Form.Label>
+                <Form.Label>Added Projects: </Form.Label>
                 <p className="horizontal sidebar-wrapper mb-2">
-                  {addedUsers.map((item) => (
+                  {addedProjects?.reverse().map((item) => (
                     <p className="sidebar-box horizontal-container mx-1 mb-3">
-                      {item.email_address}
+                      {item.project_name}
                     </p>
                   ))}
                 </p>
@@ -121,4 +131,4 @@ const AddMemberModal = ({ showModal, hideModal, data }) => {
   );
 };
 
-export default AddMemberModal;
+export default AddTeamProjectModal;

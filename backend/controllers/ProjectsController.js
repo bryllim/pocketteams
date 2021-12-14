@@ -75,7 +75,7 @@ const updateProject = asyncHandler(async (req, res) => {
 
 const deleteProject = asyncHandler(async (req, res) => {
   const project = await Project.findById(req.params.id);
-
+  const projectID = project._id;
   if (project.user.toString() !== req.user._id.toString()) {
     res.status(401);
     throw new Error("You can't perform this action");
@@ -83,7 +83,7 @@ const deleteProject = asyncHandler(async (req, res) => {
 
   if (project) {
     await project.remove();
-    res.json({ message: "Project Removed" });
+    res.json(projectID);
   }
 });
 

@@ -2,42 +2,31 @@ import Sidebar from "../components/Sidebar";
 import Navigation from "../components/Navigation";
 import SectionCard from "../components/Cards/SectionCard";
 import { Breadcrumb, Col, Container, Row } from "react-bootstrap";
-import { useEffect, useState, useContext} from "react";
+import { useEffect, useState, useContext } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { TaskContext } from "../contexts/SectionContext";
 import { SocketContext } from "../contexts/SocketContext";
+import { createSection } from "../actions/sectionActions";
+import onDragEnd from "../functions/dragDrop";
+import { sectionCreate, sectionDelete } from "../functions/sectionFunctions";
+import { taskCreate, taskRemove } from "../functions/taskFunctions";
 import {
-  updateSectionTask,
-  createSection,
-  updateSectionOrder,
+  listSectionByProjectId,
+  updateSection,
 } from "../actions/sectionActions";
-import onDragEnd from '../functions/dragDrop2';
-import { orderSections } from "../functions/dragDropFunctions";
-import { 
-  sectionCreate,
-  sectionUpdate,
-  sectionDelete } from "../functions/sectionFunctions";
-import {
-  taskUpdate,
-  taskCreate,
-  taskRemove} from '../functions/taskFunctions';
-import { 
-  listSectionByProjectId, 
-  updateSection} from "../actions/sectionActions";
-import {listTaskByProjectId,updateTask} from '../actions/taskActions'
+import { listTaskByProjectId, updateTask } from "../actions/taskActions";
 import SkeletonSectionCard from "../components/Cards/SkeletonSectionCard";
 import { ObjectID } from "bson";
 import midString from "../functions/ordering";
 import "../css/board.css";
-import { set } from "mongoose";
 
 const addSection = async ({
   dispatch,
   initialData,
   setInitialData,
-  projectId
+  projectId,
 }) => {
   const sectionOrder = initialData.sectionOrder;
   const sections = initialData.sections;
@@ -45,36 +34,43 @@ const addSection = async ({
   const newSection = {
     _id: new ObjectID().toHexString(),
     section_name: "New Section",
-    order: totalSections === 0 ? 'n' : midString(sections[sectionOrder[totalSections - 1]].order, ''),
+    order:
+      totalSections === 0
+        ? "n"
+        : midString(sections[sectionOrder[totalSections - 1]].order, ""),
     project_id: projectId,
     taskIds: [],
-  }
+  };
   sectionCreate({
     initialData,
     setInitialData,
-    newSection
+    newSection,
   });
-  dispatch(
-    createSection(newSection)
-  );
+  dispatch(createSection(newSection));
   return;
 };
 
-const onDrag = ({result,data,dispatch}) => {
-  const newData = onDragEnd({result,data});
-  if(newData && result.type === 'column') dispatch(updateSection({
-    params:newData,
-    sectionId:result.draggableId
-  }));
-  else if(newData) dispatch(updateTask({
-    params:newData,
-    taskId:result.draggableId
-  }));
-  else{
-    console.log('error');
-  };
-  return
-}
+const onDrag = ({ result, data, dispatch }) => {
+  const newData = onDragEnd({ result, data });
+  if (newData && result.type === "column")
+    dispatch(
+      updateSection({
+        params: newData,
+        sectionId: result.draggableId,
+      })
+    );
+  else if (newData)
+    dispatch(
+      updateTask({
+        params: newData,
+        taskId: result.draggableId,
+      })
+    );
+  else {
+    console.log("error");
+  }
+  return;
+};
 
 const Board = (props) => {
   const { projectId } = props.location || {};
@@ -82,87 +78,96 @@ const Board = (props) => {
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
   // const dataList = useSelector((state) => state.sectionList);
-  const {loading:sectionLoading, data:sectionList} = useSelector((state) => state.sectionList);
-  const {loading:taskLoading, data:taskList} = useSelector((state) => state.taskList);
-  const {loading:sectionUpdateLoading, data:sectionUpdateData} = useSelector((state) => state.sectionUpdate);
-  const {loading:taskUpdateLoading, data:taskUpdateData} = useSelector((state) => state.taskUpdate);
-  const {loading:taskCreateLoading, data: taskCreateData} = useSelector((state) => state.taskCreate);
-  const {loading:sectionCreateLoading, data: sectionCreateData} = useSelector((state) => state.sectionCreate);
+  const { loading: sectionLoading, data: sectionList } = useSelector(
+    (state) => state.sectionList
+  );
+  const { loading: taskLoading, data: taskList } = useSelector(
+    (state) => state.taskList
+  );
+  const { loading: sectionUpdateLoading, data: sectionUpdateData } =
+    useSelector((state) => state.sectionUpdate);
+  const { loading: taskUpdateLoading, data: taskUpdateData } = useSelector(
+    (state) => state.taskUpdate
+  );
+  const { loading: taskCreateLoading, data: taskCreateData } = useSelector(
+    (state) => state.taskCreate
+  );
+  const { loading: sectionCreateLoading, data: sectionCreateData } =
+    useSelector((state) => state.sectionCreate);
   const {
-    error: sectionDeleteError, 
+    error: sectionDeleteError,
     data: sectionDeleteData,
-    loading: sectionDeleteLoading
+    loading: sectionDeleteLoading,
   } = useSelector((state) => state.sectionDelete);
   const {
     error: taskDeleteError,
     data: taskDeleteData,
-    loading: taskDeleteLoading
+    loading: taskDeleteLoading,
   } = useSelector((state) => state.taskDelete);
 
   const [initialData, setInitialData] = useState({});
 
- 
   const [initDone, setInitDone] = useState(false);
 
   const [sections, setSections] = useState(null);
   const [sectionOrder, setSectionOrder] = useState(null);
   const { userInfo } = userLogin;
   const socket = useContext(SocketContext);
-  
+
   useEffect(() => {
     socket.emit("Join_Board", projectId);
     //subscribe to board events
-    socket.on("New_User_Joined" , (data)=>{
-      console.log("new user joined", data)
-    })
-    console.log("Test1")  
-  }, [socket,projectId]);
+    socket.on("New_User_Joined", (data) => {
+      console.log("new user joined", data);
+    });
+    console.log("Test1");
+  }, [socket, projectId]);
 
   useEffect(() => {
-    socket.on("New_Board_Update", (data)=>{
+    socket.on("New_Board_Update", (data) => {
       setInitialData(data);
       // return
-    })
-    socket.on("New_Create_Task", (data)=>{
+    });
+    socket.on("New_Create_Task", (data) => {
       taskCreate({
         initialData,
         setInitialData,
-        newTask:data,
-        sectionId:data.section_id
+        newTask: data,
+        sectionId: data.section_id,
       });
-    })
-    
-    socket.on("New_Create_Section", (data)=>{
+    });
+
+    socket.on("New_Create_Section", (data) => {
       sectionCreate({
         initialData,
         setInitialData,
-        newSection:data
+        newSection: data,
       });
-    })
+    });
 
-    socket.on("New_Delete_Section", (data)=>{
-      const index = initialData.sectionOrder.indexOf(data)
+    socket.on("New_Delete_Section", (data) => {
+      const index = initialData.sectionOrder.indexOf(data);
       sectionDelete({
         initialData,
         setInitialData,
-        sectionId:data,
-        index
+        sectionId: data,
+        index,
       });
-    })
+    });
 
-    socket.on("New_Delete_Task", (data)=>{
-      console.log("New_Delete_Task", data)
-      const index = initialData.sections[data.section_id].taskIds.indexOf(data._id)
+    socket.on("New_Delete_Task", (data) => {
+      console.log("New_Delete_Task", data);
+      const index = initialData.sections[data.section_id].taskIds.indexOf(
+        data._id
+      );
       taskRemove({
         initialData,
         setInitialData,
-        taskId:data,
-        sectionId:data.section_id,
-        index
+        taskId: data,
+        sectionId: data.section_id,
+        index,
       });
-    })
-
-
+    });
 
     return () => {
       socket.off("New_Board_Update");
@@ -170,62 +175,59 @@ const Board = (props) => {
       socket.off("New_Create_Section");
       socket.off("New_Delete_Section");
       socket.off("New_Delete_Task");
-    }
-  }, [socket,initialData]);
+    };
+  }, [socket, initialData]);
 
   useEffect(() => {
-    if(taskUpdateLoading === true) return
-    if(!taskUpdateData) return
+    if (taskUpdateLoading === true) return;
+    if (!taskUpdateData) return;
     if (initialData && !(Object.keys(initialData).length === 0)) {
-        console.log('taskUpdateLoading', initialData)
-        socket.emit("Update_Board", {initialData,projectId});
+      console.log("taskUpdateLoading", initialData);
+      socket.emit("Update_Board", { initialData, projectId });
     }
   }, [taskUpdateLoading]);
 
   useEffect(() => {
-    if(sectionUpdateLoading === true) return
-    if(!sectionUpdateData) return
+    if (sectionUpdateLoading === true) return;
+    if (!sectionUpdateData) return;
     if (initialData && !(Object.keys(initialData).length === 0)) {
-      console.log('sectionUpdateLoading')
-        socket.emit("Update_Board", {initialData,projectId});
+      console.log("sectionUpdateLoading");
+      socket.emit("Update_Board", { initialData, projectId });
     }
   }, [sectionUpdateLoading]);
 
+  useEffect(() => {
+    if (taskCreateLoading === true) return;
+    if (!taskCreateData) return;
+    if (!(Object.keys(taskCreateData).length === 0)) {
+      socket.emit("Create_Task", { taskCreateData, projectId });
+    }
+  }, [taskCreateLoading, taskCreateData]);
 
   useEffect(() => {
-    if(taskCreateLoading === true) return
-    if(!taskCreateData) return
-    if(!(Object.keys(taskCreateData).length === 0)){
-      socket.emit("Create_Task", {taskCreateData,projectId});
+    if (sectionCreateLoading === true) return;
+    if (!sectionCreateData) return;
+    if (!(Object.keys(sectionCreateData).length === 0)) {
+      socket.emit("Create_Section", { sectionCreateData, projectId });
     }
-  }, [taskCreateLoading,taskCreateData]);
+  }, [sectionCreateLoading, sectionCreateData]);
 
   useEffect(() => {
-    if(sectionCreateLoading === true) return
-    if(!sectionCreateData) return
-    if(!(Object.keys(sectionCreateData).length === 0)){
-      socket.emit("Create_Section", {sectionCreateData,projectId});
+    if (sectionDeleteLoading === true) return;
+    if (!sectionDeleteData) return;
+    if (!(Object.keys(sectionDeleteData).length === 0)) {
+      console.log("sectionDeleteData", sectionDeleteData);
+      socket.emit("Delete_Section", { sectionDeleteData, projectId });
     }
-  }, [sectionCreateLoading,sectionCreateData]);
+  }, [sectionDeleteLoading, sectionDeleteData]);
 
   useEffect(() => {
-    if(sectionDeleteLoading === true) return
-    if(!sectionDeleteData) return
-    if(!(Object.keys(sectionDeleteData).length === 0)){
-      console.log("sectionDeleteData", sectionDeleteData)
-      socket.emit("Delete_Section", {sectionDeleteData,projectId});
+    if (taskDeleteLoading === true) return;
+    if (!taskDeleteData) return;
+    if (!(Object.keys(taskDeleteData).length === 0)) {
+      socket.emit("Delete_Task", { taskDeleteData, projectId });
     }
-  }, [sectionDeleteLoading,sectionDeleteData]);
-
-  useEffect(() => {
-    if(taskDeleteLoading === true) return
-    if(!taskDeleteData) return
-    if(!(Object.keys(taskDeleteData).length === 0)){
-      socket.emit("Delete_Task", {taskDeleteData,projectId});
-    }
-  }, [taskDeleteLoading,taskDeleteData]);
-
-
+  }, [taskDeleteLoading, taskDeleteData]);
 
   useEffect(() => {
     if (!userInfo) {
@@ -242,11 +244,11 @@ const Board = (props) => {
     if (!sectionLoading && !taskLoading && sectionList && taskList) {
       const prevState = { tasks: {}, sections: {}, sectionOrder: [] };
       const getTaskIds = (id) => {
-        const filteredTasks = taskList.filter(task => task.section_id === id );
-        filteredTasks.sort((a, b) =>{
-          let orderA = a.order
-          let orderB = b.order
-          return orderA.localeCompare(orderB)//using String.prototype.localCompare()
+        const filteredTasks = taskList.filter((task) => task.section_id === id);
+        filteredTasks.sort((a, b) => {
+          let orderA = a.order;
+          let orderB = b.order;
+          return orderA.localeCompare(orderB); //using String.prototype.localCompare()
         });
         const taskIds = [];
         filteredTasks.forEach((task) => taskIds.push(task._id));
@@ -255,27 +257,26 @@ const Board = (props) => {
       const setContent = () => {
         taskList.forEach((task) => (prevState.tasks[task._id] = task));
         const newSectionList = JSON.parse(JSON.stringify(sectionList));
-        const sortedSectionList = newSectionList.sort((a, b) =>{
-          let orderA = a.order
-          let orderB = b.order
-          return orderA.localeCompare(orderB)//using String.prototype.localCompare()
+        const sortedSectionList = newSectionList.sort((a, b) => {
+          let orderA = a.order;
+          let orderB = b.order;
+          return orderA.localeCompare(orderB); //using String.prototype.localCompare()
         });
-      
-        
+
         sortedSectionList.forEach((section) => {
           prevState.sections[section._id] = {
             ...section,
             taskIds: getTaskIds(section._id),
-          }
+          };
           prevState.sectionOrder.push(section._id);
         });
-      }
-      setContent()
+      };
+      setContent();
       setInitialData({ ...prevState });
       setInitDone(true);
     }
   }, [sectionLoading, taskLoading]);
-  console.log('intialData',initialData);
+  console.log("intialData", initialData);
 
   return (
     <>
@@ -311,7 +312,7 @@ const Board = (props) => {
               <div className="d-flex scrolling-wrapper-x flex-nowrap flex-grow-1 task-board-wrapper my-3">
                 <DragDropContext
                   onDragEnd={(result) => {
-                    const data = {}
+                    const data = {};
                     // data.sections = sections;
                     // data.sectionOrder = sectionOrder;
                     // data.setSections = setSections;
@@ -361,32 +362,35 @@ const Board = (props) => {
                                   </div>
                                 );
                               })
-
-                          
-                            : initialData.sectionOrder.map((sectionId, index) => {
-                                const section = initialData.sections[sectionId];
-                                console.log('section',section);
-                                const tasks = section.taskIds.map((taskId) => initialData.tasks[taskId]);
-                                return (
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      flexDirection: "column",
-                                      alignItems: "center",
-                                      height: "100%",
-                                    }}
-                                    className="py-2"
-                                    key={sectionId}
-                                  >
-                                    <SectionCard
-                                      sectionId={section._id}
-                                      section={section}
-                                      tasks={tasks}
-                                      index={index}
-                                    />
-                                  </div>
-                                );
-                              })}
+                            : initialData.sectionOrder.map(
+                                (sectionId, index) => {
+                                  const section =
+                                    initialData.sections[sectionId];
+                                  console.log("section", section);
+                                  const tasks = section.taskIds.map(
+                                    (taskId) => initialData.tasks[taskId]
+                                  );
+                                  return (
+                                    <div
+                                      style={{
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        alignItems: "center",
+                                        height: "100%",
+                                      }}
+                                      className="py-2"
+                                      key={sectionId}
+                                    >
+                                      <SectionCard
+                                        sectionId={section._id}
+                                        section={section}
+                                        tasks={tasks}
+                                        index={index}
+                                      />
+                                    </div>
+                                  );
+                                }
+                              )}
                           {provided.placeholder}
                         </div>
                       );
@@ -401,8 +405,7 @@ const Board = (props) => {
                         dispatch,
                         initialData,
                         setInitialData,
-                        projectId
-                
+                        projectId,
                       })
                     }
                   >
