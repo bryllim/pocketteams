@@ -83,8 +83,6 @@ const taskUpdate =({
   setInitialData,
   newTask,
 }) => {
-  console.log("taskUpdate",newTask)
-  console.log("initialData",initialData)
   const newInitialData = JSON.parse(JSON.stringify(initialData))
   const getTaskIds = (id) => {
     const tasks = JSON.parse(JSON.stringify(newInitialData.tasks));
