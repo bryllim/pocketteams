@@ -108,7 +108,7 @@ const Project = () => {
         <Row className="h-100">
           <Col
             xxl="3"
-            className="d-flex flex-column h-100 d-none d-md-block d-md-none d-lg-block  d-lg-none d-xl-block"
+            className="d-flex flex-column h-100 d-none d-md-block d-md-none d-lg-block d-lg-none d-xl-block"
           >
             <Sidebar />
           </Col>
@@ -119,7 +119,7 @@ const Project = () => {
               </Breadcrumb>
             </h3>
             { error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
-            <div className="row row-cols-xxl-4 row-cols-xl-3 row-cols-md-2 g-md-2 g-2">
+            <div className="row row-cols-xxl-4 row-cols-xl-3 row-cols-md-2 g-md-2 g-2 overflow-auto">
             <Col><ProjectCard/></Col>
             { projectData?.map((project,index) => (
               <Col key={index}><ProjectCard data={project}/></Col>
