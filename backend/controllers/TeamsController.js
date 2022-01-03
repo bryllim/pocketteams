@@ -22,7 +22,7 @@ const createTeam = asyncHandler( async (req,res) => {
             users,
             projects,
         });
-        const createdTeam = await team.save();
+        const createdTeam = await team.save().then(team => team.populate('users'));
         res.status(201).json(createdTeam);
     }
 });
@@ -54,7 +54,7 @@ const updateTeam = asyncHandler(async (req,res) => {
         team.team_description = team_description;
         team.team_access = team_access;
 
-        const updatedTeam = await team.save();
+        const updatedTeam = await team.save().then(team => team.populate('users'));
         res.json(updatedTeam);
     } else {
         res.status(404);
@@ -75,7 +75,7 @@ const updateTeamUser = asyncHandler(async (req,res) => {
     if(team){
         //Edit the array here
         team.users = users 
-        const updatedTeam = await team.save();
+        const updatedTeam = await team.save().then(team => team.populate('users'));
         res.json(updatedTeam);
     } else {
         res.status(404);
@@ -85,9 +85,7 @@ const updateTeamUser = asyncHandler(async (req,res) => {
 
 const updateTeamProject = asyncHandler(async (req,res) => {
     const team = await Team.findById(req.params.id);
-    console.log("Owner: " + team.owner.toString());
     const {projects} = req.body;
-    console.log("projects: " + projects);
 
     //Check if this team belongs to the user
     if(team.owner.toString() !== req.user._id.toString()){
@@ -97,7 +95,7 @@ const updateTeamProject = asyncHandler(async (req,res) => {
 
     if(team){
         //Edit the array here
-        team.projects = projects 
+        team.projects = projects;
         const updatedTeam = await team.save();
         res.json(updatedTeam);
     } else {
@@ -129,15 +127,14 @@ const deleteUser = asyncHandler(async (req,res) => {
         throw new Error("You can't perform this action");   
     }
 
-    console.log("USER ID: " + user_id);
-
     //remove the matching user_id from the users array inside team
     if(team){
         const updatedTeam = await Team.findByIdAndUpdate(
             {_id:team._id},
-            { $pull: {users: user_id} },
+            { $pull: {users: user_id}},
             { new: true},
-        );
+        ).then(team => team.populate('users'));
+        console.log(updatedTeam);
         res.json(updatedTeam);
     }
 });
@@ -151,13 +148,11 @@ const removeProject = asyncHandler(async (req,res) => {
         throw new Error("You can't perform this action");   
     }
 
-    console.log("project id: " + project_id);
-
     //remove the matching user_id from the users array inside team
     if(team){
         const updatedTeam = await Team.findByIdAndUpdate(
             {_id:team._id},
-            { $pull: {projects: project_id} },
+            { $pull: {projects: project_id}},
             { new: true},
         );
         res.json(updatedTeam);

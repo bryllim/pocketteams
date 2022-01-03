@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import AddTeam from "./Modals/AddTeamModal";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { listTeam } from "../actions/teamActions";
+import { listTeam, updateTeamAction } from "../actions/teamActions";
 import ErrorMessage from "./ErrorMessage";
 import Preload from "./Preload";
 import { toast } from "react-toastify";
@@ -32,17 +32,20 @@ const Sidebar = () => {
   const teamCreate = useSelector((state) => state.teamCreate);
   const {loading: createTeamLoading, teams: newTeamData} = teamCreate;
 
+  const teamUpdate = useSelector((state) => state.teamUpdate);
+  const {loading: updateTeamLoading, teams: updatedTeam, success:successUpdateTeam} = teamUpdate;
+
   const teamDelete = useSelector((state) => state.teamDelete);
-  const { success: successDeleteTeam, data: deleteTeamId} = teamDelete;
+  const {success: successDeleteTeam, data: deleteTeamId} = teamDelete;
+
+  const teamAddUser = useSelector((state) => state.teamAddUser);
+  const {loading: addUserLoading, teams: addUserTeam, success: successAddUser} = teamAddUser;
+
+  const teamUserDelete = useSelector((state) => state.teamUserDelete);
+  const {success: successDeleteUser, data: deleteUserData} = teamUserDelete;
+
 
   //NOTIFICATIONS
-
-  const notifyInfo = (msg) =>
-    toast.info(msg, {
-      position: toast.POSITION.BOTTOM_RIGHT,
-      autoClose: 2500,
-    });
-
   const notifySuccess = (msg) =>
     toast.success(msg, {
     position: toast.POSITION.BOTTOM_RIGHT,
@@ -73,21 +76,50 @@ const Sidebar = () => {
         newTeams.push(newTeamData);
         setTeamData(newTeams);
       }
-      notifySuccess("Team Created");
     } 
   }, [createTeamLoading, newTeamData])
 
-  //Deleting Teams
+  //Adding Users to team
   useEffect(() => {
-    if(successDeleteTeam === true)
-    {
-      const newTeams = [...teamData]
-      const index = newTeams.findIndex(teams => teams._id === deleteTeamId)
-      newTeams.splice(index,1)
-      setTeamData(newTeams)
-      notifyInfo("Team Delete");
+    if( addUserLoading === false &&  successAddUser === true && addUserTeam){
+      const newTeam = [...teamData]
+      const index = newTeam.findIndex(teams => teams._id === addUserTeam._id)
+      newTeam.splice(index, 1, addUserTeam)
+      setTeamData(newTeam)
     }
-  }, [successDeleteTeam, deleteTeamId])
+  }, [teams, addUserTeam, successAddUser, addUserLoading])
+
+  //Updating Teams
+  useEffect(() => {
+    if(updateTeamLoading === false && successUpdateTeam === true && updatedTeam){
+      const newTeam = [...teamData]
+      const index = newTeam.findIndex(teams => teams._id === updatedTeam._id)
+      newTeam.splice(index, 1, updatedTeam)
+      setTeamData(newTeam)
+    }
+  }, [teams, updatedTeam, successUpdateTeam, updateTeamLoading])
+
+  //User Delete
+  useEffect(() => {
+    if(successDeleteUser === true && deleteUserData)
+    {
+      const newUsers = [...teamData]
+      const index = newUsers.findIndex(teams => teams._id === deleteUserData._id)
+      newUsers.splice(index,1, deleteUserData)
+      setTeamData(newUsers)
+    }
+  }, [successDeleteUser, deleteUserData])
+
+  // //Deleting Teams
+  // useEffect(() => {
+  //   if(successDeleteTeam === true && deleteTeamId)
+  //   {
+  //     const newTeams = [...teamData]
+  //     const index = newTeams.findIndex(teams => teams._id === deleteTeamId)
+  //     newTeams.splice(index,1)
+  //     setTeamData(newTeams)
+  //   }
+  // }, [successDeleteTeam, deleteTeamId])
 
   return (
     <div className="d-flex flex-column sidebar-wrapper scrolling-wrapper-y h-100">
