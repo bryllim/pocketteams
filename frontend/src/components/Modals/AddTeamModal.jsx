@@ -39,12 +39,13 @@ const AddTeam = ({ showModal, hideModal }) => {
     e.preventDefault();
     dispatch(
       //change last to user id array
-      createTeamAction(teamName, teamDescription, teamAccess,userInfo._id,addedUsers, teamProjects)
+      createTeamAction(teamName, teamDescription, teamAccess,userInfo._id, addedUsers, teamProjects)
     );
     if (!teamName || !teamDescription || !teamAccess) return;
 
     resetHandler();
     hideModal();
+    notifySuccess("Team Created");
   };
 
   const resetHandler = () => {
@@ -60,7 +61,6 @@ const AddTeam = ({ showModal, hideModal }) => {
     if(addedUsers.some(item => val.email_address === item.email_address)){
       notifyError("User Exists");
     } else {
-      notifySuccess("User Added");
       setAddedUsers([...addedUsers, val]);
     }
     return;

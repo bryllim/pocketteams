@@ -33,19 +33,19 @@ const Project = () => {
   const deleteProject = useSelector((state) => state.projectDelete);
   const {success: successDeleteProject, data: deleteProjectId} = deleteProject;
 
-  //NOTIFICATIONS
+  // //NOTIFICATIONS
 
-  const notifyInfo = (msg) =>
-    toast.info(msg, {
-      position: toast.POSITION.BOTTOM_RIGHT,
-      autoClose: 2500,
-    });
+  // const notifyInfo = (msg) =>
+  //   toast.info(msg, {
+  //     position: toast.POSITION.BOTTOM_RIGHT,
+  //     autoClose: 2500,
+  //   });
 
-  const notifySuccess = (msg) =>
-    toast.success(msg, {
-    position: toast.POSITION.BOTTOM_RIGHT,
-    autoClose: 2500,
-  });
+  // const notifySuccess = (msg) =>
+  //   toast.success(msg, {
+  //   position: toast.POSITION.BOTTOM_RIGHT,
+  //   autoClose: 2500,
+  // });
 
   //USE EFFECTS
 
@@ -65,16 +65,14 @@ const Project = () => {
     if(createProjectLoading === false && newProjectData) {
       if(projectData.length > 0) {
         const newProjects = [...projectData];
-        newProjects.push(newProjectData);
+        newProjects.push(newProjectData); 
         setProjectData(newProjects);
       } 
       else {
-        setProjectData([newProjectData]);
+        setProjectData([newProjectData]); 
       }
-      notifySuccess("Project Created");
     }
   }, [createProjectLoading, newProjectData])
-  //
 
   // Deleting Projects
   useEffect(() => {
@@ -84,10 +82,8 @@ const Project = () => {
       const index = newProjects.findIndex(project => project._id === deleteProjectId)
       newProjects.splice(index, 1)
       setProjectData(newProjects)
-      notifyInfo("Project Deleted");
     }
   }, [successDeleteProject, deleteProjectId])
-  //
 
   // Updating Projects
   useEffect(() => {
@@ -96,10 +92,8 @@ const Project = () => {
       const index = newProject.findIndex(project => project._id === updatedProject._id)
       newProject.splice(index, 1, updatedProject)
       setProjectData(newProject)
-      notifyInfo("Project Updated");
     }
   }, [projects, updatedProject, successUpdateProject, updateProjectLoading])
-  //
 
   return (
     <>

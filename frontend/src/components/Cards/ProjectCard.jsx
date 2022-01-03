@@ -9,6 +9,7 @@ import Preload from "../Preload";
 import ErrorMessage from "../ErrorMessage";
 import { Row,Col } from "react-bootstrap";
 import Swal from 'sweetalert2'
+import { toast } from "react-toastify";
 
 const ProjectCard = ({data}) => {
   const projectId = (data) ? data._id : null;
@@ -30,6 +31,12 @@ const ProjectCard = ({data}) => {
   const projectDelete = useSelector((state) => state.projectDelete);
   const {loading: loadingDelete, error: errorDelete} = projectDelete;
 
+  const notifyInfo = (msg) =>
+    toast.info(msg, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 2500,
+    });
+
   const handleDelete = (id) => {
     Swal.fire({
       title: 'Warning',
@@ -44,6 +51,7 @@ const ProjectCard = ({data}) => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
         dispatch(deleteProjectAction(id));
+        notifyInfo("Project Deleted");
       } 
     })
   }
