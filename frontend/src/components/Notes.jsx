@@ -108,8 +108,8 @@ const Notes = () => {
                 <span>Create note</span>
                 </button>  */}
                 <button className="theme-btn theme-btn-md" onClick={syncHandler}>
-                <i className="lni lni-cloud-sync me-2"></i>
-                <span>Sync note</span>
+                <i className="lni lni-cloud-sync me-3"></i>
+                <span>Sync notes</span>
                 </button> 
             </div>
         </form>
