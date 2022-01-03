@@ -75,7 +75,7 @@ const LandingPage = ({ history }) => {
                   data-aos-delay="200"
                   data-aos-duration="2000"
                 >
-                  <img src={heroImage} />
+                  <img src={heroImage} alt="hero-image"/>
                 </div>
               </div>
             </div>
