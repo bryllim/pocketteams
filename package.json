@@ -4,12 +4,12 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "heroku-postbuild": "cd client && npm install && npm run build",
-    "start": "nodemon app.js",
-    "client": "npm start --prefix client",
+    "heroku-postbuild": "cd frontend && npm install && npm run build",
+    "start": "cd backend node app.js",
+    "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm start\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "client-install": "npm install --prefix client"
+    "client-install": "npm install --prefix frontend"
   },
   "repository": {
     "type": "git",
