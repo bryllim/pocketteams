@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { listProjects } from "../actions/projectActions";
 import { toast } from "react-toastify";
+import  "../css/project.css";
 
 const Project = () => {
 
@@ -108,23 +109,28 @@ const Project = () => {
         <Row className="h-100">
           <Col
             xxl="3"
-            className="d-flex flex-column h-100 d-none d-md-block d-md-none d-lg-block d-lg-none d-xl-block"
+            className="d-flex flex-column h-100 d-none d-lg-block "
           >
             <Sidebar />
           </Col>
-          <Col md="9" className="d-flex flex-column h-100">
+          <Col md={12} lg={9}  className="d-flex flex-column h-100 ">
             <h3>
               <Breadcrumb>
                 <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>
               </Breadcrumb>
             </h3>
             { error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
-            <div className="row row-cols-xxl-4 row-cols-xl-3 row-cols-md-2 g-md-2 g-2 overflow-auto">
-            <Col><ProjectCard/></Col>
+            <div className="d-flex flex-row flex-wrap justify-content-center justify-content-lg-start overflow-auto" >
+            <ProjectCard/>
             { projectData?.map((project,index) => (
-              <Col key={index}><ProjectCard data={project}/></Col>
+             <ProjectCard data={project}/>
+                // <div className="card project-card bg-warning"> 
+                //   </div>
+        
+              // <Col key={index}><ProjectCard data={project}/></Col>
             ))}
             </div>
+            
           </Col>
         </Row>
       </Container>

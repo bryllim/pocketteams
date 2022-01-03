@@ -24,7 +24,7 @@ const LoginPage = () => {
 
     useEffect(() => {
         if(userInfo){
-            history.push('/project');
+            history.push('/');
         }
     }, [history, userInfo]);
 
