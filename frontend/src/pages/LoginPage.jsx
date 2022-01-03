@@ -19,7 +19,7 @@ const LoginPage = () => {
     const {loading, error, userInfo} = userLogin;
 
     useEffect(() => {
-        document.title = "PocketTeams - Login"
+        document.title = "Login - PocketTeams"
       }, [])
 
     useEffect(() => {

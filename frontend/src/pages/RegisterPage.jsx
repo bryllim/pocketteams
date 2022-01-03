@@ -26,7 +26,7 @@ const RegisterPage = () => {
     const { loading, error, userInfo } = userRegister;
     
     useEffect(() => {
-        document.title = "PocketTeams - register"
+        document.title = "Register - PocketTeams"
       }, [])
 
     useEffect(() => {
