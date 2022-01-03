@@ -34,22 +34,26 @@ const Navigation = () => {
               <nav className="navbar navbar-expand-lg">
                 <div className="container">
                   <div className="row">
-                    <div className="col-md-12">
+                  <div className="col-md-2 ">
+                        <button className={isActive ? "navbar-toggler active" : "navbar-toggler collapsed"} onClick={toggleNavbar} type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span className="toggler-icon"></span>
+                      <span className="toggler-icon"></span>
+                      <span className="toggler-icon"></span>
+                    </button>
+                  </div>
+                    <div className="col-md-10">
                       <div className="banner-content">
                         <h3 className="text-white mb-2 d-none d-md-block hover-me" onClick={handleOnClick}>PocketTeams</h3>
                       </div>
                     </div>
+                  
                   </div>
                 </div>
                 {/* <a className="navbar-brand" href="/">
                   <Image src={pocketdevsLogo}></Image>
                   <Navbar.Brand>Pocket Teams</Navbar.Brand>
                 </a> */}
-                <button className={isActive ? "navbar-toggler active" : "navbar-toggler collapsed"} onClick={toggleNavbar} type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                  <span className="toggler-icon"></span>
-                  <span className="toggler-icon"></span>
-                  <span className="toggler-icon"></span>
-                </button>
+             
                 <div className={isActive ? "collapse navbar-collapse sub-menu-bar show" : "collapse navbar-collapse sub-menu-bar"} id="navbarSupportedContent">
                   {!loggedIn &&
                     <ul id="nav" className="navbar-nav ms-auto">
