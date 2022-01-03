@@ -162,6 +162,12 @@ const RegisterPage = () => {
               </div>
             </div>
           </div>
+          <p className="text-center mt-5">
+            Powered by{" "}
+            <strong>
+              <a href="https://www.pocketdevs.ph">PocketDevs</a>
+            </strong>
+          </p>
         </div>
       </section>
     </>
