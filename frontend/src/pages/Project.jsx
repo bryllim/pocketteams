@@ -11,8 +11,8 @@ import { listProjects } from "../actions/projectActions";
 import { toast } from "react-toastify";
 
 const Project = () => {
-  //STATES and REDUCERS
-
+  
+  // States & Reducers
   const [projectData, setProjectData] = useState(null);
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -52,8 +52,7 @@ const Project = () => {
   //   autoClose: 2500,
   // });
 
-  //USE EFFECTS
-
+  // Use Effects
   useEffect(() => {
     dispatch(listProjects());
   }, [dispatch, history, userInfo]);
@@ -111,12 +110,12 @@ const Project = () => {
       <Navigation />
       <Row className="h-100">
         <Col
-          xxl="3"
+          xxl="4"
           className="d-flex flex-column h-100 d-none d-md-block d-md-none d-lg-block d-lg-none d-xl-block"
         >
           <Sidebar />
         </Col>
-        <Col md="9" className="d-flex flex-column h-100">
+        <Col md="8" className="d-flex flex-column h-100">
           <h3>
             <Breadcrumb>
               <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>

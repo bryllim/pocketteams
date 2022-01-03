@@ -18,20 +18,34 @@ function ProfileCard() {
   };
 
   return (
-    <div className="sidebar-box search-form-box mb-30">
-      <h5>{user.first_name + " " + user.last_name}</h5>
-      <p>{user.email_address}</p>
-      <p className="text-dark">Pocketdevs</p>
-      <p className="text-danger" onClick={handleShow}>
-        <small className="hover-me">
-          <i className="lni lni-cog" /> Account Settings
-        </small>
-      </p>
-      <p className="text-danger" onClick={logoutHandler}>
-        <small className="hover-me">
-          <strong>Logout</strong>
-        </small>
-      </p>
+    <div className="sidebar-box recent-blog-box mb-30">
+      <div className="recent-blog-items">
+        <div className="recent-blog">
+          <div className="recent-blog-img my-auto">
+            <img
+              className="img-thumbnail"
+              src="https://images.generated.photos/aAfI_Wg_CmFdnZIYHNNUTBmqlNrh_HSSQblB77dy3ro/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/NDg2MDg2LmpwZw.jpg"
+              alt=""
+            />
+          </div>
+          <div className="recent-blog-content">
+            <p className="text-dark fw-bold">
+              {user.first_name + " " + user.last_name}
+            </p>
+            <p className="date">{user.email_address}</p>
+            <a className="text-danger hover-me" onClick={handleShow}>
+              <small><i className="lni lni-cog" /> Account Settings</small>
+            </a>
+            <div>
+              <a className="text-danger hover-me" onClick={logoutHandler}>
+                <strong>
+                  <small>Logout</small>
+                </strong>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
       <ProfileSettingsModal
         user={user}
         showModal={show}
