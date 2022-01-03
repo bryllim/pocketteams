@@ -3,35 +3,17 @@ const Task = require("../models/TaskModel");
 const Section = require("../models/SectionModel");
 
 const createTask = asyncHandler( async (req,res) => {
-    const {task_name, task_description, section_id,task_id} = req.body;
+    const {newTask} = req.body;
+    newTask.user = req.user.id; 
     try{
-        if(!task_name || !task_description || !section_id){
-            throw new Error("Please Fill all the Fields");
-        } else {
-            try{
-                console.log("task_id",task_id);
-                const task = new Task({user: req.user._id, task_name, task_description, section_id, _id:task_id});
-                let createdTask = await task.save()
-                sectionResponse = await Section.findByIdAndUpdate(
-                    section_id,
-                    { $push: { tasks: createdTask} },
-                    { new: true, useFindAndModify: false },
-                );
-                if(sectionResponse === null){
-                    throw new Error("sectionResponse");
-                }
-                res.status(201).json();
-                console.log("createdTask",createdTask)
-
-            }catch (err) {
-                console.log(err)
-                res.status(500).json(err);
-            }
-        }
-  } catch (err) {
-    res.status(400).json(err);
-    console.log("er3");
-  }
+        const task = new Task(newTask);
+        await task.save();
+        res.status(201).json(newTask);
+        console.log("Created task");
+      }catch(err){
+        console.log("err",err);
+        res.status(400).json(err);
+      }
 });
 
 const getTasks = asyncHandler(async (req, res) => {
@@ -47,62 +29,36 @@ const getTasksBySection = asyncHandler(async (req, res) => {
 });
 
 const deleteTaskById = asyncHandler(async (req, res) => {
-  console.log("deleteTaskById");
+  const taskId = req.params.id;
   try {
-    const task_id = req.params.id;
-    if (!task_id) {
-      throw new Error("Please Fill all the Fields");
-    }
-    const task = await Task.findById(task_id);
-    const section = await Section.findById(task.section_id);
-    if (task && section) {
-      await task
-        .remove()
-        .then(
-          (taskIndex = section.tasks.indexOf(task_id)),
-          section.tasks.splice(taskIndex, 1),
-          await section.save()
-        );
-      res.json({ message: "task Removed" });
-    } else {
-      res.status(404).json({ message: "Request not found" });
-      throw new Error("Request not found");
-    }
+    const task = await Task.findByIdAndDelete(taskId);
+    console.log("Task Deleted", req.params.id, task);
+    res.status(200).json(task);
   } catch (err) {
-    res.status(400).json(err);
+    console.log(err);
+    res.status(500).json(err);
   }
 });
 
 const updateTaskById = asyncHandler(async (req, res) => {
+  const _id = req.params.id
+  const updates = Object.keys(req.body);
+  const allowedUpdates = ['task_name','task_description', 'order','section_id']
+  const isValidOperation = updates.every(
+      (update) => allowedUpdates.includes(update))
+  if (!isValidOperation)
+      return res.status(400).send({ error: 'Invalid updates!' })
   try {
-    console.log("updateTaskById");
-    const { task_name, task_description } = req.body;
-    const task_id = req.params.id;
-    if (!task_id && !task_description) {
-      throw new Error("Please Fill all the Fields");
-    }
-    const task = await Task.findById(task_id);
-
-    if (task_name) {
-      task.task_name = task_name;
-      await task.save();
-      res.json({ message: "task renamed" });
-    } else if (task_description) {
-      task.task_description = task_description;
-      await task.save();
-      res.json({ message: "task description updated" });
-    }
-    // else if(task_subtask){
-    //     task.task_subtask = task_subtask;
-    //     await task.save();
-    //     res.json({message: "task subtask updated"});
-    // }
-    else {
-      res.status(404).json({ message: "Request not found" });
-      throw new Error("Request not found");
-    }
-  } catch (err) {
-    console.log(err);
+    const task = await Task.findByIdAndUpdate(_id, req.body, {
+      new: true});
+    if(!task)
+      return res.status(404).json({message: "Task not found"});
+    console.log("Task Updated ", _id);
+    res.status(200).json(task);
+  }
+  catch(e) {
+    console.log(e);
+    res.status(500)
   }
 });
 
@@ -241,6 +197,28 @@ const updateTaskEndDateById = asyncHandler(async (req, res) => {
   }
 });
 
+
+const getTaskByProjectId = asyncHandler(async (req, res) => {
+  try {
+    const tasks = await Task.find({ project_id: req.params.id });
+    if (tasks) {
+      res.status(200).json(tasks);
+    } else {
+      res.status(500)
+      throw new Error("Request not found");
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500)
+    throw new Error(err);
+  }
+});
+
+
+
+
+
+
 module.exports = {
   createTask,
   getTasks,
@@ -251,4 +229,5 @@ module.exports = {
   updateTaskAssignedUsersById,
   updateTaskPriorityById,
   updateTaskNameById,
+  getTaskByProjectId,
 };

@@ -24,6 +24,10 @@ const RegisterPage = () => {
 
     const userRegister = useSelector((state) => state.userRegister)
     const { loading, error, userInfo } = userRegister;
+    
+    useEffect(() => {
+        document.title = "PocketTeams - register"
+      }, [])
 
     useEffect(() => {
         if(userInfo){
@@ -82,7 +86,7 @@ const RegisterPage = () => {
                             <div className="section-title text-center mb-55">
                                 <NavLink className="navbar-brand" to="/">
                                     <Image src={pocketdevsLogo}></Image>
-                                    <Navbar.Brand>Pocket Teams</Navbar.Brand>
+                                    <Navbar.Brand>PocketTeams</Navbar.Brand>
                                 </NavLink>
                                 <p className ="wow fadeInUp" data-wow-delay=".6s">
                                 An all-in-one workspace where you can write, plan, collaborate and get organized - it allows you to take notes, add tasks, manage projects & more.

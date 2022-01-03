@@ -9,6 +9,7 @@ const {
   updateTaskAssignedUsersById,
   updateTaskPriorityById,
   updateTaskNameById,
+  getTaskByProjectId,
 } = require("../controllers/TasksController");
 const { protect } = require("../middlewares/AuthMiddleware");
 const router = express.Router();
@@ -18,7 +19,7 @@ router.route("/create").post(protect, createTask);
 // router.route("/:sectionid").get(protect, getTasksBySection);
 router
   .route("/:id")
-  .put(protect, updateTaskById)
+  .patch(protect, updateTaskById)
   .delete(protect, deleteTaskById);
 router.route("/update/description/:id").put(protect, updateTaskDescriptionById);
 router
@@ -26,5 +27,7 @@ router
   .put(protect, updateTaskAssignedUsersById);
 router.route("/update/priority/:id").put(protect, updateTaskPriorityById);
 router.route("/update/name/:id").put(protect, updateTaskNameById);
+router.route("/project/:id").get(protect, getTaskByProjectId);
+
 
 module.exports = router;

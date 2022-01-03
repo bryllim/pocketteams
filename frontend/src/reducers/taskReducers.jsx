@@ -5,12 +5,12 @@ import {
     TASK_CREATE_REQUEST, TASK_CREATE_FAIL, TASK_CREATE_SUCCESS
 } from "../constants/taskConstants"
 
-export const taskListReducer = (state = {tasks: []}, action) => {
+export const taskListReducer = (state = {data: []}, action) => {
     switch (action.type){
         case TASK_LIST_REQUEST:
             return { loading: true };
         case TASK_LIST_SUCCESS:
-            return { loading: false, allTasks: action.payload};
+            return { loading: false, data: action.payload};
         case TASK_LIST_FAIL:
             return { loading: false, error: action.payload};
         default:

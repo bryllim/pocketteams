@@ -32,6 +32,15 @@ const taskSchema = mongoose.Schema(
       required: true,
       ref: "User",
     },
+    order:{
+      type: String,
+      required: true,
+    },
+    project_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Project",
+    },
     section_id: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
