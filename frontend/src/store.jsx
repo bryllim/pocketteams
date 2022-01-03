@@ -24,7 +24,7 @@ const reducer = combineReducers({
     teamDelete: teamDeleteReducer,
     teamUserDelete: teamUserDeleteReducer,
     teamProjectDelete: teamProjectDeleteReducer,
-    teammAddUser: teamAddUserReducer,
+    teamAddUser: teamAddUserReducer,
     teamAddProject: teamAddProjectReducer,
     taskList: taskListReducer,
     sectionOrderList: sectionOrderListReducer,

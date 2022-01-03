@@ -21,6 +21,12 @@ const AddProjectModal = ({ showModal, hideModal }) => {
   const {loading, error } = projectCreate;
   const [color, setColor] = useState("form-select form-select-sm ms-3");
 
+  const notifySuccess = (msg) =>
+    toast.success(msg, {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 2500,
+  });
+
   const postDetails = (pics) => {
     if (
       pics ===
@@ -60,9 +66,9 @@ const AddProjectModal = ({ showModal, hideModal }) => {
     e.preventDefault();
     dispatch(createProjectAction(projectName, projectDescription, projectStatus));
     if (!projectName || !projectDescription || !projectStatus) return;
-
     resetHandler();
     hideModal();
+    notifySuccess("Project Created");
   };
 
   return (

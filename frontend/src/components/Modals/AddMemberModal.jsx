@@ -14,14 +14,21 @@ const AddMemberModal = ({ showModal, hideModal, data }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [addedUsers, setAddedUsers] = useState(data.users);
 
+  const notifyInfo = (msg) =>
+    toast.info(msg, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 2500,
+    });
+
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(updateTeamUser(data._id, addedUsers));
-    window.location.reload(false);
+    notifyInfo("Added User");
+    hideModal();
   }
 
   const memberInputHandler = (input) => {
-    //If the seacrh has value
+    //If the search has value
     if (input !== "") {
       const filteredData = users.filter((item) => {
         return Object.values(item)
@@ -45,7 +52,7 @@ const AddMemberModal = ({ showModal, hideModal, data }) => {
     if (addedUsers.some((item) => val.email_address === item.email_address)) {
       notifyError("User Exists");
     } else {
-      notifySuccess("User Added");
+      resetHandler();
       setAddedUsers([...addedUsers, val]);
     }
     return;

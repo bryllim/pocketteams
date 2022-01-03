@@ -17,49 +17,67 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [teamName, setTeamName] = useState(data.team_name);
-  const [teamDescription, setTeamDescription] = useState(data.team_description);
-  const [teamAccess, setTeamAccess] = useState(data.team_access);
+  const [teamName, setTeamName] = useState(null);
+  const [teamDescription, setTeamDescription] = useState(null);
+  const [teamAccess, setTeamAccess] = useState(null);
   const [teamUsers, setTeamUsers] = useState([]);
   const dispatch = useDispatch();
 
   const teamUpdate = useSelector((state) => state.teamUpdate);
-  const {loading, error} = teamUpdate;
+  const {loading: loadingUpdate, teams: updatedTeam, success} = teamUpdate;
 
   const teamUserDelete = useSelector((state) => state.teamUserDelete);
-  const {loading: loadingDelete, error: errorDelete} = teamUserDelete;
+  const {success: successDeleteUser, data: deleteUserData}  = teamUserDelete;
 
   const updateHandler = (e) => {
     e.preventDefault();
-    
     dispatch(updateTeamAction(data._id, teamName, teamDescription, teamAccess));
     if(!teamName || !teamDescription || !teamAccess)  return;
-
+    notifyInfo("Team Updated");
     resetHandler();
     hideModal();
-    window.location.reload(false);
   }
 
   const resetHandler = () => {
     setTeamName("");
     setTeamDescription("");
+    setTeamAccess("");
+    setTeamUsers([]);
   }
 
   useEffect(() => {
-    if(data.users){
-      setTeamUsers(data.users);
-    } else {
-      setTeamUsers([]);
+    if(success && loadingUpdate === false){
+      setTeamName(updatedTeam.team_name)
+      setTeamDescription(updatedTeam.team_description)
+      setTeamAccess(updatedTeam.team_access)
+      setTeamUsers(updatedTeam.users)
     }
+
+    setTeamName(data.team_name)
+    setTeamDescription(data.team_description)
+    setTeamAccess(data.team_access)
+    setTeamUsers(data.users)
+
   }, [data, teamUserDelete, dispatch])
+
+  //NOTIFICATIONS
+
+  const notifyInfo = (msg) =>
+    toast.info(msg, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 2500,
+    });
+
+  const notifySuccess = (msg) =>
+    toast.success(msg, {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 2500,
+  });
 
   return (
     <Modal centered size="lg" show={showModal} onHide={hideModal}>
-      {loadingDelete && <Preload/>}
-      {errorDelete && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       <Modal.Header>
         <h5>Edit Team</h5>
-        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
         <button
           type="button"
           class="btn-close"

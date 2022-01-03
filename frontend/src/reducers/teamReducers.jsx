@@ -57,9 +57,9 @@ export const teamUpdateReducer = (state = {}, action) => {
         case TEAM_UPDATE_REQUEST:
             return { loading: true };
         case TEAM_UPDATE_SUCCESS:
-            return { loading: false, teams: action.payload};
+            return { loading: false, teams: action.payload, success: true};
         case TEAM_UPDATE_FAIL:
-            return { loading: false, error: action.payload};
+            return { loading: false, error: action.payload , success: false};
         
         default:
             return state;
@@ -71,7 +71,7 @@ export const teamUserDeleteReducer = (state = {}, action) => {
         case TEAM_USER_DELETE_REQUEST:
             return { loading: true };
         case TEAM_USER_DELETE_SUCCESS:
-            return { loading: false, data: action.payload ,success: true};
+            return { loading: false, data: action.payload, success: true};
         case TEAM_USER_DELETE_FAIL:
             return { loading: false, error: action.payload, success: false};
         default:
@@ -97,9 +97,9 @@ export const teamAddUserReducer = (state = {teams: []}, action) => {
         case TEAM_ADDUSER_REQUEST:
             return { loading: true };
         case TEAM_ADDUSER_SUCCESS:
-            return { loading: false, teams: action.payload};
+            return { loading: false, teams: action.payload, success: true};
         case TEAM_ADDUSER_FAIL:
-            return { loading: false, error: action.payload};
+            return { loading: false, error: action.payload, success: false};
         default:
             return state;
     }

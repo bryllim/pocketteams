@@ -84,7 +84,7 @@ const getUserById = AsyncHandler(async (req,res) => {
     if(users){
         res.json(users);
     } else {
-        res.status(404).json({message: ""});
+        res.status(404).json({message: "not found"});
     }
     res.json(users)
 });

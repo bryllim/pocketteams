@@ -47,7 +47,6 @@ const AddTeamProjectModal = ({ showModal, hideModal, data }) => {
   };
 
   const handleAdd = (val) => {
-    console.log(addedProjects.includes(val.project_name));
     if (addedProjects.some((item) => val.project_name === item.project_name)) {
       notifyError("Already Added");
     } else {
