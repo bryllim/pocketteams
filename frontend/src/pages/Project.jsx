@@ -56,7 +56,7 @@ const Project = () => {
   
   // Loading Projects
   useEffect(() => {
-    if(loading === false && projects.length > 0) {
+    if(loading === false && projects!= null&& projects.length > 0) {
       setProjectData(projects);
     }
   }, [loading, projects]);
@@ -64,18 +64,16 @@ const Project = () => {
   // Creating Projects
   useEffect(() => {
     if(createProjectLoading === false && newProjectData) {
-      if(projectData.length > 0) {
-        const newProjects = [...projectData];
-        newProjects.push(newProjectData);
-        setProjectData(newProjects);
-      } 
-      else {
-        setProjectData([newProjectData]);
-      }
-      notifySuccess("Project Created");
+        if(projectData != null && projectData.length > 0) {
+          const newProjects = [...projectData];
+          newProjects.push(newProjectData); 
+          setProjectData(newProjects);
+        } 
+        else {
+          setProjectData([newProjectData]); 
+        }
     }
   }, [createProjectLoading, newProjectData])
-  //
 
   // Deleting Projects
   useEffect(() => {

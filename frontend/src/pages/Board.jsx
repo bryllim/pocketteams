@@ -276,8 +276,7 @@ const Board = (props) => {
       setInitDone(true);
     }
   }, [sectionLoading, taskLoading]);
-  console.log("intialData", initialData);
-
+  console.log("initial", initialData.sections);
   return (
     <>
       <TaskContext.Provider

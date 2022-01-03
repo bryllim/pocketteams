@@ -66,12 +66,12 @@ const ProjectCard = ({ data }) => {
   ));
 
   return (
-    <>
+    <div className="sidebar-wrapper ">
       {errorDelete && (
         <ErrorMessage varaint="danger">{errorDelete}</ErrorMessage>
       )}
       {data ? (
-        <div className="d-flex flex-column basecard project-card m-2  p-2">
+        <div className="d-flex flex-column sidebar-box basecard project-card m-2  p-2">
           <div className="d-flex justify-content-end">
             <button type="button" className="d-flex btn m-0 p-0 ">
               <Dropdown className="my-auto">
@@ -138,8 +138,9 @@ const ProjectCard = ({ data }) => {
           />
         </div>
       ) : (
+  
         <div
-          className="d-flex flex-column sidebar-box project-card basecard project-card hover-me add-project px-4 pb-4 pt-2"
+          className="d-flex flex-column sidebar-box basecard project-card project-card m-2  p-2 hover-me add-project "
           onClick={handleShow}
         >
           <div className="mx-auto my-auto">
@@ -147,9 +148,10 @@ const ProjectCard = ({ data }) => {
             <p className="text-secondary fs-6">New Project</p>
           </div>
         </div>
+        
       )}
       <AddProjectModal showModal={show} hideModal={handleClose} />
-      </>
+      </div>
   );
 };
 
