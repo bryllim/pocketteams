@@ -11,27 +11,32 @@ import { listProjects } from "../actions/projectActions";
 import { toast } from "react-toastify";
 
 const Project = () => {
-
   //STATES and REDUCERS
 
-  const [projectData, setProjectData] = useState(null)
-  
+  const [projectData, setProjectData] = useState(null);
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const history = useHistory();
   const dispatch = useDispatch();
 
   const projectCreate = useSelector((state) => state.projectCreate);
-  const { loading: createProjectLoading, projects: newProjectData} = projectCreate;
+  const { loading: createProjectLoading, projects: newProjectData } =
+    projectCreate;
 
   const projectList = useSelector((state) => state.projectList);
   const { loading, projects, error } = projectList;
 
   const projectUpdate = useSelector((state) => state.projectUpdate);
-  const { loading: updateProjectLoading, success: successUpdateProject ,data: updatedProject}  = projectUpdate;
+  const {
+    loading: updateProjectLoading,
+    success: successUpdateProject,
+    data: updatedProject,
+  } = projectUpdate;
 
   const deleteProject = useSelector((state) => state.projectDelete);
-  const {success: successDeleteProject, data: deleteProjectId} = deleteProject;
+  const { success: successDeleteProject, data: deleteProjectId } =
+    deleteProject;
 
   // //NOTIFICATIONS
 
@@ -52,77 +57,85 @@ const Project = () => {
   useEffect(() => {
     dispatch(listProjects());
   }, [dispatch, history, userInfo]);
-  
+
   // Loading Projects
   useEffect(() => {
-    if(loading === false && projects.length > 0) {
+    if (loading === false && projects.length > 0) {
       setProjectData(projects);
     }
   }, [loading, projects]);
 
   // Creating Projects
   useEffect(() => {
-    if(createProjectLoading === false && newProjectData) {
-      if(projectData.length > 0) {
+    if (createProjectLoading === false && newProjectData) {
+      if (projectData.length > 0) {
         const newProjects = [...projectData];
-        newProjects.push(newProjectData); 
+        newProjects.push(newProjectData);
         setProjectData(newProjects);
-      } 
-      else {
-        setProjectData([newProjectData]); 
+      } else {
+        setProjectData([newProjectData]);
       }
     }
-  }, [createProjectLoading, newProjectData])
+  }, [createProjectLoading, newProjectData]);
 
   // Deleting Projects
   useEffect(() => {
-    if(successDeleteProject === true)
-    {
-      const newProjects = [...projectData]
-      const index = newProjects.findIndex(project => project._id === deleteProjectId)
-      newProjects.splice(index, 1)
-      setProjectData(newProjects)
+    if (successDeleteProject === true) {
+      const newProjects = [...projectData];
+      const index = newProjects.findIndex(
+        (project) => project._id === deleteProjectId
+      );
+      newProjects.splice(index, 1);
+      setProjectData(newProjects);
     }
-  }, [successDeleteProject, deleteProjectId])
+  }, [successDeleteProject, deleteProjectId]);
 
   // Updating Projects
   useEffect(() => {
-    if(updateProjectLoading === false && successUpdateProject === true && updatedProject){
-      const newProject = [...projectData]
-      const index = newProject.findIndex(project => project._id === updatedProject._id)
-      newProject.splice(index, 1, updatedProject)
-      setProjectData(newProject)
+    if (
+      updateProjectLoading === false &&
+      successUpdateProject === true &&
+      updatedProject
+    ) {
+      const newProject = [...projectData];
+      const index = newProject.findIndex(
+        (project) => project._id === updatedProject._id
+      );
+      newProject.splice(index, 1, updatedProject);
+      setProjectData(newProject);
     }
-  }, [projects, updatedProject, successUpdateProject, updateProjectLoading])
+  }, [projects, updatedProject, successUpdateProject, updateProjectLoading]);
 
   return (
-    <>
+    <Container className="board-container">
       <Navigation />
-      <Container fluid className="board-container">
-        <Row className="h-100">
-          <Col
-            xxl="3"
-            className="d-flex flex-column h-100 d-none d-md-block d-md-none d-lg-block d-lg-none d-xl-block"
-          >
-            <Sidebar />
-          </Col>
-          <Col md="9" className="d-flex flex-column h-100">
-            <h3>
-              <Breadcrumb>
-                <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>
-              </Breadcrumb>
-            </h3>
-            { error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
-            <div className="row row-cols-xxl-4 row-cols-xl-3 row-cols-md-2 g-md-2 g-2">
-            <Col><ProjectCard/></Col>
-            { projectData?.map((project,index) => (
-              <Col key={index}><ProjectCard data={project}/></Col>
+      <Row className="h-100">
+        <Col
+          xxl="3"
+          className="d-flex flex-column h-100 d-none d-md-block d-md-none d-lg-block d-lg-none d-xl-block"
+        >
+          <Sidebar />
+        </Col>
+        <Col md="9" className="d-flex flex-column h-100">
+          <h3>
+            <Breadcrumb>
+              <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>
+            </Breadcrumb>
+          </h3>
+          {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+          <div className="row row-cols-xxl-4 row-cols-xl-3 row-cols-md-2 g-md-2 g-2">
+            <Col>
+              <ProjectCard />
+            </Col>
+            {projectData?.map((project, index) => (
+              <Col key={index}>
+                <ProjectCard data={project} />
+              </Col>
             ))}
-            </div>
-          </Col>
-        </Row>
-      </Container>
-    </>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

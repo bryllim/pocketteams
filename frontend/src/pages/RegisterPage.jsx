@@ -75,9 +75,9 @@ const RegisterPage = () => {
                     </div>
                   </div>
                 </div>
-                {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+                {error && <ErrorMessage variant="danger"><small>{error}</small></ErrorMessage>}
                 {message && (
-                  <ErrorMessage variant="danger">{message}</ErrorMessage>
+                  <ErrorMessage variant="danger"><small>{message}</small></ErrorMessage>
                 )}
                 {loading && <Preload />}
                 <form onSubmit={submitHandler} className="contact-form">

@@ -61,7 +61,7 @@ const LoginPage = () => {
                     </div>
                   </div>
                 </div>
-                {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
+                {error && <ErrorMessage variant="danger"><small>{error}</small></ErrorMessage>}
                 {loading && <Preload />}
                 <form onSubmit={submitHandler} className="contact-form">
                   <div className="row">
