@@ -1,6 +1,6 @@
 import React, { useEffect, useState,useCallback } from 'react';
 import {  useSelector } from 'react-redux';
-import background from '../assets_pocketdevs/assets/img/bg/common-bg.svg';
+import Logo from '../assets_pocketdevs/assets/img/logo/logo.png';
 import { useHistory ,} from 'react-router-dom';
 
 const Navigation = () => {
@@ -27,7 +27,7 @@ const Navigation = () => {
 
   return (
     <>
-      <section className="header navbar-area sticky" style={{background: `url(${background})`}}>
+      <section className="header navbar-area sticky">
         <div className="container">
           <div className="row align-items-center">
             <div className="col-lg-12">
@@ -36,15 +36,13 @@ const Navigation = () => {
                   <div className="row">
                     <div className="col-md-12">
                       <div className="banner-content">
-                        <h3 className="text-white mb-2 d-none d-md-block hover-me" onClick={handleOnClick}>PocketTeams</h3>
+                        <a className="navbar-brand d-none d-md-block" href="/">
+                            <img src={Logo} alt="Logo" />
+                        </a>
                       </div>
                     </div>
                   </div>
                 </div>
-                {/* <a className="navbar-brand" href="/">
-                  <Image src={pocketdevsLogo}></Image>
-                  <Navbar.Brand>Pocket Teams</Navbar.Brand>
-                </a> */}
                 <button className={isActive ? "navbar-toggler active" : "navbar-toggler collapsed"} onClick={toggleNavbar} type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                   <span className="toggler-icon"></span>
                   <span className="toggler-icon"></span>
@@ -54,22 +52,10 @@ const Navigation = () => {
                   {!loggedIn &&
                     <ul id="nav" className="navbar-nav ms-auto">
                       <li className="nav-item">
-                          {isActive ? <a className="page-scroll" href="#features">Features</a>:
-                            <a className="page-scroll nav-text" href="#features">Features</a>
-                          }
+                          <a href="/login">Login</a>
                       </li>
                       <li className="nav-item">
-                          {isActive ? <a className="page-scroll" href="https://pocketdevs.ph/#contact">Contact</a>:
-                            <a className="page-scroll nav-text" href="https://pocketdevs.ph/#contact">Contact</a>
-                          }
-                      </li>
-                      <li className="nav-item">
-                        {isActive ? <a className="page-scroll" href="/login">Login</a> :
-                          <a href="/login" className="page-scroll nav-text">Login</a>}
-                      </li>
-                      <li className="nav-item">
-                        {isActive ? <a className="page-scroll" href="/register">Register</a> :
-                          <a href="/register" className="page-scroll nav-text">Register</a>}
+                          <a href="/register"><span className="d-none d-md-block"><span class="badge bg-danger">It's free!</span> &nbsp; </span><strong>Create an Account</strong></a>
                       </li>
                     </ul>
                   }
