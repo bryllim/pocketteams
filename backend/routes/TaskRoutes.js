@@ -9,6 +9,7 @@ const {
   updateTaskAssignedUsersById,
   updateTaskPriorityById,
   updateTaskNameById,
+  markAsComplete,
 } = require("../controllers/TasksController");
 const { protect } = require("../middlewares/AuthMiddleware");
 const router = express.Router();
@@ -26,5 +27,6 @@ router
   .put(protect, updateTaskAssignedUsersById);
 router.route("/update/priority/:id").put(protect, updateTaskPriorityById);
 router.route("/update/name/:id").put(protect, updateTaskNameById);
+router.route("/update/status/:id").put(protect, markAsComplete);
 
 module.exports = router;

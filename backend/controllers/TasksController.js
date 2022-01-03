@@ -2,33 +2,42 @@ const asyncHandler = require("express-async-handler");
 const Task = require("../models/TaskModel");
 const Section = require("../models/SectionModel");
 const Comment = require("../models/CommentsModel");
+const Subtask = require("../models/SubtasksModel");
 
-const createTask = asyncHandler( async (req,res) => {
-    const {task_name, task_description, section_id,task_id} = req.body;
-    try{
-        if(!task_name || !task_description || !section_id){
-            throw new Error("Please Fill all the Fields");
-        } else {
-            try{
-                console.log("task_id",task_id);
-                const task = new Task({user: req.user._id, task_name, task_description, section_id, _id:task_id});
-                let createdTask = await task.save()
-                sectionResponse = await Section.findByIdAndUpdate(
-                    section_id,
-                    { $push: { tasks: createdTask} },
-                    { new: true, useFindAndModify: false },
-                );
-                if(sectionResponse === null){
-                    throw new Error("sectionResponse");
-                }
-                res.status(201).json();
-                console.log("createdTask",createdTask)
-
-            }catch (err) {
-                console.log(err)
-                res.status(500).json(err);
-            }
+const createTask = asyncHandler(async (req, res) => {
+  const { task_name, task_description, section_id, task_id, isComplete } =
+    req.body;
+  try {
+    if (!task_name || !task_description || !section_id) {
+      throw new Error("Please Fill all the Fields");
+    } else {
+      try {
+        console.log("task_id", task_id);
+        const task = new Task({
+          user: req.user._id,
+          isComplete,
+          task_name,
+          task_description,
+          section_id,
+          _id: task_id,
+        });
+        task.isComplete = false;
+        let createdTask = await task.save();
+        sectionResponse = await Section.findByIdAndUpdate(
+          section_id,
+          { $push: { tasks: createdTask } },
+          { new: true, useFindAndModify: false }
+        );
+        if (sectionResponse === null) {
+          throw new Error("sectionResponse");
         }
+        res.status(201).json();
+        console.log("createdTask", createdTask);
+      } catch (err) {
+        console.log(err);
+        res.status(500).json(err);
+      }
+    }
   } catch (err) {
     res.status(400).json(err);
     console.log("er3");
@@ -57,6 +66,7 @@ const deleteTaskById = asyncHandler(async (req, res) => {
     const task = await Task.findById(task_id);
     const section = await Section.findById(task.section_id);
     const comments = await Comment.find({ task_id: task._id });
+    const subtasks = await Subtask.find({ task_id: task._id });
     if (task && section) {
       await task
         .remove()
@@ -68,6 +78,9 @@ const deleteTaskById = asyncHandler(async (req, res) => {
       //remove all comments inside this task
       for (let i = 0; i < comments.length; i++) {
         await comments[i].remove();
+      }
+      for (let i = 0; i < subtasks.length; i++) {
+        await subtasks[i].remove();
       }
       res.json({ message: "task Removed" });
     } else {
@@ -169,7 +182,6 @@ const updateTaskAssignedUsersById = asyncHandler(async (req, res) => {
 const updateTaskPriorityById = asyncHandler(async (req, res) => {
   try {
     const { task_priority } = req.body;
-    console.log(task_priority);
     const task_id = req.params.id;
     if (!task_id) {
       let err = new Error("Please Fill all the Fields");
@@ -180,7 +192,6 @@ const updateTaskPriorityById = asyncHandler(async (req, res) => {
     if (task) {
       task.task_priority = task_priority;
       await task.save();
-      console.log("taskpriosave");
       res
         .status(200)
         .json({ message: "task_priority " + task_id + " updated" });
@@ -209,6 +220,30 @@ const updateTaskNameById = asyncHandler(async (req, res) => {
       task.task_name = task_name;
       await task.save();
       res.status(200).json({ message: "task_name " + task_id + " updated" });
+    } else {
+      let err = new Error("Request of" + task_id + "not found");
+      err.status = 404;
+      throw err;
+    }
+  } catch (err) {
+    console.log(err.status, err.message);
+    res.status(err.status).json({ message: err.message });
+  }
+});
+
+const markAsComplete = asyncHandler(async (req, res) => {
+  try {
+    const task_id = req.params.id;
+    if (!task_id) {
+      let err = new Error("Please Fill all the Fields");
+      err.status = 400;
+      throw err;
+    }
+    const task = await Task.findById(task_id);
+    if (task) {
+      task.isComplete = !task.isComplete;
+      await task.save();
+      res.status(200).json({ message: "taskStatus" + task_id + " completed" });
     } else {
       let err = new Error("Request of" + task_id + "not found");
       err.status = 404;
@@ -257,4 +292,5 @@ module.exports = {
   updateTaskAssignedUsersById,
   updateTaskPriorityById,
   updateTaskNameById,
+  markAsComplete,
 };

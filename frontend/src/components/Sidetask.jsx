@@ -1,13 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Dropdown } from "react-bootstrap";
-// import Comment from "../components/Comment";
 import SubTask from "../components/SubTask";
 import { TaskContext } from "../contexts/SectionContext";
 import { useSelector } from "react-redux";
 import Preload from "../components/Preload";
 import ErrorMessage from "../components/ErrorMessage";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import {
   taskRename,
   taskRemove,
@@ -20,10 +17,9 @@ import {
   createTask,
   updateTaskDescription,
   updateTaskPriority,
+  updateTaskStatus,
 } from "../actions/taskActions";
 import { listComments, createComments, updateComments, deleteComment} from "../actions/commentActions";
-
-toast.configure()
 
 const updateTaskName = ({
   sectionId,
@@ -105,7 +101,7 @@ const changeTaskDescription = ({
 const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
   const { sections, setSections, sectionOrder, setSectionOrder, dispatch } =
     useContext(TaskContext);
-  const [markTask, setMarkTask] = useState(true);
+  const [markTask, setMarkTask] = useState(task.isComplete);
   const [sectionName, setSectionName] = useState("set section");
   const [user, setUser] = useState("assign user");
   const [color, setColor] = useState(
@@ -121,10 +117,7 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
   const { loading, comments, error } = commentList;
   const [comment, setComment] = useState("");
   const [readOnly, setReadOnly] = useState("true");
-  const notifySuccess = (msg) => toast.success(msg, {
-    position: toast.POSITION.BOTTOM_RIGHT,
-    autoClose: 2500,
-  });
+  const [editCommentStyle, setEditCommentStyle] = useState("p-1 full label-font input-border resize-0");
   const commentCreate = useSelector((state) => state.commentCreate);
   const { success: successCreateComment } = commentCreate;
   const commentUpdate = useSelector((state) => state.commentUpdate);
@@ -157,9 +150,14 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
   
   //useEffect to fetch comments
   useEffect(() => {
-    dispatch(listComments(taskId));
-  }, [dispatch, taskId, successCreateComment,successUpdateComment]);
-  
+    if (readOnly === false) {
+      setEditCommentStyle("p-1 full label-font input-border resize-0 form-control")
+    } else {
+      setEditCommentStyle("p-1 full label-font input-border resize-0")
+    }
+    dispatch(listComments(taskId ));
+  }, [dispatch, taskId, successCreateComment,successUpdateComment,readOnly]);
+
   //useEffect to check/show the color of Priority
   useEffect(() => {
     if (taskPriority === "light") {
@@ -168,8 +166,10 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
       setColor("form-select form-select-sm label-font ms-3 medium");
     } else if (taskPriority === "heavy") {
       setColor("form-select form-select-sm label-font ms-3 heavy");
+    } else if (taskPriority === "select priority") {
+      setColor("form-select form-select-sm label-font ms-3");
     }
-  },[task]);
+  },[taskPriority]);
 // function for priority
   const reClass = (e) => {
     let taskNewPriority = "";
@@ -213,8 +213,19 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
         sections,
         setSections,
       });
-    } else if (e.target.value === "select priority") {
+    } else if (e.target.value === "Select Priority") {
       setColor("form-select form-select-sm label-font ms-3 prio");
+      setTaskPriority("Select Priority");
+      taskNewPriority = "Select Priority";
+      priorityStatus({
+        taskNewPriority,
+        taskId,
+        dispatch,
+        index,
+        sectionId,
+        sections,
+        setSections,
+      });
     }
   };
 
@@ -234,11 +245,16 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
         <div className="d-flex align-items-center justify-content-between">
           <button
             complete={markTask}
-            onClick={() => setMarkTask(!markTask)}
+            onClick={(e) => {
+              setMarkTask(!markTask)
+              dispatch(updateTaskStatus(taskId, markTask))
+              e.preventDefault();
+              e.stopPropagation();
+            }}
             className="theme-btn theme-btn-md mb-2 py-1"
           >
             <i className="lni lni-checkmark-circle pe-2"></i>
-            {markTask ? "Mark as complete" : "Completed"}
+            {!markTask ? "Mark as complete" : "Completed"}
           </button>
           <div className="d-flex align-items-center">
             <i className="lni lni-trash-can pointer f-dark me-2"></i>
@@ -376,23 +392,22 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
                       className={color}
                       onChange={reClass}
                       aria-label="form-select-sm example"
-                      id="test"
                       value={taskPriority}
                     >
                       <option
                         className="form-select-option label-font-fw prio"
                         aria-label="form-select-sm example"
                       >
-                        select priority
+                        Select Priority
                       </option>
                       <option className="light" value="light">
-                        Light
+                        🟡 - Light
                       </option>
                       <option className="medium" value="medium">
-                        Medium
+                        🟠 - Medium
                       </option>
                       <option className="heavy" value="heavy">
-                        Heavy
+                        🔴 - Heavy
                       </option>
                     </select>
                   </div>
@@ -441,7 +456,7 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
                   </div>
                 </div>
                 <div className="row">
-                  <SubTask />
+                  <SubTask taskId={taskId}/>
                 </div>
               </>
             </form>
@@ -456,7 +471,7 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
               <div className="d-flex align-items-center p-2">
                 <i className="lni lni-user mx-2 fas-icon"></i>
                 <input
-                  className="p-1 full label-font input-border resize-0"
+                  className={editCommentStyle}
                   type="text"
                   readOnly={readOnly}
                   defaultValue={comment.Comment_context}
@@ -466,11 +481,6 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
                       if (e.key === "Enter" || e.key === "Escape") {
                         dispatch(updateComments (comment._id, comment.Comment_context))
                         setReadOnly(true)
-                        if (readOnly === true) {
-                        setReadOnly(true)
-                        } else {
-                          notifySuccess("Comment Updated Successfully.")
-                        }
                         e.preventDefault();
                         e.stopPropagation();
                       }
@@ -483,11 +493,14 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
                       as={CustomToggle} 
                       id="dropdown-custom-components">
                         <button className="btn p-0" type="button">
-                          <i className="lni lni-pencil p-2"></i>
+                          {/* <i className="lni lni-pencil p-2"></i> */}
+                          <i className="bi bi-three-dots fs-5 ms-1" />
                         </button>
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item onClick={(e) => setReadOnly(false)}>Edit</Dropdown.Item>
+                        <Dropdown.Item onClick={(e) => {
+                        setReadOnly(false);
+                        }}>Edit</Dropdown.Item>
                         <Dropdown.Item onClick={(e) => {
                           e.preventDefault(); 
                           dispatch(deleteComment( comment._id ));

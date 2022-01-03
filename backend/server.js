@@ -11,6 +11,7 @@ const sectionRoutes = require("./routes/SectionRoutes");
 const { NotFound, ErrorHandler } = require("./middlewares/ErrorMiddleware");
 const teamRoutes = require("./routes/TeamRoutes");
 const commentsRoutes = require("./routes/CommentsRoutes");
+const subtasksRoutes = require("./routes/SubtasksRoutes");
 const app = express();
 dotenv.config();
 connectDB();
@@ -27,6 +28,7 @@ app.use("/api/note", noteRoutes);
 app.use("/api/sections", sectionRoutes);
 app.use("/api/teams", teamRoutes);
 app.use("/api/comments", commentsRoutes);
+app.use("/api/subtasks", subtasksRoutes);
 
 app.use(NotFound);
 app.use(ErrorHandler);

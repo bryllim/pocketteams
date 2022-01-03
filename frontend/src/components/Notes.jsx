@@ -41,30 +41,6 @@ const Notes = () => {
 
   }, [dispatch, history, userInfo, successCreate, successUpdate]);
 
-
-  // const defaultContent = 0;
-
-  // for updating
-  // useEffect(() => {
-  //   const fetching = async () => {
-  //      const { data } = await axios.get( `api/note/${note._id}` );
-
-  //     setContent(data.content);
-  //   };
-
-  //   fetching();
-  // }, [note._id]);
-
-
-// for updating note
-  // const updateHandler = (e) => {
-  //   e.preventDefault();
-  //   if (!content) return
-  //   dispatch(updateNoteAction( notes[0]._id, content ));
-
-  //   window.location.reload(false);
-  // }
-
   //for creating note
   const syncHandler = (e) => {
     const defaultContent = "Write your note here."
