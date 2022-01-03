@@ -1,6 +1,6 @@
 import React, { useEffect, useState,useCallback } from 'react';
 import {  useSelector } from 'react-redux';
-import Logo from '../assets_pocketdevs/assets/img/logo/logo.png';
+import Logo from '../assets/img/logo/logo.png';
 import { useHistory ,} from 'react-router-dom';
 
 const Navigation = () => {

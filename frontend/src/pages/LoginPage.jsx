@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Image, Navbar } from 'react-bootstrap';
 import { NavLink, useHistory } from 'react-router-dom';
-import PocketdevsLogo from '../assets_pocketdevs/assets/img/logo/pocketdevs-logo.png';
+import PocketdevsLogo from '../assets/img/logo/pocketdevs-logo.png';
 import ErrorMessage from '../components/ErrorMessage';
 import Preload from '../components/Preload';
 import { login } from '../actions/userActions';

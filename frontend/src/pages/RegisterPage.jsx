@@ -3,7 +3,7 @@ import { Image, Navbar} from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 import { register } from '../actions/userActions';
-import pocketdevsLogo from '../assets_pocketdevs/assets/img/logo/pocketdevs-logo.png';
+import pocketdevsLogo from '../assets/img/logo/pocketdevs-logo.png';
 import ErrorMessage from '../components/ErrorMessage';
 import Preload from '../components/Preload';
 

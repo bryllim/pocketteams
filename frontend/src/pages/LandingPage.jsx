@@ -4,13 +4,13 @@ import Footer from "../components/Footer";
 import Navigation from "../components/Navigation";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import heroImage from "../../src/assets_pocketdevs/assets/img/hero/hero-img.png";
-import createTeam from "../assets_pocketdevs/assets/videos/createTeam.webm";
-import createProject from "../assets_pocketdevs/assets/videos/createProject.webm";
-import createTask from "../assets_pocketdevs/assets/videos/createTask.webm";
-import Dave from ".././assets_pocketdevs/assets/img/team/Dave.svg";
-import Lester from ".././assets_pocketdevs/assets/img/team/Lester.svg";
-import Seb from ".././assets_pocketdevs/assets/img/team/Seb.svg";
+import heroImage from "../../src/assets/img/hero/hero-img.png";
+import createTeam from "../assets/videos/createTeam.webm";
+import createProject from "../assets/videos/createProject.webm";
+import createTask from "../assets/videos/createTask.webm";
+import Dave from ".././assets/img/team/Dave.svg";
+import Lester from ".././assets/img/team/Lester.svg";
+import Seb from ".././assets/img/team/Seb.svg";
 
 const LandingPage = ({ history }) => {
   const userLogin = useSelector((state) => state.userLogin);
