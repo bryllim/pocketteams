@@ -149,7 +149,7 @@ const Sidebar = () => {
           className="theme-btn theme-btn-md mb-30"
           onClick={handleTeamShow}
         >
-          <small><i className="lni lni-plus me-3"></i></small> New <strong>Team</strong>
+          <small><i className="lni lni-plus me-3"></i></small> New team
         </button>
       </div>
       <AddTeam showModal={teamShow} hideModal={handleTeamClose} />
