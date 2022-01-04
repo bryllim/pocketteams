@@ -4,10 +4,6 @@ import {
   Accordion,
   Card,
   Dropdown,
-  Container,
-  Row,
-  Col,
-  Image,
 } from "react-bootstrap";
 import EditTeam from "../Modals/EditTeamModal";
 import { deleteTeamAction, deleteTeamProjectAction } from "../../actions/teamActions";
@@ -33,7 +29,7 @@ const TeamCard = ({ data }) => {
   const handleProjectShow = () => setProjectShow(true);
 
   const teamDelete = useSelector((state) => state.teamDelete);
-  const { loading: loadingDelete, error: errorDelete } = teamDelete;
+  const {error: errorDelete } = teamDelete;
 
 
   const handleDelete = (id) => {

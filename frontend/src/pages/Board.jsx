@@ -95,12 +95,12 @@ const Board = (props) => {
   const { loading: sectionCreateLoading, data: sectionCreateData } =
     useSelector((state) => state.sectionCreate);
   const {
-    error: sectionDeleteError,
+    //error: sectionDeleteError,
     data: sectionDeleteData,
     loading: sectionDeleteLoading,
   } = useSelector((state) => state.sectionDelete);
   const {
-    error: taskDeleteError,
+    //error: taskDeleteError,
     data: taskDeleteData,
     loading: taskDeleteLoading,
   } = useSelector((state) => state.taskDelete);
@@ -185,6 +185,7 @@ const Board = (props) => {
       console.log("taskUpdateLoading", initialData);
       socket.emit("Update_Board", { initialData, projectId });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskUpdateLoading]);
 
   useEffect(() => {
@@ -194,6 +195,7 @@ const Board = (props) => {
       console.log("sectionUpdateLoading");
       socket.emit("Update_Board", { initialData, projectId });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sectionUpdateLoading]);
 
   useEffect(() => {
@@ -202,6 +204,7 @@ const Board = (props) => {
     if (!(Object.keys(taskCreateData).length === 0)) {
       socket.emit("Create_Task", { taskCreateData, projectId });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskCreateLoading, taskCreateData]);
 
   useEffect(() => {
@@ -210,6 +213,7 @@ const Board = (props) => {
     if (!(Object.keys(sectionCreateData).length === 0)) {
       socket.emit("Create_Section", { sectionCreateData, projectId });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sectionCreateLoading, sectionCreateData]);
 
   useEffect(() => {
@@ -219,6 +223,7 @@ const Board = (props) => {
       console.log("sectionDeleteData", sectionDeleteData);
       socket.emit("Delete_Section", { sectionDeleteData, projectId });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sectionDeleteLoading, sectionDeleteData]);
 
   useEffect(() => {
@@ -227,6 +232,7 @@ const Board = (props) => {
     if (!(Object.keys(taskDeleteData).length === 0)) {
       socket.emit("Delete_Task", { taskDeleteData, projectId });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [taskDeleteLoading, taskDeleteData]);
 
   useEffect(() => {
@@ -275,6 +281,7 @@ const Board = (props) => {
       setInitialData({ ...prevState });
       setInitDone(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sectionLoading, taskLoading]);
   console.log("initial", initialData.sections);
   return (
