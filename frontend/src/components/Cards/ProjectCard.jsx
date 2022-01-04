@@ -69,18 +69,18 @@ const ProjectCard = ({data}) => {
 ));
 
   return (
-    <div className="sidebar-wrapper m-0 p-2">
+    <div className="sidebar-wrapper">
       {errorDelete && (<ErrorMessage varaint="danger">{errorDelete}</ErrorMessage>)}
       {data ?
       <div className="d-flex flex-column sidebar-box basecard project-card px-4 pb-4 pt-2">
         <div className="d-flex justify-content-end">
-        <button type="button" className="d-flex btn m-0 p-0 ">
+        <button type="button" className="d-flex btn m-0 p-0">
             <Dropdown className="my-auto">
               <Dropdown.Toggle
                 as={CustomToggle}
                 id="dropdown-custom-components"
               >
-                &nbsp;<i className="bi bi-three-dots fs-3" />
+                &nbsp;<i className="lni lni-more-alt fs-5" />
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item onClick={handleEditShow}>Edit</Dropdown.Item>
@@ -90,27 +90,16 @@ const ProjectCard = ({data}) => {
           </button>
         </div>
         <div className="d-flex justify-content-flex-start">
-          <img
-            src="https://via.placeholder.com/150"
-            alt=""
-            className="rounded me-3"
-            style={{ height: "50px", width: "50px" }}
-          />
           <h4 className="text-limit">{data.project_name}</h4>
         </div>
         <div className="d-flex flex-fill flex-column mt-3">
-          <p className="text-limit text-limit-project text-dark fs-6"> {data.project_description} </p>
+          <p className="text-limit text-limit-project text-secondary fs-10"> {data.project_description} </p>
           <div className="d-flex justify-content-between mt-auto">
             <Row>
               <Col>
-                <blockquote className="blockquote mb-0">
-                      <p>Created on{" "}<cite title="Source Title">{data.createdAt.substring(0,10)}</cite></p>
-                </blockquote>
-                </Col>
-              <Col>
-                <blockquote className="blockquote mb-0 hover-me" onClick={handleOnClick}>
-                  <p>{" "}Open project <i className="bi bi-chevron-right"></i>{" "}</p>
-                </blockquote>
+                <button className="theme-btn theme-btn-sm" onClick={handleOnClick}>
+                    Open Project &nbsp;<i className="lni lni-arrow-right"></i>&nbsp;
+                </button>
               </Col>
             </Row>
           </div>
