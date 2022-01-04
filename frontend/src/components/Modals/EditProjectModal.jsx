@@ -1,15 +1,11 @@
 import React, { useState,useEffect } from "react";
 import { Form, Modal, Dropdown } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateProjectAction } from "../../actions/projectActions";
-import ErrorMessage from "../ErrorMessage";
-import AddMemberModal from "./AddMemberModal";
-import Preload from "../Preload";
 import { toast } from "react-toastify";
 
 const EditProjectModal = ({ showModal, hideModal, data}) => {
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+  const [setShow] = useState(false);
   const handleShow = () => setShow(true);
 
   const [projectName, setProjectName] = useState(null);

@@ -58,11 +58,11 @@ const AddMemberModal = ({ showModal, hideModal, data }) => {
     return;
   };
 
-  const notifySuccess = (msg) =>
-    toast.success(msg, {
-      position: toast.POSITION.BOTTOM_RIGHT,
-      autoClose: 2500,
-    });
+  // const notifySuccess = (msg) =>
+  //   toast.success(msg, {
+  //     position: toast.POSITION.BOTTOM_RIGHT,
+  //     autoClose: 2500,
+  //   });
 
   const notifyError = (msg) =>
     toast.info(msg, {
