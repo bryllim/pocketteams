@@ -51,31 +51,64 @@ const taskRemove = ({
 };
 
 
-const taskDescriptionUpdate = ({sections, setSections, taskDescription, index, sectionId}) => {
-  const newSections = [...sections];
-  newSections.forEach((section) => {
-    return section._id === sectionId
-      ? (section.tasks[index].task_description = taskDescription)
-      : null;
-  });
+// const taskDescriptionUpdate = ({sections, setSections, taskDescription, index, sectionId}) => {
+//   const newSections = [...sections];
+//   newSections.forEach((section) => {
+//     return section._id === sectionId
+//       ? (section.tasks[index].task_description = taskDescription)
+//       : null;
+//   });
 
-  setSections(newSections);
+//   setSections(newSections);
+// };
+
+
+const taskDescriptionUpdate = ({
+  initialData,
+  setInitialData,
+  taskDescription,
+  taskId}) => {
+  const tasks = JSON.parse(JSON.stringify(initialData.tasks))
+  tasks[taskId].task_description = taskDescription
+  setInitialData({
+    ...initialData,
+    tasks:tasks
+  })
+  // return {task_name:taskName}
 };
 
+
+
+
+// const taskPriorityUpdate = ({
+//   sections,
+//   setSections,
+//   taskNewPriority,
+//   index,
+//   sectionId,
+// }) => {
+//   console.log("sections",sections)
+//   const newSections = [...sections];
+//   newSections.forEach((section) => {
+//     return section._id === sectionId
+//       ? (section.tasks[index].task_priority = taskNewPriority)
+//       : null;
+//   });
+//   setSections(newSections);
+// };
+
 const taskPriorityUpdate = ({
-  sections,
-  setSections,
   taskNewPriority,
-  index,
-  sectionId,
+  initialData,
+  setInitialData,
+  taskId
 }) => {
-  const newSections = [...sections];
-  newSections.forEach((section) => {
-    return section._id === sectionId
-      ? (section.tasks[index].task_priority = taskNewPriority)
-      : null;
-  });
-  setSections(newSections);
+  const tasks = JSON.parse(JSON.stringify(initialData.tasks))
+  tasks[taskId].task_priority = taskNewPriority
+  setInitialData({
+    ...initialData,
+    tasks:tasks
+  })
 };
 
 const taskUpdate =({

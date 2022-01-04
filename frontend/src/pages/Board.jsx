@@ -283,8 +283,7 @@ const Board = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sectionLoading, taskLoading]);
-  console.log("intialData", initialData);
-
+  console.log("initial", initialData.sections);
   return (
     <>
       <TaskContext.Provider
@@ -302,12 +301,12 @@ const Board = (props) => {
         <Container fluid className="board-container">
           <Row className="h-100">
             <Col
-              xl="3"
-              className="d-flex flex-column h-100 d-none d-md-block d-md-none d-lg-block  d-lg-none d-xl-block"
+             xxl="3"
+             className="d-flex flex-column h-100 d-none d-lg-block"
             >
               <Sidebar />
             </Col>
-            <Col xl="9" className="d-flex flex-column h-100 col-md-12 ">
+            <Col md={12} lg={9}  className="d-flex flex-column h-100 ">
               <h3>
                 <Breadcrumb>
                   <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>

@@ -54,7 +54,7 @@ const Sidebar = () => {
 
   // Loading Teams
   useEffect(() => {
-    if (loading === false && teams.length > 0) {
+    if (loading === false && teams) {
       setTeamData(teams);
     }
   }, [loading, teams]);
