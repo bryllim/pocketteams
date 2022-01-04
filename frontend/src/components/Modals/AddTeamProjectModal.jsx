@@ -8,11 +8,8 @@ import { useEffect } from "react";
 import { listProjects } from "../../actions/projectActions";
 
 const AddTeamProjectModal = ({ showModal, hideModal, data }) => {
-  const userList = useSelector((state) => state.userList);
-  const { users } = userList;
-
   const projectList = useSelector((state) => state.projectList);
-  const { loading, projects, error } = projectList;
+  const { projects } = projectList;
 
   const dispatch = useDispatch();
 
@@ -41,10 +38,10 @@ const AddTeamProjectModal = ({ showModal, hideModal, data }) => {
     }
   };
 
-  const resetHandler = () => {
-    setaddedProjects([]);
-    setSuggestions([]);
-  };
+  // const resetHandler = () => {
+  //   setaddedProjects([]);
+  //   setSuggestions([]);
+  // };
 
   const handleAdd = (val) => {
     if (addedProjects.some((item) => val.project_name === item.project_name)) {

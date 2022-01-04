@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import { Col, Image, Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { Image, Row } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { deleteTeamUserAction } from "../../actions/teamActions";
 import Swal from 'sweetalert2';

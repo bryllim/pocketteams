@@ -5,10 +5,8 @@ import { useEffect, useState } from "react";
 import AddTeam from "./Modals/AddTeamModal";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { listTeam, updateTeamAction } from "../actions/teamActions";
+import { listTeam } from "../actions/teamActions";
 import ErrorMessage from "./ErrorMessage";
-import Preload from "./Preload";
-import { toast } from "react-toastify";
 
 const Sidebar = () => {
   const [teamData, setTeamData] = useState(null);
@@ -38,9 +36,6 @@ const Sidebar = () => {
     success: successUpdateTeam,
   } = teamUpdate;
 
-  const teamDelete = useSelector((state) => state.teamDelete);
-  const { success: successDeleteTeam, data: deleteTeamId } = teamDelete;
-
   const teamAddUser = useSelector((state) => state.teamAddUser);
   const {
     loading: addUserLoading,
@@ -50,13 +45,6 @@ const Sidebar = () => {
 
   const teamUserDelete = useSelector((state) => state.teamUserDelete);
   const { success: successDeleteUser, data: deleteUserData } = teamUserDelete;
-
-  //NOTIFICATIONS
-  const notifySuccess = (msg) =>
-    toast.success(msg, {
-      position: toast.POSITION.BOTTOM_RIGHT,
-      autoClose: 2500,
-    });
 
   //USE EFFECTS
 
@@ -82,6 +70,7 @@ const Sidebar = () => {
         setTeamData(newTeams);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createTeamLoading, newTeamData]);
 
   //Adding Users to team
@@ -92,6 +81,7 @@ const Sidebar = () => {
       newTeam.splice(index, 1, addUserTeam);
       setTeamData(newTeam);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [teams, addUserTeam, successAddUser, addUserLoading]);
 
   //Updating Teams
@@ -106,6 +96,7 @@ const Sidebar = () => {
       newTeam.splice(index, 1, updatedTeam);
       setTeamData(newTeam);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [teams, updatedTeam, successUpdateTeam, updateTeamLoading]);
 
   //User Delete
@@ -118,6 +109,7 @@ const Sidebar = () => {
       newUsers.splice(index, 1, deleteUserData);
       setTeamData(newUsers);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [successDeleteUser, deleteUserData]);
 
   // //Deleting Teams

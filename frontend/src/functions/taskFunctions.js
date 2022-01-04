@@ -114,6 +114,7 @@ const taskUpdate =({
     // });
     const newSections = JSON.parse(JSON.stringify(newInitialData.sections));
     console.log("newSections",newSections)
+    // eslint-disable-next-line array-callback-return
     Object.values(newSections).map((section) => { 
       newInitialData.sections[section._id] = {
         ...section,
