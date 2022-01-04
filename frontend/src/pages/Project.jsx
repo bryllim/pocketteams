@@ -60,7 +60,7 @@ const Project = () => {
 
   // Loading Projects
   useEffect(() => {
-    if (loading === false && projects.length > 0) {
+    if (loading === false && projects) {
       setProjectData(projects);
     }
   }, [loading, projects]);
