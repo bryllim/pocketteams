@@ -1,8 +1,8 @@
 //create section on frontend
-const sectionCreate = ({
+export function sectionCreate  ({
   initialData,
   setInitialData,
-  newSection}) =>{
+  newSection}) {
   const sections = JSON.parse(JSON.stringify(initialData.sections))
   const sectionOrder = JSON.parse(JSON.stringify(initialData.sectionOrder))
   sections[newSection._id] = newSection
@@ -17,11 +17,11 @@ const sectionCreate = ({
 
 
 //delete only the sectionid on sectionOrder, should delete tasks alsos
-const sectionDelete = ({
+export function sectionDelete  ({
   initialData,
   setInitialData,
   sectionId,
-  index}) =>{
+  index}){
   const sections = JSON.parse(JSON.stringify(initialData.sections))
   const sectionOrder = JSON.parse(JSON.stringify(initialData.sectionOrder))
   sectionOrder.splice(index,1)
@@ -35,12 +35,12 @@ const sectionDelete = ({
 }
 
 //rename section on frontend
-const sectionRename = ({
+export function sectionRename ({
   sectionTitle,
   initialData,
   setInitialData,
   sectionId,
-}) =>{ //change to sectionRename or sectionUpdate
+}) { //change to sectionRename or sectionUpdate
   const sections = JSON.parse(JSON.stringify(initialData.sections))
   sections[sectionId].section_name = sectionTitle
   setInitialData({
@@ -49,7 +49,7 @@ const sectionRename = ({
   })
 }
 
-const sectionTaskUpdate = ({sections,setSections,task,dragProps}) =>{
+export function sectionTaskUpdate ({sections,setSections,task,dragProps}) {
   const newSections  = JSON.parse(JSON.stringify(sections))
   const sectionId = task.section_id
   const sourceSectionId = dragProps.sourceSectionId
@@ -64,7 +64,7 @@ const sectionTaskUpdate = ({sections,setSections,task,dragProps}) =>{
   setSections(newSections)
 }
 
-const sectionUpdate = ({sections,setSections, sectionOrder, setSectionOrder,sectionData}) =>{
+export function sectionUpdate  ({sections,setSections, sectionOrder, setSectionOrder,sectionData}) {
   console.log("sectionData",sectionData.order)
   const newSections  = JSON.parse(JSON.stringify(sections))
   const newSectionOrder  = JSON.parse(JSON.stringify(sectionOrder))
@@ -82,5 +82,3 @@ const sectionUpdate = ({sections,setSections, sectionOrder, setSectionOrder,sect
   console.log("newSectionOrder", newSectionOrder)
   return
 }
-
-module.exports = {sectionDelete,sectionRename,sectionCreate,sectionTaskUpdate,sectionUpdate}
