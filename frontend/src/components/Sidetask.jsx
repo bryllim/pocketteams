@@ -114,7 +114,8 @@ const changeTaskDescription = ({
 
 
 const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
-  const { sections, setSections, dispatch } =
+  const { sections, setSections, sectionOrder, setSectionOrder, dispatch,   initialData,
+    setInitialData } =
     useContext(TaskContext);
   
 
@@ -244,6 +245,8 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
   //   const selectedSection = e.target.value;
   //   setSectionName(selectedSection.toString())
   // }
+
+  console.log("sections task", sections)
 
   console.log("sections task", sections)
 
