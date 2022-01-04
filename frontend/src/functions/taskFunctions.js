@@ -1,9 +1,9 @@
 //add the task on frontend
-const taskCreate = ({
+export function taskCreate  ({
   initialData,
   setInitialData,
   sectionId,
-  newTask}) => { //change to section index
+  newTask}) { //change to section index
     console.log("newTask")
   const sections = JSON.parse(JSON.stringify(initialData.sections))
   const tasks = JSON.parse(JSON.stringify(initialData.tasks))
@@ -18,11 +18,11 @@ const taskCreate = ({
 }
 
 //rename task on frontend
-const taskRename = ({
+export function taskRename  ({
   initialData,
   setInitialData,
   taskName,
-  taskId}) => {
+  taskId}) {
   const tasks = JSON.parse(JSON.stringify(initialData.tasks))
   tasks[taskId].task_name = taskName
   setInitialData({
@@ -33,12 +33,12 @@ const taskRename = ({
 }
 
 //remove the task on frontend
-const taskRemove = ({  
+export function taskRemove  ({  
   initialData,
   setInitialData,
   taskId,
   sectionId,
-  index}) => {
+  index})  {
   const tasks = JSON.parse(JSON.stringify(initialData.tasks))
   const sections = JSON.parse(JSON.stringify(initialData.sections))
   delete tasks[taskId]
@@ -63,11 +63,11 @@ const taskRemove = ({
 // };
 
 
-const taskDescriptionUpdate = ({
+export function taskDescriptionUpdate  ({
   initialData,
   setInitialData,
   taskDescription,
-  taskId}) => {
+  taskId}) {
   const tasks = JSON.parse(JSON.stringify(initialData.tasks))
   tasks[taskId].task_description = taskDescription
   setInitialData({
@@ -97,12 +97,12 @@ const taskDescriptionUpdate = ({
 //   setSections(newSections);
 // };
 
-const taskPriorityUpdate = ({
+export function taskPriorityUpdate  ({
   taskNewPriority,
   initialData,
   setInitialData,
   taskId
-}) => {
+})  {
   const tasks = JSON.parse(JSON.stringify(initialData.tasks))
   tasks[taskId].task_priority = taskNewPriority
   setInitialData({
@@ -111,11 +111,11 @@ const taskPriorityUpdate = ({
   })
 };
 
-const taskUpdate =({
+export function taskUpdate ({
   initialData, 
   setInitialData,
   newTask,
-}) => {
+}) {
   console.log("taskUpdate",newTask)
   console.log("initialData",initialData)
   const newInitialData = JSON.parse(JSON.stringify(initialData))
@@ -156,18 +156,9 @@ const taskUpdate =({
   })
 }
 setContent()
-console.log("newInitialData",newInitialData)
 setInitialData({ ...newInitialData });
 }
 
 
 
 
-module.exports = {
-  taskRename,
-  taskRemove,
-  taskCreate,
-  taskDescriptionUpdate,
-  taskPriorityUpdate,
-  taskUpdate,
-};
