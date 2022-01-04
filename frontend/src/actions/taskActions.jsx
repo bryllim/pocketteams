@@ -6,7 +6,7 @@ import {
 } from "../constants/taskConstants"
 import axios from "axios";
 
-export const listTasks = () => async (dispatch, getState) => {
+export const listTaskByProjectId = ({project_id}) => async (dispatch, getState) => {
     try{
         dispatch({
             type: TASK_LIST_REQUEST,
@@ -22,7 +22,9 @@ export const listTasks = () => async (dispatch, getState) => {
         },
     };
 
-    const { data } = await axios.get(`/api/tasks`, config);
+    const { data } = await axios.get(`/api/tasks/project/${project_id}`, config);
+
+    console.log("data", data)
 
     dispatch({
         type: TASK_LIST_SUCCESS,
@@ -81,7 +83,7 @@ export const createTask = ({task_name,task_description,section_id,task_id,task_p
 }
 
 
-export const deleteTask = ({taskId, task_index}) => async (dispatch, getState) => {
+export const deleteTask = ({taskId}) => async (dispatch, getState) => {
     try{
         dispatch({
             type: TASK_DELETE_REQUEST,
@@ -120,7 +122,7 @@ export const deleteTask = ({taskId, task_index}) => async (dispatch, getState) =
 }
 
 
-export const updateTask = ({task_name,task_description,task_id}) => async (dispatch, getState) => {
+export const updateTask = ({params,taskId}) => async (dispatch, getState) => {
     try{
         dispatch({
             type: TASK_UPDATE_REQUEST,
@@ -135,12 +137,12 @@ export const updateTask = ({task_name,task_description,task_id}) => async (dispa
             Authorization: `Bearer ${userInfo.token}`,
         },
     };
-    const { data } = await axios.put(
-        `/api/tasks/${task_id}`,
-        {task_name,task_description}, 
+    const { data } = await axios.patch(
+        `/api/tasks/${taskId}`,
+        params, 
         config
     );
-
+    console.log("data", data)
     dispatch({
         type: TASK_UPDATE_SUCCESS,
         payload: data,

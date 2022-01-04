@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Navigation from "../components/Navigation";
 import ProjectCard from "../components/Cards/ProjectCard";
@@ -8,31 +8,93 @@ import { Breadcrumb, Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { listProjects } from "../actions/projectActions";
-
+import { toast } from "react-toastify";
 
 const Project = () => {
+
+  //STATES and REDUCERS
+
+  const [projectData, setProjectData] = useState(null)
   
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const projectCreate = useSelector((state) => state.projectCreate);
-  const { success: successCreate} = projectCreate;
+  const { loading: createProjectLoading, projects: newProjectData} = projectCreate;
 
-  const dispatch = useDispatch();
   const projectList = useSelector((state) => state.projectList);
   const { loading, projects, error } = projectList;
 
   const projectUpdate = useSelector((state) => state.projectUpdate);
-  const { success: successUpdate}  = projectUpdate;
+  const { loading: updateProjectLoading, success: successUpdateProject ,data: updatedProject}  = projectUpdate;
+
+  const deleteProject = useSelector((state) => state.projectDelete);
+  const {success: successDeleteProject, data: deleteProjectId} = deleteProject;
+
+  // //NOTIFICATIONS
+
+  // const notifyInfo = (msg) =>
+  //   toast.info(msg, {
+  //     position: toast.POSITION.BOTTOM_RIGHT,
+  //     autoClose: 2500,
+  //   });
+
+  // const notifySuccess = (msg) =>
+  //   toast.success(msg, {
+  //   position: toast.POSITION.BOTTOM_RIGHT,
+  //   autoClose: 2500,
+  // });
+
+  //USE EFFECTS
 
   useEffect(() => {
-    if (userInfo) {
-      history.push('/project');
-    }
     dispatch(listProjects());
-  }, [dispatch, successCreate, successUpdate, history, userInfo]);
+  }, [dispatch, history, userInfo]);
   
+  // Loading Projects
+  useEffect(() => {
+    if(loading === false && projects.length > 0) {
+      setProjectData(projects);
+    }
+  }, [loading, projects]);
+
+  // Creating Projects
+  useEffect(() => {
+    if(createProjectLoading === false && newProjectData) {
+      if(projectData.length > 0) {
+        const newProjects = [...projectData];
+        newProjects.push(newProjectData); 
+        setProjectData(newProjects);
+      } 
+      else {
+        setProjectData([newProjectData]); 
+      }
+    }
+  }, [createProjectLoading, newProjectData])
+
+  // Deleting Projects
+  useEffect(() => {
+    if(successDeleteProject === true)
+    {
+      const newProjects = [...projectData]
+      const index = newProjects.findIndex(project => project._id === deleteProjectId)
+      newProjects.splice(index, 1)
+      setProjectData(newProjects)
+    }
+  }, [successDeleteProject, deleteProjectId])
+
+  // Updating Projects
+  useEffect(() => {
+    if(updateProjectLoading === false && successUpdateProject === true && updatedProject){
+      const newProject = [...projectData]
+      const index = newProject.findIndex(project => project._id === updatedProject._id)
+      newProject.splice(index, 1, updatedProject)
+      setProjectData(newProject)
+    }
+  }, [projects, updatedProject, successUpdateProject, updateProjectLoading])
+
   return (
     <>
       <Navigation />
@@ -51,10 +113,9 @@ const Project = () => {
               </Breadcrumb>
             </h3>
             { error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
-            { loading && <Preload/> }
             <div className="row row-cols-xxl-4 row-cols-xl-3 row-cols-md-2 g-md-2 g-2">
             <Col><ProjectCard/></Col>
-            { projects?.reverse().map((project,index) => (
+            { projectData?.map((project,index) => (
               <Col key={index}><ProjectCard data={project}/></Col>
             ))}
             </div>

@@ -9,7 +9,10 @@ const DeleteSectionConfirmation = ({
   index,
   removeSection,
 }) => {
-  const { sections, setSections, sectionOrder, setSectionOrder, dispatch } =
+  const {  
+    initialData,
+    setInitialData,
+    dispatch } =
     useContext(TaskContext);
   return (
     <>
@@ -34,13 +37,11 @@ const DeleteSectionConfirmation = ({
             className="theme-btn theme-btn-modal mx-0"
             onClick={() =>
               removeSection({
-                sections,
-                setSections,
-                sectionOrder,
-                setSectionOrder,
-                dispatch,
+                initialData,
+                setInitialData,
                 sectionId,
                 index,
+                dispatch
               })
             }
           >

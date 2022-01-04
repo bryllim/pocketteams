@@ -3,30 +3,35 @@ import { Col, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { deleteTeamUserAction } from "../../actions/teamActions";
+import Swal from 'sweetalert2';
 
 const EditTeamCard = (props) => {
   const dispatch = useDispatch();
+  
+  const notifyInfo = (msg) =>
+    toast.info(msg, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 2500,
+    });
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
-  const teamUserDelete = useSelector((state) => state.teamUserDelete);
-  const {loading, error} = teamUserDelete
-
-  const notifySuccess = (msg) => toast.success(msg, {
-    position: toast.POSITION.BOTTOM_RIGHT,
-    autoClose: 2500,
-  });
-
-  const handleClick = (id, userId) => {
-    if(window.confirm("Are you sure?")){
-      dispatch(deleteTeamUserAction(id, userId));
-      window.location.reload(false);
-      notifySuccess();
-    }
-    //Delete user
+  const handleClick = (id, user_Id) => {
+    Swal.fire({
+      title: 'Warning',
+      text: 'Are you sure you want to remove this user?',
+      icon: 'error',
+      showDenyButton: true,
+      confirmButtonText: 'Yes',
+      denyButtonText: `No`,
+      confirmButtonColor: '#dc3741',
+      denyButtonColor: '#6c757d'
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        dispatch(deleteTeamUserAction(id, user_Id));
+        notifyInfo("User Deleted");
+      } 
+    })
   };
-
 
   return (
     <div className="sidebar-wrapper mt-10 mb-10 mx-1">
@@ -37,7 +42,7 @@ const EditTeamCard = (props) => {
         <div className="mb-20 navbar-brand">
           <Image
             //   src={user.profile_picture}
-            src={props.logo}
+            src={props.data.profile_pic}
             alt="Profile Picture"
             className="profile-image hover-me"
           ></Image>

@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import { Form, Modal, Col, Row, Container } from "react-bootstrap";
 import EditTeamCard from "../Cards/EditTeamCard";
 import pocketdevsLogo from "../../assets_pocketdevs/assets/img/profile/generated_profile.PNG";
@@ -6,45 +6,77 @@ import { useDispatch, useSelector } from "react-redux";
 import ErrorMessage from "../ErrorMessage";
 import Preload from "../Preload";
 import { updateTeamAction } from "../../actions/teamActions";
-import { useEffect } from "react";
 import { toast } from "react-toastify";
+import AddMemberModal from "./AddMemberModal";
+import axios from "axios";
 
 
 const EditTeamModal = ({ showModal, hideModal, data }) => {
 
-  const [teamName, setTeamName] = useState(data.team_name);
-  const [teamDescription, setTeamDescription] = useState(data.team_description);
-  const [teamAccess, setTeamAccess] = useState(data.team_access);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const [teamName, setTeamName] = useState(null);
+  const [teamDescription, setTeamDescription] = useState(null);
+  const [teamAccess, setTeamAccess] = useState(null);
+  const [teamUsers, setTeamUsers] = useState([]);
   const dispatch = useDispatch();
 
   const teamUpdate = useSelector((state) => state.teamUpdate);
-  const {loading, error} = teamUpdate;
+  const {loading: loadingUpdate, teams: updatedTeam, success} = teamUpdate;
+
+  const teamUserDelete = useSelector((state) => state.teamUserDelete);
+  const {success: successDeleteUser, data: deleteUserData}  = teamUserDelete;
 
   const updateHandler = (e) => {
     e.preventDefault();
-    
     dispatch(updateTeamAction(data._id, teamName, teamDescription, teamAccess));
     if(!teamName || !teamDescription || !teamAccess)  return;
-
+    notifyInfo("Team Updated");
     resetHandler();
     hideModal();
-    window.location.reload(false);
   }
 
   const resetHandler = () => {
     setTeamName("");
     setTeamDescription("");
+    setTeamAccess("");
+    setTeamUsers([]);
   }
 
   useEffect(() => {
-    
-  }, [data])
+    if(success && loadingUpdate === false){
+      setTeamName(updatedTeam.team_name)
+      setTeamDescription(updatedTeam.team_description)
+      setTeamAccess(updatedTeam.team_access)
+      setTeamUsers(updatedTeam.users)
+    }
+
+    setTeamName(data.team_name)
+    setTeamDescription(data.team_description)
+    setTeamAccess(data.team_access)
+    setTeamUsers(data.users)
+
+  }, [data, teamUserDelete, dispatch])
+
+  //NOTIFICATIONS
+
+  const notifyInfo = (msg) =>
+    toast.info(msg, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 2500,
+    });
+
+  const notifySuccess = (msg) =>
+    toast.success(msg, {
+    position: toast.POSITION.BOTTOM_RIGHT,
+    autoClose: 2500,
+  });
 
   return (
     <Modal centered size="lg" show={showModal} onHide={hideModal}>
       <Modal.Header>
         <h5>Edit Team</h5>
-        {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
         <button
           type="button"
           class="btn-close"
@@ -82,7 +114,7 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
           </Row>
           <div className="horizontal">
             {
-              data.users?.map((userslist) => (
+              teamUsers.map((userslist) => (
                 <EditTeamCard logo={pocketdevsLogo} data={userslist} teamId={data._id} />
               ))
             }
@@ -115,8 +147,9 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
                     </option>
                   </select>
           </Form.Group>
-        <button className="theme-btn theme-btn-modal ms-5 mx-1" onClick={hideModal}> <i class="lni lni-plus"></i> Add Members </button>
+        <button className="theme-btn theme-btn-modal ms-5 mx-1" onClick={handleShow}> <i class="lni lni-plus"></i> Add Members </button>
         <button className="theme-btn theme-btn-modal mx-1" onClick={updateHandler}> Save Changes </button>
+        <AddMemberModal showModal={show} hideModal={hideModal} data={data} />
       </Modal.Footer>
     </Modal>
   );

@@ -45,9 +45,9 @@ export const projectUpdateReducer = (state = {}, action) => {
         case PROJECT_UPDATE_REQUEST:
             return { loading: true };
         case PROJECT_UPDATE_SUCCESS:
-            return { loading: false, projects: action.payload};
+            return { loading: false, data: action.payload, success: true};
         case PROJECT_UPDATE_FAIL:
-            return { loading: false, error: action.payload};
+            return { loading: false, error: action.payload, success: false};
         
         default:
             return state;
@@ -59,7 +59,7 @@ export const projectDeleteReducer = (state = {}, action) => {
       case PROJECT_DELETE_REQUEST:
         return { loading: true };
       case PROJECT_DELETE_SUCCESS:
-        return { loading: false, success: true };
+        return { loading: false, success: true, data: action.payload };
       case PROJECT_DELETE_FAIL:
         return { loading: false, error: action.payload, success: false };
       default:

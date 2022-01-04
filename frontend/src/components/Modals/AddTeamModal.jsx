@@ -14,12 +14,13 @@ const AddTeam = ({ showModal, hideModal }) => {
   const [teamDescription, setTeamDescription] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [addedUsers, setAddedUsers] = useState([]);
+  const [teamProjects] = useState([]);
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   const teamCreate = useSelector((state) => state.teamCreate);
-  const {loading, error, team} = teamCreate;
+  const {loading, error} = teamCreate;
 
   const userList = useSelector((state) => state.userList);
   const {users} = userList;
@@ -38,13 +39,13 @@ const AddTeam = ({ showModal, hideModal }) => {
     e.preventDefault();
     dispatch(
       //change last to user id array
-      createTeamAction(teamName, teamDescription, teamAccess,userInfo._id,addedUsers)
+      createTeamAction(teamName, teamDescription, teamAccess,userInfo._id, addedUsers, teamProjects)
     );
     if (!teamName || !teamDescription || !teamAccess) return;
 
     resetHandler();
     hideModal();
-    window.location.reload(false);
+    notifySuccess("Team Created");
   };
 
   const resetHandler = () => {
@@ -60,7 +61,6 @@ const AddTeam = ({ showModal, hideModal }) => {
     if(addedUsers.some(item => val.email_address === item.email_address)){
       notifyError("User Exists");
     } else {
-      notifySuccess("User Added");
       setAddedUsers([...addedUsers, val]);
     }
     return;
@@ -90,7 +90,7 @@ const AddTeam = ({ showModal, hideModal }) => {
           <h5>Create New Team</h5>
           <button
             type="button"
-            class="btn-close me-2"
+            className="btn-close me-2"
             onClick={hideModal}
             aria-label="Close"
           ></button>
@@ -137,7 +137,7 @@ const AddTeam = ({ showModal, hideModal }) => {
             <Col md="12" className="mb-2">
               <Form.Label>Description</Form.Label>
               <textarea
-                class="form-control"
+                className="form-control"
                 type="text"
                 name="description"
                 id="description"

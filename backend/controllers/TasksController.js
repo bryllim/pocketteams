@@ -57,7 +57,7 @@ const getTasksBySection = asyncHandler(async (req, res) => {
 });
 
 const deleteTaskById = asyncHandler(async (req, res) => {
-  console.log("deleteTaskById");
+  const taskId = req.params.id;
   try {
     const task_id = req.params.id;
     if (!task_id) {
@@ -72,8 +72,7 @@ const deleteTaskById = asyncHandler(async (req, res) => {
         .remove()
         .then(
           (taskIndex = section.tasks.indexOf(task_id)),
-          section.tasks.splice(taskIndex, 1),
-          await section.save()
+          section.tasks.splice(taskIndex, 1)
         );
       //remove all comments inside this task
       for (let i = 0; i < comments.length; i++) {
@@ -88,40 +87,35 @@ const deleteTaskById = asyncHandler(async (req, res) => {
       throw new Error("Request not found");
     }
   } catch (err) {
-    res.status(400).json(err);
+    console.log(err);
+    res.status(500).json(err);
   }
 });
 
 const updateTaskById = asyncHandler(async (req, res) => {
+  const _id = req.params.id;
+  const updates = Object.keys(req.body);
+  const allowedUpdates = [
+    "task_name",
+    "task_description",
+    "order",
+    "section_id",
+  ];
+  const isValidOperation = updates.every((update) =>
+    allowedUpdates.includes(update)
+  );
+  if (!isValidOperation)
+    return res.status(400).send({ error: "Invalid updates!" });
   try {
-    console.log("updateTaskById");
-    const { task_name, task_description } = req.body;
-    const task_id = req.params.id;
-    if (!task_id && !task_description) {
-      throw new Error("Please Fill all the Fields");
-    }
-    const task = await Task.findById(task_id);
-
-    if (task_name) {
-      task.task_name = task_name;
-      await task.save();
-      res.json({ message: "task renamed" });
-    } else if (task_description) {
-      task.task_description = task_description;
-      await task.save();
-      res.json({ message: "task description updated" });
-    }
-    // else if(task_subtask){
-    //     task.task_subtask = task_subtask;
-    //     await task.save();
-    //     res.json({message: "task subtask updated"});
-    // }
-    else {
-      res.status(404).json({ message: "Request not found" });
-      throw new Error("Request not found");
-    }
-  } catch (err) {
-    console.log(err);
+    const task = await Task.findByIdAndUpdate(_id, req.body, {
+      new: true,
+    });
+    if (!task) return res.status(404).json({ message: "Task not found" });
+    console.log("Task Updated ", _id);
+    res.status(200).json(task);
+  } catch (e) {
+    console.log(e);
+    res.status(500);
   }
 });
 
@@ -282,6 +276,22 @@ const updateTaskEndDateById = asyncHandler(async (req, res) => {
   }
 });
 
+const getTaskByProjectId = asyncHandler(async (req, res) => {
+  try {
+    const tasks = await Task.find({ project_id: req.params.id });
+    if (tasks) {
+      res.status(200).json(tasks);
+    } else {
+      res.status(500);
+      throw new Error("Request not found");
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500);
+    throw new Error(err);
+  }
+});
+
 module.exports = {
   createTask,
   getTasks,
@@ -293,4 +303,5 @@ module.exports = {
   updateTaskPriorityById,
   updateTaskNameById,
   markAsComplete,
+  getTaskByProjectId,
 };
