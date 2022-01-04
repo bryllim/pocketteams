@@ -55,7 +55,8 @@ const Project = () => {
   
   // Loading Projects
   useEffect(() => {
-    if(loading === false && projects.length > 0) {
+
+    if(loading === false && projects != null && projects.length > 0) {
       setProjectData(projects);
     }
   }, [loading, projects]);
@@ -63,14 +64,14 @@ const Project = () => {
   // Creating Projects
   useEffect(() => {
     if(createProjectLoading === false && newProjectData) {
-      if(projectData.length > 0) {
-        const newProjects = [...projectData];
-        newProjects.push(newProjectData); 
-        setProjectData(newProjects);
-      } 
-      else {
-        setProjectData([newProjectData]); 
-      }
+        if(projectData != null && projectData.length > 0) {
+          const newProjects = [...projectData];
+          newProjects.push(newProjectData); 
+          setProjectData(newProjects);
+        } 
+        else {
+          setProjectData([newProjectData]); 
+        }
     }
   }, [createProjectLoading, newProjectData])
 
@@ -112,7 +113,7 @@ const Project = () => {
                 <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>
               </Breadcrumb>
             </h3>
-            { error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
+            {/* { error && <ErrorMessage variant='danger'>{error}</ErrorMessage>} */}
             <div className="row row-cols-xxl-4 row-cols-xl-3 row-cols-md-2 g-md-2 g-2">
             <Col><ProjectCard/></Col>
             { projectData?.map((project,index) => (
