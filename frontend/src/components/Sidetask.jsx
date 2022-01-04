@@ -61,8 +61,8 @@ const updateTaskName = ({
     dispatch(updateTask({params:newData,taskId}))
   }
 };
-const updateTaskEndDate = (taskId, taskEndDate) => {};
-const updateTaskAssignedUsers = (taskId, taskAssignedUsers) => {};
+// const updateTaskEndDate = (taskId, taskEndDate) => {};
+// const updateTaskAssignedUsers = (taskId, taskAssignedUsers) => {};
 
 const priorityStatus = ({
   taskNewPriority,
@@ -184,6 +184,7 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
     } else if (taskPriority === "heavy") {
       setColor("form-select form-select-sm label-font ms-3 heavy");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[task]);
 // function for priority
   const reClass = (e) => {
@@ -240,10 +241,12 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
   };
 
   //function for setSections TODO send the targetvalue to backend
-  const sectionSetter = (e) => {
-    const selectedSection = e.target.value;
-    setSectionName(selectedSection.toString())
-  }
+  // const sectionSetter = (e) => {
+  //   const selectedSection = e.target.value;
+  //   setSectionName(selectedSection.toString())
+  // }
+
+  console.log("sections task", sections)
 
   console.log("sections task", sections)
 

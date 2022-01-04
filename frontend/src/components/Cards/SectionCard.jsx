@@ -81,7 +81,7 @@ const SectionCard = ({index,section,sectionId,tasks}) => {
   const openDeleteSection = () => setShowDeleteSection(true)
   const [sectionTitle, setSectionTitle] = useState(section.section_name)
   const [sectionToggleState,setSectionToggleState] = useState(true)
-  const {sections,setSections,initialData,setInitialData} = useContext(TaskContext)
+  const {initialData,setInitialData} = useContext(TaskContext)
   const dispatch = useDispatch();
   
   useEffect(() => {

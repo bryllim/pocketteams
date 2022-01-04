@@ -5,7 +5,6 @@ import EditProjectModal from "../Modals/EditProjectModal";
 import AddProjectModal from "../Modals/AddProjectModal";
 import { deleteProjectAction } from "../../actions/projectActions";
 import { useDispatch, useSelector } from "react-redux";
-import Preload from "../Preload";
 import ErrorMessage from "../ErrorMessage";
 import { Row,Col } from "react-bootstrap";
 import Swal from 'sweetalert2'
@@ -34,7 +33,7 @@ const ProjectCard = ({ data }) => {
   const handleShow = () => setShow(true);
 
   const projectDelete = useSelector((state) => state.projectDelete);
-  const { loading: loadingDelete, error: errorDelete } = projectDelete;
+  const {error: errorDelete} = projectDelete;
 
   const notifyInfo = (msg) =>
     toast.info(msg, {
