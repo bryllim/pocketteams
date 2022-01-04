@@ -114,7 +114,7 @@ const changeTaskDescription = ({
 
 
 const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
-  const { sections, setSections, sectionOrder, setSectionOrder, dispatch,   initialData,
+  const { sections, setSections, dispatch, initialData,
     setInitialData } =
     useContext(TaskContext);
   
