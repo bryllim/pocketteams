@@ -10,15 +10,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/basceb/pocketteams.git"
+    "url": "git+https://github.com/bryllim/pocketteams.git"
   },
   "author": "Pocketdevs",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/basceb/pocketteams/issues"
+    "url": "https://github.com/bryllim/pocketteams/issues"
   },
-  "homepage": "https://github.com/basceb/pocketteams#readme",
+  "homepage": "https://github.com/bryllim/pocketteams#readme",
   "dependencies": {
+    "aos": "^3.0.0-beta.6",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "concurrently": "^6.4.0",
