@@ -48,8 +48,8 @@ const updateTaskName = ({
     dispatch(updateTask({ task_name: taskName, task_id: taskId }));
   }
 };
-const updateTaskEndDate = (taskId, taskEndDate) => {};
-const updateTaskAssignedUsers = (taskId, taskAssignedUsers) => {};
+// const updateTaskEndDate = (taskId, taskEndDate) => {};
+// const updateTaskAssignedUsers = (taskId, taskAssignedUsers) => {};
 
 const priorityStatus = ({
   taskNewPriority,
@@ -99,7 +99,7 @@ const changeTaskDescription = ({
 
 
 const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
-  const { sections, setSections, sectionOrder, setSectionOrder, dispatch } =
+  const { sections, setSections, dispatch } =
     useContext(TaskContext);
   const [markTask, setMarkTask] = useState(task.isComplete);
   const [sectionName, setSectionName] = useState("set section");
@@ -169,7 +169,8 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
     } else if (taskPriority === "select priority") {
       setColor("form-select form-select-sm label-font ms-3");
     }
-  },[taskPriority]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[task]);
 // function for priority
   const reClass = (e) => {
     let taskNewPriority = "";
@@ -230,10 +231,10 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
   };
 
   //function for setSections TODO send the targetvalue to backend
-  const sectionSetter = (e) => {
-    const selectedSection = e.target.value;
-    setSectionName(selectedSection.toString())
-  }
+  // const sectionSetter = (e) => {
+  //   const selectedSection = e.target.value;
+  //   setSectionName(selectedSection.toString())
+  // }
 
   return (
     <div

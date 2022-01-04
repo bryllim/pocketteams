@@ -1,20 +1,17 @@
 import {useEffect, useState} from "react";
 import { Form, Modal, Col, Row, Container } from "react-bootstrap";
 import EditTeamCard from "../Cards/EditTeamCard";
-import pocketdevsLogo from "../../assets_pocketdevs/assets/img/profile/generated_profile.PNG";
+import pocketdevsLogo from "../../assets/img/profile/generated_profile.PNG";
 import { useDispatch, useSelector } from "react-redux";
-import ErrorMessage from "../ErrorMessage";
-import Preload from "../Preload";
 import { updateTeamAction } from "../../actions/teamActions";
 import { toast } from "react-toastify";
 import AddMemberModal from "./AddMemberModal";
-import axios from "axios";
 
 
 const EditTeamModal = ({ showModal, hideModal, data }) => {
 
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
+  // const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [teamName, setTeamName] = useState(null);
   const [teamDescription, setTeamDescription] = useState(null);
@@ -26,7 +23,6 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
   const {loading: loadingUpdate, teams: updatedTeam, success} = teamUpdate;
 
   const teamUserDelete = useSelector((state) => state.teamUserDelete);
-  const {success: successDeleteUser, data: deleteUserData}  = teamUserDelete;
 
   const updateHandler = (e) => {
     e.preventDefault();
@@ -56,7 +52,7 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
     setTeamDescription(data.team_description)
     setTeamAccess(data.team_access)
     setTeamUsers(data.users)
-
+// eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, teamUserDelete, dispatch])
 
   //NOTIFICATIONS
@@ -67,11 +63,11 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
       autoClose: 2500,
     });
 
-  const notifySuccess = (msg) =>
-    toast.success(msg, {
-    position: toast.POSITION.BOTTOM_RIGHT,
-    autoClose: 2500,
-  });
+  // const notifySuccess = (msg) =>
+  //   toast.success(msg, {
+  //   position: toast.POSITION.BOTTOM_RIGHT,
+  //   autoClose: 2500,
+  // });
 
   return (
     <Modal centered size="lg" show={showModal} onHide={hideModal}>

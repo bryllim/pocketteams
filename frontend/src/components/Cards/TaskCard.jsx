@@ -1,7 +1,7 @@
 import React, { useState,useEffect,useContext} from "react";
 import SideTask from "../Sidetask";
 import {Draggable} from 'react-beautiful-dnd'
-import AddIcon from "../../assets_pocketdevs/assets/svg/AddIcon";
+import AddIcon from "../../assets/svg/AddIcon";
 import { Dropdown } from "react-bootstrap";
 import {taskRename,taskRemove} from "../../functions/taskFunctions"
 import { TaskContext } from "../../contexts/SectionContext";

@@ -1,6 +1,7 @@
+/* eslint-disable jsx-a11y/heading-has-content */
 import React from "react";
 import { Droppable} from 'react-beautiful-dnd' 
-import AddIcon from "../../assets_pocketdevs/assets/svg/AddIcon";
+import AddIcon from "../../assets/svg/AddIcon";
 import { Dropdown } from "react-bootstrap";
 import "../../css/skeleton.css"
 const SkeletonSectionCard = () => {

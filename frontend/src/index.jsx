@@ -9,13 +9,13 @@ import reportWebVitals from './reportWebVitals';
 import { SocketContext,socket } from './contexts/SocketContext';
 //CSS IMPORTS HERE
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './assets_pocketdevs/assets/css/animate.css'
-import './assets_pocketdevs/assets/css/bootstrap-5.0.0-beta1.min.css'
-import './assets_pocketdevs/assets/css/glightbox.min.css'
-import './assets_pocketdevs/assets/css/LineIcons.2.0.css'
-import './assets_pocketdevs/assets/css/main.css'
-import './assets_pocketdevs/assets/css/main.css.map'
-import './assets_pocketdevs/assets/css/tiny-slider.css'
+import './assets/css/animate.css'
+import './assets/css/bootstrap-5.0.0-beta1.min.css'
+import './assets/css/glightbox.min.css'
+import './assets/css/LineIcons.2.0.css'
+import './assets/css/main.css'
+import './assets/css/main.css.map'
+import './assets/css/tiny-slider.css'
 import './css/taskmanagement.css'
 import './css/board.css'
 import 'react-bootstrap'
