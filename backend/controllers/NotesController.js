@@ -1,6 +1,6 @@
-const Note = require("../models/noteModel");
+const Note = require("../models/NoteModel");
 const asyncHandler = require("express-async-handler");
-const User = require("../models/userModel");
+const User = require("../models/UserModel");
 
 const getNotes = asyncHandler(async (req, res) => {
   const notes = await Note.find({ user: req.user._id });
