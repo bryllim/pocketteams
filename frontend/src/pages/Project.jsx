@@ -2,13 +2,11 @@ import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Navigation from "../components/Navigation";
 import ProjectCard from "../components/Cards/ProjectCard";
-import Preload from "../components/Preload";
 import ErrorMessage from "../components/ErrorMessage";
 import { Breadcrumb, Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { listProjects } from "../actions/projectActions";
-import { toast } from "react-toastify";
 
 const Project = () => {
   
@@ -76,6 +74,7 @@ const Project = () => {
           setProjectData([newProjectData]); 
         }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createProjectLoading, newProjectData]);
 
   // Deleting Projects
@@ -88,6 +87,7 @@ const Project = () => {
       newProjects.splice(index, 1);
       setProjectData(newProjects);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [successDeleteProject, deleteProjectId]);
 
   // Updating Projects
@@ -104,6 +104,7 @@ const Project = () => {
       newProject.splice(index, 1, updatedProject);
       setProjectData(newProject);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [projects, updatedProject, successUpdateProject, updateProjectLoading]);
 
   return (

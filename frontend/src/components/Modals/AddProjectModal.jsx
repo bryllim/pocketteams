@@ -19,7 +19,7 @@ const AddProjectModal = ({ showModal, hideModal }) => {
   const dispatch = useDispatch();
   const projectCreate = useSelector((state) => state.projectCreate);
   const {loading, error } = projectCreate;
-  const [color, setColor] = useState("form-select form-select-sm ms-3");
+  const [color] = useState("form-select form-select-sm ms-3");
 
   const notifySuccess = (msg) =>
     toast.success(msg, {

@@ -14,7 +14,7 @@ const RegisterPage = () => {
   const [password, setPassword] = useState("");
   const [confirm_password, setConfirmPassword] = useState("");
   const [message, setMessage] = useState(null);
-  const [profile_pic, setProfilePic] = useState(
+  const [profile_pic] = useState(
     "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
   );
 

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
