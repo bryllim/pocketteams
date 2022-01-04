@@ -2,41 +2,26 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <>
-      <footer className="footer pt-100">
-        <div className="container">
-          <div className="copyright-area">
-            <div className="row align-items-center">
-              <div className="col-md-6">
-                <div className="footer-social-links">
-                  <ul className="d-flex">
-                    <li>
-                      <a href="https://www.facebook.com/pocketdevscebu">
-                        <i className="lni lni-facebook-filled"></i>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="https://www.instagram.com/pocketdevs.ph/">
-                        <i className="lni lni-instagram-filled"></i>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="col-md-6">
-                <p className="wow fadeInUp" data-wow-delay=".3s">
-                  Copyright © 2021{" "}
-                  <a href="https://pocketdevs.online" rel="nofollow">
-                    PocketDevs
-                  </a>{" "}
-                  All Rights Reserved
-                </p>
-              </div>
+    <footer className="footer pt-50">
+      <div className="container">
+        <div className="copyright-area">
+          <div className="row">
+            <div className="col-md-4 mx-auto">
+              <p className="text-center">
+                Copyright © 2022 | Powered by&nbsp;
+                <a
+                  href="https://pocketdevs.ph"
+                  className="fw-bold"
+                  rel="nofollow"
+                >
+                  PocketDevs
+                </a>
+              </p>
             </div>
           </div>
         </div>
-      </footer>
-    </>
+      </div>
+    </footer>
   );
 };
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Col, Container, Form, Image, Modal, Row } from 'react-bootstrap'
-import pocketdevsLogo from "../../assets_pocketdevs/assets/img/profile/generated_profile.PNG";
+import pocketdevsLogo from "../../assets/img/profile/generated_profile.PNG";
 
 const ProfileSettingsModal = ({showModal, hideModal}) => {
     return (

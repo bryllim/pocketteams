@@ -5,6 +5,7 @@ import { updateProjectAction } from "../../actions/projectActions";
 import ErrorMessage from "../ErrorMessage";
 import AddMemberModal from "./AddMemberModal";
 import Preload from "../Preload";
+import { toast } from "react-toastify";
 
 const EditProjectModal = ({ showModal, hideModal, data}) => {
   const [show, setShow] = useState(false);
@@ -15,6 +16,14 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
   const [projectDescription, setProjectDescription] = useState(null);
   const [projectStatus, setProjectStatus] = useState(null);
 
+  //NOTIFICATIONS
+
+  const notifyInfo = (msg) =>
+    toast.info(msg, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 2500,
+    });
+
   const dispatch = useDispatch();
 
   const [color, setColor] = useState("form-select form-select-sm ms-3");
@@ -23,9 +32,9 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
     e.preventDefault();
     dispatch(updateProjectAction(data._id, projectName, projectDescription, projectStatus));
     if(!projectName || !projectDescription || !projectStatus) return;
-
     resetHandler();
     hideModal();
+    notifyInfo("Project Updated");
   }
 
   useEffect(() => {
