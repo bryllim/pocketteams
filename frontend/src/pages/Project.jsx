@@ -124,7 +124,7 @@ const Project = () => {
             </Breadcrumb>
           </h3>
           {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-          <div className="row row-cols-xxl-4 row-cols-xl-3 row-cols-md-2 g-md-2 g-2">
+          <div className="row row-cols-xl-3 row-cols-md-2 g-md-2 g-2">
             <Col>
               <ProjectCard />
             </Col>
