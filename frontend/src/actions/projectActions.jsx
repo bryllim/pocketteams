@@ -49,7 +49,7 @@ export const listProjects = () => async (dispatch, getState) => {
     }
 }
 
-export const createProjectAction = (project_name, project_description, project_status) => async (dispatch, getState) => {
+export const createProjectAction = (project_name, project_description) => async (dispatch, getState) => {
     try {
         dispatch({
             type: PROJECT_CREATE_REQUEST,
@@ -68,7 +68,7 @@ export const createProjectAction = (project_name, project_description, project_s
 
         const { data } = await axios.post(
             `api/projects/create`,
-            {project_name,project_description,project_status},
+            {project_name,project_description},
             config
         );
 
@@ -88,7 +88,7 @@ export const createProjectAction = (project_name, project_description, project_s
     }
 };
 
-export const updateProjectAction = (id, project_name, project_description, project_status) => async (dispatch, getState) => {
+export const updateProjectAction = (id, project_name, project_description) => async (dispatch, getState) => {
     try{
         dispatch({
             type: PROJECT_UPDATE_REQUEST,
@@ -107,7 +107,7 @@ export const updateProjectAction = (id, project_name, project_description, proje
 
         const { data } = await axios.put(
             `/api/projects/${id}`,
-            {project_name, project_description, project_status}, 
+            {project_name, project_description}, 
             config
         );
 
