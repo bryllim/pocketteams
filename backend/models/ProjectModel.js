@@ -6,14 +6,6 @@ const projectSchema = mongoose.Schema(
             type: String,
             required: true,
         },
-        project_status:{
-            type: String,
-            required: true,
-        },
-        project_image:{
-            data: Buffer,
-            contentType: String,
-        },
         project_description:{
             type: String,
         },

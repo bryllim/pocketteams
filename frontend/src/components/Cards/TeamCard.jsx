@@ -87,10 +87,6 @@ const TeamCard = ({ data }) => {
     </p>
   ));
 
-  //Load the user by id
-  useEffect(() => {
-    console.log(data)
-  }, [data])
 
   return (
     <div>
