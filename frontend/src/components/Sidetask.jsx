@@ -29,6 +29,8 @@ const updateTaskName = ({
   taskId,
   taskName,
   dispatch,
+  initialData,
+  setInitialData
 }) => {
   if (taskName === "") {
     taskRemove({ sectionId, sections, setSections, index });
@@ -44,8 +46,15 @@ const updateTaskName = ({
       })
     );
   } else {
-    taskRename({ sectionId, sections, setSections, taskName, index });
-    dispatch(updateTask({ task_name: taskName, task_id: taskId }));
+    // taskRename({ sectionId, sections, setSections, taskName, index });
+    // dispatch(updateTask({ task_name: taskName, task_id: taskId }));
+
+    const newData = taskRename({
+      initialData,
+      setInitialData,
+      taskName,
+      taskId});
+    dispatch(updateTask({params:newData,taskId}))
   }
 };
 // const updateTaskEndDate = (taskId, taskEndDate) => {};
@@ -59,14 +68,15 @@ const priorityStatus = ({
   sectionId,
   sections,
   setSections,
+  initialData,
+  setInitialData,
 }) => {
   // console.log("prioritystatus", taskNewPriority)
   taskPriorityUpdate({
-    sections,
-    setSections,
     taskNewPriority,
-    index,
-    sectionId,
+    initialData,
+    setInitialData,
+    taskId
   });
   dispatch(
     updateTaskPriority({ task_priority: taskNewPriority, task_id: taskId })
@@ -81,13 +91,14 @@ const changeTaskDescription = ({
   sectionId,
   taskId,
   dispatch,
+  initialData,
+  setInitialData,
 }) => {
   taskDescriptionUpdate({
-    sections,
-    setSections,
-    taskDescription,
-    index,
-    sectionId,
+    initialData,
+  setInitialData,
+  taskDescription,
+  taskId
   });
   dispatch(
     updateTaskDescription({
@@ -99,9 +110,12 @@ const changeTaskDescription = ({
 
 
 const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
-  const { sections, setSections, dispatch } =
+  const { sections, setSections, dispatch, initialData,
+    setInitialData } =
     useContext(TaskContext);
-  const [markTask, setMarkTask] = useState(task.isComplete);
+  
+
+  const [markTask, setMarkTask] = useState(true);
   const [sectionName, setSectionName] = useState("set section");
   const [user, setUser] = useState("assign user");
   const [color, setColor] = useState(
@@ -187,6 +201,8 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
         sectionId,
         sections,
         setSections,
+        initialData,
+        setInitialData,
       });
     } else if (e.target.value === "medium") {
       setColor("form-select form-select-sm label-font ms-3 medium");
@@ -200,6 +216,8 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
         sectionId,
         sections,
         setSections,
+        initialData,
+        setInitialData,
       });
     } else if (e.target.value === "heavy") {
       setColor("form-select form-select-sm label-font ms-3 heavy");
@@ -213,6 +231,8 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
         sectionId,
         sections,
         setSections,
+        initialData,
+        setInitialData,
       });
     } else if (e.target.value === "Select Priority") {
       setColor("form-select form-select-sm label-font ms-3 prio");
@@ -288,6 +308,8 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
                     index,
                     dispatch,
                     taskId,
+                    initialData,
+                    setInitialData
                   });
                   e.preventDefault();
                   e.stopPropagation();
@@ -433,6 +455,8 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
                             sectionId,
                             taskId,
                             dispatch,
+                            initialData,
+                            setInitialData,
                           });
                           e.preventDefault();
                           e.stopPropagation();
@@ -447,6 +471,8 @@ const SideTask = ({ showed, hide, task, index, section, sectionId }) => {
                               index,
                               dispatch,
                               taskId,
+                              initialData,
+                              setInitialData,
                             });
                             event.preventDefault();
                             event.stopPropagation();

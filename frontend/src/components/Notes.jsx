@@ -33,7 +33,7 @@ const Notes = () => {
   const { success: successCreate } = noteCreate;
 
   const notifySuccess = (msg) => toast.success(msg, {
-    position: toast.POSITION.BOTTOM_RIGHT,
+    position: toast.POSITION.TOP_CENTER,
     autoClose: 2500,
   });
 

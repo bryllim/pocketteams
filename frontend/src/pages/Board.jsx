@@ -74,6 +74,7 @@ const onDrag = ({ result, data, dispatch }) => {
 
 const Board = (props) => {
   const { projectId } = props.location || {};
+  const { projectName } = props.location || {};
   const dispatch = useDispatch();
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
@@ -113,6 +114,12 @@ const Board = (props) => {
   const [sectionOrder, setSectionOrder] = useState(null);
   const { userInfo } = userLogin;
   const socket = useContext(SocketContext);
+
+  // titlebar
+  useEffect(() => {
+    document.title = `${projectName} - PocketTeams`;
+  }, [projectName]);
+
 
   useEffect(() => {
     socket.emit("Join_Board", projectId);
@@ -283,8 +290,7 @@ const Board = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sectionLoading, taskLoading]);
-  console.log("intialData", initialData);
-
+  // console.log("initial", initialData.sections);
   return (
     <>
       <TaskContext.Provider
@@ -302,12 +308,12 @@ const Board = (props) => {
         <Container fluid className="board-container">
           <Row className="h-100">
             <Col
-              xl="3"
-              className="d-flex flex-column h-100 d-none d-md-block d-md-none d-lg-block  d-lg-none d-xl-block"
+             xxl="3"
+             className="d-flex flex-column h-100 d-none d-lg-block"
             >
               <Sidebar />
             </Col>
-            <Col xl="9" className="d-flex flex-column h-100 col-md-12 ">
+            <Col md={12} lg={9}  className="d-flex flex-column h-100 ">
               <h3>
                 <Breadcrumb>
                   <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>
