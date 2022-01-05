@@ -1,22 +1,41 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from "react";
+import React, { useState,useSelector } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { logout } from "../../actions/userActions";
 import ProfileSettingsModal from "../Modals/ProfileSettingsModal";
-
+import Swal from 'sweetalert2'
 function ProfileCard() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
   const user = JSON.parse(localStorage.getItem("userInfo"));
   const history = useHistory();
   const dispatch = useDispatch();
-  const logoutHandler = () => {
-    dispatch(logout());
-    history.push("/");
+  const [loggedIn, setLoggedIn] = useState(true);
+  const logoutHandler = async() => {
+    const result = await Swal.fire({
+      title: "Logout?",
+      html: "<p>Are you sure you want to <b>logout?</></p>",
+      text: "Are you sure you want to",
+      icon: "question",
+      reverseButtons: true,
+      showDenyButton: true,
+      denyButtonText: `Cancel`,
+      confirmButtonText: "Confirm",
+      confirmButtonColor: "#dc3741",
+      denyButtonColor: "#6c757d",
+    })
+      /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+      setLoggedIn(false);
+    }
   };
+
+  if(!loggedIn) {
+      dispatch(logout());
+    history.push("/");
+  }
 
   return (
     <div className="sidebar-box recent-blog-box mb-30">
