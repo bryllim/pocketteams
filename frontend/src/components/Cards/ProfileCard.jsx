@@ -15,12 +15,14 @@ function ProfileCard() {
   const [loggedIn, setLoggedIn] = useState(true);
   const logoutHandler = async() => {
     const result = await Swal.fire({
-      title: "Wait!",
-      text: "Are you sure you want to logout?",
-      icon: "warning",
+      title: "Logout?",
+      html: "<p>Are you sure you want to <b>logout?</></p>",
+      text: "Are you sure you want to",
+      icon: "question",
+      reverseButtons: true,
       showDenyButton: true,
-      confirmButtonText: "Confirm",
       denyButtonText: `Cancel`,
+      confirmButtonText: "Confirm",
       confirmButtonColor: "#dc3741",
       denyButtonColor: "#6c757d",
     })
