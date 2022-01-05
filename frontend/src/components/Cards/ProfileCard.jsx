@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import { logout } from "../../actions/userActions";
 import ProfileSettingsModal from "../Modals/ProfileSettingsModal";
-
+import Swal from 'sweetalert2'
 function ProfileCard() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -13,9 +13,25 @@ function ProfileCard() {
   const user = JSON.parse(localStorage.getItem("userInfo"));
   const history = useHistory();
   const dispatch = useDispatch();
+
   const logoutHandler = () => {
-    dispatch(logout());
-    history.push("/");
+    Swal.fire({
+      title: "Wait!",
+      text: "Are you sure you want to logout?",
+      icon: "warning",
+      showDenyButton: true,
+      confirmButtonText: "Confirm",
+      denyButtonText: `Cancel`,
+      confirmButtonColor: "#dc3741",
+      denyButtonColor: "#6c757d",
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        dispatch(logout());
+        history.push("/");
+      } 
+    })
+   
   };
 
   return (
