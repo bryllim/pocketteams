@@ -43,7 +43,7 @@ export const listTaskByProjectId = ({project_id}) => async (dispatch, getState) 
     }
 }
 
-export const createTask = (newTask) => async (dispatch, getState) => {
+export const createTask = ({task_name,task_description,section_id,task_id,task_priority,isComplete}) => async (dispatch, getState) => {
     try{
         dispatch({
             type: TASK_CREATE_REQUEST,
@@ -60,7 +60,7 @@ export const createTask = (newTask) => async (dispatch, getState) => {
     };
     const { data } = await axios.post(
         `/api/tasks/create`,
-        {newTask}, 
+        {task_name, task_description, section_id, task_id,task_priority,isComplete}, 
         config
     );
 
@@ -221,6 +221,45 @@ export const updateTaskPriority = ({task_priority,task_id}) => async (dispatch, 
         config
     );
 
+    dispatch({
+        type: TASK_UPDATE_SUCCESS,
+        payload: data,
+    })
+
+    } catch (error){
+        const message = 
+        error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+
+        dispatch({
+            type: TASK_UPDATE_FAIL,
+            payload: message,
+        });
+    }
+}
+
+export const updateTaskStatus = (task_id,markTask) => async (dispatch, getState) => {
+    try{
+        dispatch({
+            type: TASK_UPDATE_REQUEST,
+        });
+
+    const {
+        userLogin: {userInfo},
+    } = getState();
+
+    const config = {
+        headers: {
+            Authorization: `Bearer ${userInfo.token}`,
+        },
+    };
+    const { data } = await axios.put(
+        `/api/tasks/update/status/${task_id}`,
+        {markTask}, 
+        config
+    );
+        console.log("action",markTask,task_id)
     dispatch({
         type: TASK_UPDATE_SUCCESS,
         payload: data,

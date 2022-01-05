@@ -57,7 +57,7 @@ const createComment = asyncHandler(async (req, res) => {
 
 const updateComment = asyncHandler(async (req, res) => {
   try {
-    const { Comment_context, user } = req.body;
+    const { Comment_context } = req.body;
     const commentId = req.params.id;
     const comment = await Comments.findById(commentId);
     console.log("comment here:", comment);
@@ -65,11 +65,11 @@ const updateComment = asyncHandler(async (req, res) => {
       res.status(401);
       throw new Error("You can't perform this action.");
     }
-    // if (!Comment_context) {
-    //   let err = new Error("Please Fill all the Fields");
-    //   err.status = 400;
-    //   throw err;
-    // }
+    if (!Comment_context) {
+      let err = new Error("Please Fill all the Fields");
+      err.status = 400;
+      throw err;
+    }
 
     if (comment) {
       comment.Comment_context = Comment_context;
@@ -87,4 +87,29 @@ const updateComment = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { getComments, createComment, updateComment };
+const deleteCommentById = asyncHandler(async (req, res) => {
+  try {
+    const comment_id = req.params.id;
+    if (!comment_id) {
+      throw new Error("Please Fill all the Fields");
+    }
+    const comment = await Comments.findById(comment_id);
+    if (comment) {
+      await comment.remove();
+      res.json({ message: "comment Removed" });
+    } else {
+      res.status(404).json({ message: "Request not found" });
+      throw new Error("Request not found");
+    }
+  } catch (err) {
+    console.log("deleteCommentById");
+    res.status(400).json(err);
+  }
+});
+
+module.exports = {
+  getComments,
+  createComment,
+  updateComment,
+  deleteCommentById,
+};

@@ -32,11 +32,10 @@ const Notes = () => {
   const noteCreate = useSelector((state) => state.noteCreate);
   const { success: successCreate } = noteCreate;
 
-  const notify = () =>
-    toast.success(notif, {
-      position: toast.POSITION.BOTTOM_RIGHT,
-      autoClose: 2500,
-    });
+  const notifySuccess = (msg) => toast.success(msg, {
+    position: toast.POSITION.TOP_CENTER,
+    autoClose: 2500,
+  });
 
   useEffect(() => {
     dispatch(listNotes());
@@ -45,44 +44,20 @@ const Notes = () => {
     }
   }, [dispatch, history, userInfo, successCreate, successUpdate]);
 
-  // const defaultContent = 0;
-
-  // for updating
-  // useEffect(() => {
-  //   const fetching = async () => {
-  //      const { data } = await axios.get( `api/note/${note._id}` );
-
-  //     setContent(data.content);
-  //   };
-
-  //   fetching();
-  // }, [note._id]);
-
-  // for updating note
-  // const updateHandler = (e) => {
-  //   e.preventDefault();
-  //   if (!content) return
-  //   dispatch(updateNoteAction( notes[0]._id, content ));
-
-  //   window.location.reload(false);
-  // }
-
-  // For creating notes
+  //for creating note
   const syncHandler = (e) => {
     const defaultContent = "Write your note here.";
     e.preventDefault();
     if (notes.length === 0) {
-      dispatch(createNoteAction(defaultContent));
-      setNotif("Notes Created Successfully.");
-      notify();
-      window.location.reload(false);
-    }
+      dispatch(createNoteAction( defaultContent ));
+      notifySuccess("Note Created Successfully.")
+      window.location.reload(false)
+    } 
     if (notes.length >= 1) {
-      dispatch(updateNoteAction(notes[0]._id, content));
-      setNotif("Notes Updated Successfully.");
-      notify();
-    }
-  };
+      dispatch(updateNoteAction( notes[0]._id, content ));
+      notifySuccess("Note Updated Successfully.")
+      }
+}
   // console.log(window.location.pathname);
 
   return (

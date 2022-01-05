@@ -6,9 +6,10 @@ import { projectCreateReducer, projectDeleteReducer, projectListReducer, project
 import { taskListReducer} from './reducers/taskReducers';
 import { sectionOrderListReducer, sectionListReducer ,sectionUpdateTaskReducer,SectionOrderUpdateReducer,sectionUpdateReducer,sectionCreateReducer,sectionDeleteReducer} from './reducers/sectionReducers';
 import {noteListReducer,noteCreateReducer,noteUpdateReducer} from './reducers/noteReducers';
+import {taskDeleteReducer, taskUpdateReducer,taskCreateReducer} from './reducers/taskReducers';
+import {commentCreateReducer, commentDeleteReducer, commentListReducer, commentUpdateReducer} from './reducers/commentReducers';
+import {subtaskCreateReducer, subtaskDeleteReducer, subtaskListReducer, subtaskUpdateReducer} from './reducers/subtaskReducers';
 import { teamAddProjectReducer, teamAddUserReducer, teamCreateReducer, teamDeleteReducer, teamProjectDeleteReducer, teamtListReducer, teamUpdateReducer, teamUserDeleteReducer } from './reducers/teamReducers';
-import {taskDeleteReducer,taskCreateReducer,taskUpdateReducer} from './reducers/taskReducers';
-import {commentCreateReducer, commentListReducer, commentUpdateReducer} from './reducers/commentReducers';
 const reducer = combineReducers({
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
@@ -42,7 +43,12 @@ const reducer = combineReducers({
     taskUpdate: taskUpdateReducer,
     commentList: commentListReducer,
     commentCreate: commentCreateReducer,
-    commentUpdate: commentUpdateReducer
+    commentUpdate: commentUpdateReducer,
+    commentDelete: commentDeleteReducer,
+    subtaskList: subtaskListReducer,
+    subtaskCreate: subtaskCreateReducer,
+    subtaskUpdate: subtaskUpdateReducer,
+    subtaskDelete: subtaskDeleteReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
