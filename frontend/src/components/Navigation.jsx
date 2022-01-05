@@ -36,17 +36,17 @@ const Navigation = () => {
                   <div className="col-md-12">
                     <div className="banner-content">
                       <a className="navbar-brand d-none d-md-block" href="/">
-                        {/* <img src={Logo} alt="Logo" /> */}
-                        <img />
+                        {!loggedIn?<img src={Logo} alt="logo" />:<img />}
                       </a>
                     </div>
                   
                   </div>
                 </div>
               </div>
+              {!loggedIn?
               <button
                 className={
-                  isActive
+                  isActive 
                     ? "navbar-toggler active"
                     : "navbar-toggler collapsed"
                 }
@@ -61,7 +61,7 @@ const Navigation = () => {
                 <span className="toggler-icon"></span>
                 <span className="toggler-icon"></span>
                 <span className="toggler-icon"></span>
-              </button>
+              </button>:  <div></div>}
               <div
                 className={
                   isActive
