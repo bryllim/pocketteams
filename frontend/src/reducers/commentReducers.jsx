@@ -1,4 +1,4 @@
-import {COMMENT_LIST_REQUEST, COMMENT_LIST_SUCCESS, COMMENT_LIST_FAIL, COMMENT_CREATE_REQUEST, COMMENT_CREATE_SUCCESS, COMMENT_CREATE_FAIL, COMMENT_UPDATE_FAIL, COMMENT_UPDATE_REQUEST,COMMENT_UPDATE_SUCCESS } from "../constants/commentConstants";
+import {COMMENT_LIST_REQUEST, COMMENT_LIST_SUCCESS, COMMENT_LIST_FAIL, COMMENT_CREATE_REQUEST, COMMENT_CREATE_SUCCESS, COMMENT_CREATE_FAIL, COMMENT_UPDATE_FAIL, COMMENT_UPDATE_REQUEST,COMMENT_UPDATE_SUCCESS, COMMENT_DELETE_REQUEST, COMMENT_DELETE_SUCCESS, COMMENT_DELETE_FAIL } from "../constants/commentConstants";
 
 export const commentListReducer = (state = { comment: [] }, action) => {
     switch (action.type) {
@@ -34,6 +34,19 @@ export const commentUpdateReducer = (state = {}, action) => {
         case COMMENT_UPDATE_SUCCESS:
             return { loading: false, successUpdateComment: action.payload };
         case COMMENT_UPDATE_FAIL:
+            return { loading: false, error: action.payload };
+        default:
+            return state;
+    }
+};
+
+export const commentDeleteReducer = (state = {comment: []}, action) => {
+    switch (action.type) {
+        case COMMENT_DELETE_REQUEST:
+            return { loading: true };
+        case COMMENT_DELETE_SUCCESS:
+            return { loading: false, successUpdateComment: action.payload };
+        case COMMENT_DELETE_FAIL:
             return { loading: false, error: action.payload };
         default:
             return state;

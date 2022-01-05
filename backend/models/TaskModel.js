@@ -2,6 +2,9 @@ const mongoose = require("mongoose");
 
 const taskSchema = mongoose.Schema(
   {
+    isComplete: {
+      type: Boolean,
+    },
     task_name: {
       type: String,
       required: true,
@@ -25,6 +28,12 @@ const taskSchema = mongoose.Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment",
+      },
+    ],
+    task_subtasks: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Subtask",
       },
     ],
     user: {

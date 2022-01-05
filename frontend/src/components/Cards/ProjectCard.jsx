@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 
 const ProjectCard = ({ data }) => {
   const projectId = data ? data._id : null;
+  const projectName = data ? data.project_name : null;
 
   const history = useHistory();
   const dispatch = useDispatch();
@@ -20,8 +21,8 @@ const ProjectCard = ({ data }) => {
     [data]
   );
   const handleOnClick = useCallback(
-    () => history.push({ pathname: "/board", sectionList, projectId }),
-    [history, sectionList, projectId]
+    () => history.push({ pathname: "/board", sectionList, projectId,projectName}), 
+    [history, sectionList, projectId, projectName]
   );
 
   const [editShow, setEditShow] = useState(false);
@@ -37,7 +38,7 @@ const ProjectCard = ({ data }) => {
 
   const notifyInfo = (msg) =>
     toast.info(msg, {
-      position: toast.POSITION.BOTTOM_RIGHT,
+      position: toast.POSITION.TOP_CENTER,
       autoClose: 2500,
     });
 
@@ -102,7 +103,7 @@ const ProjectCard = ({ data }) => {
           <div className="d-flex justify-content-between mt-auto">
             <Row>
               <Col>
-                <button className="theme-btn theme-btn-sm" onClick={handleOnClick}>
+                <button className="theme-btn theme-btn-sm" onClick={handleOnClick} data={data} >
                     Open Project &nbsp;<i className="lni lni-arrow-right"></i>&nbsp;
                 </button>
               </Col>

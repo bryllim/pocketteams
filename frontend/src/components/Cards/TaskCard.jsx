@@ -76,14 +76,31 @@ const TaskCard = ({task,index,sectionId}) => {
   const [showNav, setShowNav] = useState(false);
   const [toggle, setToggle] = useState(true)
   const [taskName, setTaskName] = useState(task.task_name)
+  const [taskColor, setTaskColor] = useState("")
+  const [badgeStatus, setBadgeStatus] = useState("")
   const taskId = task._id
   const taskDescription = task.task_description
-  
+  const taskPriority = task.task_priority
  
   useEffect(() => {
     // update the state of taskName when dragging
     setTaskName(task.task_name);
   },[task]);
+
+   useEffect(() => {
+    if (taskPriority === "light") {
+      setTaskColor("light-1");
+      setBadgeStatus("light")
+    } else if (taskPriority === "medium") {
+      setTaskColor("medium-2 text-white");
+      setBadgeStatus("medium")
+    } else if (taskPriority === "heavy") {
+      setTaskColor("heavy-3");
+      setBadgeStatus("heavy")
+    } else {
+      setBadgeStatus('')
+    }
+  },[taskPriority]);
   
   const editText = () => {
     console.log("Edit")
@@ -112,7 +129,7 @@ const TaskCard = ({task,index,sectionId}) => {
         {(provided, snapshot) => {
           return (
             <div
-              className={`d-flex flex-column task-wrapper rounded `}
+              className={`d-flex flex-column task-wrapper rounded`}
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
@@ -151,6 +168,7 @@ const TaskCard = ({task,index,sectionId}) => {
                 }}} 
               />)
             }      
+                <span className={`badge ${taskColor}`}>{badgeStatus}</span>
                 {/* <h6>{task.content}</h6> */}
                 <Dropdown>
                     <Dropdown.Toggle 
@@ -162,20 +180,14 @@ const TaskCard = ({task,index,sectionId}) => {
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
                         <Dropdown.Item onClick={()=>setShowNav(!showNav)}>Edit</Dropdown.Item>
-                        <Dropdown.Item onClick={(e)=>{
-                          removeTask({
-                            initialData,
-                            setInitialData,
-                            taskId,
-                            index,
-                            sectionId,
-                            dispatch});
+                        <Dropdown.Item onClick={()=>{
+                          removeTask({sectionId, sections, setSections, index,taskId,dispatch});;
                         }}>Remove</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
                 {/* <i onClick={() => setShowNav(!showNav)} className="lni lni-pencil p-2"></i> */}
               </div>                    
-            <p className="px-3 text-limit">{taskDescription}</p>
+            <p className={`px-3 text-limit`}>{taskDescription}</p>
             <div className="d-flex justify-content-between align-tasks-center">
               <p>date</p>
               <div className="d-flex align-tasks-center">

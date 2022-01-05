@@ -50,6 +50,11 @@ const Project = () => {
   //   autoClose: 2500,
   // });
 
+  //titlebar
+  useEffect(() => {
+    document.title = "Projects - PocketTeams";
+  }, []);
+
   // Use Effects
   useEffect(() => {
     dispatch(listProjects());
