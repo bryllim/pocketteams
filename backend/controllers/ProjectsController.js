@@ -12,16 +12,15 @@ const getProjects = asyncHandler(async (req, res) => {
 });
 
 const createProject = asyncHandler(async (req, res) => {
-  const { project_name, project_description, project_status } = req.body;
+  const { project_name, project_description} = req.body;
 
-  if (!project_name || !project_status || !project_description) {
+  if (!project_name || !project_description) {
     res.status(400);
     throw new Error("Please Fill all the Fields");
   } else {
     const project = new Project({
       user: req.user._id,
       project_name,
-      project_status,
       project_description,
     });
 
@@ -50,7 +49,7 @@ const getProjectById = asyncHandler(async (req, res) => {
 });
 
 const updateProject = asyncHandler(async (req, res) => {
-  const { project_name, project_status, project_description } = req.body;
+  const { project_name, project_description } = req.body;
 
   const project = await Project.findById(req.params.id);
 
@@ -63,7 +62,6 @@ const updateProject = asyncHandler(async (req, res) => {
   if (project) {
     project.project_name = project_name;
     project.project_description = project_description;
-    project.project_status = project_status;
 
     const updatedProject = await project.save();
     res.json(updatedProject);
