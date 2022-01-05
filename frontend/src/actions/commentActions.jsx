@@ -1,5 +1,5 @@
 import { 
-    COMMENT_LIST_REQUEST, COMMENT_LIST_SUCCESS, COMMENT_LIST_FAIL, COMMENT_CREATE_FAIL, COMMENT_CREATE_SUCCESS, COMMENT_CREATE_REQUEST, COMMENT_UPDATE_FAIL, COMMENT_UPDATE_REQUEST,COMMENT_UPDATE_SUCCESS
+    COMMENT_LIST_REQUEST, COMMENT_LIST_SUCCESS, COMMENT_LIST_FAIL, COMMENT_CREATE_FAIL, COMMENT_CREATE_SUCCESS, COMMENT_CREATE_REQUEST, COMMENT_UPDATE_FAIL, COMMENT_UPDATE_REQUEST,COMMENT_UPDATE_SUCCESS, COMMENT_DELETE_REQUEST, COMMENT_DELETE_SUCCESS, COMMENT_DELETE_FAIL
 } from "../constants/commentConstants"
 import axios from "axios";
 
@@ -106,6 +106,45 @@ export const updateComments = ( id, Comment_context) => async (dispatch, getStat
 
         dispatch({
             type: COMMENT_UPDATE_FAIL,
+            payload: message,
+        });
+    }
+}
+
+
+export const deleteComment = (id) => async (dispatch, getState) => {
+    try{
+        dispatch({
+            type: COMMENT_DELETE_REQUEST,
+        });
+
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        const { data } = await axios.delete(
+            `/api/comments/delete/${id}`,
+            config
+        );
+
+        dispatch({
+            type: COMMENT_DELETE_SUCCESS,
+            payload: data,
+        });
+    } catch (error) {
+        const message = 
+            error.response && error.response.data.message 
+                ? error.response.data.message 
+                : error.message;
+        dispatch({
+            type: COMMENT_DELETE_FAIL,
             payload: message,
         });
     }

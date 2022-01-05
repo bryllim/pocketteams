@@ -74,6 +74,7 @@ const onDrag = ({ result, data, dispatch }) => {
 
 const Board = (props) => {
   const { projectId } = props.location || {};
+  const { projectName } = props.location || {};
   const dispatch = useDispatch();
   const history = useHistory();
   const userLogin = useSelector((state) => state.userLogin);
@@ -113,6 +114,12 @@ const Board = (props) => {
   const [sectionOrder, setSectionOrder] = useState(null);
   const { userInfo } = userLogin;
   const socket = useContext(SocketContext);
+
+  // titlebar
+  useEffect(() => {
+    document.title = `${projectName} - PocketTeams`;
+  }, [projectName]);
+
 
   useEffect(() => {
     socket.emit("Join_Board", projectId);
@@ -283,7 +290,7 @@ const Board = (props) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sectionLoading, taskLoading]);
-  console.log("initial", initialData.sections);
+  // console.log("initial", initialData.sections);
   return (
     <>
       <TaskContext.Provider
