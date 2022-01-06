@@ -1,10 +1,10 @@
 <div id="top"></div>
-
+<div align="center">
 [![Contributors][contributors-shield]](https://github.com/Lester-Fong/pocketteams/graphs/contributors)
 [![Forks][forks-shield]](https://github.com/Lester-Fong/pocketteams/network/members)
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]](https://www.linkedin.com/company/pocketdevs/)
-
+</div>
 
 
 <!-- PROJECT LOGO -->
