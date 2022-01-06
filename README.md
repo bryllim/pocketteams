@@ -65,7 +65,6 @@ PocketTeams is built with the help of these libraries.
 * [Bootstrap](https://getbootstrap.com)
 * [Expressjs](https://expressjs.com/)
 * [Mongoosejs](https://mongoosejs.com/)
-* [nodemon](https://www.npmjs.com/package/nodemon)
 * [React.js](https://reactjs.org/)
 * [socket.io](https://socket.io/)
 
@@ -163,7 +162,7 @@ Project Link: [https://github.com/bryllim/pocketteams](https://github.com/brylli
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
-Special thanks for these Package/plugins that are a huge help in building the project.
+Special thanks for these Packages/Plugins that are a huge help in building the project.
 
 * [aos](https://www.npmjs.com/package/aos)
 * [Axios](https://www.npmjs.com/package/axios)
@@ -172,6 +171,7 @@ Special thanks for these Package/plugins that are a huge help in building the pr
 * [Express-async-handler](https://www.npmjs.com/package/express-async-handler)
 * [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
 * [LineIcons](https://lineicons.com/)
+* [nodemon](https://www.npmjs.com/package/nodemon)
 * [React-bootstrap](https://react-bootstrap.github.io/)
 * [react-modal](https://www.npmjs.com/package/react-modal)
 * [react-toastify](https://www.npmjs.com/package/react-toastify)
