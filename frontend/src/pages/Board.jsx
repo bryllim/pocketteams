@@ -310,14 +310,14 @@ const Board = (props) => {
               <Sidebar />
             </Col>
             <Col md={8} className="d-flex flex-column h-100">
-              <h3>
+              <h4>
                 <Breadcrumb>
                   <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>
                   <Breadcrumb.Item href="/board" active>
                     {projectName}
                   </Breadcrumb.Item>
                 </Breadcrumb>
-              </h3>
+              </h4>
               <div className="d-flex scrolling-wrapper-x flex-nowrap flex-grow-1 task-board-wrapper my-3">
                 <DragDropContext
                   onDragEnd={(result) => {

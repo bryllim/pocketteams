@@ -109,11 +109,11 @@ const Project = () => {
           <Sidebar />
         </Col>
         <Col md="8" className="d-flex flex-column h-100">
-          <h3>
+          <h4>
             <Breadcrumb>
               <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>
             </Breadcrumb>
-          </h3>
+          </h4>
           {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
           <div className="row row-cols-xl-3 row-cols-md-2 g-md-2 g-2">
             <Col>
