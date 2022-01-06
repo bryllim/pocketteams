@@ -196,6 +196,5 @@ Special thanks to these Packages/Plugins that are a huge help in building the pr
 [license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: 
 [create-screenshot]: https://user-images.githubusercontent.com/75387615/148388905-a760bd92-9367-4372-bc36-665a5e4cd2a5.png
 
