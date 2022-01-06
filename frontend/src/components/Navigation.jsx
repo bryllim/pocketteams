@@ -22,7 +22,11 @@ const Navigation = () => {
   }, [userInfo]);
 
   return (
-    <section className="header navbar-area sticky">
+    <section className={
+      loggedIn
+      ?"header navbar-area sticky theme-bg-color"
+      :"header navbar-area sticky"
+    }>
       <div className="container">
         <div className="row align-items-center">
           <div className="col-lg-12">
@@ -32,16 +36,17 @@ const Navigation = () => {
                   <div className="col-md-12">
                     <div className="banner-content">
                       <a className="navbar-brand d-none d-md-block" href="/">
-                        <img src={Logo} alt="Logo" />
+                        {!loggedIn?<img src={Logo} alt="logo" />:<img />}
                       </a>
                     </div>
                   
                   </div>
                 </div>
               </div>
+              {!loggedIn?
               <button
                 className={
-                  isActive
+                  isActive 
                     ? "navbar-toggler active"
                     : "navbar-toggler collapsed"
                 }
@@ -56,7 +61,7 @@ const Navigation = () => {
                 <span className="toggler-icon"></span>
                 <span className="toggler-icon"></span>
                 <span className="toggler-icon"></span>
-              </button>
+              </button>:  <div></div>}
               <div
                 className={
                   isActive

@@ -36,18 +36,6 @@ const Project = () => {
   const { success: successDeleteProject, data: deleteProjectId } =
     deleteProject;
 
-  // const notifyInfo = (msg) =>
-  //   toast.info(msg, {
-  //     position: toast.POSITION.BOTTOM_RIGHT,
-  //     autoClose: 2500,
-  //   });
-
-  // const notifySuccess = (msg) =>
-  //   toast.success(msg, {
-  //   position: toast.POSITION.BOTTOM_RIGHT,
-  //   autoClose: 2500,
-  // });
-
   //titlebar
   useEffect(() => {
     document.title = "Projects - PocketTeams";
