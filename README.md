@@ -60,23 +60,14 @@ PocketTeams allows your team to stay organized, sync, and plan your project in o
 
 
 ## Built With
-PocketTeams is built with the help of these libraries and packages.
-* [aos](https://www.npmjs.com/package/aos)
-* [Axios](https://www.npmjs.com/package/axios)
-* [Bcryptjs](https://www.npmjs.com/package/bcryptjs)
+PocketTeams is built with the help of these libraries.
+
 * [Bootstrap](https://getbootstrap.com)
-* [Concurrently](https://www.npmjs.com/package/concurrently)
 * [Expressjs](https://expressjs.com/)
-* [Express-async-handler](https://www.npmjs.com/package/express-async-handler)
-* [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
 * [Mongoosejs](https://mongoosejs.com/)
 * [nodemon](https://www.npmjs.com/package/nodemon)
 * [React.js](https://reactjs.org/)
-* [React-bootstrap](https://react-bootstrap.github.io/)
-* [react-modal](https://www.npmjs.com/package/react-modal)
-* [react-toastify](https://www.npmjs.com/package/react-toastify)
 * [socket.io](https://socket.io/)
-* [socket.io-client](https://www.npmjs.com/package/socket.io-client)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -173,33 +164,18 @@ Project Link: [https://github.com/bryllim/pocketteams](https://github.com/brylli
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
+Packages/plug-ins that are a huge help in building the project.
+* [aos](https://www.npmjs.com/package/aos)
+* [Axios](https://www.npmjs.com/package/axios)
+* [Bcryptjs](https://www.npmjs.com/package/bcryptjs)
+* [Concurrently](https://www.npmjs.com/package/concurrently)
+* [Express-async-handler](https://www.npmjs.com/package/express-async-handler)
+* [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+* [LineIcons](https://lineicons.com/)
+* [React-bootstrap](https://react-bootstrap.github.io/)
+* [react-modal](https://www.npmjs.com/package/react-modal)
+* [react-toastify](https://www.npmjs.com/package/react-toastify)
+* [socket.io-client](https://www.npmjs.com/package/socket.io-client)
 
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
-[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
-[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
-[stars-url]: https://github.com/othneildrew/Best-README-Template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
-[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: images/screenshot.png
