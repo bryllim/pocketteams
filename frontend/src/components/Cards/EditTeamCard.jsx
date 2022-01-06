@@ -19,6 +19,7 @@ const EditTeamCard = (props) => {
       title: 'Warning',
       text: 'Are you sure you want to remove this user?',
       icon: 'error',
+      reverseButtons: true,
       showDenyButton: true,
       confirmButtonText: 'Yes',
       denyButtonText: `No`,
