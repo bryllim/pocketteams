@@ -10,12 +10,12 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://github.com/Lester-Fong/pocketteams">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">PocketTeams</h3>
-  <h4 align="center">Level up the way you work with your team<h4>
+  <h4 align="center">Level up the way you work with your team</h4>
 
 </div>
 
@@ -51,7 +51,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](https://pocketteams.vercel.app/)
 
 PocketTeams allows your team to stay organized, sync, and plan your project in one common environment, allowing them to discuss tasks in one shared space. We provide a professional working environment in which you can simply collaborate from anywhere. From forming a team and organizing projects to assigning tasks and keeping track of progress, we've got you covered.
 
@@ -74,6 +74,7 @@ PocketTeams is built with the help of these libraries.
 * [React.js](https://reactjs.org/)
 * [React-bootstrap](https://react-bootstrap.github.io/)
 * [react-modal](https://www.npmjs.com/package/react-modal)
+* [react-toastify](https://www.npmjs.com/package/react-toastify)
 * [socket.io](https://socket.io/)
 * [socket.io-client](https://www.npmjs.com/package/socket.io-client)
 
@@ -115,8 +116,6 @@ _Below is an example of how you can instruct your audience on installing and set
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-
-
 <!-- USAGE EXAMPLES -->
 ## Usage
 
@@ -132,25 +131,6 @@ Create your project, add a description, and invite your team members. You can th
 Add, drag, and drop tasks to your board and assign them to your team or change their order. You can also leave comments on tasks.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- ROADMAP -->
-## Roadmap
-
-- [x] Add Changelog
-- [x] Add back to top links
-- [x] Add Additional Templates w/ Examples
-- [x] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- CONTRIBUTING -->
 ## Contributing
@@ -182,7 +162,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+Powered By: [Pocketdevs.ph](https://pocketdevs.ph/#contact)
 
 Project Link: [https://github.com/bryllim/pocketteams](https://github.com/bryllim/pocketteams)
 
