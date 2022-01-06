@@ -115,9 +115,10 @@ Give your team a name and invite team members and assign user roles. You can als
 #### Project management
 
 Create your project, add a description, and invite your team members. You can then create multiple boards for your project.
+[![create your project][project-screenshot]](https://pocketteams.vercel.app/)
 
 #### Manage tasks and collaborate
-
+[![board page][board-screenshot]](https://pocketteams.vercel.app/)
 Add, drag, and drop tasks to your board and assign them to your team or change their order. You can also leave comments on tasks.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -197,4 +198,5 @@ Special thanks to these Packages/Plugins that are a huge help in building the pr
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
 [create-screenshot]: https://user-images.githubusercontent.com/75387615/148388905-a760bd92-9367-4372-bc36-665a5e4cd2a5.png
-
+[project-screenshot]: https://user-images.githubusercontent.com/75387615/148389883-7b1beb1c-d2b5-498a-adcd-886027a5694a.png
+[board-screenshot]: https://user-images.githubusercontent.com/75387615/148389967-ff213d36-465e-4965-8ff6-f4ce4ac47efe.png
