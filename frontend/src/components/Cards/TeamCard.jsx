@@ -102,7 +102,7 @@ const TeamCard = ({ data }) => {
                 as={CustomToggle}
                 id="dropdown-custom-components"
               >
-                <i className="bi bi-three-dots" />
+                <i className="lni lni-more-alt" />
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item onClick={handleShow}>Edit</Dropdown.Item>

@@ -179,6 +179,15 @@ code {
   padding: 0.5rem !important;
 }
 
+.theme-bg-color {
+  background: linear-gradient(
+    to right,
+    #ed213a 0%,
+    #93291e 100%,
+    #ed213a 50%
+  )!important;
+}
+
 @media only screen and (max-width: 991px) {
   .editteam-email {
     display: none;
