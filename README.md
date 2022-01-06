@@ -162,7 +162,7 @@ Project Link: [https://github.com/bryllim/pocketteams](https://github.com/brylli
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
-Special thanks for these Packages/Plugins that are a huge help in building the project.
+Special thanks to these Packages/Plugins that are a huge help in building the project.
 
 * [aos](https://www.npmjs.com/package/aos)
 * [Axios](https://www.npmjs.com/package/axios)
