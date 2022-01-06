@@ -1,11 +1,9 @@
 <div id="top"></div>
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
+[![Contributors][contributors-shield]](https://github.com/Lester-Fong/pocketteams/graphs/contributors)
+[![Forks][forks-shield]](https://github.com/Lester-Fong/pocketteams/network/members)
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+[![LinkedIn][linkedin-shield]](https://www.linkedin.com/company/pocketdevs/)
 
 
 
@@ -134,6 +132,25 @@ Create your project, add a description, and invite your team members. You can th
 Add, drag, and drop tasks to your board and assign them to your team or change their order. You can also leave comments on tasks.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- ROADMAP -->
+## Roadmap
+
+- [x] Add Changelog
+- [x] Add back to top links
+- [x] Add Additional Templates w/ Examples
+- [x] Add "components" document to easily copy & paste sections of the readme
+- [ ] Multi-language Support
+    - [ ] Chinese
+    - [ ] Spanish
+
+See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
 
 <!-- CONTRIBUTING -->
 ## Contributing
