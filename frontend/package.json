@@ -5,6 +5,7 @@
   "proxy": "http://127.0.0.1:5000",
   "dependencies": {
     "@babel/core": "^7.15.5",
+    "@dsalvagni/react-profile-picture": "^1.0.1",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",

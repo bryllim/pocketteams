@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Logo from "../assets/img/logo/logo.png";
@@ -36,7 +37,7 @@ const Navigation = () => {
                   <div className="col-md-12">
                     <div className="banner-content">
                       <a className="navbar-brand d-none d-md-block" href="/">
-                        {!loggedIn?<img src={Logo} alt="logo" />:<img />}
+                        {!loggedIn?<img src={Logo} alt="logo" />:<img/>}
                       </a>
                     </div>
                   
