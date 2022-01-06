@@ -7,6 +7,7 @@ import { Breadcrumb, Col, Container, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { listProjects } from "../actions/projectActions";
+import ProfileCard from "../components/Cards/ProfileCard";
 
 const Project = () => {
   
@@ -101,7 +102,7 @@ const Project = () => {
   return (
     <Container className="board-container">
       <Navigation />
-      <Row className="h-100">
+      <Row className="h-100 overflow-auto">
         <Col
           xxl="4"
           className="d-flex flex-column h-100 d-none d-md-block d-md-none d-lg-block d-lg-none d-xl-block"
