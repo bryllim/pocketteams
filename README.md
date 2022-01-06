@@ -8,11 +8,11 @@
 
 <!-- PROJECT LOGO -->
 <br />
-<div align="center">
-  <a href="https://github.com/Lester-Fong/pocketteams">
-    [![create your team][create-screenshot]](https://pocketteams.vercel.app/)
-  </a>
 
+
+    [![create your team][create-screenshot]](https://github.com/Lester-Fong/pocketteams)
+
+<div align="center">
   <h3 align="center">PocketTeams</h3>
   <h4 align="center">Level up the way you work with your team</h4>
 
