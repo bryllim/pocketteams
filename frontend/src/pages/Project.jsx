@@ -36,8 +36,6 @@ const Project = () => {
   const { success: successDeleteProject, data: deleteProjectId } =
     deleteProject;
 
-  // //NOTIFICATIONS
-
   // const notifyInfo = (msg) =>
   //   toast.info(msg, {
   //     position: toast.POSITION.BOTTOM_RIGHT,
