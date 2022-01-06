@@ -118,9 +118,9 @@ Create your project, add a description, and invite your team members. You can th
 [![create your project][project-screenshot]](https://pocketteams.vercel.app/)
 
 #### Manage tasks and collaborate
-[![board page][board-screenshot]](https://pocketteams.vercel.app/)
-Add, drag, and drop tasks to your board and assign them to your team or change their order. You can also leave comments on tasks.
 
+Add, drag, and drop tasks to your board and assign them to your team or change their order. You can also leave comments on tasks.
+[![board page][board-screenshot]](https://pocketteams.vercel.app/)
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->
