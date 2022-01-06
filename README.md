@@ -10,7 +10,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Lester-Fong/pocketteams">
-    <img src="https://user-images.githubusercontent.com/75387615/148390378-7139edb1-2b9c-49e4-a99b-41537d07bd8c.png" alt="Logo" width="110" height="80">
+    <img src="https://user-images.githubusercontent.com/75387615/148390378-7139edb1-2b9c-49e4-a99b-41537d07bd8c.png" alt="Logo" width="125" height="80">
   </a>
 
   <h3 align="center">PocketTeams</h3>
