@@ -8,11 +8,11 @@
 
 <!-- PROJECT LOGO -->
 <br />
-
-
-    [![create your team][create-screenshot]](https://github.com/Lester-Fong/pocketteams)
-
 <div align="center">
+  <a href="https://github.com/Lester-Fong/pocketteams">
+    <img src="https://user-images.githubusercontent.com/75387615/148390378-7139edb1-2b9c-49e4-a99b-41537d07bd8c.png" alt="Logo" width="80" height="80">
+  </a>
+
   <h3 align="center">PocketTeams</h3>
   <h4 align="center">Level up the way you work with your team</h4>
 
@@ -201,4 +201,4 @@ Special thanks to these Packages/Plugins that are a huge help in building the pr
 [project-screenshot]: https://user-images.githubusercontent.com/75387615/148389883-7b1beb1c-d2b5-498a-adcd-886027a5694a.png
 [board-screenshot]: https://user-images.githubusercontent.com/75387615/148389967-ff213d36-465e-4965-8ff6-f4ce4ac47efe.png
 [product-screenshot]: https://user-images.githubusercontent.com/75387615/148390141-20b4bb8d-f847-44de-9596-5e84886dc184.png
-[logo-img]: https://user-images.githubusercontent.com/75387615/148390378-7139edb1-2b9c-49e4-a99b-41537d07bd8c.png
+
