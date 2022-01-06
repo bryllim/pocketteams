@@ -24,7 +24,7 @@ const Notes = () => {
   const history = useHistory();
 
   const [content, setContent] = useState(notes);
-  
+
   const noteUpdate = useSelector((state) => state.noteUpdate);
   const { success: successUpdate } = noteUpdate;
 
@@ -73,7 +73,7 @@ const Notes = () => {
             placeholder="Write your notes here..."
             onChange={(e) => setContent(e.target.value)}
             defaultValue={note.content}
-            className="notes-text"
+            className="notes-text pt-3"
           ></textarea>
         ))}
         <div>
