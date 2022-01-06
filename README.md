@@ -110,7 +110,7 @@ _Below is an example of how you can instruct your audience on installing and set
 
 #### Create your team 
 Give your team a name and invite team members and assign user roles. You can also create multiple teams.
-[![create your team][createTeam]]
+[![create your team][create-screenshot]](https://pocketteams.vercel.app/)
  
 #### Project management
 
@@ -197,5 +197,5 @@ Special thanks to these Packages/Plugins that are a huge help in building the pr
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
 [product-screenshot]: 
-[createTeam]: https://user-images.githubusercontent.com/75387615/148388905-a760bd92-9367-4372-bc36-665a5e4cd2a5.png
+[create-screenshot]: https://user-images.githubusercontent.com/75387615/148388905-a760bd92-9367-4372-bc36-665a5e4cd2a5.png
 
