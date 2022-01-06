@@ -117,7 +117,7 @@ const Sidebar = () => {
       <ProfileCard />
       {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       <div className="team-section-wrapper sidebar-box d-flex flex-column scrolling-wrapper-y mb-30 p-2">
-        {teamData.length > 0 ? (
+        {teamData > 0 ? (
           teamData?.map((team) => <TeamCard data={team} />)
         ) : (
           <p className="m-4">You currently don't have any teams.</p>
