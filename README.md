@@ -1,12 +1,6 @@
 
 <div id="top"></div>
 
-[![Contributors][contributors-shield]](https://github.com/bryllim/pocketteams/graphs/contributors)
-[![Forks][forks-shield]](https://github.com/bryllim/pocketteams/network/members)
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]](https://www.linkedin.com/company/pocketdevs/)
-
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -36,8 +30,6 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](https://pocketteams.vercel.app/)
 
 PocketTeams allows your team to stay organized, sync, and plan your project in one common environment, allowing them to discuss tasks in one shared space. We provide a professional working environment in which you can simply collaborate from anywhere. From forming a team and organizing projects to assigning tasks and keeping track of progress, we've got you covered.
 
