@@ -60,7 +60,7 @@ PocketTeams allows your team to stay organized, sync, and plan your project in o
 
 
 ## Built With
-PocketTeams is built with the help of these libraries.
+PocketTeams is built with the help of these libraries and packages.
 * [aos](https://www.npmjs.com/package/aos)
 * [Axios](https://www.npmjs.com/package/axios)
 * [Bcryptjs](https://www.npmjs.com/package/bcryptjs)
