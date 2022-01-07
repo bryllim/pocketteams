@@ -10,7 +10,6 @@ import { listProjects } from "../actions/projectActions";
 import ProfileCard from "../components/Cards/ProfileCard";
 
 const Project = () => {
-  
   // States & Reducers
   const [projectData, setProjectData] = useState(null);
 
@@ -49,24 +48,23 @@ const Project = () => {
 
   // Loading Projects
   useEffect(() => {
-    if(loading === false && projects != null && projects.length > 0) {
+    if (loading === false && projects != null && projects.length > 0) {
       setProjectData(projects);
     }
   }, [loading, projects]);
 
   // Creating Projects
   useEffect(() => {
-    if(createProjectLoading === false && newProjectData) {
-        if(projectData != null && projectData.length > 0) {
-          const newProjects = [...projectData];
-          newProjects.push(newProjectData); 
-          setProjectData(newProjects);
-        } 
-        else {
-          setProjectData([newProjectData]); 
-        }
+    if (createProjectLoading === false && newProjectData) {
+      if (projectData != null && projectData.length > 0) {
+        const newProjects = [...projectData];
+        newProjects.push(newProjectData);
+        setProjectData(newProjects);
+      } else {
+        setProjectData([newProjectData]);
+      }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createProjectLoading, newProjectData]);
 
   // Deleting Projects
@@ -100,23 +98,28 @@ const Project = () => {
   }, [projects, updatedProject, successUpdateProject, updateProjectLoading]);
 
   return (
-    <Container className="board-container">
+    <Container className="board-container scrolling-wrapper-y h-100">
       <Navigation />
-      <Row className="h-100 overflow-auto">
-        <Col
-          xxl="4"
-          className="d-flex flex-column h-100 d-none d-md-block d-md-none d-lg-block d-lg-none d-xl-block"
-        >
+      <Row className="h-100 justify-content-sm-center ">
+        <Col xxl="4" className="d-flex flex-column h-100 d-none d-lg-block">
           <Sidebar />
         </Col>
-        <Col md="8" className="d-flex flex-column h-100">
+
+        <Col xs="12" lg="8" className="d-flex flex-column ">
+          <Row className="sidebar-wrapper d-md-block d-lg-none">
+            <Col className="">
+              <ProfileCard />{" "}
+            </Col>
+          </Row>
+
           <h3>
             <Breadcrumb>
               <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>
             </Breadcrumb>
           </h3>
           {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
-          <div className="row row-cols-xl-3 row-cols-md-2 g-md-2 g-2">
+          <Row className="row-cols-lg-auto row-cols-1 
+          row-cols-md-2 g-2 mb-30 ">
             <Col>
               <ProjectCard />
             </Col>
@@ -125,7 +128,10 @@ const Project = () => {
                 <ProjectCard data={project} />
               </Col>
             ))}
-          </div>
+          </Row>
+          <Row className="d-block d-lg-none">
+            <Sidebar />
+          </Row>
         </Col>
       </Row>
     </Container>
