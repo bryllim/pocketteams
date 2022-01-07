@@ -120,7 +120,6 @@ const Board = (props) => {
     document.title = `${projectName} - PocketTeams`;
   }, [projectName]);
 
-
   useEffect(() => {
     socket.emit("Join_Board", projectId);
     //subscribe to board events
@@ -305,31 +304,24 @@ const Board = (props) => {
         }}
       >
         <Navigation />
-        <Container fluid className="board-container">
+        <Container className="board-container">
           <Row className="h-100">
-            <Col
-             xxl="3"
-             className="d-flex flex-column h-100 d-none d-lg-block"
-            >
+            <Col md="4" className="d-flex flex-column h-100 d-none d-lg-block">
               <Sidebar />
             </Col>
-            <Col md={12} lg={9}  className="d-flex flex-column h-100 ">
-              <h3>
+            <Col md={8} className="d-flex flex-column h-100">
+              <h4>
                 <Breadcrumb>
                   <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>
                   <Breadcrumb.Item href="/board" active>
-                    Board
+                    {projectName}
                   </Breadcrumb.Item>
                 </Breadcrumb>
-              </h3>
+              </h4>
               <div className="d-flex scrolling-wrapper-x flex-nowrap flex-grow-1 task-board-wrapper my-3">
                 <DragDropContext
                   onDragEnd={(result) => {
                     const data = {};
-                    // data.sections = sections;
-                    // data.sectionOrder = sectionOrder;
-                    // data.setSections = setSections;
-                    // data.setSectionOrder = setSectionOrder;
                     data.initialData = initialData;
                     data.setInitialData = setInitialData;
                     onDrag({
