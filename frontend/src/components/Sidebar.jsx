@@ -112,23 +112,12 @@ const Sidebar = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [successDeleteUser, deleteUserData]);
 
-  // //Deleting Teams
-  // useEffect(() => {
-  //   if(successDeleteTeam === true && deleteTeamId)
-  //   {
-  //     const newTeams = [...teamData]
-  //     const index = newTeams.findIndex(teams => teams._id === deleteTeamId)
-  //     newTeams.splice(index,1)
-  //     setTeamData(newTeams)
-  //   }
-  // }, [successDeleteTeam, deleteTeamId])
-
   return (
     <div className="d-flex flex-column sidebar-wrapper scrolling-wrapper-y h-100">
       <ProfileCard />
       {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       <div className="team-section-wrapper sidebar-box d-flex flex-column scrolling-wrapper-y mb-30 p-2">
-        {teamData ? (
+        {teamData > 0 ? (
           teamData?.map((team) => <TeamCard data={team} />)
         ) : (
           <p className="m-4">You currently don't have any teams.</p>

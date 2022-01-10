@@ -49,12 +49,12 @@ const Notes = () => {
     e.preventDefault();
     if (notes.length === 0) {
       dispatch(createNoteAction( defaultContent ));
-      notifySuccess("Note Created Successfully.")
+      notifySuccess("Note synced!")
       window.location.reload(false)
     } 
     if (notes.length >= 1) {
       dispatch(updateNoteAction( notes[0]._id, content ));
-      notifySuccess("Note Updated Successfully.")
+      notifySuccess("Note synced!")
       }
 }
   // console.log(window.location.pathname);
@@ -73,7 +73,7 @@ const Notes = () => {
             placeholder="Write your notes here..."
             onChange={(e) => setContent(e.target.value)}
             defaultValue={note.content}
-            className="notes-text"
+            className="notes-text pt-3"
           ></textarea>
         ))}
         <div>
