@@ -24,7 +24,6 @@ const Notes = () => {
   const history = useHistory();
 
   const [content, setContent] = useState(notes);
-  const [notif, setNotif] = useState();
 
   const noteUpdate = useSelector((state) => state.noteUpdate);
   const { success: successUpdate } = noteUpdate;
