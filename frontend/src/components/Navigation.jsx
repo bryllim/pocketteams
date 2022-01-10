@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Logo from "../assets/img/logo/logo.png";
+import JoinWaitlistModal from "./Modals/JoinWaitlistModal";
+
 
 const Navigation = () => {
   const userLogin = useSelector((state) => state.userLogin);
@@ -12,6 +14,10 @@ const Navigation = () => {
   const toggleNavbar = () => {
     setActive(!isActive);
   };
+
+  const [JoinModal, setJoinModal] = useState(false);
+  const handleJoinClose = () => setJoinModal(false);
+  const handleJoinShow = () => setJoinModal(true);
 
   useEffect(() => {
     if (userInfo) {
@@ -76,16 +82,21 @@ const Navigation = () => {
                       <a href="/login">Login</a>
                     </li>
                     <li className="nav-item">
-                      <a href="/register">
+                      <a href="/#" onClick={handleJoinShow}>
                         <span className="d-none d-md-block">
                           <span class="badge bg-danger">It's free!</span> &nbsp;{" "}
                         </span>
-                        <strong>Create an Account</strong>
+                        <strong>Join the wait list</strong>
                       </a>
                     </li>
                   </ul>
                 )}
               </div>
+              <JoinWaitlistModal
+                // data={data}
+                showModal={JoinModal}
+                hideModal={handleJoinClose}
+              />
             </nav>
           </div>
         </div>

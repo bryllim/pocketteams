@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension'
 import { userLoginReducer, userRegisterReducer, userListReducer, userAddReducer } from './reducers/userReducers';
 import { projectCreateReducer, projectDeleteReducer, projectListReducer, projectUpdateReducer } from './reducers/projectReducers';
+import { joinWaitingListReducer } from './reducers/waitlistReducers';
 import { taskListReducer} from './reducers/taskReducers';
 import { sectionOrderListReducer, sectionListReducer ,sectionUpdateTaskReducer,SectionOrderUpdateReducer,sectionUpdateReducer,sectionCreateReducer,sectionDeleteReducer} from './reducers/sectionReducers';
 import {noteListReducer,noteCreateReducer,noteUpdateReducer} from './reducers/noteReducers';
@@ -49,6 +50,7 @@ const reducer = combineReducers({
     subtaskCreate: subtaskCreateReducer,
     subtaskUpdate: subtaskUpdateReducer,
     subtaskDelete: subtaskDeleteReducer,
+    waitlistCreate: joinWaitingListReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
