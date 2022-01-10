@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import { listProjects } from "../actions/projectActions";
 import ProfileCard from "../components/Cards/ProfileCard";
+import Footer from "../components/Footer";
 
 const Project = () => {
   // States & Reducers
@@ -98,7 +99,8 @@ const Project = () => {
   }, [projects, updatedProject, successUpdateProject, updateProjectLoading]);
 
   return (
-    <Container className="board-container scrolling-wrapper-y h-100">
+    <>
+    <Container className="board-container scrolling-wrapper-y hv-100">
       <Navigation />
       <Row className="h-100 justify-content-sm-center ">
         <Col xxl="4" className="d-flex flex-column h-100 d-none d-lg-block">
@@ -135,6 +137,8 @@ const Project = () => {
         </Col>
       </Row>
     </Container>
+    <Footer/>
+    </>
   );
 };
 
