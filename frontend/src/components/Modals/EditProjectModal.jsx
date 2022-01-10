@@ -5,6 +5,7 @@ import { updateProjectAction } from "../../actions/projectActions";
 import { toast } from "react-toastify";
 
 const EditProjectModal = ({ showModal, hideModal, data}) => {
+
   const [projectName, setProjectName] = useState(null);
   const [projectDescription, setProjectDescription] = useState(null);
   const [projectStatus, setProjectStatus] = useState(null);
@@ -22,12 +23,14 @@ const EditProjectModal = ({ showModal, hideModal, data}) => {
   const updateHandler = (e) => {
     e.preventDefault();
     dispatch(updateProjectAction(data._id, projectName, projectDescription, projectStatus));
-    if(!projectName || !projectDescription || !projectStatus) return;
+    if(!projectName || !projectDescription) return;
+    
     resetHandler();
     hideModal();
     notifyInfo("Project Updated");
   }
-
+ 
+  //Loading Project
   useEffect(() => {
     setProjectName(data.project_name);
     setProjectDescription(data.project_description);

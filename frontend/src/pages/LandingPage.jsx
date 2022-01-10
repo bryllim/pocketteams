@@ -22,7 +22,6 @@ const LandingPage = ({ history }) => {
     if (userInfo) {
       history.push("/project");
     }
-    console.log(userInfo);
   }, [history, userInfo]);
 
   return (

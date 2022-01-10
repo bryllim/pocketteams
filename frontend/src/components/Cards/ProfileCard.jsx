@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image } from "react-bootstrap";
-import { useDispatch  } from "react-redux";
+import { useDispatch, useSelector  } from "react-redux";
 import { useHistory } from "react-router";
-import { logout } from "../../actions/userActions";
+import { getUserAction, logout } from "../../actions/userActions";
 import ProfileSettingsModal from "../Modals/ProfileSettingsModal";
 import Swal from 'sweetalert2'
 function ProfileCard() {
@@ -16,6 +16,11 @@ function ProfileCard() {
   const history = useHistory();
   const dispatch = useDispatch();
   const [loggedIn, setLoggedIn] = useState(true);
+
+  // useEffect(() => {
+  //   dispatch(getUserAction(user._id))
+  //   console.log(userGetData);
+  // }, [dispatch, user._id])
 
   const logoutHandler = async() => {
     const result = await Swal.fire({
@@ -40,6 +45,15 @@ function ProfileCard() {
     dispatch(logout());
     history.push("/");
   }
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
+  useEffect(() => {
+    if(userInfo){
+      console.log(userInfo);
+    }
+  }, [dispatch, userInfo])
 
   return (
     <div className="sidebar-box recent-blog-box mb-30">

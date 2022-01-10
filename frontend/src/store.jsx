@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { userLoginReducer, userRegisterReducer, userListReducer, userAddReducer } from './reducers/userReducers';
+import { userLoginReducer, userRegisterReducer, userListReducer, userAddReducer, userUpdateReducer, userGetReducer } from './reducers/userReducers';
 import { projectCreateReducer, projectDeleteReducer, projectListReducer, projectUpdateReducer } from './reducers/projectReducers';
 import { taskListReducer} from './reducers/taskReducers';
 import { sectionOrderListReducer, sectionListReducer ,sectionUpdateTaskReducer,SectionOrderUpdateReducer,sectionUpdateReducer,sectionCreateReducer,sectionDeleteReducer} from './reducers/sectionReducers';
@@ -15,6 +15,8 @@ const reducer = combineReducers({
     userRegister: userRegisterReducer,
     userList: userListReducer,
     userAdd: userAddReducer,
+    userUpdate: userUpdateReducer,
+    userGet: userGetReducer,
     projectList: projectListReducer,
     projectCreate: projectCreateReducer,
     projectUpdate: projectUpdateReducer,

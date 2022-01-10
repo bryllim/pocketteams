@@ -9,7 +9,13 @@ import {
     USER_REGISTER_SUCCESS,
     USER_LIST_FAIL,
     USER_LIST_REQUEST, 
-    USER_LIST_SUCCESS,  } from "../constants/userConstants";
+    USER_LIST_SUCCESS,
+    USER_UPDATE_REQUEST,
+    USER_UPDATE_SUCCESS,
+    USER_UPDATE_FAIL,
+    USER_GET_FAIL,
+    USER_GET_SUCCESS,
+    USER_GET_REQUEST,  } from "../constants/userConstants";
 
 export const login = (email_address, password) => async (dispatch) =>{
     try {
@@ -106,6 +112,87 @@ export const getusers = () => async (dispatch, getState) => {
         });
     }
 };
+
+export const getUserAction = (id) => async (dispatch, getState) => {
+    try{
+        dispatch({
+            type: USER_GET_REQUEST,
+        });
+
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        const { data } = await axios.get(`/api/users/${id}`, config);
+
+        dispatch({
+            type: USER_GET_SUCCESS,
+            payload: data,
+        });
+    } catch (error) {
+        const message = 
+            error.response && error.response.data.message 
+                ? error.response.data.message 
+                : error.message;
+        dispatch({
+            type: USER_GET_FAIL,
+            payload: message,
+        });
+    } 
+}
+
+export const updateUserAction = (id, first_name, last_name, email_address, password, confirm_password, profile_pic) => async (dispatch, getState) => {
+    try{
+        dispatch({
+            type: USER_UPDATE_REQUEST,
+        });
+
+        const {
+            userLogin: { userInfo },
+        } = getState();
+
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userInfo.token}`,
+            },
+        };
+
+        const { data } = await axios.put(
+            `/api/users/${id}`,
+            {
+            first_name, 
+            last_name, 
+            email_address, 
+            password, 
+            confirm_password, 
+            profile_pic
+            },
+            config
+        );
+
+        dispatch({
+            type: USER_UPDATE_SUCCESS,
+            payload: data,
+        });
+    } catch (error) {
+        const message = 
+            error.response && error.response.data.message 
+                ? error.response.data.message 
+                : error.message;
+        dispatch({
+            type: USER_UPDATE_FAIL,
+            payload: message,
+        });
+    } 
+}
 
 export const logout = () => async (dispatch) => {
     localStorage.removeItem("userInfo");

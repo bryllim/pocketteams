@@ -29,6 +29,7 @@ const LoginPage = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    console.log("Error: ", error);
     dispatch(login(email_address, password));
   };
 
