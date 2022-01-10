@@ -21,6 +21,8 @@ import SkeletonSectionCard from "../components/Cards/SkeletonSectionCard";
 import { ObjectID } from "bson";
 import midString from "../functions/ordering";
 import "../css/board.css";
+import Footer from "../components/Footer";
+import ProfileCard from "../components/Cards/ProfileCard";
 
 const addSection = async ({
   dispatch,
@@ -310,6 +312,12 @@ const Board = (props) => {
               <Sidebar />
             </Col>
             <Col md={8} className="d-flex flex-column h-100">
+            <Row className="sidebar-wrapper d-md-block d-lg-none">
+            <Col className="">
+              <ProfileCard />{" "}
+            </Col>
+          </Row>
+
               <h4>
                 <Breadcrumb>
                   <Breadcrumb.Item href="/project">Projects</Breadcrumb.Item>
@@ -419,10 +427,16 @@ const Board = (props) => {
                   </div>
                 </div>
               </div>
+              
             </Col>
+            
           </Row>
         </Container>
       </TaskContext.Provider>
+      <Row className="d-block d-lg-none">
+            <Sidebar />
+        </Row>
+      <Footer/>
     </>
   );
 };

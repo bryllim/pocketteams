@@ -114,7 +114,7 @@ const Sidebar = () => {
 
   return (
     <div className="d-flex flex-column sidebar-wrapper scrolling-wrapper-y h-100">
-      <ProfileCard />
+      <div className="d-none d-lg-block"><ProfileCard/></div>
       {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       <div className="team-section-wrapper sidebar-box d-flex flex-column scrolling-wrapper-y mb-30 p-2">
         {teamData > 0 ? (
