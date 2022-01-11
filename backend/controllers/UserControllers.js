@@ -85,12 +85,8 @@ const updateUser = AsyncHandler(async (req, res) => {
       user.last_name = last_name; 
       user.email_address = email_address;
       user.password = password;
-      if(profile_pic){
-        user.profile_pic = profile_pic
-      }
+      user.profile_pic = profile_pic
       const updatedUser = await user.save();
-      console.log("User Update");
-      console.log("Profile Pic: ", user.profile_pic)
       res.json(updatedUser);
     } 
   else {

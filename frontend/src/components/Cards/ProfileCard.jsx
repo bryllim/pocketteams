@@ -11,6 +11,13 @@ function ProfileCard() {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  
+  const [userName, setUserName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [pic, setPic] = useState(null);
+
+  // const userLogin = useSelector((state) => state.userLogin);
+  // const { user } = userLogin;
 
   const user = JSON.parse(localStorage.getItem("userInfo"));
   const history = useHistory();
@@ -37,22 +44,20 @@ function ProfileCard() {
       /* Read more about isConfirmed, isDenied below */
     if (result.isConfirmed) {
       setLoggedIn(false);
+      dispatch(logout());
+      history.push("/");
     }
   };
 
-  if(!loggedIn) {
-    dispatch(logout());
-    history.push("/");
-  }
-
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
-
   useEffect(() => {
-    if(userInfo){
-      console.log(userInfo);
+    if(user){
+      setUserName(user.first_name + " " + user.last_name);
+      setEmail(user.email_address);
+      setPic(user.profile_pic);
+    } else {
+      history.push("/");
     }
-  }, [dispatch, userInfo])
+  }, [user, history])
 
   return (
     <div className="sidebar-box recent-blog-box mb-30">
@@ -62,15 +67,15 @@ function ProfileCard() {
             <Image
               className="img-thumbnail"
               //src="https://images.generated.photos/aAfI_Wg_CmFdnZIYHNNUTBmqlNrh_HSSQblB77dy3ro/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/NDg2MDg2LmpwZw.jpg"
-              src={user.profile_pic}
+              src={pic}
               alt=""
             />
           </div>
           <div className="recent-blog-content">
             <p className="text-dark fw-bold">
-              {user.first_name + " " + user.last_name}
+              {userName}
             </p>
-            <p className="date">{user.email_address}</p>
+            <p className="date">{email}</p>
             <a className="text-danger hover-me" onClick={handleShow}>
               <small><i className="lni lni-cog" /> Account Settings</small>
             </a>

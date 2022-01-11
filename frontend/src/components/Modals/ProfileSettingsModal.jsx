@@ -4,31 +4,34 @@ import ProfilePicture from "@dsalvagni/react-profile-picture";
 import "@dsalvagni/react-profile-picture/dist/ProfilePicture.css";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUserAction } from "../../actions/userActions";
+import ErrorMessage from "../../components/ErrorMessage"
 import { toast } from "react-toastify";
 
-
-
 const ProfileSettingsModal = ({ showModal, hideModal }) => {
-
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [emailAddress, setEmailAddress] = useState(null);
   const [password, setPassword] = useState(null);
   const [confirmPassword, setConfirmPassword] = useState(null);
-  
+  const [picMessage, setPicMessage] = useState(null);
+  const [pic, setPic] = useState(null);
+
   const profileRef = React.createRef();
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
   const userUpdate = useSelector((state) => state.userUpdate);
-  const {loading: updateLoading, data: userData, success: updateSuccess} = userUpdate;
+  const {
+    loading: updateLoading,
+    data: userData,
+    success: updateSuccess,
+  } = userUpdate;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-
-    if(updateSuccess && updateLoading === false && userData){
+    if (updateSuccess && updateLoading === false && userData) {
       setFirstName(userData.first_name);
       setLastName(userData.last_name);
       setEmailAddress(userData.emailAddress);
@@ -39,33 +42,58 @@ const ProfileSettingsModal = ({ showModal, hideModal }) => {
       setLastName(userInfo.last_name);
       setEmailAddress(userInfo.email_address);
     }
-  }, [userInfo]);
+  }, [userInfo, updateSuccess, updateLoading, userData]);
 
   const updateHandler = (e) => {
-
-    const PP = profileRef.current;
-    const imageData = PP.getData();
-    const file = imageData.file;
-    const imageAsDataURL = PP.getImageAsDataUrl();
-    console.log("Image as data url: ", imageAsDataURL);
-
-
+    // const PP = profileRef.current;
+    // const imageData = PP.getData();
+    // const file = imageData.file;
+    // const imageAsDataURL = PP.getImageAsDataUrl()
+    
     //Update
     e.preventDefault();
-    // dispatch(
-    //   updateUserAction(
-    //     userInfo._id,
-    //     firstName,
-    //     lastName,
-    //     emailAddress,
-    //     password,
-    //     confirmPassword,
-    //     file
-    //   )
-    // );
+    dispatch(
+      updateUserAction(
+        userInfo._id,
+        firstName,
+        lastName,
+        emailAddress,
+        password,
+        confirmPassword,
+        pic
+      )
+    );
     notifyInfo("User Updated");
     //resetHandler();
     //hideModal();
+  };
+
+  const postDetails = (image) => {
+    if (!image) {
+      return setPicMessage("Please Select an Image");
+    }
+
+    setPicMessage(null);
+
+    if (image.type === "image/jpeg" || image.type === "image/png") {
+      const data = new FormData();
+      data.append("file", image);
+      data.append('upload_preset', 'pocketteams');
+      data.append('cloud_name', 'dppl4qapk');
+      fetch("https://api.cloudinary.com/v1_1/dppl4qapk/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPic(data.url.toString());
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      return setPicMessage("Please Select an Image");
+    }
   };
 
   //NOTIFICATIONS
@@ -82,7 +110,7 @@ const ProfileSettingsModal = ({ showModal, hideModal }) => {
     setPassword(null);
     setConfirmPassword(null);
   };
-  
+
   return (
     <Modal show={showModal} onHide={hideModal} size="lg">
       <Container>
@@ -101,7 +129,18 @@ const ProfileSettingsModal = ({ showModal, hideModal }) => {
               <div className="text-start">
                 <Row className="mb-20">
                   <div className="navbar-brand col-md-12">
+                    <Form.Label>Change Profile Picture</Form.Label>
+                    {picMessage && (
+                    <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
+                      )}
+                    <Form.File
+                      onChange={(e) => postDetails(e.target.files[0])}
+                      id="custom-file"
+                      type="image/png"
+                      custom
+                    />
                     <ProfilePicture
+                      //onChange={(e) => postDetails(e.target.files[0])}
                       ref={profileRef}
                       useHelper={true}
                       debug={true}

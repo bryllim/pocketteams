@@ -85,7 +85,7 @@ const Navigation = () => {
                     <li className="nav-item">
                       <a href="/#" onClick={handleJoinShow}>
                         <span className="d-none d-md-block">
-                          <span class="badge bg-danger">It's free!</span> &nbsp;{" "}
+                          <span className="badge bg-danger">It's free!</span> &nbsp;{" "}
                         </span>
                         <strong>Join the wait list</strong>
                       </a>

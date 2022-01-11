@@ -37,6 +37,7 @@ export const login = (email_address, password) => async (dispatch) =>{
         
         dispatch({type: USER_LOGIN_SUCCESS, payload:data});
         localStorage.setItem('userInfo', JSON.stringify(data));
+        console.log('userInfo', JSON.stringify(data));
     }
     catch (error){
         dispatch({
@@ -182,6 +183,8 @@ export const updateUserAction = (id, first_name, last_name, email_address, passw
             type: USER_UPDATE_SUCCESS,
             payload: data,
         });
+
+        console.log("New Data: ", JSON.stringify(data));
     } catch (error) {
         const message = 
             error.response && error.response.data.message 

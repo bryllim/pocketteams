@@ -112,6 +112,13 @@ const Sidebar = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [successDeleteUser, deleteUserData]);
 
+  //Check if the user is logged in
+  useEffect(() => {
+    if (!userInfo) {
+      history.push("/");
+    } 
+  }, [history, userInfo]);
+
   return (
     <div className="d-flex flex-column sidebar-wrapper scrolling-wrapper-y h-100">
       <div className="d-none d-lg-block"><ProfileCard/></div>
