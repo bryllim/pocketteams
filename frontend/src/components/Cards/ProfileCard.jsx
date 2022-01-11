@@ -28,7 +28,6 @@ function ProfileCard() {
       html: "<p>Are you sure you want to <b>logout?</></p>",
       text: "Are you sure you want to",
       icon: "question",
-      reverseButtons: true,
       showDenyButton: true,
       denyButtonText: `Cancel`,
       confirmButtonText: "Confirm",
