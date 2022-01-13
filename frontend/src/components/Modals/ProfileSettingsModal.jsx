@@ -6,8 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateUserAction } from "../../actions/userActions";
 import ErrorMessage from "../../components/ErrorMessage"
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
-const ProfileSettingsModal = ({ showModal, hideModal }) => {
+const ProfileSettingsModal = ({ showModal, hideModal, data}) => {
   const [firstName, setFirstName] = useState(null);
   const [lastName, setLastName] = useState(null);
   const [emailAddress, setEmailAddress] = useState(null);
@@ -22,36 +23,24 @@ const ProfileSettingsModal = ({ showModal, hideModal }) => {
   const { userInfo } = userLogin;
 
   const userUpdate = useSelector((state) => state.userUpdate);
-  const {
-    loading: updateLoading,
-    data: userData,
-    success: updateSuccess,
-  } = userUpdate;
+  const {success: updateSuccess, error: updateError} = userUpdate;
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (updateSuccess && updateLoading === false && userData) {
-      setFirstName(userData.first_name);
-      setLastName(userData.last_name);
-      setEmailAddress(userData.emailAddress);
-    }
-
-    if (userInfo) {
+    if(userInfo){
       setFirstName(userInfo.first_name);
       setLastName(userInfo.last_name);
       setEmailAddress(userInfo.email_address);
     }
-  }, [userInfo, updateSuccess, updateLoading, userData]);
+  }, [userInfo])
 
   const updateHandler = (e) => {
-    // const PP = profileRef.current;
-    // const imageData = PP.getData();
-    // const file = imageData.file;
-    // const imageAsDataURL = PP.getImageAsDataUrl()
-    
-    //Update
     e.preventDefault();
+    //postDetails(profileRef.current.state.file)
+    console.log("DATA 1: ", profileRef.current.state.file);
+    console.log("PIC: ", pic);
+    //Update
     dispatch(
       updateUserAction(
         userInfo._id,
@@ -63,10 +52,19 @@ const ProfileSettingsModal = ({ showModal, hideModal }) => {
         pic
       )
     );
-    notifyInfo("User Updated");
-    //resetHandler();
-    //hideModal();
+    
+    if(updateSuccess){
+      notifyInfo("User Updated");
+    } else {
+      notifyWarning("Update Failed: ", updateError);
+      console.log("Error: ", updateError);
+    }  
+    hideModal();
   };
+
+  const uploadImage = () => {
+    postDetails(profileRef.current.state.file)
+  }
 
   const postDetails = (image) => {
     if (!image) {
@@ -87,6 +85,8 @@ const ProfileSettingsModal = ({ showModal, hideModal }) => {
         .then((res) => res.json())
         .then((data) => {
           setPic(data.url.toString());
+        }).then( async() => {
+          Swal.fire('Image is uploaded successfully');
         })
         .catch((err) => {
           console.log(err);
@@ -99,6 +99,12 @@ const ProfileSettingsModal = ({ showModal, hideModal }) => {
   //NOTIFICATIONS
   const notifyInfo = (msg) =>
     toast.info(msg, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+      autoClose: 2500,
+    });
+
+    const notifyWarning = (msg) =>
+    toast.warning(msg, {
       position: toast.POSITION.BOTTOM_RIGHT,
       autoClose: 2500,
     });
@@ -129,22 +135,18 @@ const ProfileSettingsModal = ({ showModal, hideModal }) => {
               <div className="text-start">
                 <Row className="mb-20">
                   <div className="navbar-brand col-md-12">
-                    <Form.Label>Change Profile Picture</Form.Label>
                     {picMessage && (
                     <ErrorMessage variant="danger">{picMessage}</ErrorMessage>
                       )}
-                    <Form.File
-                      onChange={(e) => postDetails(e.target.files[0])}
-                      id="custom-file"
-                      type="image/png"
-                      custom
-                    />
                     <ProfilePicture
-                      //onChange={(e) => postDetails(e.target.files[0])}
                       ref={profileRef}
                       useHelper={true}
                       debug={true}
                     />
+                      <Button
+                        className="theme-btn theme-btn-modal ms-5"
+                        onClick={uploadImage}
+                      > Upload Image </Button> 
                   </div>
                 </Row>
               </div>

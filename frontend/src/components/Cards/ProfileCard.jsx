@@ -16,18 +16,9 @@ function ProfileCard() {
   const [email, setEmail] = useState(null);
   const [pic, setPic] = useState(null);
 
-  // const userLogin = useSelector((state) => state.userLogin);
-  // const { user } = userLogin;
-
   const user = JSON.parse(localStorage.getItem("userInfo"));
   const history = useHistory();
   const dispatch = useDispatch();
-  const [loggedIn, setLoggedIn] = useState(true);
-
-  // useEffect(() => {
-  //   dispatch(getUserAction(user._id))
-  //   console.log(userGetData);
-  // }, [dispatch, user._id])
 
   const logoutHandler = async() => {
     const result = await Swal.fire({
@@ -43,12 +34,15 @@ function ProfileCard() {
     })
       /* Read more about isConfirmed, isDenied below */
     if (result.isConfirmed) {
-      setLoggedIn(false);
       dispatch(logout());
       history.push("/");
     }
   };
+  
+  const userUpdate = useSelector((state) => state.userUpdate);
+  const { loading: updateLoading, data: userData, success: updateSuccess} = userUpdate;
 
+  //Loading the user profile
   useEffect(() => {
     if(user){
       setUserName(user.first_name + " " + user.last_name);
@@ -59,6 +53,21 @@ function ProfileCard() {
     }
   }, [user, history])
 
+  //Updating the user profile
+  useEffect(() => {
+    if(userData){
+      if(updateLoading === false){
+        setUserName(userData.first_name + " " + userData.last_name);
+        setEmail(userData.email_address);
+        setPic(userData.profile_pic);
+      }
+    } else {
+      setUserName(user.first_name + " " + user.last_name);
+      setEmail(user.email_address);
+      setPic(user.profile_pic);
+    }   
+  }, [updateLoading, userData, updateSuccess, user])
+
   return (
     <div className="sidebar-box recent-blog-box mb-30">
       <div className="recent-blog-items">
@@ -66,7 +75,6 @@ function ProfileCard() {
           <div className="recent-blog-img my-auto">
             <Image
               className="img-thumbnail"
-              //src="https://images.generated.photos/aAfI_Wg_CmFdnZIYHNNUTBmqlNrh_HSSQblB77dy3ro/rs:fit:256:256/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/NDg2MDg2LmpwZw.jpg"
               src={pic}
               alt=""
             />

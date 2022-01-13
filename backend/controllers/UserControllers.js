@@ -85,7 +85,9 @@ const updateUser = AsyncHandler(async (req, res) => {
       user.last_name = last_name; 
       user.email_address = email_address;
       user.password = password;
-      user.profile_pic = profile_pic
+      if(profile_pic){
+        user.profile_pic = profile_pic
+      }
       const updatedUser = await user.save();
       res.json(updatedUser);
     } 
@@ -101,11 +103,18 @@ const getUsers = AsyncHandler(async (req, res) => {
 });
 
 const getUserById = AsyncHandler(async (req, res) => {
-  const users = await User.findById(req.params.id);
+  const user = await User.findById(req.params.id);
   console.log("Inside USER ID");
-  if (users) {
-    res.json(users);
-    console.log("User", users);
+  if (user) {
+    res.json({
+      _id: user._id,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email_address: user.email_address,
+      profile_pic: user.profile_pic,
+      is_admin: user.is_admin,
+      token: generateToken(user._id),
+    });
   } else {
     res.status(404).json({ message: "not found" });
   }

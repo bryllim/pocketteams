@@ -67,7 +67,7 @@ export const userUpdateReducer = (state ={}, action) =>{
         case USER_UPDATE_SUCCESS:  //Takes the userinfo payload if the user login is a success
             return {loading:false, data: action.payload, success: true};
         case USER_UPDATE_FAIL: //Takes the userinfo error if the user login is failed
-            return {loading:false, error:action.payload, success: true};
+            return {loading:false, error:action.payload, success: false};
         default:
             return state;
     }

@@ -166,6 +166,8 @@ export const updateUserAction = (id, first_name, last_name, email_address, passw
             },
         };
 
+        console.log("Updated: ",first_name, last_name, email_address, password, confirm_password, profile_pic);
+
         const { data } = await axios.put(
             `/api/users/${id}`,
             {
@@ -183,8 +185,7 @@ export const updateUserAction = (id, first_name, last_name, email_address, passw
             type: USER_UPDATE_SUCCESS,
             payload: data,
         });
-
-        console.log("New Data: ", JSON.stringify(data));
+        localStorage.setItem('userInfo', JSON.stringify(data));
     } catch (error) {
         const message = 
             error.response && error.response.data.message 
