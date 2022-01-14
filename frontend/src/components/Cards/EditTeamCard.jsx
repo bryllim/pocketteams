@@ -40,12 +40,11 @@ const EditTeamCard = (props) => {
         <div className="d-flex justify-content-end">
           <i class="lni lni-cross-circle hover-me" onClick={()=>handleClick(props.teamId ,props.data._id)}></i>
         </div>
-        <div className="mb-20 navbar-brand">
+        <div className="mb-20 recent-blog-img">
           <Image
-            //   src={user.profile_picture}
             src={props.data.profile_pic}
             alt="Profile Picture"
-            className="profile-image hover-me"
+            className="img-thumbnail"
           ></Image>
         </div>
         <Row>

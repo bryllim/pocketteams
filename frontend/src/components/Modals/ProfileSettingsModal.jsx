@@ -16,6 +16,7 @@ const ProfileSettingsModal = ({ showModal, hideModal, data}) => {
   const [confirmPassword, setConfirmPassword] = useState(null);
   const [picMessage, setPicMessage] = useState(null);
   const [pic, setPic] = useState(null);
+  const [isEnabled, setIsEnabled] = useState(false);
 
   const profileRef = React.createRef();
 
@@ -37,9 +38,7 @@ const ProfileSettingsModal = ({ showModal, hideModal, data}) => {
 
   const updateHandler = (e) => {
     e.preventDefault();
-    //postDetails(profileRef.current.state.file)
-    console.log("DATA 1: ", profileRef.current.state.file);
-    console.log("PIC: ", pic);
+
     //Update
     dispatch(
       updateUserAction(
@@ -55,14 +54,14 @@ const ProfileSettingsModal = ({ showModal, hideModal, data}) => {
     
     if(updateSuccess){
       notifyInfo("User Updated");
-    } else {
-      notifyWarning("Update Failed: ", updateError);
-      console.log("Error: ", updateError);
+    } else if (!updateSuccess) {
+      notifyWarning("Update Failed");
     }  
     hideModal();
   };
 
   const uploadImage = () => {
+    setIsEnabled(true);
     postDetails(profileRef.current.state.file)
   }
 
@@ -86,6 +85,7 @@ const ProfileSettingsModal = ({ showModal, hideModal, data}) => {
         .then((data) => {
           setPic(data.url.toString());
         }).then( async() => {
+          setIsEnabled(false);
           Swal.fire('Image is uploaded successfully');
         })
         .catch((err) => {
@@ -215,6 +215,7 @@ const ProfileSettingsModal = ({ showModal, hideModal, data}) => {
       <Modal.Footer>
         <Button
           className="theme-btn theme-btn-modal mx-0"
+          disabled={isEnabled}
           onClick={updateHandler}
         >
           Save Changes

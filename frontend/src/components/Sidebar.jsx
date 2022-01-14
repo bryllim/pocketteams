@@ -29,6 +29,9 @@ const Sidebar = () => {
   const teamCreate = useSelector((state) => state.teamCreate);
   const { loading: createTeamLoading, teams: newTeamData } = teamCreate;
 
+  const teamDelete = useSelector((state) => state.teamDelete);
+  const { success: successDeleteTeam, teams: deleteTeamId} = teamDelete;
+
   const teamUpdate = useSelector((state) => state.teamUpdate);
   const {
     loading: updateTeamLoading,
@@ -54,7 +57,7 @@ const Sidebar = () => {
 
   // Loading Teams
   useEffect(() => {
-    if (loading === false && teams) {
+    if (loading === false && teams != null && teams.length > 0) {
       setTeamData(teams);
     }
   }, [loading, teams]);
@@ -99,6 +102,19 @@ const Sidebar = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [teams, updatedTeam, successUpdateTeam, updateTeamLoading]);
 
+  //Team Delete
+  useEffect(() => {
+    if(successDeleteTeam === false){
+      const newTeam = [...teamData];
+      const index = newTeam.findIndex(
+        (team) => team._id === deleteTeamId
+      );
+      newTeam.splice(index, 1);
+      setTeamData(newTeam);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [successDeleteTeam, deleteTeamId])
+
   //User Delete
   useEffect(() => {
     if (successDeleteUser === true && deleteUserData) {
@@ -106,7 +122,7 @@ const Sidebar = () => {
       const index = newUsers.findIndex(
         (teams) => teams._id === deleteUserData._id
       );
-      newUsers.splice(index, 1, deleteUserData);
+      newUsers.splice(index, 1);
       setTeamData(newUsers);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,11 +140,12 @@ const Sidebar = () => {
       <div className="d-none d-lg-block"><ProfileCard/></div>
       {error && <ErrorMessage variant="danger">{error}</ErrorMessage>}
       <div className="team-section-wrapper sidebar-box d-flex flex-column scrolling-wrapper-y mb-30 p-2">
-        {teamData > 0 ? (
-          teamData?.map((team) => <TeamCard data={team} />)
+        {teamData && teamData.length > 0 ? (
+          teamData?.reverse().map((team) => <TeamCard data={team} />)
         ) : (
           <p className="m-4">You currently don't have any teams.</p>
         )}
+
         {/* CREATE TEAM BUTTON */}
       </div>
       <div className="ms-4">

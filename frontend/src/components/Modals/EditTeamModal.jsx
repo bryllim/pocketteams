@@ -5,14 +5,10 @@ import pocketdevsLogo from "../../assets/img/profile/generated_profile.PNG";
 import { useDispatch, useSelector } from "react-redux";
 import { updateTeamAction } from "../../actions/teamActions";
 import { toast } from "react-toastify";
-import AddMemberModal from "./AddMemberModal";
 
 
 const EditTeamModal = ({ showModal, hideModal, data }) => {
 
-  const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
   const [teamName, setTeamName] = useState(null);
   const [teamDescription, setTeamDescription] = useState(null);
   const [teamAccess, setTeamAccess] = useState(null);
@@ -137,9 +133,7 @@ const EditTeamModal = ({ showModal, hideModal, data }) => {
                     </option>
                   </select>
           </Form.Group>
-        <button className="theme-btn theme-btn-modal ms-5 mx-1" onClick={handleShow}> <i class="lni lni-plus"></i> Add Members </button>
         <button className="theme-btn theme-btn-modal mx-1" onClick={updateHandler}> Save Changes </button>
-        <AddMemberModal showModal={show} hideModal={hideModal} data={data} />
       </Modal.Footer>
     </Modal>
   );

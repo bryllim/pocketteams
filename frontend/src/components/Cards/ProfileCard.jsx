@@ -62,9 +62,11 @@ function ProfileCard() {
         setPic(userData.profile_pic);
       }
     } else {
-      setUserName(user.first_name + " " + user.last_name);
-      setEmail(user.email_address);
-      setPic(user.profile_pic);
+      if(user){
+        setUserName(user.first_name + " " + user.last_name);
+        setEmail(user.email_address);
+        setPic(user.profile_pic);
+      }  
     }   
   }, [updateLoading, userData, updateSuccess, user])
 

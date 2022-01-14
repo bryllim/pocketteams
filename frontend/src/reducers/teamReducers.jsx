@@ -123,7 +123,7 @@ export const teamDeleteReducer = (state = {}, action) => {
       case TEAM_DELETE_REQUEST:
         return { loading: true };
       case TEAM_DELETE_SUCCESS:
-        return { loading: false, success: true , data: action.payload};
+        return { loading: false, success: true , teams: action.payload};
       case TEAM_DELETE_FAIL:
         return { loading: false, error: action.payload, success: false };
       default:
